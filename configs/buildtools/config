@@ -1,0 +1,19 @@
+debug                = 0
+manual               = 0
+
+nspr4                = 0
+wininet              = 0
+software_ftp         = 0
+software_email       = 0
+
+socket_ftp           = 0
+socket_pop3          = 0
+
+vnc                  = 0
+jabber_notifier      = 0
+
+client_platforms     = 0
+server_platforms     = 0
+bcserver_platforms   = 0
+builder_platforms    = 0
+buildtools_platforms = win64

@@ -1,0 +1,1364 @@
+ client32
+
+ Timestamp is 4da70da0 (Thu Apr 14 16:07:12 2011)
+
+ Preferred load address is 00400000
+
+ Start         Length     Name                   Class
+ 0001:00000000 000005a0H .idata$5                CODE
+ 0001:000005a0 00003614H .rdata                  CODE
+ 0001:00003bb4 00018ca2H .text                   CODE
+ 0001:0001c860 00001e41H code                    CODE
+ 0001:0001e6a4 00000104H .idata$2                CODE
+ 0001:0001e7a8 00000014H .idata$3                CODE
+ 0001:0001e7bc 000005a0H .idata$4                CODE
+ 0001:0001ed5c 00001828H .idata$6                CODE
+ 0001:00020584 00000000H .edata                  CODE
+ 0002:00000000 000003a8H .data                   DATA
+ 0002:000003a8 00001cacH .bss                    DATA
+
+  Address         Publics by Value              Rva+Base       Lib:Object
+
+ 0001:00000000       __imp__GetLengthSid@4      00401000     advapi32:ADVAPI32.dll
+ 0001:00000004       __imp__CryptGetHashParam@20 00401004     advapi32:ADVAPI32.dll
+ 0001:00000008       __imp__OpenProcessToken@12 00401008     advapi32:ADVAPI32.dll
+ 0001:0000000c       __imp__GetSidSubAuthority@8 0040100c     advapi32:ADVAPI32.dll
+ 0001:00000010       __imp__CryptAcquireContextW@20 00401010     advapi32:ADVAPI32.dll
+ 0001:00000014       __imp__OpenThreadToken@16  00401014     advapi32:ADVAPI32.dll
+ 0001:00000018       __imp__GetSidSubAuthorityCount@4 00401018     advapi32:ADVAPI32.dll
+ 0001:0000001c       __imp__GetTokenInformation@20 0040101c     advapi32:ADVAPI32.dll
+ 0001:00000020       __imp__RegCreateKeyExW@36  00401020     advapi32:ADVAPI32.dll
+ 0001:00000024       __imp__CryptReleaseContext@8 00401024     advapi32:ADVAPI32.dll
+ 0001:00000028       __imp__RegQueryValueExW@24 00401028     advapi32:ADVAPI32.dll
+ 0001:0000002c       __imp__CreateProcessAsUserW@44 0040102c     advapi32:ADVAPI32.dll
+ 0001:00000030       __imp__InitializeSecurityDescriptor@8 00401030     advapi32:ADVAPI32.dll
+ 0001:00000034       __imp__SetSecurityDescriptorDacl@16 00401034     advapi32:ADVAPI32.dll
+ 0001:00000038       __imp__SetNamedSecurityInfoW@28 00401038     advapi32:ADVAPI32.dll
+ 0001:0000003c       __imp__LookupPrivilegeValueW@12 0040103c     advapi32:ADVAPI32.dll
+ 0001:00000040       __imp__CryptCreateHash@20  00401040     advapi32:ADVAPI32.dll
+ 0001:00000044       __imp__ConvertStringSecurityDescriptorToSecurityDescriptorW@16 00401044     advapi32:ADVAPI32.dll
+ 0001:00000048       __imp__RegOpenKeyExW@20    00401048     advapi32:ADVAPI32.dll
+ 0001:0000004c       __imp__GetSecurityDescriptorSacl@16 0040104c     advapi32:ADVAPI32.dll
+ 0001:00000050       __imp__SetSecurityDescriptorSacl@16 00401050     advapi32:ADVAPI32.dll
+ 0001:00000054       __imp__CryptDestroyHash@4  00401054     advapi32:ADVAPI32.dll
+ 0001:00000058       __imp__AdjustTokenPrivileges@24 00401058     advapi32:ADVAPI32.dll
+ 0001:0000005c       __imp__RegCloseKey@4       0040105c     advapi32:ADVAPI32.dll
+ 0001:00000060       __imp__RegSetValueExW@24   00401060     advapi32:ADVAPI32.dll
+ 0001:00000064       __imp__CryptHashData@16    00401064     advapi32:ADVAPI32.dll
+ 0001:00000068       __imp__EqualSid@8          00401068     advapi32:ADVAPI32.dll
+ 0001:0000006c       __imp__RegEnumKeyExW@32    0040106c     advapi32:ADVAPI32.dll
+ 0001:00000070       __imp__InitiateSystemShutdownExW@24 00401070     advapi32:ADVAPI32.dll
+ 0001:00000074       __imp__ConvertSidToStringSidW@8 00401074     advapi32:ADVAPI32.dll
+ 0001:00000078       __imp__IsWellKnownSid@8    00401078     advapi32:ADVAPI32.dll
+ 0001:0000007c       \177ADVAPI32_NULL_THUNK_DATA 0040107c     advapi32:ADVAPI32.dll
+ 0001:00000080       __imp__PFXExportCertStoreEx@20 00401080     crypt32:CRYPT32.dll
+ 0001:00000084       __imp__CertDuplicateCertificateContext@4 00401084     crypt32:CRYPT32.dll
+ 0001:00000088       __imp__CertEnumCertificatesInStore@8 00401088     crypt32:CRYPT32.dll
+ 0001:0000008c       __imp__PFXImportCertStore@12 0040108c     crypt32:CRYPT32.dll
+ 0001:00000090       __imp__CertCloseStore@8    00401090     crypt32:CRYPT32.dll
+ 0001:00000094       __imp__CertOpenSystemStoreW@8 00401094     crypt32:CRYPT32.dll
+ 0001:00000098       __imp__CertDeleteCertificateFromStore@4 00401098     crypt32:CRYPT32.dll
+ 0001:0000009c       __imp__CryptUnprotectData@28 0040109c     crypt32:CRYPT32.dll
+ 0001:000000a0       \177CRYPT32_NULL_THUNK_DATA 004010a0     crypt32:CRYPT32.dll
+ 0001:000000a4       __imp__RestoreDC@8         004010a4     gdi32:GDI32.dll
+ 0001:000000a8       __imp__SaveDC@4            004010a8     gdi32:GDI32.dll
+ 0001:000000ac       __imp__DeleteDC@4          004010ac     gdi32:GDI32.dll
+ 0001:000000b0       __imp__GdiFlush@0          004010b0     gdi32:GDI32.dll
+ 0001:000000b4       __imp__SetViewportOrgEx@16 004010b4     gdi32:GDI32.dll
+ 0001:000000b8       __imp__SelectObject@8      004010b8     gdi32:GDI32.dll
+ 0001:000000bc       __imp__CreateCompatibleDC@4 004010bc     gdi32:GDI32.dll
+ 0001:000000c0       __imp__CreateDIBSection@24 004010c0     gdi32:GDI32.dll
+ 0001:000000c4       __imp__GetDeviceCaps@8     004010c4     gdi32:GDI32.dll
+ 0001:000000c8       __imp__GetDIBits@28        004010c8     gdi32:GDI32.dll
+ 0001:000000cc       __imp__DeleteObject@4      004010cc     gdi32:GDI32.dll
+ 0001:000000d0       __imp__SetRectRgn@20       004010d0     gdi32:GDI32.dll
+ 0001:000000d4       __imp__CreateCompatibleBitmap@12 004010d4     gdi32:GDI32.dll
+ 0001:000000d8       \177GDI32_NULL_THUNK_DATA  004010d8     gdi32:GDI32.dll
+ 0001:000000dc       __imp__VirtualAllocEx@20   004010dc     kernel32:KERNEL32.dll
+ 0001:000000e0       __imp__FindClose@4         004010e0     kernel32:KERNEL32.dll
+ 0001:000000e4       __imp__LoadLibraryA@4      004010e4     kernel32:KERNEL32.dll
+ 0001:000000e8       __imp__RemoveDirectoryW@4  004010e8     kernel32:KERNEL32.dll
+ 0001:000000ec       __imp__WaitForMultipleObjects@16 004010ec     kernel32:KERNEL32.dll
+ 0001:000000f0       __imp__lstrcmpiW@8         004010f0     kernel32:KERNEL32.dll
+ 0001:000000f4       __imp__FindNextFileW@8     004010f4     kernel32:KERNEL32.dll
+ 0001:000000f8       __imp__VirtualProtect@16   004010f8     kernel32:KERNEL32.dll
+ 0001:000000fc       __imp__GetFileTime@16      004010fc     kernel32:KERNEL32.dll
+ 0001:00000100       __imp__ReleaseMutex@4      00401100     kernel32:KERNEL32.dll
+ 0001:00000104       __imp__FileTimeToLocalFileTime@8 00401104     kernel32:KERNEL32.dll
+ 0001:00000108       __imp__GetVolumeNameForVolumeMountPointW@12 00401108     kernel32:KERNEL32.dll
+ 0001:0000010c       __imp__DeleteFileW@4       0040110c     kernel32:KERNEL32.dll
+ 0001:00000110       __imp__GetFileInformationByHandle@8 00401110     kernel32:KERNEL32.dll
+ 0001:00000114       __imp__LocalFree@4         00401114     kernel32:KERNEL32.dll
+ 0001:00000118       __imp__GetSystemTime@4     00401118     kernel32:KERNEL32.dll
+ 0001:0000011c       __imp__WriteProcessMemory@20 0040111c     kernel32:KERNEL32.dll
+ 0001:00000120       __imp__SetFileAttributesW@8 00401120     kernel32:KERNEL32.dll
+ 0001:00000124       __imp__CreateThread@24     00401124     kernel32:KERNEL32.dll
+ 0001:00000128       __imp__ExpandEnvironmentStringsW@12 00401128     kernel32:KERNEL32.dll
+ 0001:0000012c       __imp__GetCurrentThreadId@0 0040112c     kernel32:KERNEL32.dll
+ 0001:00000130       __imp__ExitProcess@4       00401130     kernel32:KERNEL32.dll
+ 0001:00000134       __imp__SetEvent@4          00401134     kernel32:KERNEL32.dll
+ 0001:00000138       __imp__lstrcmpiA@8         00401138     kernel32:KERNEL32.dll
+ 0001:0000013c       __imp__WTSGetActiveConsoleSessionId@0 0040113c     kernel32:KERNEL32.dll
+ 0001:00000140       __imp__CreateEventW@16     00401140     kernel32:KERNEL32.dll
+ 0001:00000144       __imp__MapViewOfFile@20    00401144     kernel32:KERNEL32.dll
+ 0001:00000148       __imp__WriteFile@20        00401148     kernel32:KERNEL32.dll
+ 0001:0000014c       __imp__SetThreadPriority@8 0040114c     kernel32:KERNEL32.dll
+ 0001:00000150       __imp__VirtualProtectEx@20 00401150     kernel32:KERNEL32.dll
+ 0001:00000154       __imp__TlsAlloc@0          00401154     kernel32:KERNEL32.dll
+ 0001:00000158       __imp__TlsFree@4           00401158     kernel32:KERNEL32.dll
+ 0001:0000015c       __imp__GetFileAttributesExW@12 0040115c     kernel32:KERNEL32.dll
+ 0001:00000160       __imp__GetPrivateProfileStringW@24 00401160     kernel32:KERNEL32.dll
+ 0001:00000164       __imp__GetPrivateProfileIntW@16 00401164     kernel32:KERNEL32.dll
+ 0001:00000168       __imp__GetLocalTime@4      00401168     kernel32:KERNEL32.dll
+ 0001:0000016c       __imp__ResetEvent@4        0040116c     kernel32:KERNEL32.dll
+ 0001:00000170       __imp__TlsGetValue@4       00401170     kernel32:KERNEL32.dll
+ 0001:00000174       __imp__TlsSetValue@8       00401174     kernel32:KERNEL32.dll
+ 0001:00000178       __imp__TerminateProcess@8  00401178     kernel32:KERNEL32.dll
+ 0001:0000017c       __imp__MoveFileExW@12      0040117c     kernel32:KERNEL32.dll
+ 0001:00000180       __imp__GetModuleFileNameW@12 00401180     kernel32:KERNEL32.dll
+ 0001:00000184       __imp__GetUserDefaultUILanguage@0 00401184     kernel32:KERNEL32.dll
+ 0001:00000188       __imp__GetThreadContext@8  00401188     kernel32:KERNEL32.dll
+ 0001:0000018c       __imp__SetThreadContext@8  0040118c     kernel32:KERNEL32.dll
+ 0001:00000190       __imp__GetProcessId@4      00401190     kernel32:KERNEL32.dll
+ 0001:00000194       __imp__GetNativeSystemInfo@4 00401194     kernel32:KERNEL32.dll
+ 0001:00000198       __imp__GetVersionExW@4     00401198     kernel32:KERNEL32.dll
+ 0001:0000019c       __imp__GetCommandLineW@0   0040119c     kernel32:KERNEL32.dll
+ 0001:000001a0       __imp__SetErrorMode@4      004011a0     kernel32:KERNEL32.dll
+ 0001:000001a4       __imp__GetComputerNameW@8  004011a4     kernel32:KERNEL32.dll
+ 0001:000001a8       __imp__OpenEventW@12       004011a8     kernel32:KERNEL32.dll
+ 0001:000001ac       __imp__DuplicateHandle@28  004011ac     kernel32:KERNEL32.dll
+ 0001:000001b0       __imp__GetCurrentProcessId@0 004011b0     kernel32:KERNEL32.dll
+ 0001:000001b4       __imp__VirtualQueryEx@16   004011b4     kernel32:KERNEL32.dll
+ 0001:000001b8       __imp__SetFileTime@16      004011b8     kernel32:KERNEL32.dll
+ 0001:000001bc       __imp__VirtualAlloc@16     004011bc     kernel32:KERNEL32.dll
+ 0001:000001c0       __imp__GetProcAddress@8    004011c0     kernel32:KERNEL32.dll
+ 0001:000001c4       __imp__SetLastError@4      004011c4     kernel32:KERNEL32.dll
+ 0001:000001c8       __imp__GetLastError@0      004011c8     kernel32:KERNEL32.dll
+ 0001:000001cc       __imp__OpenMutexW@12       004011cc     kernel32:KERNEL32.dll
+ 0001:000001d0       __imp__GetFileSizeEx@8     004011d0     kernel32:KERNEL32.dll
+ 0001:000001d4       __imp__GetTempPathW@8      004011d4     kernel32:KERNEL32.dll
+ 0001:000001d8       __imp__FlushFileBuffers@4  004011d8     kernel32:KERNEL32.dll
+ 0001:000001dc       __imp__MultiByteToWideChar@24 004011dc     kernel32:KERNEL32.dll
+ 0001:000001e0       __imp__IsBadReadPtr@8      004011e0     kernel32:KERNEL32.dll
+ 0001:000001e4       __imp__GetProcessHeap@0    004011e4     kernel32:KERNEL32.dll
+ 0001:000001e8       __imp__CreateFileW@28      004011e8     kernel32:KERNEL32.dll
+ 0001:000001ec       __imp__GetTimeZoneInformation@4 004011ec     kernel32:KERNEL32.dll
+ 0001:000001f0       __imp__ReadFile@20         004011f0     kernel32:KERNEL32.dll
+ 0001:000001f4       __imp__Thread32Next@8      004011f4     kernel32:KERNEL32.dll
+ 0001:000001f8       __imp__GetFileAttributesW@4 004011f8     kernel32:KERNEL32.dll
+ 0001:000001fc       __imp__HeapCreate@12       004011fc     kernel32:KERNEL32.dll
+ 0001:00000200       __imp__HeapDestroy@4       00401200     kernel32:KERNEL32.dll
+ 0001:00000204       __imp__ReadProcessMemory@20 00401204     kernel32:KERNEL32.dll
+ 0001:00000208       __imp__Sleep@4             00401208     kernel32:KERNEL32.dll
+ 0001:0000020c       __imp__LoadLibraryW@4      0040120c     kernel32:KERNEL32.dll
+ 0001:00000210       __imp__WideCharToMultiByte@32 00401210     kernel32:KERNEL32.dll
+ 0001:00000214       __imp__CreateFileMappingW@24 00401214     kernel32:KERNEL32.dll
+ 0001:00000218       __imp__Thread32First@8     00401218     kernel32:KERNEL32.dll
+ 0001:0000021c       __imp__VirtualFree@12      0040121c     kernel32:KERNEL32.dll
+ 0001:00000220       __imp__GetCurrentThread@0  00401220     kernel32:KERNEL32.dll
+ 0001:00000224       __imp__GetModuleHandleW@4  00401224     kernel32:KERNEL32.dll
+ 0001:00000228       __imp__CreateDirectoryW@8  00401228     kernel32:KERNEL32.dll
+ 0001:0000022c       __imp__HeapFree@12         0040122c     kernel32:KERNEL32.dll
+ 0001:00000230       __imp__SetFilePointerEx@20 00401230     kernel32:KERNEL32.dll
+ 0001:00000234       __imp__SystemTimeToFileTime@8 00401234     kernel32:KERNEL32.dll
+ 0001:00000238       __imp__HeapAlloc@12        00401238     kernel32:KERNEL32.dll
+ 0001:0000023c       __imp__CreateProcessW@40   0040123c     kernel32:KERNEL32.dll
+ 0001:00000240       __imp__FreeLibrary@4       00401240     kernel32:KERNEL32.dll
+ 0001:00000244       __imp__SetEndOfFile@4      00401244     kernel32:KERNEL32.dll
+ 0001:00000248       __imp__FindFirstFileW@8    00401248     kernel32:KERNEL32.dll
+ 0001:0000024c       __imp__CreateMutexW@12     0040124c     kernel32:KERNEL32.dll
+ 0001:00000250       __imp__HeapReAlloc@16      00401250     kernel32:KERNEL32.dll
+ 0001:00000254       __imp__GetTempFileNameW@16 00401254     kernel32:KERNEL32.dll
+ 0001:00000258       __imp__FileTimeToDosDateTime@12 00401258     kernel32:KERNEL32.dll
+ 0001:0000025c       __imp__GetEnvironmentVariableW@12 0040125c     kernel32:KERNEL32.dll
+ 0001:00000260       __imp__CloseHandle@4       00401260     kernel32:KERNEL32.dll
+ 0001:00000264       __imp__CreateToolhelp32Snapshot@8 00401264     kernel32:KERNEL32.dll
+ 0001:00000268       __imp__Process32NextW@8    00401268     kernel32:KERNEL32.dll
+ 0001:0000026c       __imp__Process32FirstW@8   0040126c     kernel32:KERNEL32.dll
+ 0001:00000270       __imp__VirtualFreeEx@16    00401270     kernel32:KERNEL32.dll
+ 0001:00000274       __imp__OpenProcess@12      00401274     kernel32:KERNEL32.dll
+ 0001:00000278       __imp__CreateRemoteThread@28 00401278     kernel32:KERNEL32.dll
+ 0001:0000027c       __imp__WaitForSingleObject@8 0040127c     kernel32:KERNEL32.dll
+ 0001:00000280       __imp__EnterCriticalSection@4 00401280     kernel32:KERNEL32.dll
+ 0001:00000284       __imp__GlobalUnlock@4      00401284     kernel32:KERNEL32.dll
+ 0001:00000288       __imp__LeaveCriticalSection@4 00401288     kernel32:KERNEL32.dll
+ 0001:0000028c       __imp__InitializeCriticalSection@4 0040128c     kernel32:KERNEL32.dll
+ 0001:00000290       __imp__GetTickCount@0      00401290     kernel32:KERNEL32.dll
+ 0001:00000294       __imp__UnmapViewOfFile@4   00401294     kernel32:KERNEL32.dll
+ 0001:00000298       __imp__GlobalLock@4        00401298     kernel32:KERNEL32.dll
+ 0001:0000029c       \177KERNEL32_NULL_THUNK_DATA 0040129c     kernel32:KERNEL32.dll
+ 0001:000002a0       __imp__NetApiBufferFree@4  004012a0     netapi32:NETAPI32.dll
+ 0001:000002a4       __imp__NetUserEnum@32      004012a4     netapi32:NETAPI32.dll
+ 0001:000002a8       __imp__NetUserGetInfo@16   004012a8     netapi32:NETAPI32.dll
+ 0001:000002ac       \177NETAPI32_NULL_THUNK_DATA 004012ac     netapi32:NETAPI32.dll
+ 0001:000002b0       __imp__VariantInit@4       004012b0     oleaut32:OLEAUT32.dll
+ 0001:000002b4       __imp__SysAllocString@4    004012b4     oleaut32:OLEAUT32.dll
+ 0001:000002b8       __imp__VariantClear@4      004012b8     oleaut32:OLEAUT32.dll
+ 0001:000002bc       __imp__SysFreeString@4     004012bc     oleaut32:OLEAUT32.dll
+ 0001:000002c0       \177OLEAUT32_NULL_THUNK_DATA 004012c0     oleaut32:OLEAUT32.dll
+ 0001:000002c4       __imp__ShellExecuteW@24    004012c4     shell32:SHELL32.dll
+ 0001:000002c8       __imp__SHGetFolderPathW@20 004012c8     shell32:SHELL32.dll
+ 0001:000002cc       __imp__CommandLineToArgvW@8 004012cc     shell32:SHELL32.dll
+ 0001:000002d0       \177SHELL32_NULL_THUNK_DATA 004012d0     shell32:SHELL32.dll
+ 0001:000002d4       __imp__wvnsprintfW@16      004012d4     shlwapi:SHLWAPI.dll
+ 0001:000002d8       __imp__PathQuoteSpacesW@4  004012d8     shlwapi:SHLWAPI.dll
+ 0001:000002dc       __imp__PathIsURLW@4        004012dc     shlwapi:SHLWAPI.dll
+ 0001:000002e0       __imp__PathRenameExtensionW@8 004012e0     shlwapi:SHLWAPI.dll
+ 0001:000002e4       __imp__StrStrIW@8          004012e4     shlwapi:SHLWAPI.dll
+ 0001:000002e8       __imp__StrStrIA@8          004012e8     shlwapi:SHLWAPI.dll
+ 0001:000002ec       __imp__StrCmpNIW@12        004012ec     shlwapi:SHLWAPI.dll
+ 0001:000002f0       __imp__wvnsprintfA@16      004012f0     shlwapi:SHLWAPI.dll
+ 0001:000002f4       __imp__StrCmpNIA@12        004012f4     shlwapi:SHLWAPI.dll
+ 0001:000002f8       __imp__PathMatchSpecW@8    004012f8     shlwapi:SHLWAPI.dll
+ 0001:000002fc       __imp__PathRemoveBackslashW@4 004012fc     shlwapi:SHLWAPI.dll
+ 0001:00000300       __imp__PathUnquoteSpacesW@4 00401300     shlwapi:SHLWAPI.dll
+ 0001:00000304       __imp__PathAddExtensionW@8 00401304     shlwapi:SHLWAPI.dll
+ 0001:00000308       __imp__PathCombineW@12     00401308     shlwapi:SHLWAPI.dll
+ 0001:0000030c       __imp__SHDeleteKeyW@8      0040130c     shlwapi:SHLWAPI.dll
+ 0001:00000310       __imp__PathSkipRootW@4     00401310     shlwapi:SHLWAPI.dll
+ 0001:00000314       __imp__SHDeleteValueW@12   00401314     shlwapi:SHLWAPI.dll
+ 0001:00000318       __imp__PathAddBackslashW@4 00401318     shlwapi:SHLWAPI.dll
+ 0001:0000031c       __imp__PathRemoveFileSpecW@4 0040131c     shlwapi:SHLWAPI.dll
+ 0001:00000320       __imp__PathFindFileNameW@4 00401320     shlwapi:SHLWAPI.dll
+ 0001:00000324       __imp__PathIsDirectoryW@4  00401324     shlwapi:SHLWAPI.dll
+ 0001:00000328       __imp__UrlUnescapeA@16     00401328     shlwapi:SHLWAPI.dll
+ 0001:0000032c       \177SHLWAPI_NULL_THUNK_DATA 0040132c     shlwapi:SHLWAPI.dll
+ 0001:00000330       __imp__GetUserNameExW@12   00401330     secur32:Secur32.dll
+ 0001:00000334       \177Secur32_NULL_THUNK_DATA 00401334     secur32:Secur32.dll
+ 0001:00000338       __imp__OpenInputDesktop@12 00401338     user32:USER32.dll
+ 0001:0000033c       __imp__MenuItemFromPoint@16 0040133c     user32:USER32.dll
+ 0001:00000340       __imp__GetMenu@4           00401340     user32:USER32.dll
+ 0001:00000344       __imp__RegisterClassExW@4  00401344     user32:USER32.dll
+ 0001:00000348       __imp__GetMenuItemRect@16  00401348     user32:USER32.dll
+ 0001:0000034c       __imp__TrackPopupMenuEx@24 0040134c     user32:USER32.dll
+ 0001:00000350       __imp__SystemParametersInfoW@16 00401350     user32:USER32.dll
+ 0001:00000354       __imp__GetClassNameW@12    00401354     user32:USER32.dll
+ 0001:00000358       __imp__GetMenuState@12     00401358     user32:USER32.dll
+ 0001:0000035c       __imp__DefWindowProcA@16   0040135c     user32:USER32.dll
+ 0001:00000360       __imp__DefMDIChildProcW@16 00401360     user32:USER32.dll
+ 0001:00000364       __imp__SwitchDesktop@4     00401364     user32:USER32.dll
+ 0001:00000368       __imp__GetMenuItemCount@4  00401368     user32:USER32.dll
+ 0001:0000036c       __imp__DefDlgProcA@16      0040136c     user32:USER32.dll
+ 0001:00000370       __imp__PostThreadMessageW@16 00401370     user32:USER32.dll
+ 0001:00000374       __imp__DefMDIChildProcA@16 00401374     user32:USER32.dll
+ 0001:00000378       __imp__HiliteMenuItem@16   00401378     user32:USER32.dll
+ 0001:0000037c       __imp__DefFrameProcA@20    0040137c     user32:USER32.dll
+ 0001:00000380       __imp__SendMessageW@16     00401380     user32:USER32.dll
+ 0001:00000384       __imp__CallWindowProcA@20  00401384     user32:USER32.dll
+ 0001:00000388       __imp__EndMenu@0           00401388     user32:USER32.dll
+ 0001:0000038c       __imp__CallWindowProcW@20  0040138c     user32:USER32.dll
+ 0001:00000390       __imp__DefWindowProcW@16   00401390     user32:USER32.dll
+ 0001:00000394       __imp__DefFrameProcW@20    00401394     user32:USER32.dll
+ 0001:00000398       __imp__GetWindowThreadProcessId@8 00401398     user32:USER32.dll
+ 0001:0000039c       __imp__GetMessageW@16      0040139c     user32:USER32.dll
+ 0001:000003a0       __imp__GetShellWindow@0    004013a0     user32:USER32.dll
+ 0001:000003a4       __imp__CharLowerW@4        004013a4     user32:USER32.dll
+ 0001:000003a8       __imp__CreateDesktopW@24   004013a8     user32:USER32.dll
+ 0001:000003ac       __imp__SetProcessWindowStation@4 004013ac     user32:USER32.dll
+ 0001:000003b0       __imp__GetThreadDesktop@4  004013b0     user32:USER32.dll
+ 0001:000003b4       __imp__GetSystemMetrics@4  004013b4     user32:USER32.dll
+ 0001:000003b8       __imp__MapVirtualKeyW@8    004013b8     user32:USER32.dll
+ 0001:000003bc       __imp__GetUpdateRgn@12     004013bc     user32:USER32.dll
+ 0001:000003c0       __imp__CharLowerBuffA@8    004013c0     user32:USER32.dll
+ 0001:000003c4       __imp__ExitWindowsEx@8     004013c4     user32:USER32.dll
+ 0001:000003c8       __imp__FillRect@12         004013c8     user32:USER32.dll
+ 0001:000003cc       __imp__DrawEdge@16         004013cc     user32:USER32.dll
+ 0001:000003d0       __imp__IntersectRect@12    004013d0     user32:USER32.dll
+ 0001:000003d4       __imp__EqualRect@8         004013d4     user32:USER32.dll
+ 0001:000003d8       __imp__PrintWindow@12      004013d8     user32:USER32.dll
+ 0001:000003dc       __imp__GetWindowRect@8     004013dc     user32:USER32.dll
+ 0001:000003e0       __imp__PostMessageW@16     004013e0     user32:USER32.dll
+ 0001:000003e4       __imp__GetParent@4         004013e4     user32:USER32.dll
+ 0001:000003e8       __imp__GetWindowInfo@8     004013e8     user32:USER32.dll
+ 0001:000003ec       __imp__GetClassLongW@8     004013ec     user32:USER32.dll
+ 0001:000003f0       __imp__GetAncestor@8       004013f0     user32:USER32.dll
+ 0001:000003f4       __imp__SetWindowPos@28     004013f4     user32:USER32.dll
+ 0001:000003f8       __imp__IsWindow@4          004013f8     user32:USER32.dll
+ 0001:000003fc       __imp__MapWindowPoints@16  004013fc     user32:USER32.dll
+ 0001:00000400       __imp__IsRectEmpty@4       00401400     user32:USER32.dll
+ 0001:00000404       __imp__DrawIcon@16         00401404     user32:USER32.dll
+ 0001:00000408       __imp__GetIconInfo@8       00401408     user32:USER32.dll
+ 0001:0000040c       __imp__EndPaint@8          0040140c     user32:USER32.dll
+ 0001:00000410       __imp__GetWindowDC@4       00401410     user32:USER32.dll
+ 0001:00000414       __imp__SetCapture@4        00401414     user32:USER32.dll
+ 0001:00000418       __imp__GetSubMenu@8        00401418     user32:USER32.dll
+ 0001:0000041c       __imp__BeginPaint@8        0040141c     user32:USER32.dll
+ 0001:00000420       __imp__GetMessageA@16      00401420     user32:USER32.dll
+ 0001:00000424       __imp__RegisterClassW@4    00401424     user32:USER32.dll
+ 0001:00000428       __imp__GetUpdateRect@12    00401428     user32:USER32.dll
+ 0001:0000042c       __imp__DefDlgProcW@16      0040142c     user32:USER32.dll
+ 0001:00000430       __imp__SetCursorPos@8      00401430     user32:USER32.dll
+ 0001:00000434       __imp__GetDCEx@12          00401434     user32:USER32.dll
+ 0001:00000438       __imp__ToUnicode@24        00401438     user32:USER32.dll
+ 0001:0000043c       __imp__GetClipboardData@4  0040143c     user32:USER32.dll
+ 0001:00000440       __imp__PeekMessageA@20     00401440     user32:USER32.dll
+ 0001:00000444       __imp__GetCursorPos@4      00401444     user32:USER32.dll
+ 0001:00000448       __imp__ReleaseCapture@0    00401448     user32:USER32.dll
+ 0001:0000044c       __imp__GetMessagePos@0     0040144c     user32:USER32.dll
+ 0001:00000450       __imp__CloseWindowStation@4 00401450     user32:USER32.dll
+ 0001:00000454       __imp__CreateWindowStationW@16 00401454     user32:USER32.dll
+ 0001:00000458       __imp__GetProcessWindowStation@0 00401458     user32:USER32.dll
+ 0001:0000045c       __imp__OpenDesktopW@16     0040145c     user32:USER32.dll
+ 0001:00000460       __imp__CloseDesktop@4      00401460     user32:USER32.dll
+ 0001:00000464       __imp__SetThreadDesktop@4  00401464     user32:USER32.dll
+ 0001:00000468       __imp__GetUserObjectInformationW@20 00401468     user32:USER32.dll
+ 0001:0000046c       __imp__OpenWindowStationW@12 0040146c     user32:USER32.dll
+ 0001:00000470       __imp__GetTopWindow@4      00401470     user32:USER32.dll
+ 0001:00000474       __imp__LoadImageW@24       00401474     user32:USER32.dll
+ 0001:00000478       __imp__MsgWaitForMultipleObjects@20 00401478     user32:USER32.dll
+ 0001:0000047c       __imp__WindowFromPoint@8   0040147c     user32:USER32.dll
+ 0001:00000480       __imp__CharToOemW@8        00401480     user32:USER32.dll
+ 0001:00000484       __imp__GetDC@4             00401484     user32:USER32.dll
+ 0001:00000488       __imp__GetWindowLongW@8    00401488     user32:USER32.dll
+ 0001:0000048c       __imp__CharLowerA@4        0040148c     user32:USER32.dll
+ 0001:00000490       __imp__RegisterClassExA@4  00401490     user32:USER32.dll
+ 0001:00000494       __imp__RegisterWindowMessageW@4 00401494     user32:USER32.dll
+ 0001:00000498       __imp__GetMenuItemID@8     00401498     user32:USER32.dll
+ 0001:0000049c       __imp__SetKeyboardState@4  0040149c     user32:USER32.dll
+ 0001:000004a0       __imp__RegisterClassA@4    004014a0     user32:USER32.dll
+ 0001:000004a4       __imp__GetKeyboardState@4  004014a4     user32:USER32.dll
+ 0001:000004a8       __imp__TranslateMessage@4  004014a8     user32:USER32.dll
+ 0001:000004ac       __imp__DispatchMessageW@4  004014ac     user32:USER32.dll
+ 0001:000004b0       __imp__GetWindow@8         004014b0     user32:USER32.dll
+ 0001:000004b4       __imp__SendMessageTimeoutW@28 004014b4     user32:USER32.dll
+ 0001:000004b8       __imp__SetWindowLongW@12   004014b8     user32:USER32.dll
+ 0001:000004bc       __imp__CharUpperW@4        004014bc     user32:USER32.dll
+ 0001:000004c0       __imp__ReleaseDC@8         004014c0     user32:USER32.dll
+ 0001:000004c4       __imp__PeekMessageW@20     004014c4     user32:USER32.dll
+ 0001:000004c8       __imp__GetCapture@0        004014c8     user32:USER32.dll
+ 0001:000004cc       \177USER32_NULL_THUNK_DATA 004014cc     user32:USER32.dll
+ 0001:000004d0       __imp__HttpAddRequestHeadersW@16 004014d0     wininet:WININET.dll
+ 0001:000004d4       __imp__InternetSetStatusCallbackW@8 004014d4     wininet:WININET.dll
+ 0001:000004d8       __imp__GetUrlCacheEntryInfoW@12 004014d8     wininet:WININET.dll
+ 0001:000004dc       __imp__HttpAddRequestHeadersA@16 004014dc     wininet:WININET.dll
+ 0001:000004e0       __imp__HttpSendRequestW@20 004014e0     wininet:WININET.dll
+ 0001:000004e4       __imp__InternetReadFileExA@16 004014e4     wininet:WININET.dll
+ 0001:000004e8       __imp__InternetQueryDataAvailable@16 004014e8     wininet:WININET.dll
+ 0001:000004ec       __imp__HttpSendRequestExW@20 004014ec     wininet:WININET.dll
+ 0001:000004f0       __imp__HttpSendRequestExA@20 004014f0     wininet:WININET.dll
+ 0001:000004f4       __imp__InternetQueryOptionA@16 004014f4     wininet:WININET.dll
+ 0001:000004f8       __imp__InternetCloseHandle@4 004014f8     wininet:WININET.dll
+ 0001:000004fc       __imp__InternetOpenA@20    004014fc     wininet:WININET.dll
+ 0001:00000500       __imp__HttpSendRequestA@20 00401500     wininet:WININET.dll
+ 0001:00000504       __imp__HttpOpenRequestA@32 00401504     wininet:WININET.dll
+ 0001:00000508       __imp__InternetSetOptionA@16 00401508     wininet:WININET.dll
+ 0001:0000050c       __imp__InternetReadFile@16 0040150c     wininet:WININET.dll
+ 0001:00000510       __imp__InternetCrackUrlA@16 00401510     wininet:WININET.dll
+ 0001:00000514       __imp__InternetQueryOptionW@16 00401514     wininet:WININET.dll
+ 0001:00000518       __imp__InternetConnectA@32 00401518     wininet:WININET.dll
+ 0001:0000051c       __imp__HttpQueryInfoA@20   0040151c     wininet:WININET.dll
+ 0001:00000520       \177WININET_NULL_THUNK_DATA 00401520     wininet:WININET.dll
+ 0001:00000524       __imp__WSASetLastError@4   00401524     ws2_32:WS2_32.dll
+ 0001:00000528       __imp__freeaddrinfo@4      00401528     ws2_32:WS2_32.dll
+ 0001:0000052c       __imp__socket@12           0040152c     ws2_32:WS2_32.dll
+ 0001:00000530       __imp__bind@12             00401530     ws2_32:WS2_32.dll
+ 0001:00000534       __imp__recv@16             00401534     ws2_32:WS2_32.dll
+ 0001:00000538       __imp__setsockopt@20       00401538     ws2_32:WS2_32.dll
+ 0001:0000053c       __imp__shutdown@8          0040153c     ws2_32:WS2_32.dll
+ 0001:00000540       __imp__getsockname@12      00401540     ws2_32:WS2_32.dll
+ 0001:00000544       __imp__getpeername@12      00401544     ws2_32:WS2_32.dll
+ 0001:00000548       __imp__recvfrom@24         00401548     ws2_32:WS2_32.dll
+ 0001:0000054c       __imp__sendto@24           0040154c     ws2_32:WS2_32.dll
+ 0001:00000550       __imp__WSASend@28          00401550     ws2_32:WS2_32.dll
+ 0001:00000554       __imp__WSAEventSelect@12   00401554     ws2_32:WS2_32.dll
+ 0001:00000558       __imp__WSAIoctl@36         00401558     ws2_32:WS2_32.dll
+ 0001:0000055c       __imp__connect@12          0040155c     ws2_32:WS2_32.dll
+ 0001:00000560       __imp__WSAAddressToStringW@20 00401560     ws2_32:WS2_32.dll
+ 0001:00000564       __imp__WSAStartup@8        00401564     ws2_32:WS2_32.dll
+ 0001:00000568       __imp__getaddrinfo@16      00401568     ws2_32:WS2_32.dll
+ 0001:0000056c       __imp__select@20           0040156c     ws2_32:WS2_32.dll
+ 0001:00000570       __imp__closesocket@4       00401570     ws2_32:WS2_32.dll
+ 0001:00000574       __imp__send@16             00401574     ws2_32:WS2_32.dll
+ 0001:00000578       __imp__listen@8            00401578     ws2_32:WS2_32.dll
+ 0001:0000057c       __imp__accept@12           0040157c     ws2_32:WS2_32.dll
+ 0001:00000580       __imp__WSAGetLastError@0   00401580     ws2_32:WS2_32.dll
+ 0001:00000584       \177WS2_32_NULL_THUNK_DATA 00401584     ws2_32:WS2_32.dll
+ 0001:00000588       __imp__StringFromGUID2@12  00401588     ole32:ole32.dll
+ 0001:0000058c       __imp__CLSIDFromString@8   0040158c     ole32:ole32.dll
+ 0001:00000590       __imp__CoUninitialize@0    00401590     ole32:ole32.dll
+ 0001:00000594       __imp__CoCreateInstance@20 00401594     ole32:ole32.dll
+ 0001:00000598       __imp__CoInitializeEx@8    00401598     ole32:ole32.dll
+ 0001:0000059c       \177ole32_NULL_THUNK_DATA  0040159c     ole32:ole32.dll
+ 0001:000005a0       _IID_IXMLDOMDocument       004015a0     msxml2:msxml2_i.obj
+ 0001:000005b0       _CLSID_DOMDocument30       004015b0     msxml2:msxml2_i.obj
+ 0001:000005c0       _IID_IContactManager       004015c0     uuid:i_icontact.obj
+ 0001:000005d0       _IID_IContactProperties    004015d0     uuid:i_icontact.obj
+ 0001:000005e0       _CLSID_ContactManager      004015e0     uuid:i_icontact.obj
+ 0001:000005f0       ??_C@_13FKHEONJA@?$CB?$JA?$AA?$AA@ 004015f0     userhook.obj
+ 0001:000005f4       ??_C@_13HOIJIPNN@?$AA?5?$AA?$AA@ 004015f4     userhook.obj
+ 0001:00001d88       ?baseConfigSource@@3QBDB   00402d88     coreinject.obj
+ 0001:000020b4       ??_C@_02PFEMMEEH@li?$AA@   004030b4     common.obj
+ 0001:000020b8       ??_C@_02MPGGCNAA@h6?$AA@   004030b8     common.obj
+ 0001:000020bc       ??_C@_02OEELHOMD@h5?$AA@   004030bc     common.obj
+ 0001:000020c0       ??_C@_02PNFAEPIC@h4?$AA@   004030c0     common.obj
+ 0001:000020c4       ??_C@_02LCBBNJEF@h3?$AA@   004030c4     common.obj
+ 0001:000020c8       ??_C@_02KLAKOIAE@h2?$AA@   004030c8     common.obj
+ 0001:000020cc       ??_C@_02IACHLLMH@h1?$AA@   004030cc     common.obj
+ 0001:000020d0       ??_C@_03FEJMGOGI@div?$AA@  004030d0     common.obj
+ 0001:000020d4       ??_C@_02FCNHEIMC@td?$AA@   004030d4     common.obj
+ 0001:000020d8       ??_C@_02EOEPPNBF@tr?$AA@   004030d8     common.obj
+ 0001:000020dc       ??_C@_02FLHDKHAB@hr?$AA@   004030dc     common.obj
+ 0001:000020e0       ??_C@_02FGOECCNH@br?$AA@   004030e0     common.obj
+ 0001:000020e4       ??_C@_03ENEOKCEM@?$CK?1?$CK?$AA@ 004030e4     common.obj
+ 0001:000020e8       ??_C@_11LOCGONAA@?$AA?$AA@ 004030e8     common.obj
+ 0001:00002144       ??_C@_1BK@MGMFAEKH@?$AAk?$AAe?$AAr?$AAn?$AAe?$AAl?$AA3?$AA2?$AA?4?$AAd?$AAl?$AAl?$AA?$AA@ 00403144     common.obj
+ 0001:00002160       ??_C@_0P@LKABJJMO@IsWow64Process?$AA@ 00403160     common.obj
+ 0001:00002170       ??_C@_19GBMGDAIM@?$AA?$CC?$AA?$CF?$AAs?$AA?$CC?$AA?$AA@ 00403170     common.obj
+ 0001:0000217c       ??_C@_1BA@FPNIFEJ@?$AA?$CC?$AA?$CF?$AAs?$AA?$CC?$AA?5?$AA?$CF?$AAs?$AA?$AA@ 0040317c     common.obj
+ 0001:0000218c       ??_C@_0M@GKFBEPIE@userenv?4dll?$AA@ 0040318c     common.obj
+ 0001:00002198       ??_C@_0BH@GHBGPPFN@CreateEnvironmentBlock?$AA@ 00403198     common.obj
+ 0001:000021b0       ??_C@_0BI@BBBEJNFI@DestroyEnvironmentBlock?$AA@ 004031b0     common.obj
+ 0001:000021c8       ??_C@_0CD@HHAGCEGC@?3d?$AN?6del?5?$CC?$CFs?$CC?$AN?6if?5exist?5?$CC?$CFs?$CC?5goto@ 004031c8     common.obj
+ 0001:000021ec       ??_C@_17CPOGGMGE@?$AAb?$AAa?$AAt?$AA?$AA@ 004031ec     common.obj
+ 0001:000021f4       ??_C@_0BN@LLKBMIM@?$EAecho?5off?$AN?6?$CFs?$AN?6del?5?1F?5?$CC?$CFs?$CC?$AN?6?$AA@ 004031f4     common.obj
+ 0001:00002214       ??_C@_1BA@BPKPHOOC@?$AA?1?$AAc?$AA?5?$AA?$CC?$AA?$CF?$AAs?$AA?$CC?$AA?$AA@ 00403214     common.obj
+ 0001:00002224       ??_C@_1BA@PHJPMKEE@?$AAC?$AAo?$AAm?$AAS?$AAp?$AAe?$AAc?$AA?$AA@ 00403224     common.obj
+ 0001:00002234       ??_C@_0DI@EJEIHEDB@Mozilla?14?40?5?$CIcompatible?$DL?5MSIE?57?4@ 00403234     common.obj
+ 0001:0000226c       ??_C@_08IJEMDJGI@HTTP?11?41?$AA@ 0040326c     common.obj
+ 0001:00002278       ??_C@_04HCJEIHPL@POST?$AA@ 00403278     common.obj
+ 0001:00002280       ??_C@_03HAPOJHBM@GET?$AA@  00403280     common.obj
+ 0001:00002284       ??_C@_0BE@OKJIGHFK@Connection?3?5close?$AN?6?$AA@ 00403284     common.obj
+ 0001:00002298       ??_C@_0L@BFDIJHCF@urlmon?4dll?$AA@ 00403298     common.obj
+ 0001:000022a4       ??_C@_0BG@NHELJKBN@ObtainUserAgentString?$AA@ 004032a4     common.obj
+ 0001:000022bc       ??_C@_17EKNKKPIB@?$AA0?$AA?3?$AA0?$AA?$AA@ 004032bc     common.obj
+ 0001:000022d4       ??_C@_1CI@OBHDBMNA@?$AAS?$AA?3?$AA?$CI?$AAM?$AAL?$AA?$DL?$AA?$DL?$AAN?$AAR?$AAN?$AAW?$AAN?$AAX?$AA?$DL?$AA?$DL?$AA?$DL?$AAL?$AAW?$AA?$CJ?$AA?$AA@ 004032d4     common.obj
+ 0001:000022fc       ??_C@_1CI@EODHFOHP@?$AAS?$AAe?$AAS?$AAe?$AAc?$AAu?$AAr?$AAi?$AAt?$AAy?$AAP?$AAr?$AAi?$AAv?$AAi?$AAl?$AAe?$AAg?$AAe?$AA?$AA@ 004032fc     common.obj
+ 0001:00002324       ??_C@_1DA@MNCIILKB@?$AAS?$AA?3?$AA?$CI?$AAM?$AAL?$AA?$DL?$AAC?$AAI?$AAO?$AAI?$AA?$DL?$AAN?$AAR?$AAN?$AAW?$AAN?$AAX?$AA?$DL?$AA?$DL?$AA?$DL?$AAL?$AAW?$AA?$CJ?$AA?$AA@ 00403324     common.obj
+ 0001:00002354       ??_C@_02FIGINHIK@?$DPO?$AA@ 00403354     common.obj
+ 0001:00002358       ??_C@_02ODCHAAM@?$DPI?$AA@ 00403358     common.obj
+ 0001:0000235c       ??_C@_02PBFOBMBA@?$DPT?$AA@ 0040335c     common.obj
+ 0001:00002360       ??_C@_17JGDOGELJ@?$AAc?$AAa?$AAb?$AA?$AA@ 00403360     common.obj
+ 0001:00002368       ??_C@_0M@KBACFEOA@cabinet?4dll?$AA@ 00403368     common.obj
+ 0001:00002374       ??_C@_09PECPPCHB@FCICreate?$AA@ 00403374     common.obj
+ 0001:00002380       ??_C@_0L@GMEIMLEP@FCIAddFile?$AA@ 00403380     common.obj
+ 0001:0000238c       ??_C@_0BA@JKDJLCFD@FCIFlushCabinet?$AA@ 0040338c     common.obj
+ 0001:0000239c       ??_C@_0L@CEMECEMA@FCIDestroy?$AA@ 0040339c     common.obj
+ 0001:000023c4       ??_C@_1BA@LJDFMAL@?$AAG?$AAl?$AAo?$AAb?$AAa?$AAl?$AA?2?$AA?$AA@ 004033c4     common.obj
+ 0001:000023d4       ??_C@_1O@MHLCHDPA@?$AAL?$AAo?$AAc?$AAa?$AAl?$AA?2?$AA?$AA@ 004033d4     common.obj
+ 0001:0000242c       ??_C@_06OLONEIEH@script?$AA@ 0040342c     common.obj
+ 0001:00002434       ??_C@_05IOPIJMEB@nbsp?$DL?$AA@ 00403434     common.obj
+ 0001:0000243c       ??_C@_06FFOGOLGD@Basic?5?$AA@ 0040343c     common.obj
+ 0001:00002444       ??_C@_17GNJCADOE@?$AAt?$AAm?$AAp?$AA?$AA@ 00403444     common.obj
+ 0001:0000244c       ??_C@_1BE@BBKOCBJG@?$AA?$CF?$AAs?$AA?$CF?$AA0?$AA8?$AAx?$AA?4?$AA?$CF?$AAs?$AA?$AA@ 0040344c     common.obj
+ 0001:00002460       ??_C@_1O@FOEMFFND@?$AA?$CF?$AAs?$AA?$CF?$AA0?$AA8?$AAx?$AA?$AA@ 00403460     common.obj
+ 0001:00002470       ??_C@_13BBDEGPLJ@?$AA?$CK?$AA?$AA@ 00403470     common.obj
+ 0001:00002474       ??_C@_19DOGDICKI@?$AA?4?$AAe?$AAx?$AAe?$AA?$AA@ 00403474     dynamicconfig.obj
+ 0001:00002480       ??_C@_15OLECOAGL@?$AA?9?$AAf?$AA?$AA@ 00403480     dynamicconfig.obj
+ 0001:00002488       ??_C@_1BO@DHGLBHEP@?$AAS?$AAe?$AAT?$AAc?$AAb?$AAP?$AAr?$AAi?$AAv?$AAi?$AAl?$AAe?$AAg?$AAe?$AA?$AA@ 00403488     coreinstall.obj
+ 0001:000024a8       ??_C@_1CG@BOFJOHGI@?$AAS?$AAO?$AAF?$AAT?$AAW?$AAA?$AAR?$AAE?$AA?2?$AAM?$AAi?$AAc?$AAr?$AAo?$AAs?$AAo?$AAf?$AAt?$AA?$AA@ 004034a8     coreinstall.obj
+ 0001:000024d0       ??_C@_15ELPOAHMG@?$AAM?$AAY?$AA?$AA@ 004034d0     certstorehook.obj
+ 0001:000024d8       ??_C@_19GGNHIDOH@?$AA?4?$AAt?$AAx?$AAt?$AA?$AA@ 004034d8     certstorehook.obj
+ 0001:000024e4       ??_C@_1BM@FEGPDFAG@?$AAS?$AAy?$AAs?$AAL?$AAi?$AAs?$AAt?$AAV?$AAi?$AAe?$AAw?$AA3?$AA2?$AA?$AA@ 004034e4     vncserver.obj
+ 0001:00002500       ??_C@_1BE@ECHJLGKM@?$AAM?$AAD?$AAI?$AAC?$AAl?$AAi?$AAe?$AAn?$AAt?$AA?$AA@ 00403500     vncserver.obj
+ 0001:00002514       ??_C@_1CC@KDCMKNFH@?$AAC?$AAi?$AAc?$AAe?$AAr?$AAo?$AAU?$AAI?$AAW?$AAn?$AAd?$AAF?$AAr?$AAa?$AAm?$AAe?$AA?$AA@ 00403514     vncserver.obj
+ 0001:00002538       ??_C@_1CG@FFFCCLIF@?$AAC?$AAo?$AAn?$AAs?$AAo?$AAl?$AAe?$AAW?$AAi?$AAn?$AAd?$AAo?$AAw?$AAC?$AAl?$AAa?$AAs?$AAs?$AA?$AA@ 00403538     vncserver.obj
+ 0001:00002560       ??_C@_1O@PIEEADFA@?$AA?$CD?$AA3?$AA2?$AA7?$AA6?$AA8?$AA?$AA@ 00403560     vncserver.obj
+ 0001:00002570       ??_C@_1BE@FNICLJNA@?$AAS?$AAy?$AAs?$AAS?$AAh?$AAa?$AAd?$AAo?$AAw?$AA?$AA@ 00403570     vncserver.obj
+ 0001:00002584       ??_C@_05DJCKAPIL@FIXME?$AA@ 00403584     vncserver.obj
+ 0001:0000258c       ??_C@_1BE@CNIDEFBA@?$AAn?$AAs?$AAp?$AAr?$AA4?$AA?4?$AAd?$AAl?$AAl?$AA?$AA@ 0040358c     winapitables.obj
+ 0001:000025a0       ??_C@_0BB@CIMGMNPD@PR_OpenTCPSocket?$AA@ 004035a0     winapitables.obj
+ 0001:000025b4       ??_C@_08FBEMILPC@PR_Close?$AA@ 004035b4     winapitables.obj
+ 0001:000025c0       ??_C@_07IAMGAFMC@PR_Read?$AA@ 004035c0     winapitables.obj
+ 0001:000025c8       ??_C@_08DGPPKLMF@PR_Write?$AA@ 004035c8     winapitables.obj
+ 0001:000025e4       ??_C@_0M@BDCOGHAL@gdiplus?4dll?$AA@ 004035e4     screenshot.obj
+ 0001:000025f0       ??_C@_0P@NIGHOHPH@GdiplusStartup?$AA@ 004035f0     screenshot.obj
+ 0001:00002600       ??_C@_0BA@OMKIAPCJ@GdiplusShutdown?$AA@ 00403600     screenshot.obj
+ 0001:00002610       ??_C@_0BM@FOHIHKFL@GdipCreateBitmapFromHBITMAP?$AA@ 00403610     screenshot.obj
+ 0001:0000262c       ??_C@_0BB@MGCHKKMH@GdipDisposeImage?$AA@ 0040362c     screenshot.obj
+ 0001:00002640       ??_C@_0BJ@FHLOKKGN@GdipGetImageEncodersSize?$AA@ 00403640     screenshot.obj
+ 0001:0000265c       ??_C@_0BF@PGAMAOCJ@GdipGetImageEncoders?$AA@ 0040365c     screenshot.obj
+ 0001:00002674       ??_C@_0BG@LIPDAPJN@GdipSaveImageToStream?$AA@ 00403674     screenshot.obj
+ 0001:0000268c       ??_C@_09IMMMOKKM@ole32?4dll?$AA@ 0040368c     screenshot.obj
+ 0001:00002698       ??_C@_0BG@DNLLFOBD@CreateStreamOnHGlobal?$AA@ 00403698     screenshot.obj
+ 0001:000026b0       ??_C@_09HDGMBNAP@gdi32?4dll?$AA@ 004036b0     screenshot.obj
+ 0001:000026bc       ??_C@_09FAFGKJHN@CreateDCW?$AA@ 004036bc     screenshot.obj
+ 0001:000026c8       ??_C@_0BD@GAEMADDD@CreateCompatibleDC?$AA@ 004036c8     screenshot.obj
+ 0001:000026dc       ??_C@_0BH@JHHFCKBN@CreateCompatibleBitmap?$AA@ 004036dc     screenshot.obj
+ 0001:000026f4       ??_C@_0O@NKPJEFC@GetDeviceCaps?$AA@ 004036f4     screenshot.obj
+ 0001:00002704       ??_C@_0N@PNAJBKIN@SelectObject?$AA@ 00403704     screenshot.obj
+ 0001:00002714       ??_C@_06KJCNECEM@BitBlt?$AA@ 00403714     screenshot.obj
+ 0001:0000271c       ??_C@_0N@EMMNKEAC@DeleteObject?$AA@ 0040371c     screenshot.obj
+ 0001:0000272c       ??_C@_08LKMBNHBJ@DeleteDC?$AA@ 0040372c     screenshot.obj
+ 0001:00002738       ??_C@_1BA@PICGEGJB@?$AAD?$AAI?$AAS?$AAP?$AAL?$AAA?$AAY?$AA?$AA@ 00403738     screenshot.obj
+ 0001:00002748       ??_C@_09HHKKFMAD@?N?U?F?O?H?$IL?B?K?D?$AA@ 00403748     cryptedstrings.obj
+ 0001:00002754       ??_C@_0M@LECGJIOD@?h?A?T?U?$MA?G?F?$OA?B?T?x?$AA@ 00403754     cryptedstrings.obj
+ 0001:00002760       ??_C@_0L@IGNPNFN@?$AC?$AF?$BA?$AG?$EA?$EA_?$BE?$BD?$BC?$AA@ 00403760     cryptedstrings.obj
+ 0001:0000276c       ??_C@_0CA@PPGEPPIE@?$PO?$NN?O?$PO?X?Z?$NO?K?$NN?D?f?A?P?F?g?D?F?N?B?F?H?h?F?$NM?D?C?W?M?W?$NN?p?$AA@ 0040376c     cryptedstrings.obj
+ 0001:0000278c       ??_C@_0M@DNLDCFCP@?$BF?$BC?$AH?$BB?$AB?$AL?$BAI?$AM?$AF?$AG?$AA@ 0040378c     cryptedstrings.obj
+ 0001:00002798       ??_C@_0BC@DBHELHCO@?f?d?$OA?c?$MA?Q?E?O?l?K?$NO?H?i?S?T?$NL?O?$AA@ 00403798     cryptedstrings.obj
+ 0001:000027ac       ??_C@_0O@EODPBIOG@?j?h?l?x?K?$NN?$NO?w?P?Y?X?D?H?$AA@ 004037ac     cryptedstrings.obj
+ 0001:000027bc       ??_C@_0BG@EANBPDLM@NLH_sir?$HLcqgwFqde?$GAgeyZ?$AA@ 004037bc     cryptedstrings.obj
+ 0001:000027d4       ??_C@_0N@JLGGIHMN@?$KO?$KM?$KI?$LL?$KN?$LF?l?l?$PP?$LE?$LP?$LO?$AA@ 004037d4     cryptedstrings.obj
+ 0001:000027e4       ??_C@_07GLKFKEIG@YCEAG?$FOD?$AA@ 004037e4     cryptedstrings.obj
+ 0001:000027ec       ??_C@_0M@BPFKOABA@?$LC?$LE?$KC?$LG?$LM?$IO?$LH?$KB?$KO?$LC?$KM?$AA@ 004037ec     cryptedstrings.obj
+ 0001:000027f8       ??_C@_0M@CCEECKN@j?$DN?$BCi?$HLr?$BBmw?$HO?$BN?$AA@ 004037f8     cryptedstrings.obj
+ 0001:00002804       ??_C@_0BB@KMEAANO@?1?$AD?$AO?$AB?$BL?$AP?$AB?$DM?$BB?$AN?$AF?$BF?$AE?$BC?0?$AA?$AA@ 00403804     cryptedstrings.obj
+ 0001:00002818       ??_C@_0M@BEGJOPPI@mKUSAMNgMYK?$AA@ 00403818     cryptedstrings.obj
+ 0001:00002824       ??_C@_0CN@PHNELEEK@?$LI?$KF?$KP?$LM?$LI?$KP?$LP?$KJ?$LP?$KP?$II?$ID?$JF?$IJ?$JG?$IL?$JN?$IO?$KF?$KP?$JG?$JA?$JJ?$JD?$IE?$IB?Q?$LO?$KD?$KK?$LG?$IB@ 00403824     cryptedstrings.obj
+ 0001:00002854       ??_C@_0BB@MFKOCLHI@?$DN1?$CJ?255?9X4$?0$?875Q?$AA@ 00403854     cryptedstrings.obj
+ 0001:00002868       ??_C@_0BI@GAADHPPP@?$JC?L?c?w?x?$JJ?O?I?$IP?D?k?$PP?p?$JB?G?A?$IE?$IG?$NP?r?$OA?i?$IK?$AA@ 00403868     cryptedstrings.obj
+ 0001:00002880       ??_C@_0N@NOCOIPFC@?00?$DL?$CG?$CC?$DO?$CK?$DMo?$CF?$DL?8?$AA@ 00403880     cryptedstrings.obj
+ 0001:00002890       ??_C@_0M@DHENABME@?r?e?r?$OA?h?l?v?$KJ?m?q?o?$AA@ 00403890     cryptedstrings.obj
+ 0001:0000289c       ??_C@_0L@MHNMBLLF@?$LD?$KF?$LE?$LO?$LL?$LL?x?$LC?$KA?$LM?$AA@ 0040389c     cryptedstrings.obj
+ 0001:000028a8       ??_C@_0M@KNDFLNIB@?$AA?$AF?$BG?$BK?$AH?$BE?$AI?$FO?$BK?$AG?$BI?$AA@ 004038a8     cryptedstrings.obj
+ 0001:000028b4       ??_C@_0M@BGGEBMIN@?$PM?h?y?$OA?i?c?i?$KB?e?y?g?$AA@ 004038b4     cryptedstrings.obj
+ 0001:000028c0       ??_C@_0N@JDIHMKLG@?$JH?$ID?$JC?$IL?$IP?$IJ?$JG?$JA?E?$IP?$JB?$IN?$AA@ 004038c0     cryptedstrings.obj
+ 0001:000028d0       ??_C@_07HNEEGHBC@?$IA?$JC?$IL?I?$IF?$JJ?$IH?$AA@ 004038d0     cryptedstrings.obj
+ 0001:000028d8       ??_C@_07LEHNPCBK@?U?U?U?S?$MA?X?C?$AA@ 004038d8     cryptedstrings.obj
+ 0001:000028e0       ??_C@_07JHKHNEJI@vIMQQE?$BH?$AA@ 004038e0     cryptedstrings.obj
+ 0001:000028e8       ??_C@_03IFCPJIAJ@x?$HN?$BL?$AA@ 004038e8     cryptedstrings.obj
+ 0001:000028ec       ??_C@_0BM@EMMHMHLH@?$CJ?$BD?$BF?$BB?$BH?$AO?$BE?$FL?$BH?$BK?$BL?$BK?$BB?$BP?$BGS?$AN?$BJN?$AD?$AB?$AH?$APKA?$BAH?$AA@ 004038ec     cryptedstrings.obj
+ 0001:00002908       ??_C@_0CG@PAFGLCGG@Ljaekk?0ym?$CDeycdqq?$HP?$DL?$HLvsr?$HNsv3qe6?$HL?$HN?$HL@ 00403908     cryptedstrings.obj
+ 0001:00002930       ??_C@_0CE@EPAIAEII@?Y?$PP?t?p?$PO?$PO?$LJ?l?x?$LG?f?u?e?w?$LB?$PM?$OA?m?l?$OA?$KL?i?f?f?a?o?b?q?q?c?u?i@ 00403930     cryptedstrings.obj
+ 0001:00002954       ??_C@_0CE@DDJKLDBI@?$NN?$PL?p?t?z?z?$LN?h?$PM?$LC?$PN?$PP?v?r?$LF?x?d?i?h?d?$KP?m?b?b?e?k?f?u?u?g?q?m@ 00403954     cryptedstrings.obj
+ 0001:00002978       ??_C@_0BJ@FEODEGLF@?0?$BN?$AP?$BF?$AL?$AOY?$BJ?$BL?$AE?$BA?$BF?$BH?$ALQ?$BF?$BH?$AL?$AO?$BJ?$BP?$AP?$ANF?$AA@ 00403978     cryptedstrings.obj
+ 0001:00002994       ??_C@_0BD@EFKKJKPF@Vvn?$DLysqjwy2?$HOqxyeq?8?$AA@ 00403994     cryptedstrings.obj
+ 0001:000029a8       ??_C@_0BI@DJDLLGCO@?$CI?1?3?0?$AG?$DO7?$DL?$CG?$DM?8?30?$CJ6?5?$BC?$DO?$CK?$CD?$CG?$DO?4?$AA@ 004039a8     cryptedstrings.obj
+ 0001:000029c0       ??_C@_0BF@KIJBALF@Z?$FNH?$FOtLEITNUHB?$FLDR?$GAYXH?$AA@ 004039c0     cryptedstrings.obj
+ 0001:000029d8       ??_C@_0BG@EMNHBBEK@?$JK?$JN?$II?$JO?$LE?$IP?$IE?$IJ?$IO?$IK?$IG?$II?$IK?$IH?$IP?$JE?$IM?$KB?$JK?$JJ?$IP?$AA@ 004039d8     cryptedstrings.obj
+ 0001:000029f0       ??_C@_0BE@KCJMMBHC@?$IN?$IK?$JP?$IJ?$KD?$JL?$IK?$IP?$JD?$JN?$JL?$JG?$JK?$IB?$IF?$KI?$IP?$IM?$JO?$AA@ 004039f0     cryptedstrings.obj
+ 0001:00002a04       ??_C@_0BC@EFIFCNG@?$GAgrdNx?$HM?$HPxl?$HOy?$HMGh?$HPq?$AA@ 00403a04     cryptedstrings.obj
+ 0001:00002a18       ??_C@_0BB@MHFDFMMN@?$JC?$JF?$IA?$JG?$LM?$JH?$JD?$IM?$LA?$JL?$ID?$IO?$IH?$IF?$IK?$ID?$AA@ 00403a18     cryptedstrings.obj
+ 0001:00002a2c       ??_C@_0P@MOODANMK@?B?E?P?F?l?G?C?$NM?$OA?$NM?Q?S?X?Q?$AA@ 00403a2c     cryptedstrings.obj
+ 0001:00002a3c       ??_C@_0BC@JLPNCGEF@EBWAkVSELJeIYPQIE?$AA@ 00403a3c     cryptedstrings.obj
+ 0001:00002a50       ??_C@_0P@JIJDLOAJ@?9?$CK?$DP?$CJ?$AD?$DO?$DL?9$?$CC?$AN41?$CB?$AA@ 00403a50     cryptedstrings.obj
+ 0001:00002a60       ??_C@_0BE@CIIBIEMP@34?$CB7?$BN?5?1?4?$CF?$CG?$CJ?$DO?$BF9?9$9?$CB1?$AA@ 00403a60     cryptedstrings.obj
+ 0001:00002a74       ??_C@_0BB@DIDFFCOH@?$AI?$AP?$BK?$AM?$CG?$BL?$BE?$BF?$BO?$BN?$BC?$AF?4?$BH?$BG?$AG?$AA@ 00403a74     cryptedstrings.obj
+ 0001:00002a88       ??_C@_0N@CMHBPOFH@?7?$AO?$BL?$AN?8?$BM?$AC?$BO?$BH?$AA?$AC?$BC?$AA@ 00403a88     cryptedstrings.obj
+ 0001:00002a98       ??_C@_0M@KLIAKLLD@?$LJ?$LO?$KL?$LN?$JH?$KF?$KF?$KM?$KL?$KD?$KA?$AA@ 00403a98     cryptedstrings.obj
+ 0001:00002aa4       ??_C@_0N@KAKKCOII@?$NL?$NM?I?$NP?u?O?M?Z?R?U?K?$NM?$AA@ 00403aa4     cryptedstrings.obj
+ 0001:00002ab4       ??_C@_0BB@NCMAMGOD@?$LC?$KG?$IJ?$KE?$LF?$LA?$KA?$LA?$LE?$IC?$KM?$LK?$LF?$LG?$KM?$LO?$AA@ 00403ab4     cryptedstrings.obj
+ 0001:00002ac8       ??_C@_0O@BOHDMBAA@?$FOJeHY?2L?2XnSWP?$AA@ 00403ac8     cryptedstrings.obj
+ 0001:00002ad8       ??_C@_0M@OBPFAKKH@?u?a?N?$OA?v?b?$PN?K?$PM?$PP?m?$AA@ 00403ad8     cryptedstrings.obj
+ 0001:00002ae4       ??_C@_0BG@JMPANHCA@amu_orqtbdcmlzRi?$HNss?$HMr?$AA@ 00403ae4     cryptedstrings.obj
+ 0001:00002afc       ??_C@_0BH@OIMJCAEO@?$CF?$CJ1?$BL?$CL650?$CG?5?8?$CJ?$CI?$DO?$BG?0?$DO?$CF46?$DP7?$AA@ 00403afc     cryptedstrings.obj
+ 0001:00002b14       ??_C@_0O@KECKFJAF@?$OA?l?t?$NO?d?d?$NL?w?o?f?g?$PP?k?$AA@ 00403b14     cryptedstrings.obj
+ 0001:00002b24       ??_C@_0L@KBCHNOGI@7?$DL?$CD?733?$AM398?$AA@ 00403b24     cryptedstrings.obj
+ 0001:00002b30       ??_C@_0L@PPNBBINM@q?$HNeObfquo?$HP?$AA@ 00403b30     cryptedstrings.obj
+ 0001:00002b3c       ??_C@_0O@NNOLOEOH@?o?c?$PL?Q?$PM?f?b?d?v?p?f?j?m?$AA@ 00403b3c     cryptedstrings.obj
+ 0001:00002b4c       ??_C@_09FLKPCDAN@?$IF?$JI?$LH?$JL?$IL?$IN?$ID?$IC?$JG?$AA@ 00403b4c     cryptedstrings.obj
+ 0001:00002b58       ??_C@_0M@MBFBNGDB@?$IJ?$JE?$LL?$JG?$IK?$JG?$JE?$IF?$IB?$JI?$IC?$AA@ 00403b58     cryptedstrings.obj
+ 0001:00002b64       ??_C@_07BPBDHJPN@?$CI?$DM?0?4?$CJ?1?9?$AA@ 00403b64     cryptedstrings.obj
+ 0001:00002b6c       ??_C@_0BP@ELJMHMB@?$AA?$AH?$BD?$BE?$BE?3?$EA?$BH7O?$BK7J?$FO_?$BJ?0WAB?$AC?$CJPDO?$APW?$AI?$BJ?$AG?$AA@ 00403b6c     cryptedstrings.obj
+ 0001:00002b8c       ??_C@_04MDEOHPFH@?$KC?$LC?$KD?$KC?$AA@ 00403b8c     cryptedstrings.obj
+ 0001:00002b94       ??_C@_0N@CLINN@?Q?V?C?U?I?O?K?W?$IC?H?V?J?$AA@ 00403b94     cryptedstrings.obj
+ 0001:00002ba4       ??_C@_08GMLBOCHG@kT?$FLIH?$HLjo?$AA@ 00403ba4     cryptedstrings.obj
+ 0001:00002bb0       ??_C@_06LKFJFPOK@?Q?Y?Y?P?V?$MA?$AA@ 00403bb0     cryptedstrings.obj
+ 0001:00002bb8       ??_C@_0CN@JGKIKOP@?$LM?$KB?$KL?$LI?$LM?$KL?$LL?$KN?$LL?$JF?$II?$IF?$JB?$JG?$IH?$JE?$IP?$KC?$JO?$JA?$JC?$JP?$JH?$IM?W?D?$NL?D?$KP?$IB?$JE?$IE@ 00403bb8     cryptedstrings.obj
+ 0001:00002be8       ??_C@_0BD@HMHPHHGI@?$AI?$BM?$AI?$AI?$BD?$BD?$BP?$BDP?$BH?$BD?$AF?$BL?$AH?$BP?$AD?$AN?$BK?$AA@ 00403be8     cryptedstrings.obj
+ 0001:00002bfc       ??_C@_0DI@BGBPPJAB@?b?$PP?u?f?b?u?e?s?e?K?V?$NL?O?H?Y?J?Q?$PM?$MA?N?L?A?I?R?$IJ?$JK?$IF?$JK?q?$NP?J?Z@ 00403bfc     cryptedstrings.obj
+ 0001:00002c34       ??_C@_08PBMIPBGA@?$DO?$AO?$BP?$BO?$BN?$AE?$BK?$AN?$AA@ 00403c34     cryptedstrings.obj
+ 0001:00002c40       ??_C@_04PLFCLODL@?$BL?$DM?$CJ?$DP?$AA@ 00403c40     cryptedstrings.obj
+ 0001:00002c48       ??_C@_04LKMENAID@?Z?d?z?$PN?$AA@ 00403c48     cryptedstrings.obj
+ 0001:00002c50       ??_C@_04FKLNGFHC@sUJL?$AA@ 00403c50     cryptedstrings.obj
+ 0001:00002c58       ??_C@_0N@HABPICFC@?Q?w?c?$PL?a?$PL?e?u?V?j?x?q?$AA@ 00403c58     cryptedstrings.obj
+ 0001:00002c68       ??_C@_05KLCDKAOB@?$KA?$KF?p?d?b?$AA@ 00403c68     cryptedstrings.obj
+ 0001:00002c70       ??_C@_07IODJOEFA@yTJ?2xkl?$AA@ 00403c70     cryptedstrings.obj
+ 0001:00002c78       ??_C@_02NCNAGHKL@?$LM?$LK?$AA@ 00403c78     cryptedstrings.obj
+ 0001:00002c7c       ??_C@_04JHHMCJNF@?$CF?$CC7?$CB?$AA@ 00403c7c     cryptedstrings.obj
+ 0001:00002c84       ??_C@_04LBJIOPAI@fxfa?$AA@ 00403c84     cryptedstrings.obj
+ 0001:00002c8c       ??_C@_04KHOCKFLE@?$AH?$AB?$BO?$BI?$AA@ 00403c8c     cryptedstrings.obj
+ 0001:00002c94       ??_C@_0BP@KAGFMPKG@?3?8?9?$DO?3?9?$DN?$CL?$DN?$AG?$BH?$BC?$BC?$AF?$BF?$AD?$CF?$BL?$BE?$AI?$BI?$BK?$AL?$AO?9?$AD?$BK?$AG?$BA?$AH?$AA@ 00403c94     cryptedstrings.obj
+ 0001:00002cb4       ??_C@_0O@KIONDBH@?$JB?$IC?$IF?t?$JA?$LN?$LM?$LN?$LO?$LA?$LJ?$LJ?$KJ?$AA@ 00403cb4     cryptedstrings.obj
+ 0001:00002cc4       ??_C@_0P@ELLDINHJ@?$LF?$KG?$KB?z?$LE?$LJ?$LI?$LJ?$LK?$LE?$LN?$LN?$KN?t?$AA@ 00403cc4     cryptedstrings.obj
+ 0001:00002cd4       ??_C@_0L@BGHDDLOC@Z?$BA?$AC?$BB?$BG?$BD?$AI?$BE?$ANU?$AA@ 00403cd4     cryptedstrings.obj
+ 0001:00002ce0       ??_C@_06KDOBLHFN@V?$BJ?$BM?$AL?$BLU?$AA@ 00403ce0     cryptedstrings.obj
+ 0001:00002ce8       ??_C@_06LANHHHEG@?t?$LO?$KC?$LO?$LP?w?$AA@ 00403ce8     cryptedstrings.obj
+ 0001:00002cf0       ??_C@_08DPDCMIOM@?$KB?h?$PN?k?h?z?n?$KA?$AA@ 00403cf0     cryptedstrings.obj
+ 0001:00002cfc       ??_C@_0M@LNIAEBCD@cpwjhsw?0yt?$HL?$AA@ 00403cfc     cryptedstrings.obj
+ 0001:00002d08       ??_C@_06OOBFFMAD@?762?$AO?$BJ?$AL?$AA@ 00403d08     cryptedstrings.obj
+ 0001:00002d10       ??_C@_08IOOMCLE@VFWVULRE?$AA@ 00403d10     cryptedstrings.obj
+ 0001:00002d1c       ??_C@_08EBGJIFKF@?r?u?$OA?v?m?c?l?e?$AA@ 00403d1c     cryptedstrings.obj
+ 0001:00002d28       ??_C@_0L@LGBNLKG@1?116?$CL1?$CK$?0?3?$AA@ 00403d28     cryptedstrings.obj
+ 0001:00002d34       ??_C@_08DIOLBGFL@db?$HN?$HLfhgn?$AA@ 00403d34     cryptedstrings.obj
+ 0001:00002d40       ??_C@_0CK@CBMNEAE@?$FOCIZ?$FOIYOYiftuim?$CCmnvukawFb?$HNyer?$GA3?5@ 00403d40     cryptedstrings.obj
+ 0001:00002d6c       ??_C@_0M@HBPJJEFB@ECS?5jgkelo?$HL?$AA@ 00403d6c     cryptedstrings.obj
+ 0001:00002d78       ??_C@_08FMDCFEBG@zj?$HLzy?$GA?$HOi?$AA@ 00403d78     cryptedstrings.obj
+ 0001:00002d84       ??_C@_04EDKOEOLL@?$JD?$JE?$IB?$JH?$AA@ 00403d84     cryptedstrings.obj
+ 0001:00002d8c       ??_C@_08BANAHPID@?$KM?$KL?$LO?$KI?$LD?$LN?$LC?$LL?$AA@ 00403d8c     cryptedstrings.obj
+ 0001:00002d98       ??_C@_08MMOICBCD@?W?Q?N?H?U?$NL?T?$NN?$AA@ 00403d98     cryptedstrings.obj
+ 0001:00002da4       ??_C@_0CA@LFFCJHOA@?$PN?$OA?j?y?$PN?j?z?l?z?a?E?W?$JA?$PP?p?M?K?X?U?S?I?g?$NO?M?F?k?$NM?Z?A?G?C?$AA@ 00403da4     cryptedstrings.obj
+ 0001:00002dc4       ??_C@_0BP@KLFEGDDF@?$DN?5?$CK9?$DN?$CK?3?0?3?$CB?$AF?$BH?$DO3?$AM?$BE?$BJ?$BG?$BC?$AO?$CG?$BN?$AM?7?$CK?$BP?$BL?$AG?$AG?$AA?$AA@ 00403dc4     cryptedstrings.obj
+ 0001:00002de4       ??_C@_09HPKOMKNO@lBDLtF?$EAAC?$AA@ 00403de4     cryptedstrings.obj
+ 0001:00002df0       ??_C@_0M@NFDMPHPL@?$JC?$NP?S?W?Y?G?W?S?$NM?P?$JI?$AA@ 00403df0     cryptedstrings.obj
+ 0001:00002dfc       ??_C@_04BNKPPOOL@?3?6?$BL?$BK?$AA@ 00403dfc     cryptedstrings.obj
+ 0001:00002e04       ??_C@_04GOAPNHGK@hOZL?$AA@ 00403e04     cryptedstrings.obj
+ 0001:00002e0c       ??_C@_04NBMCDKGN@?$BD?934?$AA@ 00403e0c     cryptedstrings.obj
+ 0001:00002e14       ??_C@_04HMEAMDCI@4?$BC?$AN?$AL?$AA@ 00403e14     cryptedstrings.obj
+ 0001:00002e1c       ??_C@_0M@MADBMMGA@37157J?$HPibpd?$AA@ 00403e1c     cryptedstrings.obj
+ 0001:00002e28       ??_C@_05JBOHGODB@KN?$BL?$AP?7?$AA@ 00403e28     cryptedstrings.obj
+ 0001:00002e30       ??_C@_06ENLBJDIO@?$KI?$KN?$KC?$LK?$KP?$KK?$AA@ 00403e30     cryptedstrings.obj
+ 0001:00002e38       ??_C@_0L@PPEMHHNF@t6?0?4?92?0?3?$DO?$HN?$AA@ 00403e38     cryptedstrings.obj
+ 0001:00002e44       ??_C@_07LIOIEFMG@?$GAdrfdhp?$AA@ 00403e44     cryptedstrings.obj
+ 0001:00002e4c       ??_C@_0BJ@JBKNMLMD@jw?$HNnj?$HNm?$HLmYCAB?$FNCUAt?2YrJ?$FL?$FO?$AA@ 00403e4c     cryptedstrings.obj
+ 0001:00002e68       ??_C@_03DCCAHKKO@LJZ?$AA@  00403e68     cryptedstrings.obj
+ 0001:00002e6c       ??_C@_03PHDJCGPE@uhf?$AA@  00403e6c     cryptedstrings.obj
+ 0001:00002e70       ??_C@_04EPMDGMLH@?$NM?B?$NM?$NL?$AA@ 00403e70     cryptedstrings.obj
+ 0001:00002e78       ??_C@_04NFGDBDBF@?J?L?S?U?$AA@ 00403e78     cryptedstrings.obj
+ 0001:00002e80       ??_C@_08DEMAEJF@B?$HPpp?$HPq?$HME?$AA@ 00403e80     cryptedstrings.obj
+ 0001:00002e8c       ??_C@_0L@IHONIF@?$LB?$LE?$JL?$KD?$LG?$LD?n?$KI?$KA?$KG?$AA@ 00403e8c     cryptedstrings.obj
+ 0001:00002e98       ??_C@_0BA@ODHJOMFO@?$JL?$KB?$LJ?$KN?$KH?j?$IK?$KH?$KK?$KL?$KE?$KK?$KH?$KH?$LD?$AA@ 00403e98     cryptedstrings.obj
+ 0001:00002ea8       ??_C@_09DPFMGPDC@?$JP?S?$NP?$NP?B?$NM?V?$MA?$JH?$AA@ 00403ea8     cryptedstrings.obj
+ 0001:00002eb4       ??_C@_0BC@HJBOIMIO@?$DMc?$HLas?$HP?3rqrq?$HMt?$HP?$HNk?0?$AA@ 00403eb4     cryptedstrings.obj
+ 0001:00002ec8       ??_C@_0L@DEHEGCCE@?$BHHPJXTXWQ?$BO?$AA@ 00403ec8     cryptedstrings.obj
+ 0001:00002ed4       ??_C@_0L@GGNCPKE@?$BL?$BN?$AD?$AF?$BH?$BL?$BI?$BB?$BD?7?$AA@ 00403ed4     cryptedstrings.obj
+ 0001:00002ee0       ??_C@_0L@CBOFGDIP@5?$CG?$CB99?$DP?$DL56?$DP?$AA@ 00403ee0     cryptedstrings.obj
+ 0001:00002eec       ??_C@_0CB@BJDKCENE@?$KG?$LL?$LB?$KC?$KG?$LB?$KB?$LH?$KB?$LL?$JH?$JH?$IK?$JE?$JO?$II?$LJ?$LA?$II?$JC?$IA?$IM?C?$KB?$IC?$IB?$IC?$IP?$IH?$IM?$IO?$JI@ 00403eec     cryptedstrings.obj
+ 0001:00002f10       ??_C@_08NJCMALBB@eudef?$HPav?$AA@ 00403f10     cryptedstrings.obj
+ 0001:00002f1c       ??_C@_08DNGJOOBE@?q?v?c?u?n?$OA?o?f?$AA@ 00403f1c     cryptedstrings.obj
+ 0001:00002f28       ??_C@_04MPAAFKIN@?Y?$NP?$MA?F?$AA@ 00403f28     cryptedstrings.obj
+ 0001:00002f30       ??_C@_07ILCKJNDL@?$NN?$NN?$NN?$NL?H?P?K?$AA@ 00403f30     cryptedstrings.obj
+ 0001:00002f38       ??_C@_0M@CKNEFPLL@?$KM?$KB?$KD?$KC?$KO?$KJ?$LN?$KB?$KI?$KI?$LG?$AA@ 00403f38     cryptedstrings.obj
+ 0001:00002f44       ??_C@_0M@KLOHPJEM@?$DN?$CI0?$BG?$CI?$DL?$DMc?$CL?9?$CJ?$AA@ 00403f44     cryptedstrings.obj
+ 0001:00002f50       ??_C@_08HFEJFCNM@_tziuZGN?$AA@ 00403f50     cryptedstrings.obj
+ 0001:00002f5c       ??_C@_0L@MNMIKHJL@?U?$JI?$JB?$JN?$II?$JC?$JP?$IA?$IH?$NM?$AA@ 00403f5c     cryptedstrings.obj
+ 0001:00002f68       ??_C@_0L@ECPFGAIA@koymmeelbt?$AA@ 00403f68     cryptedstrings.obj
+ 0001:00002f74       ??_C@_0BE@MKEPIFGF@?$NO?C?I?Z?$NO?I?Y?O?Y?B?k?g?r?h?E?Z?M?$MA?$KM?$AA@ 00403f74     cryptedstrings.obj
+ 0001:00002f88       ??_C@_04FEJINKII@TDUT?$AA@ 00403f88     cryptedstrings.obj
+ 0001:00002f90       ??_C@_04HCCLDKKL@?$BO?$BJ?$AM?$BK?$AA@ 00403f90     cryptedstrings.obj
+ 0001:00002f98       ??_C@_04FNPIFJNN@?$LN?$KD?$LN?$LK?$AA@ 00403f98     cryptedstrings.obj
+ 0001:00002fa0       ??_C@_02DHFBMJJA@?K?S?$AA@ 00403fa0     cryptedstrings.obj
+ 0001:00002fa4       ??_C@_0M@FLHCKNPL@33?$CK?00?0$r73?$CF?$AA@ 00403fa4     cryptedstrings.obj
+ 0001:00002fb0       ??_C@_09IJBAFGHN@?w?r?m?f?i?$KN?d?$OA?z?$AA@ 00403fb0     cryptedstrings.obj
+ 0001:00002fbc       ??_C@_09POJDALPC@?M?V?H?X?I?$JF?$NM?X?B?$AA@ 00403fbc     cryptedstrings.obj
+ 0001:00002fc8       ??_C@_0BN@JEGCOKHM@?L?u?$IE?$IA?K?q?$IH?$IK?Y?y?W?X?K?N?$NM?R?b?v?$MA?$JD?$JG?H?$JG?w?A?h?Y?$JN?$AA@ 00403fc8     cryptedstrings.obj
+ 0001:00002fe8       ??_C@_0BD@LFOGIGHJ@?$CK9?$DOugfo?$BI?$HO?$GA?$BF?$AHe?$BCxf?$CJW?$AA@ 00403fe8     cryptedstrings.obj
+ 0001:00002ffc       ??_C@_0BA@IJKHCIND@?Y?J?M?$IG?$JE?$JF?$JM?K?$IN?$JD?F?t?$JG?A?$LL?$AA@ 00403ffc     cryptedstrings.obj
+ 0001:0000300c       ??_C@_0BD@OKOOBJME@?a?r?u?$LO?$KM?$KN?$KE?s?$LF?$KL?$PO?L?$KO?y?$LD?$KN?b?$JM?$AA@ 0040400c     cryptedstrings.obj
+ 0001:00003020       ??_C@_06BEKLMJLM@I?$EA89?$CBE?$AA@ 00404020     cryptedstrings.obj
+ 0001:00003028       ??_C@_04EOAGBBLF@?$KN?$KI?$KH?$LH?$AA@ 00404028     cryptedstrings.obj
+ 0001:00003030       ??_C@_04OIKKLMCJ@?40?0N?$AA@ 00404030     cryptedstrings.obj
+ 0001:00003038       ??_C@_04GNOPBDDO@D?$FLAD?$AA@ 00404038     cryptedstrings.obj
+ 0001:00003040       ??_C@_0BF@IJMGBOHD@?$BMKdiX_JLTop?$FN?$FLZRU?$FNADD?$AA@ 00404040     cryptedstrings.obj
+ 0001:00003058       ??_C@_07CMDBOBJK@?Q?$IG?$KJ?$KH?$JP?$ID?$IG?$AA@ 00404058     cryptedstrings.obj
+ 0001:00003060       ??_C@_0N@CKGFHDMD@p?8?$AI?$AG0?$CD?5?$CF2?4?$DLl?$AA@ 00404060     cryptedstrings.obj
+ 0001:00003070       ??_C@_0N@MKAIBICF@?q?$KG?$IJ?$IC?$KD?$LE?$KA?$IM?$JC?$LM?$LD?$LK?$AA@ 00404070     cryptedstrings.obj
+ 0001:00003080       ??_C@_09MNPBHIOG@?$KI?$PP?P?$NN?l?z?$PN?o?w?$AA@ 00404080     cryptedstrings.obj
+ 0001:0000308c       ??_C@_0DC@CMAHPEKB@?$II?$NP?$JF?$KE?$KA?$PL?N?X?S?A?U?$JM?$IB?$IF?P?$JI?$JI?I?$JK?M?$LD?$LB?n?I?P?F?Y?W?$NM?U?$IJ?$JC@ 0040408c     cryptedstrings.obj
+ 0001:000030c0       ??_C@_0BP@DPMFFFPM@o8?7?$CK?9?59?$CD6c?4?5?$CL?$CC?$HOe?$HP?$CIR?$BMs2?$DN4?$DOipt?$CF?$FN?$AA@ 004040c0     cryptedstrings.obj
+ 0001:000030e0       ??_C@_0BD@GBAPAFHI@?t?k?q?t?$PM?g?L?A?F?B?r?m?O?N?$NL?M?D?E?$AA@ 004040e0     cryptedstrings.obj
+ 0001:000030f4       ??_C@_0N@NOHHFAG@?$IP?$KM?$KP?$KC?$LP?$KF?$LM?$JG?$II?$KG?$KJ?$KA?$AA@ 004040f4     cryptedstrings.obj
+ 0001:00003104       ??_C@_0P@IEMFLKJP@?S?z?o?n?$PL?$PM?$PN?X?u?t?$PL?$OA?$PM?g?$AA@ 00404104     cryptedstrings.obj
+ 0001:00003114       ??_C@_0BC@FPBCIFPE@tKODHQV?$AEgC_M?$APcLE_?$AA@ 00404114     cryptedstrings.obj
+ 0001:00003128       ??_C@_0N@MDCCGEBJ@?$AG9?$DN6?3?$CD$v?$BE926?$AA@ 00404128     cryptedstrings.obj
+ 0001:00003138       ??_C@_04IMEGIPAF@?T?$JN?C?$JE?$AA@ 00404138     cryptedstrings.obj
+ 0001:00003140       ??_C@_04GFEGFONE@?$LL?$II?$IG?$JP?$AA@ 00404140     cryptedstrings.obj
+ 0001:00003148       ??_C@_0L@KFCFFGPC@?$LJ?$JP?$IH?$JL?$IL?O?$LO?$IC?$IN?$JH?$AA@ 00404148     cryptedstrings.obj
+ 0001:00003154       ??_C@_0CF@HDMGBFLK@?$IM?$LB?$LL?$KI?$KM?$LL?$KL?$LN?$IL?$JL?$LM?$LH?$KB?$LN?$KC?$LP?$KJ?$LK?$JB?$JL?$KC?$KE?$KN?$KH?$LA?$LF?e?$II?$KK?$LE?$KE?$OA@ 00404154     cryptedstrings.obj
+ 0001:0000317c       ??_C@_0CA@FOMKGECO@?i?T?$NO?M?I?$NO?N?X?n?$PO?Y?R?D?X?G?Z?L?$NP?t?$PO?G?A?H?B?U?P?$IA?l?G?N?H?$AA@ 0040417c     cryptedstrings.obj
+ 0001:0000319c       ??_C@_0BF@NDHPILPB@?n?m?n?c?$PO?d?$PN?s?$KN?$PL?$KL?k?f?c?b?c?p?k?s?h?$AA@ 0040419c     cryptedstrings.obj
+ 0001:000031b4       ??_C@_0BA@FNKKLABF@?g?$NM?$NO?G?C?B?E?$IP?e?Y?R?Q?A?V?U?$AA@ 004041b4     cryptedstrings.obj
+ 0001:000031c4       ??_C@_0BL@LBLEDPLF@?C?x?z?c?g?f?a?$KL?A?$PN?v?u?e?r?q?$KD?N?x?$PN?v?h?p?$PP?u?$OA?f?$AA@ 004041c4     cryptedstrings.obj
+ 0001:000031e0       ??_C@_0BI@FCJKBLAI@?$BH?$CI?0?8?$CL25g?$AF?$CI?$CD?8l?$BP?$CL?09?$CB?$DL6?3?$CB?$CF?$AA@ 004041e0     cryptedstrings.obj
+ 0001:000031f8       ??_C@_0DA@OHOCKCJH@?$AN$?$CL?$CC?5?$AM?$CK?$CL2$10?$AH?$CK?$CK?$CL?$DN?3?4233q?$BK?$DN0?$DL?$DP?$BF12?$CF@ 004041f8     cryptedstrings.obj
+ 0001:00003228       ??_C@_03OLFGCFMH@8?$CG?$DL?$AA@ 00404228     cryptedstrings.obj
+ 0001:0000322c       ??_C@_06EHFHPAKB@L4?$DP?$DO9I?$AA@ 0040422c     cryptedstrings.obj
+ 0001:00003234       ??_C@_0BB@PCENAEMM@?$BJ?$CG?$CC?$CJ?$CF?$DM?$DLi?$AF?$CI?$CK1?$CD?542?$AA@ 00404234     cryptedstrings.obj
+ 0001:00003248       ??_C@_07OHHEHNPK@AVVZbv?$HO?$AA@ 00404248     cryptedstrings.obj
+ 0001:00003250       ??_C@_0BP@CNELPCPC@GZPCGP?$EAV?$EAPw?$HMjvitbqZPAC?$FOG?$EAA?$FOn?$HMa?$AA@ 00404250     cryptedstrings.obj
+ 0001:00003270       ??_C@_0BF@GNIOLDEG@?$IB?$LO?$LK?$LB?$LN?$KE?$KD?q?$JP?$LL?$LI?$KP?$LP?$KI?$KL?y?$IE?$KI?$KL?$KO?$AA@ 00404270     cryptedstrings.obj
+ 0001:00003288       ??_C@_05MMGGMBKL@BG?$BJ?$AE?$AA?$AA@ 00404288     cryptedstrings.obj
+ 0001:00003290       ??_C@_0BA@HEICGGCD@?m?f?h?$PL?g?$PO?a?m?z?g?s?$KO?d?g?g?$AA@ 00404290     cryptedstrings.obj
+ 0001:000032a0       ??_C@_0BI@KCPKJAMO@?k?F?G?W?M?N?E?E?G?N?p?k?F?J?$NL?A?$JG?g?X?T?K?V?B?$AA@ 004042a0     cryptedstrings.obj
+ 0001:000032b8       ??_C@_0FG@JNJAGNC@G?$EAUCiGFP?2?$BD?$BK?$FLLPKNGQ?$AORRFVQ_?$FL?$AGAABI?$FN@ 004042b8     cryptedstrings.obj
+ 0001:00003310       ??_C@_0BEH@IOBCCPPF@?Z?$NN?H?$NO?t?Z?$NL?M?A?$IO?$IH?J?F?V?V?O?M?U?$JD?$NP?T?U?R?Q?R?$JI?V?$NL?$NM?Y?X?U@ 00404310     cryptedstrings.obj
+ 0001:00003458       ??_C@_04HMIDBINF@?$II?$LI?$KO?$LD?$AA@ 00404458     cryptedstrings.obj
+ 0001:00003460       ??_C@_0L@BIDIGLEG@?$JL?$KA?$IC?$LE?$LK?$LG?$KA?$LM?$KM?$LO?$AA@ 00404460     cryptedstrings.obj
+ 0001:0000346c       ??_C@_09PBAFEMKD@x?$FLEMEAK?6U?$AA@ 0040446c     cryptedstrings.obj
+ 0001:00003478       ??_C@_0N@BLOMMAHD@?$CG?$CF?$DL3?$DL?$DP5?$CCp624?$AA@ 00404478     cryptedstrings.obj
+ 0001:00003488       ??_C@_07LNALKFMN@ru?$GAv?9hr?$AA@ 00404488     cryptedstrings.obj
+ 0001:00003490       ??_C@_0BA@IHKANLDC@?$KK?$IJ?$JP?$IN?$IP?$IO?$IA?$LM?$KJ?$IH?$JP?$IJ?$IN?$IF?$JB?$AA@ 00404490     cryptedstrings.obj
+ 0001:000034a0       ??_C@_05OANCCABG@Jc?$HNxr?$AA@ 004044a0     cryptedstrings.obj
+ 0001:000034a8       ??_C@_0CH@BBBELNKJ@?v?I?M?K?K?A?S?$IO?$OA?F?$NP?O?$NP?B?J?Z?$JB?u?K?B?Y?$NL?E?S?K?$JB?$JL?Y?R?S?T?W@ 004044a8     cryptedstrings.obj
+ 0001:000034d0       ??_C@_03IJDIBPOE@nLW?$AA@  004044d0     cryptedstrings.obj
+ 0001:000034d4       ??_C@_07HLDIBLKG@?g?$IM?e?$OA?$LN?$LA?$LP?$AA@ 004044d4     cryptedstrings.obj
+ 0001:000034dc       ??_C@_06FHHNBGML@?$OA?$LH?z?c?$LC?J?$AA@ 004044dc     cryptedstrings.obj
+ 0001:000034e4       ??_C@_0L@LCPOKIM@?W?$IM?$LO?$KK?$LB?b?$PL?$PP?$KG?$NO?$AA@ 004044e4     cryptedstrings.obj
+ 0001:000034f0       ??_C@_0BF@DPHOEMKG@?S?$PN?$LF?T?q?$PL?u?$PL?$PL?v?t?$LM?E?$PO?z?v?o?$LB?$IF?$ID?$AA@ 004044f0     cryptedstrings.obj
+ 0001:00003508       ??_C@_05DLPCKNEJ@?$HPo?$BD?$CF?$CF?$AA@ 00404508     cryptedstrings.obj
+ 0001:00003510       ??_C@_0BM@IMOOCMKB@?T?w?t?s?a?d?$LO?W?s?$PP?p?z?p?v?$PM?$KA?$KF?m?c?c?o?t?j?v?t?$IB?$IF?$AA@ 00404510     cryptedstrings.obj
+ 0001:0000352c       ??_C@_04PCLPBJI@?q?w?r?z?$AA@ 0040452c     cryptedstrings.obj
+ 0001:00003534       ??_C@_04CEBNNHCL@MINI?$AA@ 00404534     cryptedstrings.obj
+ 0001:00003540       ??_C@_0EF@IEKHACOA@?$LD?$IO?$IE?$JH?$JD?$IE?$JE?$IC?$LE?$KE?$ID?$II?$JO?$IC?$JN?$IA?$JG?$IF?$KO?$KE?$JN?$JL?$JC?$JI?$IP?$IK?$KG?$LI?$IJ?$IP?$IM?$JK@ 00404540     cryptedstrings.obj
+ 0001:00003588       ??_C@_0N@EAOFDDCH@?$LB?$JP?$JF?$JA?$JI?$LE?$JL?$JK?$JB?$JC?$JN?$IK?$AA@ 00404588     cryptedstrings.obj
+ 0001:00003598       ??_C@_0CN@NLHFPCJM@?n?S?Y?J?N?Y?I?$NP?i?y?$NO?U?C?$NP?$MA?$NN?K?X?s?g?G?$NM?N?X?K?A?S?$IG?d?X?S?N@ 00404598     cryptedstrings.obj
+ 0001:000035c8       ??_C@_09GKELLHCA@?l?F?J?H?A?I?K?x?$JJ?$AA@ 004045c8     cryptedstrings.obj
+ 0001:000035d4       ??_C@_07FOFMDJFO@?$LB?$JL?$JH?$JF?$JM?$JE?$JG?$AA@ 004045d4     cryptedstrings.obj
+ 0001:000035dc       ??_C@_0DE@NMMFJGCN@?74?$DO?9?$CJ?$DO?48?$AO?$BO92$8?8?3?0?$DP?$BE?$AA?5?$DL?$CJ?$DP?0?$CG4a?$AD?$DP4?$CJ@ 004045dc     cryptedstrings.obj
+ 0001:00003610       ??_C@_0L@CNFOEHM@?$AH?$CB7?$CF$q?$AC2?$DL8?$AA@ 00404610     cryptedstrings.obj
+ 0001:0000361c       ??_C@_0CK@DGAIDNLF@TicptcseSCdoyezgqbI?$FN?$HNftbq?$HLi?$DM?$FObit@ 0040461c     cryptedstrings.obj
+ 0001:00003648       ??_C@_09PCCHOAOP@mcaaqde?$HOw?$AA@ 00404648     cryptedstrings.obj
+ 0001:00003654       ??_C@_04JEANMJHO@?$FO?$EA?2?$BO?$AA@ 00404654     cryptedstrings.obj
+ 0001:0000365c       ??_C@_03MGFJLH@?$KP?$LM?$LL?$AA@ 0040465c     cryptedstrings.obj
+ 0001:00003660       ??_C@_0P@GCLGPDMC@?Y?$IO?D?P?W?$NM?$IJ?A?Q?$IG?$LG?R?$ID?$NO?$AA@ 00404660     cryptedstrings.obj
+ 0001:00003670       ??_C@_0CD@MGKOKKAG@?p?m?n?k?$JM?$NM?K?K?X?T?$NM?G?$NN?V?W?C?A?F?D?$IL?$IE?H?$MA?L?O?E?G?G?$IN?$JP?$IG?$IC@ 00404670     cryptedstrings.obj
+ 0001:00003694       ??_C@_0DD@EFBGMDGB@$9?3?$DPH?$AI?$BP?$BP?$AM?$AA?$AI?$BD?7?$AC?$AD?$BH?$BF?$BC?$BAEX?$AM?7?$BO?$AG?$BL?$BH?$BK?$BFLPV@ 00404694     cryptedstrings.obj
+ 0001:000036c8       ??_C@_0CC@MEBCJELE@SC?$EA?$FN_TUASTV?$BGF?$BCKJU?$AOFNTJ?7PXGMGM?$EAHH@ 004046c8     cryptedstrings.obj
+ 0001:000036ec       ??_C@_0L@ILKNCGPK@?$JB?$IJ?$IA?$IM?u?n?h?$JP?N?H?$AA@ 004046ec     cryptedstrings.obj
+ 0001:000036f8       ??_C@_0BD@LPFHLMIC@?$JO?$LD?$LB?$KK?$LM?$LG?$KP?w?$IB?$KN?$KH?$LD?k?p?v?$KB?$MA?F?$AA@ 004046f8     cryptedstrings.obj
+ 0001:0000370c       ??_C@_0L@IDCLPKEF@xs?$BI?$BH?$BD?$BO?$BF?$BK?$BE?$HL?$AA@ 0040470c     cryptedstrings.obj
+ 0001:00003718       ??_C@_09IDMOEFMB@t?6?$BC?$BG?$BE?$BE?$AP?$BH?$HM?$AA@ 00404718     cryptedstrings.obj
+ 0001:00003724       ??_C@_07JPFFEDGP@?$KF?K?$MA?$NM?$NP?S?$KD?$AA@ 00404724     cryptedstrings.obj
+ 0001:0000372c       ??_C@_0DB@FLLEJHLO@?z?$KN?x?$KP?Q?$II?$LM?$LO?$LC?$KE?$LA?$KG?i?r?t?$ID?E?$JL?$LO?$KJ?$LJ?j?$KA?$KG?$LH?$LD?$LB?$PO?c?g?$LC?J@ 0040472c     cryptedstrings.obj
+ 0001:00003760       ??_C@_0BK@MMBPIOML@7?$AD?$BD?$BB?$BG?$BA?$BCW?$BM?$BI?$AO?$BK?2?$BL?$AM?$BA?$AN?$FLBF?$BHolB?$DL?$AA@ 00404760     cryptedstrings.obj
+ 0001:0000377c       ??_C@_0BO@LDIEBDCB@?$KD?$LH?$KH?$KF?$KC?$KE?$KG?$JP?i?$JO?$JB?j?x?$PL?$LP?$JE?q?e?d?$KC?$IP?t?b?a?$KJ?s?$KK?$KH?$KM?$AA@ 0040477c     cryptedstrings.obj
+ 0001:000037a0       ??_C@_0EN@NHOEHNFD@?t?$KL?A?G?$LI?$KP?h?f?$JF?g?k?$JE?b?a?e?$LC?$PM?R?V?$KP?$LO?$PL?w?$IK?v?x?$IF?u?p?v?$KD?s@ 004047a0     cryptedstrings.obj
+ 0001:000037f0       ??_C@_0BA@MGENLJEP@?s?i?o?k?m?t?n?$NN?$PL?a?g?c?e?$PM?f?$AA@ 004047f0     cryptedstrings.obj
+ 0001:00003800       ??_C@_0BB@FPKEDEO@?$BG5?$CL?$CD?$CL?1?$CF?$AI?$CD?4?$CL?$CI?$BK?$CK?$DM?$CB?$AA@ 00404800     cryptedstrings.obj
+ 0001:00003814       ??_C@_0DM@LDKDEJPI@?$BI?$AF?$AP?$BM?$BI?$AP?$BP?7?$BP?$AP?$CI?$CD5?$CJ6?$CL?$DN?4?$AF?$AP6093$?$CBq?$BO?$AD?6?$BG?$CB@ 00404814     cryptedstrings.obj
+ 0001:00003850       ??_C@_0CO@LGBDBLPC@?$CI?$BF?$BP?$AM?$AI?$BP?$AP?$BJ?1?$DP?$BI?$BD?$AF?$BJ?$AG?$BL?$AN?$BO5?$DP?$AG?$AA?7?$AD?$BE?$BB?$DN?$CD?$BC?$BE?$BH?$AB@ 00404850     cryptedstrings.obj
+ 0001:00003880       ??_C@_0L@LDCFKJEO@?V?S?$NM?$NL?$NO?$JF?S?H?R?Q?$AA@ 00404880     cryptedstrings.obj
+ 0001:0000388c       ??_C@_07MELPHOMM@?$JF?$IP?$IJ?$IN?$IL?$JC?$II?$AA@ 0040488c     cryptedstrings.obj
+ 0001:00003894       ??_C@_0BN@EOMOFIJC@?$JC?$ID?$JB?$IH?$IA?$IK?$JE?$IO?$IG?$JM?$JI?$LG?H?$JP?$LD?K?A?D?$IL?$KN?P?D?O?$IO?W?$JC?$IL?$JN?$AA@ 00404894     cryptedstrings.obj
+ 0001:000038b4       ??_C@_0BG@MMCBOCGN@PR_GetNameForIdentity?$AA@ 004048b4     nspr4hook.obj
+ 0001:000038cc       ??_C@_0M@FIFMCKOG@PR_SetError?$AA@ 004048cc     nspr4hook.obj
+ 0001:000038d8       ??_C@_0M@KJHADJJL@PR_GetError?$AA@ 004048d8     nspr4hook.obj
+ 0001:000038e4       ??_C@_04CPPPJGME@Host?$AA@ 004048e4     nspr4hook.obj
+ 0001:000038ec       ??_C@_0P@HOJGPHBA@Content?9Length?$AA@ 004048ec     nspr4hook.obj
+ 0001:000038fc       ??_C@_07FGAOOBMN@http?3?1?1?$AA@ 004048fc     nspr4hook.obj
+ 0001:00003904       ??_C@_09FNILHMOF@NSS?5layer?$AA@ 00404904     nspr4hook.obj
+ 0001:00003910       ??_C@_08MFLLBFBE@https?3?1?1?$AA@ 00404910     nspr4hook.obj
+ 0001:0000391c       ??_C@_07EJAMNJLN@Referer?$AA@ 0040491c     nspr4hook.obj
+ 0001:00003924       ??_C@_0N@LAFFMKKA@Content?9Type?$AA@ 00404924     nspr4hook.obj
+ 0001:00003934       ??_C@_0O@NAFGPKMI@Authorization?$AA@ 00404934     nspr4hook.obj
+ 0001:00003944       ??_C@_04FMMHFHOO@?$AN?6?$AN?6?$AA@ 00404944     nspr4hook.obj
+ 0001:0000394c       ??_C@_07MOMMIIKD@HTTP?11?4?$AA@ 0040494c     nspr4hook.obj
+ 0001:00003954       ??_C@_0BC@ELHLFCNH@Transfer?9Encoding?$AA@ 00404954     nspr4hook.obj
+ 0001:00003968       ??_C@_07KCKHAHHI@chunked?$AA@ 00404968     nspr4hook.obj
+ 0001:00003970       ??_C@_0L@PJJKMLL@Connection?$AA@ 00404970     nspr4hook.obj
+ 0001:0000397c       ??_C@_05LBOHBHFK@close?$AA@ 0040497c     nspr4hook.obj
+ 0001:00003984       ??_C@_0BB@MLFPABGO@Proxy?9Connection?$AA@ 00404984     nspr4hook.obj
+ 0001:00003998       ??_C@_02PCIJFNDE@?$AN?6?$AA@ 00404998     nspr4hook.obj
+ 0001:0000399c       ??_C@_01EEMJAFIK@?6?$AA@   0040499c     nspr4hook.obj
+ 0001:000039a0       ??_C@_04GMEAFLDM@?$CFx?$AN?6?$AA@ 004049a0     nspr4hook.obj
+ 0001:000039a8       ??_C@_07MEMIDCKI@?$AN?60?$AN?6?$AN?6?$AA@ 004049a8     nspr4hook.obj
+ 0001:000039b0       ??_C@_08LBJOIDDC@identity?$AA@ 004049b0     nspr4hook.obj
+ 0001:000039bc       ??_C@_0BA@KDJCHKHJ@Accept?9Encoding?$AA@ 004049bc     nspr4hook.obj
+ 0001:000039cc       ??_C@_02OGAFBLMB@TE?$AA@   004049cc     nspr4hook.obj
+ 0001:000039d0       ??_C@_0BC@GJLFBBBL@If?9Modified?9Since?$AA@ 004049d0     nspr4hook.obj
+ 0001:000039e4       ??_C@_01JOAMLHOP@?9?$AA@   004049e4     httpgrabber.obj
+ 0001:000039e8       _CLSID_ImnAccountManager   004049e8     softwaregrabber.obj
+ 0001:000039f8       _IID_IImnAccountManager    004049f8     softwaregrabber.obj
+ 0001:00003a08       _CLSID_IMimeAllocator      00404a08     softwaregrabber.obj
+ 0001:00003a18       _IID_IMimeAllocator        00404a18     softwaregrabber.obj
+ 0001:00003a28       _IID_IMimeMessage          00404a28     softwaregrabber.obj
+ 0001:00003a38       _CLSID_StoreNamespace      00404a38     softwaregrabber.obj
+ 0001:00003a48       _IID_IStoreNamespace       00404a48     softwaregrabber.obj
+ 0001:00003a58       ??_C@_13LBAGMAIH@?$AA?6?$AA?$AA@ 00404a58     softwaregrabber.obj
+ 0001:00003a5c       ??_C@_15LLFLLHPE@?$AA?9?$AAv?$AA?$AA@ 00404a5c     vncpaint.obj
+ 0001:00003a64       ??_C@_19LKKOIHJI@?$AA?4?$AAt?$AAm?$AAp?$AA?$AA@ 00404a64     report.obj
+ 0001:00003a70       ??_C@_0BM@LMAGFGOB@http?3?1?1www?4google?4com?1webhp?$AA@ 00404a70     report.obj
+ 0001:00003a8c       ??_C@_15CCJCKIOA@?$AAb?$AAc?$AA?$AA@ 00404a8c     report.obj
+ 0001:00003a94       ??_C@_1CI@NKKEIBLI@?$AAS?$AAe?$AAS?$AAh?$AAu?$AAt?$AAd?$AAo?$AAw?$AAn?$AAP?$AAr?$AAi?$AAv?$AAi?$AAl?$AAe?$AAg?$AAe?$AA?$AA@ 00404a94     remotescript.obj
+ 0001:00003abc       ??_C@_05LBOKJHLG@socks?$AA@ 00404abc     backconnectbot.obj
+ 0001:00003ac4       ??_C@_03JMHGABON@vnc?$AA@  00404ac4     backconnectbot.obj
+ 0001:00003ac8       ??_C@_1CI@DMJKDEJI@?$AAG?$AAl?$AAo?$AAb?$AAa?$AAl?$AA?2?$AA?$CF?$AA0?$AA8?$AAX?$AA?$CF?$AA0?$AA8?$AAX?$AA?$CF?$AA0?$AA8?$AAX?$AA?$AA@ 00404ac8     backconnectbot.obj
+ 0001:00003af0       ??_C@_0N@FGDDBOL@RFB?5003?4003?6?$AA@ 00404af0     rfb.obj
+ 0001:00003b00       ??_C@_04CDOLOOKE@RFB?5?$AA@ 00404b00     rfb.obj
+ 0001:00003b08       ??_C@_0P@DGIDOA@GetProcAddress?$AA@ 00404b08     core.obj
+ 0001:00003b18       ??_C@_0N@LOMLCOFC@LoadLibraryA?$AA@ 00404b18     core.obj
+ 0001:00003b28       ??_C@_0P@OKOANDML@NtCreateThread?$AA@ 00404b28     core.obj
+ 0001:00003b38       ??_C@_0BE@IIPCAPLK@NtCreateUserProcess?$AA@ 00404b38     core.obj
+ 0001:00003b4c       ??_C@_0BK@EGDDIFMK@NtQueryInformationProcess?$AA@ 00404b4c     core.obj
+ 0001:00003b68       ??_C@_0BD@BHKNPFBB@RtlUserThreadStart?$AA@ 00404b68     core.obj
+ 0001:00003b7c       ??_C@_0L@HOFGLFDL@LdrLoadDll?$AA@ 00404b7c     core.obj
+ 0001:00003b88       ??_C@_0BA@LCKAOIML@LdrGetDllHandle?$AA@ 00404b88     core.obj
+ 0001:00003b98       ??_C@_19DOLFOBJP@?$AA?4?$AAd?$AAa?$AAt?$AA?$AA@ 00404b98     core.obj
+ 0001:00003ba4       ??_C@_0L@PCFLOELH@0xF52BE0F5?$AA@ 00404ba4     core.obj
+ 0001:00003bb0       ??_C@_13GMDMCADD@?$AA?$CD?$AA?$AA@ 00404bb0     core.obj
+ 0001:00003ca9       ?enableImageOnClick@UserHook@@YIXGPAD@Z 00404ca9 f   userhook.obj
+ 0001:00003cef       ?getInput@UserHook@@YIKPAPA_W@Z 00404cef f   userhook.obj
+ 0001:00003d51       ?hookerTranslateMessage@UserHook@@YGHPBUtagMSG@@@Z 00404d51 f   userhook.obj
+ 0001:00003eb7       ?hookerGetClipboardData@UserHook@@YGPAXI@Z 00404eb7 f   userhook.obj
+ 0001:00003ff7       ?_injectToAll@CoreInject@@YI_NXZ 00404ff7 f   coreinject.obj
+ 0001:00004171       ?reallocEx@Mem@@YI_NPAXK@Z 00405171 f   common.obj
+ 0001:000041b6       ?alloc@Mem@@YIPAXK@Z       004051b6 f   common.obj
+ 0001:000041ce       ?quickAlloc@Mem@@YIPAXK@Z  004051ce f   common.obj
+ 0001:000041e6       ?free@Mem@@YIXPAX@Z        004051e6 f   common.obj
+ 0001:00004202       ?freeArrayOfPointers@Mem@@YIXPAXK@Z 00405202 f   common.obj
+ 0001:00004222       ?_copy@Mem@@YGXPAXPBXK@Z   00405222 f   common.obj
+ 0001:00004239       ?copyEx@Mem@@YIPAXPBXK@Z   00405239 f   common.obj
+ 0001:00004257       ?_compare@Mem@@YIHPBX0K@Z  00405257 f   common.obj
+ 0001:00004287       ?_zero@Mem@@YIXPAXK@Z      00405287 f   common.obj
+ 0001:00004299       ?_set@Mem@@YGXPAXDK@Z      00405299 f   common.obj
+ 0001:000042b0       ?_findData@Mem@@YIPAXPBXKPAXK@Z 004052b0 f   common.obj
+ 0001:000042e8       ?_getTime@Time@@YIKXZ      004052e8 f   common.obj
+ 0001:00004310       ?_getLocalGmt@Time@@YIHXZ  00405310 f   common.obj
+ 0001:00004346       ?_fileTimeToTime@Time@@YIKPBU_FILETIME@@@Z 00405346 f   common.obj
+ 0001:0000454e       ?_byteToCharW@Str@@YIXEPA_W@Z 0040554e f   common.obj
+ 0001:00004587       ?_CopyW@Str@@YIXPA_WPB_WH@Z 00405587 f   common.obj
+ 0001:000045a2       ?_CopyExW@Str@@YIPA_WPA_WH@Z 004055a2 f   common.obj
+ 0001:000045da       ?_CatExW@Str@@YI_NPAPA_WPA_WH@Z 004055da f   common.obj
+ 0001:0000462d       ?_CopyA@Str@@YIXPADPBDH@Z  0040562d f   common.obj
+ 0001:00004644       ?_CopyExA@Str@@YIPADPADH@Z 00405644 f   common.obj
+ 0001:0000467d       ?_CatExA@Str@@YI_NPAPADPADH@Z 0040567d f   common.obj
+ 0001:000046c9       ?_TrimA@Str@@YIXPAD@Z      004056c9 f   common.obj
+ 0001:00004737       ?_TrimW@Str@@YIXPA_W@Z     00405737 f   common.obj
+ 0001:000047ac       ?_ToInt64A@Str@@YI_JPADPA_N@Z 004057ac f   common.obj
+ 0001:00004865       ?_ToInt32A@Str@@YIHPADPA_N@Z 00405865 f   common.obj
+ 0001:000048f8       ?_ToInt32W@Str@@YIHPA_WPA_N@Z 004058f8 f   common.obj
+ 0001:0000498f       ?_FromInt32A@Str@@YIKHPADE_N@Z 0040598f f   common.obj
+ 0001:000049d5       ?_hexStringToDwordA@Str@@YIKPAD@Z 004059d5 f   common.obj
+ 0001:00004a23       ?_fromHexW@Str@@YI_NPA_WPAX@Z 00405a23 f   common.obj
+ 0001:00004a81       ?_splitToStringsA@Str@@YIKPADKPAPAPADKD@Z 00405a81 f   common.obj
+ 0001:00004b56       ?_getArgumentsW@Str@@YIKQA_WKPAPAPA_WK@Z 00405b56 f   common.obj
+ 0001:00004c4f       ?_joinArgumentsW@Str@@YIPA_WPBQA_WK@Z 00405c4f f   common.obj
+ 0001:00004d23       ?_LengthA@Str@@YIHPBD@Z    00405d23 f   common.obj
+ 0001:00004d35       ?_LengthW@Str@@YIHPB_W@Z   00405d35 f   common.obj
+ 0001:00004d49       ?_CompareA@Str@@YIHPBD0HH@Z 00405d49 f   common.obj
+ 0001:00004df6       ?_CompareW@Str@@YIHPB_W0HH@Z 00405df6 f   common.obj
+ 0001:00004eab       ?_findCharA@Str@@YIPADQADD@Z 00405eab f   common.obj
+ 0001:00004ebf       ?_findCharW@Str@@YIPA_WQA_W_W@Z 00405ebf f   common.obj
+ 0001:00004ed9       ?_sprintfW@Str@@YAHPA_WHPB_WZZ 00405ed9 f   common.obj
+ 0001:00004f1d       ?_sprintfA@Str@@YAHPADHPBDZZ 00405f1d f   common.obj
+ 0001:00004f54       ?_sprintfExW@Str@@YAHPAPA_WPB_WZZ 00405f54 f   common.obj
+ 0001:00004f67       ?_sprintfCatExW@Str@@YAKPAPA_WKQA_WZZ 00405f67 f   common.obj
+ 0001:00004faa       ?_sprintfExA@Str@@YAHPAPADPBDZZ 00405faa f   common.obj
+ 0001:00004fbd       ?_vsprintfExW@Str@@YIHPAPA_WPB_WPAD@Z 00405fbd f   common.obj
+ 0001:00004ff5       ?_vsprintfExA@Str@@YIHPAPADPBDPAD@Z 00405ff5 f   common.obj
+ 0001:0000502b       ?_utf8Free@Str@@YIXPAUUTF8STRING@1@@Z 0040602b f   common.obj
+ 0001:0000503d       ?_utf8FromUnicode@Str@@YI_NQA_WHPAUUTF8STRING@1@@Z 0040603d f   common.obj
+ 0001:00005078       ?_isValidMultiStringA@Str@@YI_NQADK@Z 00406078 f   common.obj
+ 0001:00005096       ?_isValidMultiStringW@Str@@YI_NQA_WK@Z 00406096 f   common.obj
+ 0001:000050b6       ?_multiStringGetIndexA@Str@@YIPADPADK@Z 004060b6 f   common.obj
+ 0001:000050d2       ?_multiStringGetIndexW@Str@@YIPA_WPA_WK@Z 004060d2 f   common.obj
+ 0001:000050f2       ?_addSlashesW@Str@@YIXPA_W0@Z 004060f2 f   common.obj
+ 0001:0000512e       ?_getCurrentStringSizeA@Str@@YIKQAD0PAPAD@Z 0040612e f i common.obj
+ 0001:0000516a       ?_matchA@Str@@YI_NPAUMATCHDATAA@1@@Z 0040616a f   common.obj
+ 0001:00005362       ?_matchExA@Str@@YI_NQAD0@Z 00406362 f   common.obj
+ 0001:00005397       ?genrand_int32@@YIKXZ      00406397 f   common.obj
+ 0001:0000548b       ?_md5Hash@Crypt@@YI_NPAEPAXK@Z 0040648b f   common.obj
+ 0001:0000551f       ?mtRand@Crypt@@YIKXZ       0040651f f   common.obj
+ 0001:0000556b       ?mtRandRange@Crypt@@YIKKK@Z 0040656b f   common.obj
+ 0001:00005595       ?crc32Hash@Crypt@@YIKPBXK@Z 00406595 f   common.obj
+ 0001:000055ff       ?_rc4Init@Crypt@@YIXPBXGPAURC4KEY@1@@Z 004065ff f   common.obj
+ 0001:00005662       ?_rc4@Crypt@@YIXPAXKPAURC4KEY@1@@Z 00406662 f   common.obj
+ 0001:000056d3       ?_base64Decode@Crypt@@YIPAEPADKPAK@Z 004066d3 f   common.obj
+ 0001:000057c3       ?_generateBinaryData@Crypt@@YIXPAXKEE_N@Z 004067c3 f   common.obj
+ 0001:000057fd       ?_getUserByProcessHandle@Process@@YIPAU_TOKEN_USER@@PAXPAK@Z 004067fd f   common.obj
+ 0001:0000585b       ?_getCountOfThreadsByProcessId@Process@@YIKK@Z 0040685b f   common.obj
+ 0001:000058b2       ?_enablePrivilege@Process@@YI_NPA_W_N@Z 004068b2 f   common.obj
+ 0001:0000593a       ?_getIntegrityLevel@Process@@YIEPAX@Z 0040693a f   common.obj
+ 0001:000059ed       ?_isWow64@Process@@YI_NPAX@Z 004069ed f   common.obj
+ 0001:00005a2d       ?_create@Process@@YIKQA_W00PBU_STARTUPINFOW@@PAU_PROCESS_INFORMATION@@@Z 00406a2d f   common.obj
+ 0001:00005aad       ?_createEx@Process@@YIKQA_W00PBU_STARTUPINFOW@@PAU_PROCESS_INFORMATION@@@Z 00406aad f   common.obj
+ 0001:00005b08       ?_createAsUser@Process@@YIKPAXQA_W111PBU_STARTUPINFOW@@PAU_PROCESS_INFORMATION@@@Z 00406b08 f   common.obj
+ 0001:00005bf5       ?_closeProcessInformation@Process@@YIXPAU_PROCESS_INFORMATION@@@Z 00406bf5 f   common.obj
+ 0001:00005c1b       ?_createThread@Process@@YIKKP6GKPAX@Z0@Z 00406c1b f   common.obj
+ 0001:00005c4b       ?_runBatchForRemoveFile@Process@@YI_NQA_W@Z 00406c4b f   common.obj
+ 0001:00005ca6       ?_runTempBatch@Process@@YI_NQAD@Z 00406ca6 f   common.obj
+ 0001:00005dba       ?_Connect@Wininet@@YIPAXPAD0GK@Z 00406dba f   common.obj
+ 0001:00005e26       ?_CloseConnection@Wininet@@YIXPAX@Z 00406e26 f   common.obj
+ 0001:00005e73       ?_closeWithParents@Wininet@@YIXPAX@Z 00406e73 f   common.obj
+ 0001:00005ece       ?_SendRequest@Wininet@@YIPAXPAXPAD10KK@Z 00406ece f   common.obj
+ 0001:00005f88       ?_DownloadData@Wininet@@YI_NPAXPAUMEMDATA@@K0@Z 00406f88 f   common.obj
+ 0001:00006028       ?_DownloadDataToFile@Wininet@@YI_NPAXPA_WK0@Z 00407028 f   common.obj
+ 0001:000060fc       ?_CallURL@Wininet@@YI_NPAUCALLURLDATA@1@PAUMEMDATA@@@Z 004070fc f   common.obj
+ 0001:0000622e       ?_GetIEUserAgent@Wininet@@YIPADXZ 0040722e f   common.obj
+ 0001:000062af       ?_testDownloadDelay@Wininet@@YIKPADPAX@Z 004072af f   common.obj
+ 0001:0000631c       ?_queryOptionExA@Wininet@@YIPAXPAXKPAK@Z 0040731c f   common.obj
+ 0001:00006372       ?_queryOptionExW@Wininet@@YIPAXPAXKPAK@Z 00407372 f   common.obj
+ 0001:000063cc       ?_queryInfoExA@Wininet@@YIPADPAXKPAK1@Z 004073cc f   common.obj
+ 0001:00006c1c       ?_Compress@UCL@@YIHPAEK0PAKPAUPROGRESS_CALLBACK@1@K@Z 00407c1c f   common.obj
+ 0001:00006f39       ?_DecompressNRV2B@UCL@@YI_NPAEK0PAK@Z 00407f39 f   common.obj
+ 0001:00007103       ?_fdIsSet@WSocket@@YI_NIPAUfd_set@@@Z 00408103 f   common.obj
+ 0001:00007129       ?tcpRecv@WSocket@@YIHIPAXHK@Z 00408129 f   common.obj
+ 0001:00007199       ?tcpRecvAll@WSocket@@YI_NIPAXHK@Z 00408199 f   common.obj
+ 0001:000071e1       ?tcpRecvAllToNull@WSocket@@YI_NIHK@Z 004081e1 f   common.obj
+ 0001:00007210       ?tcpSend@WSocket@@YI_NIPBXH@Z 00408210 f   common.obj
+ 0001:0000722e       ?tcpConnect@WSocket@@YIIPBUsockaddr_storage@@@Z 0040822e f   common.obj
+ 0001:0000726f       ?tcpConnectA@WSocket@@YIIQADG@Z 0040826f f   common.obj
+ 0001:00007328       ?tcpListen@WSocket@@YIIPBUsockaddr_storage@@H@Z 00408328 f   common.obj
+ 0001:0000737a       ?tcpListenRandom@WSocket@@YIIHHGG@Z 0040837a f   common.obj
+ 0001:000073e2       ?tcpTunnel@WSocket@@YIXII@Z 004083e2 f   common.obj
+ 0001:00007496       ?tcpWaitForEvent@WSocket@@YIIPBIKK0K@Z 00408496 f   common.obj
+ 0001:00007559       ?tcpWaitForIncomingAndAccept@WSocket@@YIIPAIKKPAUsockaddr_storage@@PAK0K@Z 00408559 f   common.obj
+ 0001:00007589       ?tcpClose@WSocket@@YIXI@Z  00408589 f   common.obj
+ 0001:0000759f       ?tcpSetKeepAlive@WSocket@@YI_NI_NKK@Z 0040859f f   common.obj
+ 0001:000075e1       ?tcpDisableDelay@WSocket@@YI_NI_N@Z 004085e1 f   common.obj
+ 0001:00007606       ?udpListen@WSocket@@YIIPBUsockaddr_storage@@@Z 00408606 f   common.obj
+ 0001:00007647       ?ipToStringW@WSocket@@YI_NPBUsockaddr_storage@@PA_W@Z 00408647 f   common.obj
+ 0001:00007690       ?_isLocalIp@WSocket@@YI_NPBUsockaddr_storage@@@Z 00408690 f   common.obj
+ 0001:0000770b       ?getListOfIpAddresses@WSocket@@YIPAU_SOCKET_ADDRESS_LIST@@H@Z 0040870b f   common.obj
+ 0001:0000779e       ?getFamily@WSocket@@YIGI@Z 0040879e f   common.obj
+ 0001:000077d5       ?_getFullAccessDescriptors@WinSecurity@@YIPAXPAU_SECURITY_ATTRIBUTES@@PAU_SECURITY_DESCRIPTOR@@@Z 004087d5 f   common.obj
+ 0001:00007867       ?_setLowIntegrityLevelLabel@WinSecurity@@YI_NPA_WK_N@Z 00408867 f   common.obj
+ 0001:000078d5       ?_getUserByToken@WinSecurity@@YIPAU_TOKEN_USER@@PAX@Z 004088d5 f   common.obj
+ 0001:00007932       ?_waitForMutex@Sync@@YIPAXPAU_SECURITY_ATTRIBUTES@@PA_W@Z 00408932 f   common.obj
+ 0001:00007953       ?_waitForMultipleObjectsAndDispatchMessages@Sync@@YIKKPBQAX_NK@Z 00408953 f   common.obj
+ 0001:000079b9       ?_freeMutex@Sync@@YIXPAX@Z 004089b9 f   common.obj
+ 0001:000079c9       ?_mutexExists@Sync@@YI_NPA_W@Z 004089c9 f   common.obj
+ 0001:000079ee       ?_divU64@Math@@YG_K_K0@Z   004089ee f   common.obj
+ 0001:00007a56       ?_mul64@Math@@YG_K_K0@Z    00408a56 f   common.obj
+ 0001:00007a8a       ?_shr64@Math@@YG_K_KE@Z    00408a8a f   common.obj
+ 0001:00007fab       ?FCICreate@MsCab@@YIPAXPA_W00@Z 00408fab f   common.obj
+ 0001:000080a2       ?FCIAddFile@MsCab@@YI_NPAXPA_W1@Z 004090a2 f   common.obj
+ 0001:000081bb       ?createFromFolder@MsCab@@YI_NPA_W00PAPA_WKK@Z 004091bb f   common.obj
+ 0001:00008250       ?_closeTerminatedHandles@ThreadsGroup@@YIXPAUGROUP@1@@Z 00409250 f   common.obj
+ 0001:000082a2       ?_createThread@ThreadsGroup@@YI_NPAUGROUP@1@KP6GKPAX@Z1PAKPAPAX@Z 004092a2 f   common.obj
+ 0001:000082e7       ?_waitForAllExit@ThreadsGroup@@YI_NPAUGROUP@1@K@Z 004092e7 f   common.obj
+ 0001:0000830a       ?_getValueAsString@Registry@@YIKPAUHKEY__@@QA_W1PA_WK@Z 0040930a f   common.obj
+ 0001:000083c0       ?_getValueAsDword@Registry@@YIKPAUHKEY__@@QA_WPA_W@Z 004093c0 f   common.obj
+ 0001:00008413       ?_setValueAsDword@Registry@@YI_NPAUHKEY__@@QA_W1K@Z 00409413 f   common.obj
+ 0001:00008432       ?_getValueAsBinary@Registry@@YIKPAUHKEY__@@QA_W1PAKPAXK@Z 00409432 f   common.obj
+ 0001:00008465       ?_setValueAsBinary@Registry@@YI_NPAUHKEY__@@QA_W1KPBXK@Z 00409465 f   common.obj
+ 0001:000084b9       ?_getValueAsBinaryEx@Registry@@YIKPAUHKEY__@@QA_W1PAKPAPAX@Z 004094b9 f   common.obj
+ 0001:0000853c       ?_valueExists@Registry@@YI_NPAUHKEY__@@QA_W1@Z 0040953c f   common.obj
+ 0001:00008565       ?_GenerateRandomNameW@MalwareTools@@YIXKPA_WEE@Z 00409565 f   common.obj
+ 0001:00008696       ?_GenerateRandomFileName@MalwareTools@@YI_NKPA_W00EE@Z 00409696 f   common.obj
+ 0001:00008700       ?_GenerateRandomRegKeyName@MalwareTools@@YI_NKPAUHKEY__@@PA_W1EE@Z 00409700 f   common.obj
+ 0001:00008789       ?_getOsGuid@MalwareTools@@YI_NPAU_GUID@@@Z 00409789 f   common.obj
+ 0001:0000883f       ?_generateKernelObjectName@MalwareTools@@YIXPAU_GUID@@KKPA_WPAURC4KEY@Crypt@@E@Z 0040983f f   common.obj
+ 0001:000088f3       ?_enumWindows@Gui@@YIXPAUHWND__@@_NP6I_N0PAX@Z2@Z 004098f3 f   common.obj
+ 0001:00008922       ?_windowFromPoint@Gui@@YIPAUHWND__@@UtagPOINT@@KPAK@Z 00409922 f   common.obj
+ 0001:00008a29       ?_hook@WaHook@@YIKPAX000P6IXPBX1@Z@Z 00409a29 f   common.obj
+ 0001:00008b46       ?_copyModuleToProcess@PeImage@@YIPAXPAX0@Z 00409b46 f   common.obj
+ 0001:00008c4b       ?_parseUrl@HttpTools@@YI_NQADPAUURLDATA@1@@Z 00409c4b f   common.obj
+ 0001:00008d3c       ?_getFileNameFromUrl@HttpTools@@YIPA_WQAD@Z 00409d3c f   common.obj
+ 0001:00008dcf       ?_compareTagNameA@HttpTools@@YI_NQADK0@Z 00409dcf f   common.obj
+ 0001:00008e13       ?_removeTagsA@HttpTools@@YIKPADK@Z 00409e13 f   common.obj
+ 0001:00008f76       ?_urlEncodeW@HttpTools@@YIKPA_WK0@Z 00409f76 f   common.obj
+ 0001:00008fec       ?_getMimeHeader@HttpTools@@YIPADPBXKQADPAK@Z 00409fec f   common.obj
+ 0001:00009114       ?_removeMimeHeader@HttpTools@@YIKPAXKPAD@Z 0040a114 f   common.obj
+ 0001:00009190       ?_modifyMimeHeader@HttpTools@@YIKPAXKQAD1@Z 0040a190 f   common.obj
+ 0001:0000927f       ?_catExtraInfoFromUrlToUrlA@HttpTools@@YIPADQAD0@Z 0040a27f f   common.obj
+ 0001:00009308       ?_parseAuthorization@HttpTools@@YI_NQADKPAPA_W1@Z 0040a308 f   common.obj
+ 0001:0000939d       ?_saveToFile@Fs@@YI_NQA_WPBXK@Z 0040a39d f   common.obj
+ 0001:00009402       ?_fileToMem@Fs@@YI_NPA_WPAUMEMFILE@1@K@Z 0040a402 f   common.obj
+ 0001:000094aa       ?_closeMemFile@Fs@@YIXPAUMEMFILE@1@@Z 0040a4aa f   common.obj
+ 0001:000094d1       ?_setFilePointer@Fs@@YI_NPAX_KK@Z 0040a4d1 f   common.obj
+ 0001:000094f1       ?_getFilePointer@Fs@@YI_KPAX@Z 0040a4f1 f   common.obj
+ 0001:00009521       ?_getFileSize@Fs@@YI_KPAX@Z 0040a521 f   common.obj
+ 0001:00009548       ?_removeFile@Fs@@YI_NPA_W@Z 0040a548 f   common.obj
+ 0001:00009569       ?_createTempFileEx@Fs@@YI_NQA_W0PA_W@Z 0040a569 f   common.obj
+ 0001:000095f2       ?_createTempDirectory@Fs@@YI_NQA_WPA_W@Z 0040a5f2 f   common.obj
+ 0001:00009677       ?_isDotsName@Fs@@YI_NPA_W@Z 0040a677 f   common.obj
+ 0001:0000969c       ?_setFileTime@Fs@@YI_N_NPA_WPAU_FILETIME@@22@Z 0040a69c f   common.obj
+ 0001:000096ef       ?_setRandomFileTime@Fs@@YI_NKKPA_WK@Z 0040a6ef f   common.obj
+ 0001:000097b4       ?_getFileTime@Fs@@YI_N_NPA_WPAU_FILETIME@@22@Z 0040a7b4 f   common.obj
+ 0001:000097f9       ?_createDirectoryTree@Fs@@YI_NPA_WPAU_SECURITY_ATTRIBUTES@@@Z 0040a7f9 f   common.obj
+ 0001:00009860       ?_removeDirectoryTree@Fs@@YI_NPA_W@Z 0040a860 f   common.obj
+ 0001:0000991b       ?_findFiles@Fs@@YIXPA_WPBQA_WKKP6I_NQA_WPBU_WIN32_FIND_DATAW@@PAX@Z44KK@Z 0040a91b f   common.obj
+ 0001:00009a77       ?_pathCombine@Fs@@YI_NPA_WQA_W1@Z 0040aa77 f   common.obj
+ 0001:00009aa4       ?_checkHash@BinStorage@@YI_NPAUSTORAGE@1@@Z 0040aaa4 f   common.obj
+ 0001:00009ad3       ?_createEmpty@BinStorage@@YIPAUSTORAGE@1@XZ 0040aad3 f   common.obj
+ 0001:00009ae7       ?_addItem@BinStorage@@YI_NPAPAUSTORAGE@1@KKPAXK@Z 0040aae7 f   common.obj
+ 0001:00009b94       ?_addItemAsUtf8StringW@BinStorage@@YI_NPAPAUSTORAGE@1@KKPA_W@Z 0040ab94 f   common.obj
+ 0001:00009bd2       ?_modifyItem@BinStorage@@YI_NPAPAUSTORAGE@1@PAUITEM@1@KPAXK@Z 0040abd2 f   common.obj
+ 0001:00009c80       ?_modifyItemById@BinStorage@@YI_NPAPAUSTORAGE@1@KKPAXK@Z 0040ac80 f   common.obj
+ 0001:00009cae       ?_getNextItem@BinStorage@@YIPAUITEM@1@PBUSTORAGE@1@PAU21@@Z 0040acae f   common.obj
+ 0001:00009ce5       ?_getItem@BinStorage@@YIPAUITEM@1@PBUSTORAGE@1@KK@Z 0040ace5 f   common.obj
+ 0001:00009d10       ?_getItemData@BinStorage@@YIPAXPBUITEM@1@@Z 0040ad10 f   common.obj
+ 0001:00009d5e       ?_getItemDataEx@BinStorage@@YIPAXPBUSTORAGE@1@KKPAK@Z 0040ad5e f   common.obj
+ 0001:00009d94       ?_getItemDataAsDword@BinStorage@@YI_NPBUSTORAGE@1@KKPAK@Z 0040ad94 f   common.obj
+ 0001:00009de1       ?_pack@BinStorage@@YIKPAPAUSTORAGE@1@KPAURC4KEY@Crypt@@@Z 0040ade1 f   common.obj
+ 0001:00009f81       ?_unpack@BinStorage@@YIKPAPAUSTORAGE@1@PAXKPAURC4KEY@Crypt@@@Z 0040af81 f   common.obj
+ 0001:00009fe7       ?_combine@BinStorage@@YIPAUSTORAGE@1@PAU21@0@Z 0040afe7 f   common.obj
+ 0001:0000a05b       ?_openStorageArray@BinStorage@@YI_NPA_WKPAUSTORAGEARRAY@1@@Z 0040b05b f   common.obj
+ 0001:0000a18b       ?_closeStorageArray@BinStorage@@YIXPAUSTORAGEARRAY@1@@Z 0040b18b f   common.obj
+ 0001:0000a1a9       ?_addToStorageArray@BinStorage@@YI_NPAUSTORAGEARRAY@1@PAUSTORAGE@1@K@Z 0040b1a9 f   common.obj
+ 0001:0000a28c       ?_getNextFromStorageArray@BinStorage@@YI_NPAUSTORAGEARRAY@1@PAPAUSTORAGE@1@PAKPAURC4KEY@Crypt@@@Z 0040b28c f   common.obj
+ 0001:0000a368       ?_removeCurrentFromStorageArray@BinStorage@@YI_NPAUSTORAGEARRAY@1@@Z 0040b368 f   common.obj
+ 0001:0000a430       ?_isCorrectBlockList@HttpInject@@YI_NPBUINJECTBLOCK@1@K@Z 0040b430 f   common.obj
+ 0001:0000a471       ?_loadOverlay@BaseOverlay@@YI_NPAXPBXPAKPBURC4KEY@Crypt@@@Z 0040b471 f   common.obj
+ 0001:0000a4f9       ?_createOverlay@BaseOverlay@@YI_NPAXPBXGPBURC4KEY@Crypt@@@Z 0040b4f9 f   common.obj
+ 0001:0000a576       ?_getAddress@BaseOverlay@@YIPAXPBXKPBURC4KEY@Crypt@@@Z 0040b576 f   common.obj
+ 0001:0000a607       ?_decryptFunction@BaseOverlay@@YIXPAEKK@Z 0040b607 f   common.obj
+ 0001:0000a656       ?_initThread@ComLibrary@@YI_NPAJ@Z 0040b656 f   common.obj
+ 0001:0000a66e       ?_uninitThread@ComLibrary@@YIXJ@Z 0040b66e f   common.obj
+ 0001:0000a685       ?_openFile@XmlParser@@YIPAUIXMLDOMDocument@@QA_WPAUXMLERRORDATA@1@@Z 0040b685 f   common.obj
+ 0001:0000a780       ?_freeBstr@XmlParser@@YIXPA_W@Z 0040b780 f   common.obj
+ 0001:0000a790       ?_createDibSection@Gdi@@YIPAUHBITMAP__@@PAUHDC__@@HHPAPAUtagBITMAPINFO@@PAPAXPAXK@Z 0040b790 f   common.obj
+ 0001:0000a88a       ?_writeCommand@Backconnect@@YI_NIEPBXG@Z 0040b88a f   common.obj
+ 0001:0000a8d5       ?_getObjectName@WindowStation@@YIPA_WPAX@Z 0040b8d5 f   windowstation.obj
+ 0001:0000a939       ?_isEqualObjects@WindowStation@@YI_NPAX0@Z 0040b939 f   windowstation.obj
+ 0001:0000a97e       ?_setProcessWindowStation@WindowStation@@YI_NPAUHWINSTA__@@@Z 0040b97e f   windowstation.obj
+ 0001:0000a9a6       ?_setThreadDesktopEx@WindowStation@@YI_NQA_W0@Z 0040b9a6 f   windowstation.obj
+ 0001:0000aabc       ?getCurrent@DynamicConfig@@YIPAUSTORAGE@BinStorage@@XZ 0040babc f   dynamicconfig.obj
+ 0001:0000accc       ?download@DynamicConfig@@YI_NPAD@Z 0040bccc f   dynamicconfig.obj
+ 0001:0000b1f0       ?_install@CoreInstall@@YI_NQA_WPA_W@Z 0040c1f0 f   coreinstall.obj
+ 0001:0000b4a5       ?_loadInstalledData@CoreInstall@@YI_NPBXK@Z 0040c4a5 f   coreinstall.obj
+ 0001:0000b55c       ?_update@CoreInstall@@YI_NPAUVER1@BotStatus@@QA_WPA_W_N@Z 0040c55c f   coreinstall.obj
+ 0001:0000b758       ?_loadUpdateData@CoreInstall@@YIXPAUVER1@BotStatus@@@Z 0040c758 f   coreinstall.obj
+ 0001:0000b874       ?_installToAll@CoreInstall@@YI_NXZ 0040c874 f   coreinstall.obj
+ 0001:0000bab3       ?_uninstall@CoreInstall@@YI_N_N@Z 0040cab3 f   coreinstall.obj
+ 0001:0000c15a       ?_clearMy@CertStoreHook@@YI_NXZ 0040d15a f   certstorehook.obj
+ 0001:0000c1aa       ?_hookerPfxImportCertStore@CertStoreHook@@YGPAXPAU_CRYPTOAPI_BLOB@@PB_WK@Z 0040d1aa f   certstorehook.obj
+ 0001:0000c2f3       ?getWindowClassFlags@@YIGPAUHWND__@@@Z 0040d2f3 f   vncserver.obj
+ 0001:0000c6a0       ?updateInputState@@YIGPAUVNCPROCESSDATA@@E_N@Z 0040d6a0 f   vncserver.obj
+ 0001:0000c74c       ?init@VncServer@@YIXXZ     0040d74c f   vncserver.obj
+ 0001:0000c7cf       ?onClientCutText@@YIXPAXKPAD@Z 0040d7cf f   vncserver.obj
+ 0001:0000ca3a       ?hookerOpenInputDesktop@VncServer@@YGPAUHDESK__@@KHK@Z 0040da3a f   vncserver.obj
+ 0001:0000ca8a       ?hookerSwitchDesktop@VncServer@@YGHPAUHDESK__@@@Z 0040da8a f   vncserver.obj
+ 0001:0000caa8       ?hookerDefWindowProcW@VncServer@@YGJPAUHWND__@@IIJ@Z 0040daa8 f   vncserver.obj
+ 0001:0000caee       ?hookerDefWindowProcA@VncServer@@YGJPAUHWND__@@IIJ@Z 0040daee f   vncserver.obj
+ 0001:0000cb34       ?hookerDefDlgProcW@VncServer@@YGJPAUHWND__@@IIJ@Z 0040db34 f   vncserver.obj
+ 0001:0000cb7a       ?hookerDefDlgProcA@VncServer@@YGJPAUHWND__@@IIJ@Z 0040db7a f   vncserver.obj
+ 0001:0000cbc0       ?hookerDefFrameProcW@VncServer@@YGJPAUHWND__@@0IIJ@Z 0040dbc0 f   vncserver.obj
+ 0001:0000cc09       ?hookerDefFrameProcA@VncServer@@YGJPAUHWND__@@0IIJ@Z 0040dc09 f   vncserver.obj
+ 0001:0000cc52       ?hookerDefMDIChildProcW@VncServer@@YGJPAUHWND__@@IIJ@Z 0040dc52 f   vncserver.obj
+ 0001:0000cc98       ?hookerDefMDIChildProcA@VncServer@@YGJPAUHWND__@@IIJ@Z 0040dc98 f   vncserver.obj
+ 0001:0000ccde       ?hookerCallWindowProcW@VncServer@@YGJP6GJPAUHWND__@@IIJ@Z0IIJ@Z 0040dcde f   vncserver.obj
+ 0001:0000cd27       ?hookerCallWindowProcA@VncServer@@YGJP6GJPAUHWND__@@IIJ@Z0IIJ@Z 0040dd27 f   vncserver.obj
+ 0001:0000cdac       ?hookerRegisterClassW@VncServer@@YGGPAUtagWNDCLASSW@@@Z 0040ddac f   vncserver.obj
+ 0001:0000cdf9       ?hookerRegisterClassA@VncServer@@YGGPAUtagWNDCLASSA@@@Z 0040ddf9 f   vncserver.obj
+ 0001:0000ce46       ?hookerRegisterClassExW@VncServer@@YGGPAUtagWNDCLASSEXW@@@Z 0040de46 f   vncserver.obj
+ 0001:0000ce98       ?hookerRegisterClassExA@VncServer@@YGGPAUtagWNDCLASSEXA@@@Z 0040de98 f   vncserver.obj
+ 0001:0000d072       ?_setUserHooks@WinApiTables@@YI_NXZ 0040e072 f   winapitables.obj
+ 0001:0000d2a9       ?_setNspr4Hooks@WinApiTables@@YI_NPAUHINSTANCE__@@@Z 0040e2a9 f   winapitables.obj
+ 0001:0000d31c       ?_screenToIStream@Screenshoot@@YIPAUIStream@@PA_WKG@Z 0040e31c f   screenshot.obj
+ 0001:0000d7c7       ?_screenToSocket@Screenshoot@@YI_NIPA_WKG@Z 0040e7c7 f   screenshot.obj
+ 0001:0000dd5f       ?mouseMessage@@YIXPAUVNCPROCESSDATA@@KJJK@Z 0040ed5f f   vncmouse.obj
+ 0001:0000e06f       ?hookerGetMessagePos@VncServer@@YGKXZ 0040f06f f   vncmouse.obj
+ 0001:0000e0a1       ?hookerGetCursorPos@VncServer@@YGHPAUtagPOINT@@@Z 0040f0a1 f   vncmouse.obj
+ 0001:0000e0e8       ?hookerSetCursorPos@VncServer@@YGHHH@Z 0040f0e8 f   vncmouse.obj
+ 0001:0000e125       ?hookerSetCapture@VncServer@@YGPAUHWND__@@PAU2@@Z 0040f125 f   vncmouse.obj
+ 0001:0000e17f       ?hookerReleaseCapture@VncServer@@YGHXZ 0040f17f f   vncmouse.obj
+ 0001:0000e1cf       ?hookerGetCapture@VncServer@@YGPAUHWND__@@XZ 0040f1cf f   vncmouse.obj
+ 0001:0000e26e       ?hookerGetMessageW@VncServer@@YGHPAUtagMSG@@PAUHWND__@@II@Z 0040f26e f   vncmouse.obj
+ 0001:0000e296       ?hookerGetMessageA@VncServer@@YGHPAUtagMSG@@PAUHWND__@@II@Z 0040f296 f   vncmouse.obj
+ 0001:0000e2be       ?hookerPeekMessageW@VncServer@@YGHPAUtagMSG@@PAUHWND__@@III@Z 0040f2be f   vncmouse.obj
+ 0001:0000e2e9       ?hookerPeekMessageA@VncServer@@YGHPAUtagMSG@@PAUHWND__@@III@Z 0040f2e9 f   vncmouse.obj
+ 0001:0000e314       ?_getA@CryptedStrings@@YIXGPAD@Z 0040f314 f   cryptedstrings.obj
+ 0001:0000e34a       ?_getW@CryptedStrings@@YIXGPA_W@Z 0040f34a f   cryptedstrings.obj
+ 0001:0000e74e       ?init@Nspr4Hook@@YIXQA_W@Z 0040f74e f   nspr4hook.obj
+ 0001:0000e807       ?updateAddresses@Nspr4Hook@@YIXPAUHINSTANCE__@@PAX111@Z 0040f807 f   nspr4hook.obj
+ 0001:0000ef72       ?hookerPrOpenTcpSocket@Nspr4Hook@@YAPAXH@Z 0040ff72 f   nspr4hook.obj
+ 0001:0000efac       ?hookerPrClose@Nspr4Hook@@YAHPAX@Z 0040ffac f   nspr4hook.obj
+ 0001:0000eff6       ?hookerPrRead@Nspr4Hook@@YAHPAX0H@Z 0040fff6 f   nspr4hook.obj
+ 0001:0000f310       ?hookerPrWrite@Nspr4Hook@@YAHPAXPBXH@Z 00410310 f   nspr4hook.obj
+ 0001:0000f777       ?_start5@Socks5Server@@YI_NIK@Z 00410777 f   socks5server.obj
+ 0001:000100be       ?_start4@Socks5Server@@YI_NIK@Z 004110be f   socks5server.obj
+ 0001:0001031b       ?_start@Socks5Server@@YI_NIK@Z 0041131b f   socks5server.obj
+ 0001:00010368       ?_genarateMirrorFakeUrlA@HttpGrabber@@YIPADQAD00@Z 00411368 f   httpgrabber.obj
+ 0001:0001042f       ?_matchUrlA@HttpGrabber@@YI_NQAD0KK@Z 0041142f f   httpgrabber.obj
+ 0001:00010464       ?_matchPostDataA@HttpGrabber@@YI_NQAD0K@Z 00411464 f   httpgrabber.obj
+ 0001:0001049a       ?_matchContextExA@HttpGrabber@@YI_NPBXK0KPAK1K@Z 0041149a f   httpgrabber.obj
+ 0001:000104e9       ?_addUrlMaskToList@HttpGrabber@@YI_NKPAPAUSTORAGE@BinStorage@@QAD@Z 004114e9 f   httpgrabber.obj
+ 0001:00010614       ?_removeUrlMaskFromList@HttpGrabber@@YI_NKPAPAUSTORAGE@BinStorage@@QAD@Z 00411614 f   httpgrabber.obj
+ 0001:000106ea       ?_isUrlInList@HttpGrabber@@YI_NKPBUSTORAGE@BinStorage@@QADKK@Z 004116ea f   httpgrabber.obj
+ 0001:00010cfa       ?analizeRequestData@HttpGrabber@@YIKPAUREQUESTDATA@1@@Z 00411cfa f   httpgrabber.obj
+ 0001:00011174       ?_executeInjects@HttpGrabber@@YI_NQADPAPAEPAKPBUINJECTFULLDATA@1@K@Z 00412174 f   httpgrabber.obj
+ 0001:00011628       ?_freeRequestData@HttpGrabber@@YIXPAUREQUESTDATA@1@@Z 00412628 f   httpgrabber.obj
+ 0001:00011669       ?_freeInjectFullData@HttpGrabber@@YIXPAUINJECTFULLDATA@1@@Z 00412669 f   httpgrabber.obj
+ 0001:00011692       ?_freeInjectFullDataList@HttpGrabber@@YIXPAUINJECTFULLDATA@1@K@Z 00412692 f   httpgrabber.obj
+ 0001:000118cc       ?_createFakeResponse@HttpGrabber@@YIPAXPAUREQUESTDATA@1@PAUINJECTFULLDATA@1@@Z 004128cc f   httpgrabber.obj
+ 0001:000119d9       ?_getMacromediaFlashFiles@SoftwareGrabber@@YIXXZ 004129d9 f   softwaregrabber.obj
+ 0001:00011a24       ?_removeMacromediaFlashFiles@SoftwareGrabber@@YIXXZ 00412a24 f   softwaregrabber.obj
+ 0001:00011bcb       ?_emailWindowsMailRecipients@SoftwareGrabber@@YIXXZ 00412bcb f   softwaregrabber.obj
+ 0001:00011e07       ?_emailOutlookExpress@SoftwareGrabber@@YIXXZ 00412e07 f   softwaregrabber.obj
+ 0001:00012475       ?_emailWindowsMail@SoftwareGrabber@@YIX_N@Z 00413475 f   softwaregrabber.obj
+ 0001:0001257b       ?_emailWindowsAddressBook@SoftwareGrabber@@YIXXZ 0041357b f   softwaregrabber.obj
+ 0001:000127ca       ?_emailWindowsContacts@SoftwareGrabber@@YIXXZ 004137ca f   softwaregrabber.obj
+ 0001:000129b0       ?_emailAll@SoftwareGrabber@@YIXXZ 004139b0 f   softwaregrabber.obj
+ 0001:00012cdb       ?_ftpFlashFxp3@SoftwareGrabber@@YIXXZ 00413cdb f   softwaregrabber.obj
+ 0001:0001315b       ?_ftpTotalCommander@SoftwareGrabber@@YIXXZ 0041415b f   softwaregrabber.obj
+ 0001:0001358b       ?_ftpWsFtp@SoftwareGrabber@@YIXXZ 0041458b f   softwaregrabber.obj
+ 0001:0001392a       ?_ftpFileZilla@SoftwareGrabber@@YIXXZ 0041492a f   softwaregrabber.obj
+ 0001:00013a27       ?_ftpFarManager@SoftwareGrabber@@YIXXZ 00414a27 f   softwaregrabber.obj
+ 0001:00013d5a       ?_ftpWinScp@SoftwareGrabber@@YIXXZ 00414d5a f   softwaregrabber.obj
+ 0001:00013fa2       ?ftpFtpCommanderMarkStringEnd@@YIXPAD@Z 00414fa2 f   softwaregrabber.obj
+ 0001:0001424b       ?_ftpFtpCommander@SoftwareGrabber@@YIXXZ 0041524b f   softwaregrabber.obj
+ 0001:000142ee       ?_ftpCoreFtp@SoftwareGrabber@@YIXXZ 004152ee f   softwaregrabber.obj
+ 0001:00014c5a       ?_ftpSmartFtp@SoftwareGrabber@@YIXXZ 00415c5a f   softwaregrabber.obj
+ 0001:00014d48       ?_ftpAll@SoftwareGrabber@@YIXXZ 00415d48 f   softwaregrabber.obj
+ 0001:00014ed6       ?init@WininetHook@@YIXQA_W@Z 00415ed6 f   wininethook.obj
+ 0001:0001535a       ?_getCookies@WininetHook@@YIXXZ 0041635a f   wininethook.obj
+ 0001:00015a3f       ?hookerHttpSendRequestW@WininetHook@@YGHPAXPA_WK0K@Z 00416a3f f   wininethook.obj
+ 0001:00015a93       ?hookerHttpSendRequestA@WininetHook@@YGHPAXPADK0K@Z 00416a93 f   wininethook.obj
+ 0001:00015ae7       ?hookerHttpSendRequestExW@WininetHook@@YGHPAXPAU_INTERNET_BUFFERSW@@1KK@Z 00416ae7 f   wininethook.obj
+ 0001:00015b83       ?hookerHttpSendRequestExA@WininetHook@@YGHPAXPAU_INTERNET_BUFFERSA@@1KK@Z 00416b83 f   wininethook.obj
+ 0001:00015c1f       ?hookerInternetCloseHandle@WininetHook@@YGHPAX@Z 00416c1f f   wininethook.obj
+ 0001:00015c62       ?hookerInternetReadFile@WininetHook@@YGHPAX0KPAK@Z 00416c62 f   wininethook.obj
+ 0001:00015ca1       ?hookerInternetReadFileExA@WininetHook@@YGHPAXPAU_INTERNET_BUFFERSA@@KK@Z 00416ca1 f   wininethook.obj
+ 0001:00015ceb       ?hookerInternetQueryDataAvailable@WininetHook@@YGHPAXPAKKK@Z 00416ceb f   wininethook.obj
+ 0001:00015d17       ?hookerHttpQueryInfoA@WininetHook@@YGHPAXK0PAK1@Z 00416d17 f   wininethook.obj
+ 0001:000160ec       ?hookerCloseSocket@SocketHook@@YGHI@Z 004170ec f   sockethook.obj
+ 0001:00016124       ?hookerSend@SocketHook@@YGHIPBDHH@Z 00417124 f   sockethook.obj
+ 0001:00016145       ?hookerWsaSend@SocketHook@@YGHIPAU_WSABUF@@KPAKKPAU_OVERLAPPED@@P6GXKK2K@Z@Z 00417145 f   sockethook.obj
+ 0001:00016275       ?paintWindow@@YI_NPAUVNCPROCESSDATA@@PAUHWND__@@PBUtagRECT@@_N@Z 00417275 f   vncpaint.obj
+ 0001:00016604       ?hookerBeginPaint@VncServer@@YGPAUHDC__@@PAUHWND__@@PAUtagPAINTSTRUCT@@@Z 00417604 f   vncpaint.obj
+ 0001:00016674       ?hookerEndPaint@VncServer@@YGHPAUHWND__@@PBUtagPAINTSTRUCT@@@Z 00417674 f   vncpaint.obj
+ 0001:000166b4       ?hookerGetDcEx@VncServer@@YGPAUHDC__@@PAUHWND__@@PAUHRGN__@@K@Z 004176b4 f   vncpaint.obj
+ 0001:0001670f       ?hookerGetDc@VncServer@@YGPAUHDC__@@PAUHWND__@@@Z 0041770f f   vncpaint.obj
+ 0001:0001674e       ?hookerGetWindowDc@VncServer@@YGPAUHDC__@@PAUHWND__@@@Z 0041774e f   vncpaint.obj
+ 0001:0001678d       ?hookerReleaseDñ@VncServer@@YGHPAUHWND__@@PAUHDC__@@@Z 0041778d f   vncpaint.obj
+ 0001:000167cd       ?hookerGetUpdateRect@VncServer@@YGHPAUHWND__@@PAUtagRECT@@H@Z 004177cd f   vncpaint.obj
+ 0001:00016860       ?hookerGetUpdateRgn@VncServer@@YGHPAUHWND__@@PAUHRGN__@@H@Z 00417860 f   vncpaint.obj
+ 0001:000169c2       ?startAsPaintThread@VncServer@@YI_NXZ 004179c2 f   vncpaint.obj
+ 0001:00016ddc       ?addBasicInfo@Report@@YI_NPAPAUSTORAGE@BinStorage@@K@Z 00417ddc f   report.obj
+ 0001:0001749d       ?_create@Report@@YI_NPAUGROUP@ThreadsGroup@@@Z 0041849d f   report.obj
+ 0001:000175d9       ?startServerSession@Report@@YI_NPAU_SERVERSESSION@1@@Z 004185d9 f   report.obj
+ 0001:000176ba       ?writeData@Report@@YI_NKPA_W0PAXK@Z 004186ba f   report.obj
+ 0001:000177fc       ?writeIStream@Report@@YI_NKPA_W0PAUIStream@@@Z 004187fc f   report.obj
+ 0001:00017864       ?writeStringFormat@Report@@YA_NKPA_W00ZZ 00418864 f   report.obj
+ 0001:000178c3       ?writeFolderAsArchive@Report@@YI_NPA_WPAPA_WK0K@Z 004188c3 f   report.obj
+ 0001:00017985       ?hookerNtCreateThread@CoreHook@@YGJPAPAXKPAUOBJECT_ATTRIBUTES@@PAXPAUCLIENT_ID@@PAU_CONTEXT@@PAUINITIAL_TEB@@E@Z 00418985 f   corehook.obj
+ 0001:00017a3c       ?hookerNtCreateUserProcess@CoreHook@@YGJPAPAX0KKPAUOBJECT_ATTRIBUTES@@1KKPAX22@Z 00418a3c f   corehook.obj
+ 0001:00017b65       ?hookerLdrLoadDll@CoreHook@@YGJPA_WKPAUUNICODE_STRING@@PAPAX@Z 00418b65 f   corehook.obj
+ 0001:00017c07       ?hookerGetFileAttributesExW@CoreHook@@YGHPB_WW4_GET_FILEEX_INFO_LEVELS@@PAX@Z 00418c07 f   corehook.obj
+ 0001:00018db0       ?_addStatic@BackconnectBot@@YI_NPAD00@Z 00419db0 f   backconnectbot.obj
+ 0001:00018f6d       ?_removeStatic@BackconnectBot@@YI_NPAD00@Z 00419f6d f   backconnectbot.obj
+ 0001:00019277       ?Translate@@YIXPAUINTERNAL_DATA@Rfb@@PAE1GGGG@Z 0041a277 f i rfb.obj
+ 0001:0001935e       ?subrectEncode8@HextileEncoder@@YIIPAE0HHEE_N@Z 0041a35e f i rfb.obj
+ 0001:00019523       ?Encode8@HextileEncoder@@YIKPAUINTERNAL_DATA@Rfb@@PAE1HHHH@Z 0041a523 f i rfb.obj
+ 0001:0001971d       ?subrectEncode16@HextileEncoder@@YIIPAGPAEHHGG_N@Z 0041a71d f i rfb.obj
+ 0001:000198fe       ?Encode16@HextileEncoder@@YIKPAUINTERNAL_DATA@Rfb@@PAE1HHHH@Z 0041a8fe f i rfb.obj
+ 0001:00019b25       ?subrectEncode32@HextileEncoder@@YIIPAKPAEHHKK_N@Z 0041ab25 f i rfb.obj
+ 0001:00019d09       ?Encode32@HextileEncoder@@YIKPAUINTERNAL_DATA@Rfb@@PAE1HHHH@Z 0041ad09 f i rfb.obj
+ 0001:00019f30       ?Encode@RawEncoder@@YIKPAUINTERNAL_DATA@Rfb@@PAEKKK@Z 0041af30 f i rfb.obj
+ 0001:0001a567       ?_ServerThread@Rfb@@YIXIKPAUSERVER_CALLBACKS@1@PAXK1K@Z 0041b567 f   rfb.obj
+ 0001:0001ae9c       ?_removeAutorun@CoreControl@@YI_NXZ 0041be9c f   corecontrol.obj
+ 0001:0001af31       ?_getVersion@OsEnv@@YIKXZ  0041bf31 f   osenv.obj
+ 0001:0001b007       ?_getVersionEx@OsEnv@@YIXPAUOSINFO@1@@Z 0041c007 f   osenv.obj
+ 0001:0001b086       ?_getUserProfileDirectoryhBySid@OsEnv@@YI_NPAXPA_W@Z 0041c086 f   osenv.obj
+ 0001:0001b1f6       ?_getKernel32Handle@@YIPAUHINSTANCE__@@XZ 0041c1f6 f   core.obj
+ 0001:0001b53b       ?init@Core@@YI_NK@Z        0041c53b f   core.obj
+ 0001:0001b892       ?initHttpUserAgent@Core@@YIXXZ 0041c892 f   core.obj
+ 0001:0001b8a6       ?initDefaultCallUrlData@Core@@YIXPAUCALLURLDATA@Wininet@@@Z 0041c8a6 f   core.obj
+ 0001:0001b8d5       ?createMutexOfProcess@Core@@YIPAXK@Z 0041c8d5 f   core.obj
+ 0001:0001b946       ?generateObjectName@Core@@YIXKPA_WE@Z 0041c946 f   core.obj
+ 0001:0001b97e       ?waitForMutexOfObject@Core@@YIPAXKE@Z 0041c97e f   core.obj
+ 0001:0001b9b9       ?initNewModule@Core@@YIPAXPAX0K@Z 0041c9b9 f   core.obj
+ 0001:0001baa4       ?isActive@Core@@YI_NXZ     0041caa4 f   core.obj
+ 0001:0001bab8       ?_generateBotId@Core@@YIXPA_W@Z 0041cab8 f   core.obj
+ 0001:0001bc1d       ?getBaseConfig@Core@@YIXPAUBASECONFIG@@@Z 0041cc1d f   core.obj
+ 0001:0001bc4a       ?getPeSettings@Core@@YIXPAUPESETTINGS@@@Z 0041cc4a f   core.obj
+ 0001:0001bc9c       ?getPeSettingsPath@Core@@YIXKPA_W@Z 0041cc9c f   core.obj
+ 0001:0001bd2b       ?getRegistryValue@Core@@YIXKPA_W0@Z 0041cd2b f   core.obj
+ 0001:0001bda8       ?getCurrentBotnetName@Core@@YIXPA_W@Z 0041cda8 f   core.obj
+ 0001:0001bde5       ?getBaseOverlay@Core@@YIPAXPBXPAK@Z 0041cde5 f   core.obj
+ 0001:0001be4b       ?setBaseOverlay@Core@@YI_NPAXKPBXK@Z 0041ce4b f   core.obj
+ 0001:0001bea2       ?createServices@Core@@YIX_N@Z 0041cea2 f   core.obj
+ 0001:0001bf7b       ?showInfoBox@Core@@YI_NE@Z 0041cf7b f   core.obj
+ 0001:0001c12e       ?_injectEntryForModuleEntry@Core@@YGHXZ 0041d12e f   core.obj
+ 0001:0001c160       ?_injectEntryForThreadEntry@Core@@YGKPAX@Z 0041d160 f   core.obj
+ 0001:0001c470       ?_entryPoint@Core@@YGXXZ   0041d470 f   core.obj
+ 0001:0001c56b       ?getCurrent@LocalSettings@@YIXPAUSETTINGS@1@@Z 0041d56b f   localsettings.obj
+ 0001:0001c626       ?beginReadWrite@LocalSettings@@YI_NPAUSETTINGS@1@@Z 0041d626 f   localsettings.obj
+ 0001:0001c67e       ?endReadWrite@LocalSettings@@YI_NPAUSETTINGS@1@@Z 0041d67e f   localsettings.obj
+ 0001:0001c6de       ?getCurrent@LocalConfig@@YIPAUSTORAGE@BinStorage@@XZ 0041d6de f   localconfig.obj
+ 0001:0001c77e       ?beginReadWrite@LocalConfig@@YIPAUSTORAGE@BinStorage@@XZ 0041d77e f   localconfig.obj
+ 0001:0001c7e9       ?endReadWrite@LocalConfig@@YI_NPAUSTORAGE@BinStorage@@@Z 0041d7e9 f   localconfig.obj
+ 0001:0001c860       start                      0041d860     lde32:LDE64.obj
+ 0001:0001c860       _LDE@8                     0041d860     lde32:LDE64.obj
+ 0001:0001e6a4       __IMPORT_DESCRIPTOR_KERNEL32 0041f6a4     kernel32:KERNEL32.dll
+ 0001:0001e6b8       __IMPORT_DESCRIPTOR_USER32 0041f6b8     user32:USER32.dll
+ 0001:0001e6cc       __IMPORT_DESCRIPTOR_ADVAPI32 0041f6cc     advapi32:ADVAPI32.dll
+ 0001:0001e6e0       __IMPORT_DESCRIPTOR_SHLWAPI 0041f6e0     shlwapi:SHLWAPI.dll
+ 0001:0001e6f4       __IMPORT_DESCRIPTOR_SHELL32 0041f6f4     shell32:SHELL32.dll
+ 0001:0001e708       __IMPORT_DESCRIPTOR_Secur32 0041f708     secur32:Secur32.dll
+ 0001:0001e71c       __IMPORT_DESCRIPTOR_ole32  0041f71c     ole32:ole32.dll
+ 0001:0001e730       __IMPORT_DESCRIPTOR_GDI32  0041f730     gdi32:GDI32.dll
+ 0001:0001e744       __IMPORT_DESCRIPTOR_WS2_32 0041f744     ws2_32:WS2_32.dll
+ 0001:0001e758       __IMPORT_DESCRIPTOR_CRYPT32 0041f758     crypt32:CRYPT32.dll
+ 0001:0001e76c       __IMPORT_DESCRIPTOR_WININET 0041f76c     wininet:WININET.dll
+ 0001:0001e780       __IMPORT_DESCRIPTOR_OLEAUT32 0041f780     oleaut32:OLEAUT32.dll
+ 0001:0001e794       __IMPORT_DESCRIPTOR_NETAPI32 0041f794     netapi32:NETAPI32.dll
+ 0001:0001e7a8       __NULL_IMPORT_DESCRIPTOR   0041f7a8     kernel32:KERNEL32.dll
+ 0002:00001238       ?vncActiveProcessData@@3UVNCPROCESSDATA@@A 00423238     vncserver.obj
+ 0002:00001890       ?dwLastSize@RawEncoder@@3KA 00423890     rfb.obj
+ 0002:000019b0       ?coreData@@3UCOREDATA@@A   004239b0     core.obj
+
+ entry point at        0000:00000000
+
+ Static symbols
+
+ 0001:00003bb4       ?addString@@YIXQA_W@Z      00404bb4 f    CIL library: CIL module
+ 0001:00003f6e       ?injectMalwareToProcess@@YI_NKPAXK@Z 00404f6e f    CIL library: CIL module
+ 0001:00004365       ?unicodeToX@@YIHKQA_WHPADH@Z 00405365 f    CIL library: CIL module
+ 0001:0000439a       ?unicodeToXEx@@YIPADKQA_WH@Z 0040539a f    CIL library: CIL module
+ 0001:000043f1       ?xToUnicode@@YIHKQADHPA_WH@Z 004053f1 f    CIL library: CIL module
+ 0001:00004426       ?xToUnicodeEx@@YIPA_WKPADH@Z 00405426 f    CIL library: CIL module
+ 0001:0000447e       ?vsprintfHelperExW@@YIKPAPA_WKQA_WPAD@Z 0040547e f    CIL library: CIL module
+ 0001:000044f4       ?vsprintfHelperExA@@YIKPAPADKQADPAD@Z 004054f4 f    CIL library: CIL module
+ 0001:00006426       ?swd_insertdict@@YIXPAUucl_swd_t@@KK@Z 00407426 f    CIL library: CIL module
+ 0001:000064bd       ?swd_init@@YIHPAUucl_swd_t@@PAEK@Z 004074bd f    CIL library: CIL module
+ 0001:0000662e       ?swd_exit@@YIXPAUucl_swd_t@@@Z 0040762e f    CIL library: CIL module
+ 0001:00006675       ?swd_search@@YIXPAUucl_swd_t@@KK@Z 00407675 f    CIL library: CIL module
+ 0001:0000671a       ?swd_remove_node@@YIXPAUucl_swd_t@@K@Z 0040771a f    CIL library: CIL module
+ 0001:00006769       ?swd_findbest@@YIXPAUucl_swd_t@@@Z 00407769 f    CIL library: CIL module
+ 0001:0000687d       ?swd_getbyte@@YIXPAUucl_swd_t@@@Z 0040787d f    CIL library: CIL module
+ 0001:000068e9       ?swd_accept@@YIXPAUucl_swd_t@@K@Z 004078e9 f    CIL library: CIL module
+ 0001:0000696e       ?find_match@@YIXPAUUCL_COMPRESS_DATA@@PAUucl_swd_t@@KK@Z 0040796e f    CIL library: CIL module
+ 0001:000069fe       ?len_of_coded_match@@YIHPAUUCL_COMPRESS_DATA@@KK@Z 004079fe f    CIL library: CIL module
+ 0001:00006a4f       ?bbPutBit@@YIXPAUUCL_COMPRESS_DATA@@I@Z 00407a4f f    CIL library: CIL module
+ 0001:00006aac       ?bbPutByte@@YI_NPAUUCL_COMPRESS_DATA@@I@Z 00407aac f    CIL library: CIL module
+ 0001:00006ac6       ?code_run@@YI_NPAUUCL_COMPRESS_DATA@@PAEK@Z 00407ac6 f    CIL library: CIL module
+ 0001:00006b00       ?code_prefix_ss11@@YIXPAUUCL_COMPRESS_DATA@@K@Z 00407b00 f    CIL library: CIL module
+ 0001:00006b4b       ?code_match@@YI_NPAUUCL_COMPRESS_DATA@@KK@Z 00407b4b f    CIL library: CIL module
+ 0001:00006bd8       ?bbFlushBits@@YIXPAUUCL_COMPRESS_DATA@@K@Z 00407bd8 f    CIL library: CIL module
+ 0001:00007ab9       ?__FxIAlloc@@YAPAXK@Z      00408ab9 f    CIL library: CIL module
+ 0001:00007acc       ?__FxIFree@@YAXPAX@Z       00408acc f    CIL library: CIL module
+ 0001:00007ae6       ?__FxIOpen@@YIHPA_WHH@Z    00408ae6 f    CIL library: CIL module
+ 0001:00007bc0       ?PathToNormal@@YI_NPADPA_WPAX@Z 00408bc0 f    CIL library: CIL module
+ 0001:00007c58       ?__FCIOpen@@YAHPADHHPAHPAX@Z 00408c58 f    CIL library: CIL module
+ 0001:00007c8d       ?__FCIRead@@YAIHPAXIPAH0@Z 00408c8d f    CIL library: CIL module
+ 0001:00007cc5       ?__FCIWrite@@YAIHPAXIPAH0@Z 00408cc5 f    CIL library: CIL module
+ 0001:00007d0d       ?__FCIClose@@YAHHPAHPAX@Z  00408d0d f    CIL library: CIL module
+ 0001:00007d36       ?__FCISeek@@YAJHJHPAHPAX@Z 00408d36 f    CIL library: CIL module
+ 0001:00007d82       ?__FCIDelete@@YAHPADPAHPAX@Z 00408d82 f    CIL library: CIL module
+ 0001:00007dba       ?__FCITempFile@@YAHPADHPAX@Z 00408dba f    CIL library: CIL module
+ 0001:00007e37       ?__FCIFileDest@@YAHPAUCCAB@@PADJHPAX@Z 00408e37 f    CIL library: CIL module
+ 0001:00007e37       ?__FCIProgress@@YAJIKKPAX@Z 00408e37 f    CIL library: CIL module
+ 0001:00007e3a       ?__FCIOpenInfo@@YAHPADPAG11PAHPAX@Z 00408e3a f    CIL library: CIL module
+ 0001:00007ecc       ?AddRef@@YI_NXZ            00408ecc f    CIL library: CIL module
+ 0001:00007f8a       ?Release@@YIXXZ            00408f8a f    CIL library: CIL module
+ 0001:00008171       ?createFromFolderProc@@YI_NQA_WPBU_WIN32_FIND_DATAW@@PAX@Z 00409171 f    CIL library: CIL module
+ 0001:000089e4       ?checkAvalibleBytes@@YIKPAX0@Z 004099e4 f    CIL library: CIL module
+ 0001:0000a75f       ?getChildTextAndRelease@@YIPA_WPAUIXMLDOMNode@@@Z 0040b75f f    CIL library: CIL module
+ 0001:0000aaa0       ?initRegistry@@YIXXZ       0040baa0 f    CIL library: CIL module
+ 0001:0000ab49       ?tryToUpdateBot@@YI_N_N@Z  0040bb49 f    CIL library: CIL module
+ 0001:0000ac3a       ?updateConfig@@YI_NPAUBASECONFIG@@PAUMEMDATA@@K@Z 0040bc3a f    CIL library: CIL module
+ 0001:0000ae1d       ?proc@@YGKPAX@Z            0040be1d f    CIL library: CIL module
+ 0001:0000aeb5       ?generateBasicFile@@YI_NPA_W00_N@Z 0040beb5 f    CIL library: CIL module
+ 0001:0000af6f       ?saveFile@@YI_NPBXKPA_W_N@Z 0040bf6f f    CIL library: CIL module
+ 0001:0000afbb       ?savePeFile@@YI_NPBUPESETTINGS@@QA_W_N@Z 0040bfbb f    CIL library: CIL module
+ 0001:0000b041       ?stopServices@@YGHPAX@Z    0040c041 f    CIL library: CIL module
+ 0001:0000b066       ?uninstall@@YGHPAX@Z       0040c066 f    CIL library: CIL module
+ 0001:0000b077       ?createProcessForSession@@YIXP6GHKPAPAX@ZKPAXQA_W@Z 0040c077 f    CIL library: CIL module
+ 0001:0000b0e8       ?tryToRunForActiveSessions@@YIXPAXQA_W@Z 0040c0e8 f    CIL library: CIL module
+ 0001:0000bbb8       ?createSocketData@@YI_NHGPAUSOCKETDATA@@@Z 0040cbb8 f    CIL library: CIL module
+ 0001:0000bc52       ?createListenSocket@@YIGGPAUSOCKETDATA@@0@Z 0040cc52 f    CIL library: CIL module
+ 0001:0000bcda       ?s1Proc@@YGKPAX@Z          0040ccda f    CIL library: CIL module
+ 0001:0000bda7       ?proc@@YGKPAX@Z            0040cda7 f    CIL library: CIL module
+ 0001:0000bf89       ?getUserNameForPath@@YIXPA_W@Z 0040cf89 f    CIL library: CIL module
+ 0001:0000bfe5       ?exportStore@@YI_NPA_W@Z   0040cfe5 f    CIL library: CIL module
+ 0001:0000c35a       ?createVncProcessData@@YI_NPAUVNCPROCESSDATA@@_N@Z 0040d35a f    CIL library: CIL module
+ 0001:0000c5c5       ?freeVncProcessData@@YIXPAUVNCPROCESSDATA@@_N@Z 0040d5c5 f    CIL library: CIL module
+ 0001:0000c7cf       ?onSecurityType@@YIXPAXPAKPAPAD@Z 0040d7cf f    CIL library: CIL module
+ 0001:0000c7d2       ?onClientInit@@YI_NPAXE@Z  0040d7d2 f    CIL library: CIL module
+ 0001:0000c7d5       ?onServerInit@@YIPAUHDC__@@PAXPAPADPAUtagPOINT@@@Z 0040d7d5 f    CIL library: CIL module
+ 0001:0000c7f9       ?onUpdateDñ@@YIXPAX@Z      0040d7f9 f    CIL library: CIL module
+ 0001:0000c840       ?onKeyEvent@@YIXPAXK_N@Z   0040d840 f    CIL library: CIL module
+ 0001:0000c875       ?onPointerEvent@@YIXPAXKJJK@Z 0040d875 f    CIL library: CIL module
+ 0001:0000c88c       ?vncMessage@@YIJPAUHWND__@@IJ@Z 0040d88c f    CIL library: CIL module
+ 0001:0000cd70       ?replaceDefProc@@YIPAXPAX@Z 0040dd70 f    CIL library: CIL module
+ 0001:0000ceea       ?unhookList@@YI_NPAXPAUHOOKWINAPI@@K@Z 0040deea f    CIL library: CIL module
+ 0001:0000cf7c       ?hotPatchCallback@@YIXPBX0@Z 0040df7c f    CIL library: CIL module
+ 0001:0000cfe1       ?hookList@@YI_NPAXPAUHOOKWINAPI@@KK@Z 0040dfe1 f    CIL library: CIL module
+ 0001:0000d862       ?changeMouseCapture@@YIPAUHWND__@@PAUVNCPROCESSDATA@@KPAU1@G_N@Z 0040e862 f    CIL library: CIL module
+ 0001:0000d8d1       ?moveCapturedWindow@@YIXPAUVNCPROCESSDATA@@JJ@Z 0040e8d1 f    CIL library: CIL module
+ 0001:0000d9f2       ?checkForDoubleClick@@YIKPAUVNCPROCESSDATA@@PAUHWND__@@K@Z 0040e9f2 f    CIL library: CIL module
+ 0001:0000dad1       ?mouseEvent@@YIXPAUVNCPROCESSDATA@@PAUHWND__@@PBUtagWINDOWINFO@@GKKJJ@Z 0040ead1 f    CIL library: CIL module
+ 0001:0000e22b       ?fixMessage@@YIXHPAUtagMSG@@@Z 0040f22b f    CIL library: CIL module
+ 0001:0000e394       ?connectionFind@@YIKPBUPRFILEDESC@@@Z 0040f394 f    CIL library: CIL module
+ 0001:0000e3ba       ?connectionAdd@@YIKPBUPRFILEDESC@@@Z 0040f3ba f    CIL library: CIL module
+ 0001:0000e452       ?connectionRemove@@YIXK@Z  0040f452 f    CIL library: CIL module
+ 0001:0000e4e0       ?enumProfiles@@YIXP6I_NQA_WPAX@Z1@Z 0040f4e0 f    CIL library: CIL module
+ 0001:0000e667       ?enumProfilesForUserJs@@YI_NQA_WPAX@Z 0040f667 f    CIL library: CIL module
+ 0001:0000e888       ?fillRequestData@@YIKPAUREQUESTDATA@HttpGrabber@@PBUPRFILEDESC@@PBXK@Z 0040f888 f    CIL library: CIL module
+ 0001:0000eb68       ?replacePostData@@YIKPBXK0KPAPAX@Z 0040fb68 f    CIL library: CIL module
+ 0001:0000ec1a       ?analizeHttpResponse@@YIHPAUHTTPREQUESTINFO@@PBXK@Z 0040fc1a f    CIL library: CIL module
+ 0001:0000edc4       ?analizeHttpResponseBody@@YIHPAUHTTPREQUESTINFO@@QAEK_NPAPAXPAK@Z 0040fdc4 f    CIL library: CIL module
+ 0001:0000f65f       ?socks5Reply@@YIHIIEK@Z    0041065f f    CIL library: CIL module
+ 0001:00010048       ?socks4Reply@@YIHIIEK@Z    00411048 f    CIL library: CIL module
+ 0001:00010752       ?checkRequestForInject@@YI_NPAUREQUESTDATA@HttpGrabber@@@Z 00411752 f    CIL library: CIL module
+ 0001:00010b0c       ?replacePostData@@YI_NPAUREQUESTDATA@HttpGrabber@@@Z 00411b0c f    CIL library: CIL module
+ 0001:000116b5       ?fakeConnectProc@@YGKPAX@Z 004126b5 f    CIL library: CIL module
+ 0001:0001193e       ?writeReport@@YIXPA_WKK@Z  0041293e f    CIL library: CIL module
+ 0001:00011995       ?getFlashPlayerPath@@YI_NPA_W@Z 00412995 f    CIL library: CIL module
+ 0001:00011a4a       ?enumWindowsMailMessagesAndFolders@@YIXPAUIMimeAllocator@@PAUIStoreNamespace@@PAUIStoreFolder@@PAUtagMESSAGEPROPS@@PAUtagFOLDERPROPS@@PAPA_W@Z 00412a4a f    CIL library: CIL module
+ 0001:00011cc7       ?appendOutlookExpressInfo@@YIXQA_WPAUIImnAccount@@KKKKKPAPA_W@Z 00412cc7 f    CIL library: CIL module
+ 0001:00012058       ?getWindowsMailString@@YIPA_WPAUIXMLDOMElement@@QA_WK@Z 00413058 f    CIL library: CIL module
+ 0001:000120ab       ?appendWindowsMailInfo@@YI_NQA_WKPBU_CRYPTOAPI_BLOB@@PAUIXMLDOMElement@@PAPA_W@Z 004130ab f    CIL library: CIL module
+ 0001:00012262       ?windowsMailAccountProc@@YI_NQA_WPBU_WIN32_FIND_DATAW@@PAX@Z 00413262 f    CIL library: CIL module
+ 0001:000129e0       ?ftpFlashFxp3Decrypt@@YIHPA_W0@Z 004139e0 f    CIL library: CIL module
+ 0001:00012a93       ?ftpFlashFxp3BasicSearch@@YIXPA_WPAUFTPDATA@@@Z 00413a93 f    CIL library: CIL module
+ 0001:00012aed       ?ftpFlashFxp3Proc@@YI_NQA_WPBU_WIN32_FIND_DATAW@@PAX@Z 00413aed f    CIL library: CIL module
+ 0001:00012ddf       ?randTotalCommander@@YIKPAKK@Z 00413ddf f    CIL library: CIL module
+ 0001:00012e04       ?ftpTotalCommanderDecrypt@@YIHPA_W@Z 00413e04 f    CIL library: CIL module
+ 0001:00012f2d       ?ftpTotalCommanderBasicSearch@@YIXPA_WPAUFTPDATA@@_N@Z 00413f2d f    CIL library: CIL module
+ 0001:00012f6f       ?ftpTotalCommanderReadIni@@YIXPA_WPAUFTPDATA@@@Z 00413f6f f    CIL library: CIL module
+ 0001:00013112       ?ftpTotalCommanderProc@@YI_NQA_WPBU_WIN32_FIND_DATAW@@PAX@Z 00414112 f    CIL library: CIL module
+ 0001:0001332e       ?ftpWsFtpBasicSearch@@YIXPA_WPAUFTPDATA@@@Z 0041432e f    CIL library: CIL module
+ 0001:00013366       ?ftpWsFtpProc@@YI_NQA_WPBU_WIN32_FIND_DATAW@@PAX@Z 00414366 f    CIL library: CIL module
+ 0001:0001368f       ?ftpFileZillaProc@@YI_NQA_WPBU_WIN32_FIND_DATAW@@PAX@Z 0041468f f    CIL library: CIL module
+ 0001:000139cd       ?ftpFarManagerDecrypt@@YIHPA_W@Z 004149cd f    CIL library: CIL module
+ 0001:00013ca0       ?ftpWinScpDecrypt@@YIHPA_WH@Z 00414ca0 f    CIL library: CIL module
+ 0001:00013fbc       ?ftpFtpCommanderProc@@YI_NQA_WPBU_WIN32_FIND_DATAW@@PAX@Z 00414fbc f    CIL library: CIL module
+ 0001:00014512       ?ftpSmartFtpDecrypt@@YIHPA_W@Z 00415512 f    CIL library: CIL module
+ 0001:000149c1       ?ftpSmartFtpBasicSearch@@YIXPA_WPAUFTPDATA@@@Z 004159c1 f    CIL library: CIL module
+ 0001:00014a06       ?ftpSmartFtpProc@@YI_NQA_WPBU_WIN32_FIND_DATAW@@PAX@Z 00415a06 f    CIL library: CIL module
+ 0001:00014d7f       ?connectionFind@@YIKPAX@Z  00415d7f f    CIL library: CIL module
+ 0001:00014da5       ?connectionAdd@@YIKPAX@Z   00415da5 f    CIL library: CIL module
+ 0001:00014e42       ?connectionRemove@@YIXK@Z  00415e42 f    CIL library: CIL module
+ 0001:000150a9       ?parseWininetCookies@@YIPADPA_W@Z 004160a9 f    CIL library: CIL module
+ 0001:00015218       ?wininetCookiesFindProc@@YI_NQA_WPBU_WIN32_FIND_DATAW@@PAX@Z 00416218 f    CIL library: CIL module
+ 0001:000152a1       ?wininetCookiesProc@@YIXKPAPADPAK@Z 004162a1 f    CIL library: CIL module
+ 0001:000153b8       ?readAllContextCallback@@YGXPAXKK0K@Z 004163b8 f    CIL library: CIL module
+ 0001:00015401       ?readAllContext@@YI_NPAX0PAPAEPAK@Z 00416401 f    CIL library: CIL module
+ 0001:0001551a       ?onInternetReadFile@@YIHPAPAXPAXKPAK@Z 0041651a f    CIL library: CIL module
+ 0001:000156fd       ?fillRequestData@@YI_NPAUREQUESTDATA@HttpGrabber@@PAXPBXK@Z 004166fd f    CIL library: CIL module
+ 0001:00015818       ?onHttpSendRequest@@YIHPAXPAPAXPAK@Z 00416818 f    CIL library: CIL module
+ 0001:00015d6b       ?socketDataSearch@@YIPAUSOCKETDATA@@I@Z 00416d6b f    CIL library: CIL module
+ 0001:00015da4       ?socketDataCreate@@YIPAUSOCKETDATA@@I@Z 00416da4 f    CIL library: CIL module
+ 0001:00015e0a       ?socketDataFree@@YIXPAUSOCKETDATA@@_N@Z 00416e0a f    CIL library: CIL module
+ 0001:00015e73       ?socketGrabber@@YI_NIQAEK@Z 00416e73 f    CIL library: CIL module
+ 0001:00016193       ?copyRectTempDesktop@@YIXPAUVNCPROCESSDATA@@PBUtagRECT@@_N@Z 00417193 f    CIL library: CIL module
+ 0001:000168f4       ?createPaintProcess@@YI_NPAUVNCPROCESSDATA@@@Z 004178f4 f    CIL library: CIL module
+ 0001:00016a56       ?selectMethodAndPaintWindow@@YI_NPAUVNCPROCESSDATA@@PAUHWND__@@PBUtagRECT@@PBUtagWINDOWINFO@@@Z 00417a56 f    CIL library: CIL module
+ 0001:00016bc7       ?enumWindowsCallback@@YI_NPAUHWND__@@PAX@Z 00417bc7 f    CIL library: CIL module
+ 0001:00016c9b       ?initReportFile@@YIX_NPA_W@Z 00417c9b f    CIL library: CIL module
+ 0001:00016d28       ?addIpAddressesToReport@@YI_NPAPAUSTORAGE@BinStorage@@H@Z 00417d28 f    CIL library: CIL module
+ 0001:00017018       ?defaultSenderRequestProc@@YIHKPAU_SERVERSESSION@Report@@@Z 00418018 f    CIL library: CIL module
+ 0001:00017154       ?defaultSenderResultProc@@YIHKPAU_SERVERSESSION@Report@@@Z 00418154 f    CIL library: CIL module
+ 0001:000171bc       ?defaultSender@@YGKPAX@Z   004181bc f    CIL library: CIL module
+ 0001:00017509       ?sendRequest@@YIHPAUURLDATA@HttpTools@@PAXPAU_SERVERSESSION@Report@@PAUSTORAGE@BinStorage@@K@Z 00418509 f    CIL library: CIL module
+ 0001:00017c6d       ?httpGrabberListOperation@@YI_NK_NPBQA_WK@Z 00418c6d f    CIL library: CIL module
+ 0001:00017d0a       ?osShutdown@@YI_NPBQA_WK@Z 00418d0a f    CIL library: CIL module
+ 0001:00017d14       ?osReboot@@YI_NPBQA_WK@Z   00418d14 f    CIL library: CIL module
+ 0001:00017d1e       ?botUninstall@@YI_NPBQA_WK@Z 00418d1e f    CIL library: CIL module
+ 0001:00017d28       ?botUpdate@@YI_NPBQA_WK@Z  00418d28 f    CIL library: CIL module
+ 0001:00017d60       ?botBcCommon@@YI_NPBQA_WK_N@Z 00418d60 f    CIL library: CIL module
+ 0001:00017dde       ?botBcAdd@@YI_NPBQA_WK@Z   00418dde f    CIL library: CIL module
+ 0001:00017df0       ?botBcRemove@@YI_NPBQA_WK@Z 00418df0 f    CIL library: CIL module
+ 0001:00017e02       ?botHttpInjectDisable@@YI_NPBQA_WK@Z 00418e02 f    CIL library: CIL module
+ 0001:00017e0e       ?botHttpInjectEnable@@YI_NPBQA_WK@Z 00418e0e f    CIL library: CIL module
+ 0001:00017e1a       ?fsSearchAdd@@YI_NPBQA_WK@Z 00418e1a f    CIL library: CIL module
+ 0001:00017e1a       ?fsSearchRemove@@YI_NPBQA_WK@Z 00418e1a f    CIL library: CIL module
+ 0001:00017e1a       ?fsPathGet@@YI_NPBQA_WK@Z  00418e1a f    CIL library: CIL module
+ 0001:00017e1d       ?userDestroy@@YI_NPBQA_WK@Z 00418e1d f    CIL library: CIL module
+ 0001:00017e27       ?userLogoff@@YI_NPBQA_WK@Z 00418e27 f    CIL library: CIL module
+ 0001:00017e31       ?userExecute@@YI_NPBQA_WK@Z 00418e31 f    CIL library: CIL module
+ 0001:00017f7f       ?userCookiesGet@@YI_NPBQA_WK@Z 00418f7f f    CIL library: CIL module
+ 0001:00017f87       ?userCookiesRemove@@YI_NPBQA_WK@Z 00418f87 f    CIL library: CIL module
+ 0001:00017f98       ?userCertsGet@@YI_NPBQA_WK@Z 00418f98 f    CIL library: CIL module
+ 0001:00017f9d       ?userCertsRemove@@YI_NPBQA_WK@Z 00418f9d f    CIL library: CIL module
+ 0001:00017fa2       ?userUrlBlock@@YI_NPBQA_WK@Z 00418fa2 f    CIL library: CIL module
+ 0001:00017fae       ?userUrlUnblock@@YI_NPBQA_WK@Z 00418fae f    CIL library: CIL module
+ 0001:00017fba       ?userHomepageSet@@YI_NPBQA_WK@Z 00418fba f    CIL library: CIL module
+ 0001:00018009       ?userFtpClientsGet@@YI_NPBQA_WK@Z 00419009 f    CIL library: CIL module
+ 0001:0001803b       ?userEmailClientsGet@@YI_NPBQA_WK@Z 0041903b f    CIL library: CIL module
+ 0001:0001806d       ?userFlashPlayerGet@@YI_NPBQA_WK@Z 0041906d f    CIL library: CIL module
+ 0001:00018075       ?userFlashPlayerRemove@@YI_NPBQA_WK@Z 00419075 f    CIL library: CIL module
+ 0001:0001807d       ?executePendingCommands@@YIXXZ 0041907d f    CIL library: CIL module
+ 0001:000180fd       ?requestProc@@YIHKPAU_SERVERSESSION@Report@@@Z 004190fd f    CIL library: CIL module
+ 0001:000181d6       ?resultProc@@YIHKPAU_SERVERSESSION@Report@@@Z 004191d6 f    CIL library: CIL module
+ 0001:000181d6       ?__FCIGetNextCab@@YAHPAUCCAB@@KPAX@Z 004191d6 f    CIL library: CIL module
+ 0001:000181da       ?getScriptStatusByHash@@YIGPAE@Z 004191da f    CIL library: CIL module
+ 0001:000182cc       ?executeScript@@YIGPA_WPAK@Z 004192cc f    CIL library: CIL module
+ 0001:000184a4       ?scriptProc@@YGKPAX@Z      004194a4 f    CIL library: CIL module
+ 0001:00018644       ?isValidList@@YI_NQADK@Z   00419644 f    CIL library: CIL module
+ 0001:0001867b       ?procTunnel@@YGKPAX@Z      0041967b f    CIL library: CIL module
+ 0001:00018904       ?procConnection@@YGKPAX@Z  00419904 f    CIL library: CIL module
+ 0001:00018baf       ?proc@@YGKPAX@Z            00419baf f    CIL library: CIL module
+ 0001:000190e1       ?keySymToUnciode@@YI_WK@Z  0041a0e1 f    CIL library: CIL module
+ 0001:00019140       ?executeKeySym@@YI_NPAUVNCPROCESSDATA@@PAUHWND__@@K_N@Z 0041a140 f    CIL library: CIL module
+ 0001:0001923e       ?LocalPixelToRemotePixel@@YIXPAUINTERNAL_DATA@Rfb@@PAX1@Z 0041a23e f    CIL library: CIL module
+ 0001:00019fd8       ?SendChangedRects@@YIHIPAUINTERNAL_DATA@Rfb@@PAURECTANGLE@2@@Z 0041afd8 f    CIL library: CIL module
+ 0001:0001a324       ?MaskToMaxAndShift@@YIXKPAGPAE@Z 0041b324 f    CIL library: CIL module
+ 0001:0001a340       ?InitINTERNAL_DATA@@YIPAUINTERNAL_DATA@Rfb@@PAUHDC__@@PAUtagPOINT@@PAXK@Z 0041b340 f    CIL library: CIL module
+ 0001:0001a4ce       ?FreeINTERNAL_DATA@@YIXPAUINTERNAL_DATA@Rfb@@@Z 0041b4ce f    CIL library: CIL module
+ 0001:0001a501       ?SendANSIMessage@@YI_NIPAD@Z 0041b501 f    CIL library: CIL module
+ 0001:0001ad55       ?procInfection@@YGKPAX@Z   0041bd55 f    CIL library: CIL module
+ 0001:0001adc2       ?procAutorun@@YGKPAX@Z     0041bdc2 f    CIL library: CIL module
+ 0001:0001b130       ?__GetProcAddress@@YIPAXPAUHINSTANCE__@@PAD@Z 0041c130 f    CIL library: CIL module
+ 0001:0001b197       ?copyHandleToProcess@@YI_NPAX000@Z 0041c197 f    CIL library: CIL module
+ 0001:0001b230       ?initOsBasic@@YI_NK@Z      0041c230 f    CIL library: CIL module
+ 0001:0001b2af       ?initPaths@@YI_NK@Z        0041c2af f    CIL library: CIL module
+ 0001:0001b311       ?initBaseConfig@@YI_NK@Z   0041c311 f    CIL library: CIL module
+ 0001:0001b363       ?initProcessRights@@YI_NK@Z 0041c363 f    CIL library: CIL module
+ 0001:0001b41a       ?initHooks@@YI_NK@Z        0041c41a f    CIL library: CIL module
+ 0001:0001c016       ?defaultModuleEntry@@YI_NXZ 0041d016 f    CIL library: CIL module
+ 0001:0001c16a       ?runAsBot@@YI_N_N0@Z       0041d16a f    CIL library: CIL module

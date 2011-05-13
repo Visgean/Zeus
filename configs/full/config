@@ -1,0 +1,19 @@
+debug                = 0
+manual               = 0
+
+nspr4                = 1
+wininet              = 1
+software_ftp         = 1
+software_email       = 1
+
+socket_ftp           = 1
+socket_pop3          = 1
+
+vnc                  = 1
+jabber_notifier      = 1
+
+client_platforms     = win32
+server_platforms     = php
+bcserver_platforms   = win32
+builder_platforms    = win32
+buildtools_platforms = 0

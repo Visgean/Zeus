@@ -1,0 +1,77 @@
+#include <windows.h>
+
+#include "../../common/config.h"
+#include "resources.h"
+
+#define TOOL_WIDTH  275
+#define TOOL_HEIGHT 205
+LANGUAGE LANG_NEUTRAL, SUBLANG_NEUTRAL
+
+#if !defined SUBSYSTEM_CONSOLE
+////////////////////////////////////////////////////////////////////////////////////////////////////
+// Dialog
+////////////////////////////////////////////////////////////////////////////////////////////////////
+DIALOG_MAIN DIALOGEX 0, 0, 400, 230
+CAPTION ""
+FONT  8, "MS Shell Dlg 2"
+STYLE DS_CENTER | DS_SHELLFONT | WS_MINIMIZEBOX | WS_POPUP | WS_SYSMENU
+EXSTYLE WS_EX_APPWINDOW
+{
+  LISTBOX      IDC_TOOLSLIST,   5, 5, 100, 220, LBS_HASSTRINGS | LBS_NOINTEGRALHEIGHT | WS_VSCROLL | WS_TABSTOP
+  GROUPBOX "", IDC_TITLE,     110, 5, 285, 220
+}
+////////////////////////////////////////////////////////////////////////////////////////////////////
+DIALOG_TOOL_INFO DIALOGEX 115, 15, TOOL_WIDTH, TOOL_HEIGHT
+FONT  8, "MS Shell Dlg 2"
+STYLE DS_SHELLFONT | DS_CONTROL | WS_CHILD
+{
+  GROUPBOX   "", IDC_INFO_VERSION_TITLE,                0,   0, TOOL_WIDTH,       75
+  EDITTEXT       IDC_INFO_VERSION,                      5,  10, TOOL_WIDTH - 10,  60, ES_READONLY | ES_MULTILINE | ES_AUTOVSCROLL | WS_BORDER | WS_TABSTOP
+  GROUPBOX   "", IDC_INFO_BOT_TITLE,                    0,  80, TOOL_WIDTH,      125
+  LTEXT      "", IDC_INFO_BOT_KEY_TITLE,                5,  90, TOOL_WIDTH - 10,   8
+  EDITTEXT       IDC_INFO_BOT_KEY,                      5, 103, TOOL_WIDTH - 10,  12, ES_AUTOHSCROLL | WS_BORDER | WS_TABSTOP
+  LTEXT      "", IDC_INFO_BOT_INFO_TITLE,               5, 120, TOOL_WIDTH - 10,   8
+  EDITTEXT       IDC_INFO_BOT_INFO,                     5, 133, TOOL_WIDTH - 10,  48, ES_READONLY | ES_MULTILINE | ES_AUTOVSCROLL | WS_BORDER | WS_TABSTOP
+  PUSHBUTTON "", IDC_INFO_BOT_REFRESH,   TOOL_WIDTH - 170, 186,              80,  14, WS_TABSTOP
+  PUSHBUTTON "", IDC_INFO_BOT_REMOVE,    TOOL_WIDTH -  85, 186,              80,  14, WS_TABSTOP
+}
+////////////////////////////////////////////////////////////////////////////////////////////////////
+#if(BO_CLIENT_PLATFORMS > 0)
+DIALOG_TOOL_BUILDER DIALOGEX 115, 15, TOOL_WIDTH, TOOL_HEIGHT
+FONT  8, "MS Shell Dlg 2"
+STYLE DS_SHELLFONT | DS_CONTROL | WS_CHILD
+{
+  LTEXT      "", IDC_BUILDER_SOURCE_TITLE,                 0,  0, TOOL_WIDTH,                      8
+  EDITTEXT       IDC_BUILDER_SOURCE,                       0, 13, TOOL_WIDTH - 110,               12, ES_AUTOHSCROLL | ES_READONLY | WS_BORDER | WS_TABSTOP
+  PUSHBUTTON "", IDC_BUILDER_SOURCE_BROWSE, TOOL_WIDTH - 105, 12,               50,               14, WS_TABSTOP
+  PUSHBUTTON "", IDC_BUILDER_SOURCE_EDIT,   TOOL_WIDTH -  50, 12,               50,               14, WS_TABSTOP
+  GROUPBOX   "", IDC_BUILDER_BUILD_TITLE,                  0, 31, TOOL_WIDTH,       TOOL_HEIGHT - 31
+  PUSHBUTTON "", IDC_BUILDER_BUILD_CONFIG,                 5, 41,               130,              14, WS_TABSTOP
+  PUSHBUTTON "", IDC_BUILDER_BUILD_BOT,                  140, 41,               130,              14, WS_TABSTOP
+  EDITTEXT       IDC_BUILDER_BUILD_OUTPUT,                 5, 60, TOOL_WIDTH  - 10, TOOL_HEIGHT - 65, ES_READONLY | ES_MULTILINE | ES_AUTOVSCROLL | WS_VSCROLL | WS_BORDER | WS_TABSTOP
+}
+#endif
+////////////////////////////////////////////////////////////////////////////////////////////////////
+DIALOG_TOOL_SETTINGS DIALOGEX 115, 15, TOOL_WIDTH, TOOL_HEIGHT
+FONT  8, "MS Shell Dlg 2"
+STYLE DS_SHELLFONT | DS_CONTROL | WS_CHILD
+{
+  LTEXT         "", IDC_SETTINGS_LANGUAGE_TITLE, 0,                0, TOOL_WIDTH,  8
+  COMBOBOX          IDC_SETTINGS_LANGUAGE,       0,               13, TOOL_WIDTH, 100, CBS_DROPDOWNLIST | WS_TABSTOP
+  DEFPUSHBUTTON "", IDC_SETTINGS_APPLY,          0, TOOL_HEIGHT - 14, TOOL_WIDTH,  14, WS_TABSTOP
+}
+#endif
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+// Icon
+////////////////////////////////////////////////////////////////////////////////////////////////////
+ICON_MAIN ICON "main.ico"
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+// Manifest
+////////////////////////////////////////////////////////////////////////////////////////////////////
+#if defined SUBSYSTEM_CONSOLE
+1 RT_MANIFEST "cuimanifest.xml"
+#else
+1 RT_MANIFEST "guimanifest.xml"
+#endif

