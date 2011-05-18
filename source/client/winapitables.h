@@ -57,14 +57,13 @@ namespace WinApiTables
   bool _trySetNspr4HooksEx(LPWSTR moduleName, HMODULE moduleHandle);
 #endif
 
-  /*
-    Óñòàíîâêà äëÿ nspr4.dll. 
+  /*Â Â Â Â Installation for nspr4.dll.
 
-    IN nspr4Handle - õýíäë nspr4.dll.
-    
-    Return         - true - â ñëó÷àè óñïåõà,
-                     false - â ñëó÷àè îøèáêè.
-  */
+Â Â Â Â IN nspr4Handle - handle nspr4.dll.
+Â Â Â Â 
+Â Â Â Â Return - true - if successful,
+Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â false - if an error occurs.
+Â Â */
 #if(BO_NSPR4 > 0)
   bool _setNspr4Hooks(HMODULE nspr4Handle);
 #endif

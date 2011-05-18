@@ -8,14 +8,12 @@
   ВНИМАНИЕ: Файл находиться в UTF-8 кодировке. Файл всегда должен сохраняться без BOM (заголовок UTF-8).
 */
 
-/*
-  Создание архива.
-  
-  IN $archive - string, полный путь по которому должен быть создан архив (без расширения).
-  IN $files   - array, список файлов для добавления в архив.
-  
-  Return      - mixed, имя архива - в случаи успешного создания архива, false - в случаи ошибки.
-*/
+/*  RЎRѕR · RґR RЅReRμ ° F ° SЂS ... ReRІR °.
+  
+  IN $ archive - string, RїRѕR "RЅS <P № RїSѓS, SЊ RїRѕ RєRѕS, RѕSЂRѕRјSѓ RґRѕR" P ¶ RμRЅ P ± C <, SЊ SЃRѕR · RґR RЅ ° F ° SЂS ... ReRІ (P ± RμR · SЂR ° SЃS € ReSЂRμRЅReSЏ).
+  IN $ files - array, SЃRїReSЃRѕRє C "P ° P № R" RѕRІ RґR "SЏ RґRѕR ± P ° RІR" RμRЅReSЏ RІ P ° SЂS ... ReRІ.
+  
+  Return - mixed, ReRјSЏ P ° SЂS ... ReRІR ° - RІ SЃR "SѓS ‡ P ° Fe SѓSЃRїRμS € RЅRѕRіRѕ SЃRѕR · RґR RЅReSЏ ° F ° SЂS ... ReRІR °, false - RІ SЃR" SѓS ‡ P ° Fe RѕS € Pepsi ± RєRe .*/
 function fsarcCreate($archive, $files)
 {
   error_reporting(E_ALL);

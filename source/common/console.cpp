@@ -11,7 +11,7 @@ bool Console::init(void)
   register DWORD mode;
   handleOutput = CWA(kernel32, GetStdHandle(STD_OUTPUT_HANDLE));
 
-  //Wine баг: http://www.winehq.org/pipermail/wine-bugs/2008-January/088451.html
+  //Wine bug: http://www.winehq.org/pipermail/wine-bugs/2008-January/088451.html
   isWineBug = (CWA(kernel32, GetFileType)(handleOutput) != FILE_TYPE_CHAR || CWA(kernel32, GetConsoleMode)(handleOutput, &mode) == FALSE);
   return (handleOutput != INVALID_HANDLE_VALUE);
 }
@@ -31,7 +31,7 @@ DWORD Console::writeData(void *data, DWORD size)
 DWORD Console::writeStringW(LPWSTR string, DWORD size)
 {
   if(size == (DWORD)-1)size = Str::_LengthW(string);
-  if(isWineBug)return writeData(string, size * sizeof(WCHAR)); //WINE WARNING: Вывод почему-то происходит абсолютно номарльно.
+  if(isWineBug)return writeData(string, size * sizeof(WCHAR)); //WINE WARNING: The output for some reason, there is absolutely nomarlno.
 
   register DWORD result;
   CWA(kernel32, WriteConsoleW)(handleOutput, string, size, &result, NULL);
@@ -50,7 +50,7 @@ DWORD Console::writeFormatW(LPWSTR format, ...)
   
   if(size == -1)
   {
-    //WriteStringW(L"\n\n-- Not enough memory! --\n\n", -1);
+    //WriteStringW (L "\ n \ n - Not enough memory! - \ N \ n", -1);
     return 0;
   }
 

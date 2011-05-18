@@ -11,66 +11,66 @@
 
 namespace BinStorage
 {
-  //Флаги для ITEM.
+  //Flags for the ITEM.
   enum
   {
-    ITEMF_COMPRESSED        = 0x00000001, //Данные сжаты.
+    ITEMF_COMPRESSED        = 0x00000001, //Data is compressed.
     
-    //Данные флаги служат для указания режима перезаписи.
-    ITEMF_COMBINE_ADD       = 0x00010000, //Режим добавления, если опция сущетвует, запись не происходит.
-    ITEMF_COMBINE_OVERWRITE = 0x00020000, //Режим перезаписи, если опция не сущетвует, создается новая запись.
-    ITEMF_COMBINE_REPLACE   = 0x00040000, //Режим замены,если опция не сущетвует, запись не происходит.
-    ITEMF_COMBINE_DELETE    = 0x00080000, //Режим удаления предыдушего элемента и текушего.
+    //These flags are used to indicate the status of rewriting.
+    ITEMF_COMBINE_ADD       = 0x00010000, //Append mode if the option suschetvuet, the record does not occur.
+    ITEMF_COMBINE_OVERWRITE = 0x00020000, //Overwrite mode, if the option is not suschetvuet, a new record.
+    ITEMF_COMBINE_REPLACE   = 0x00040000, //Regime change, if the option is not suschetvuet, recording is not happening.
+    ITEMF_COMBINE_DELETE    = 0x00080000, //Delete mode previous one element and tekusheyu.
     ITEMF_COMBINE_MASK      = ITEMF_COMBINE_ADD | ITEMF_COMBINE_OVERWRITE | ITEMF_COMBINE_REPLACE | ITEMF_COMBINE_DELETE,
 
-    //Данные флаги введены для уменьшения риска совпадения dwID.
-    ITEMF_IS_OPTION         = 0x10000000, //Элемент являеся опцией.
-    ITEMF_IS_SETTING        = 0x20000000, //Элемент является настройкой.
-    ITEMF_IS_HTTP_INJECT    = 0x40000000, //Элемент являеся http-инжектом.
+    //These flags are introduced to reduce the risk of overlap dwID.
+    ITEMF_IS_OPTION         = 0x10000000, //The element is optional.
+    ITEMF_IS_SETTING        = 0x20000000, //Element is the setting.
+    ITEMF_IS_HTTP_INJECT    = 0x40000000, //Element is the http-injected.
     ITEMF_IS_MASK           = ITEMF_IS_OPTION | ITEMF_IS_SETTING | ITEMF_IS_HTTP_INJECT
   };
 
   #pragma pack(push, 1)
-  //Заголовок.
+  //Header.
   typedef struct
   {
-    BYTE randData[20];                //Произволные данные.
-    DWORD size;                       //Полный размер хранилища.
-    DWORD flags;                      //Флаги.
-    DWORD count;                      //Количетсво опции.
-    BYTE md5Hash[16/*MD5HASH_SIZE*/]; //MD5 хэш от p + sizeof(CONFIGHEADER) до p + dwSize.
+    BYTE randData[20];                //Proizvolnye data.
+    DWORD size;                       //Full-size store.
+    DWORD flags;                      //Flags.
+    DWORD count;                      //Kolichetsvo options.
+    BYTE md5Hash[16/*MD5HASH_SIZE*/]; //MD5 hash of p + sizeof (CONFIGHEADER) to p + dwSize.
   }STORAGE;
   
-  //Элемент.
+  //Element.
   typedef struct
   {
-    DWORD id;       //ID опции, обычно CRC32.
-    DWORD flags;    //Флаги.
-    DWORD size;     //Размер сжатых данных если установлен флаг ITEMF_COMPRESSED. Иначе равно realSize.
-    DWORD realSize; //Реальный размер данных.
+    DWORD id;       //ID option, usually CRC32.
+    DWORD flags;    //Flags.
+    DWORD size;     //The size of compressed data if the flag is set ITEMF_COMPRESSED. Otherwise equal realSize.
+    DWORD realSize; //The actual size of the data.
   }ITEM;
   #pragma pack(pop)
 
-  //Флаги для _openStorageFile().
+  //Flags for _openStorageFile ().
   enum
   {
-    OSF_WRITE_ACCESS = 0x1 //Открыть сущетвующий файл для записи, или создать новый в случаи
-                           //отсутвия файла.
+    OSF_WRITE_ACCESS = 0x1 //Suschetvuet open file for writing, or create a new one in case
+                           //otsutviya file.
   };
   
-  //Данные о хранилиши.
+  //Data on hranilishi.
   typedef struct
   {
-    HANDLE file;     //OUT Хэндл файла.
-    DWORD64 curItem; //OUT позиция текущего элемента.
-    DWORD xorKey;    //IN XOR маска шифрования.
+    HANDLE file;     //OUT file handle.
+    DWORD64 curItem; //OUT position of the current element.
+    DWORD xorKey;    //IN XOR encryption mask.
   }STORAGEARRAY;
   
-  //Флаги для _Pack.
+  //Flags for _Pack.
   enum
   {
-    PACKF_FINAL_MODE = 0x1 //Режим финализации, используется для сборки конечной конфигурации,
-                           //приминяет флаги ITEMF_COMBINE_*.
+    PACKF_FINAL_MODE = 0x1 //Mode finalizing used to build the final configuration,
+                           //priminyaet flags ITEMF_COMBINE_ *.
   };
   
   /*
@@ -341,13 +341,12 @@ DWORD _pack2(STORAGE **binStorage, DWORD flags, Crypt::RC4KEY *rc4Key);
   */
   bool _getNextFromStorageArray(STORAGEARRAY *storageArray, STORAGE **binStorage, LPDWORD size, Crypt::RC4KEY *rc4Key);
   
-  /*
-    Удаляет текущиее хранилище из массива.
-    
-    IN storageArray - массив.
-    
-    Return          - true - в случаи успеха,
-                      false - в случаи ошибки.
-  */
+  /*В В В В Removes the current repository of the array.
+В В В В 
+В В В В IN storageArray - array.
+В В В В 
+В В В В Return - true - if successful,
+В В В В В В В В В В В В В В В В В В В В В В false - if an error occurs.
+В В */
   bool _removeCurrentFromStorageArray(STORAGEARRAY *storageArray);
 };

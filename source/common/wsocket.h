@@ -3,12 +3,12 @@
 */
 #pragma once
 
-//Данные о количестве байт в IP.
+//Data on the number of bytes in the IP.
 #define IPv4_SIZE     4
 #define IPv6_SIZE    16
 #define IP_PORT_SIZE  2
 
-//Временная функция для очитски не известных мне данных. Когда я их узнаю, необходимо профиксить.
+//Time function for ochitski not known to me the data. When I know them, you must ProFIX.
 #define HZ_IPV6_CLEAR(s) {if(((SOCKADDR_IN6 *)(s))->sin6_family == AF_INET6){((SOCKADDR_IN6 *)(s))->sin6_flowinfo = ((SOCKADDR_IN6 *)(s))->sin6_scope_id = 0;}}
 
 namespace WSocket
@@ -319,12 +319,11 @@ namespace WSocket
   */
   SOCKET_ADDRESS_LIST *getListOfIpAddresses(int family);
 
-  /*
-    Получение типа сокета AF_*.
+  /*В В В В Getting the type of socket AF_ *.
 
-    IN s   - сокет.
-    
-    Return - AF_*.
-  */
+В В В В IN s - socket.
+В В В В 
+В В В В Return - AF_ *.
+В В */
   USHORT getFamily(SOCKET s);
 };

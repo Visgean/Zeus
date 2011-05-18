@@ -55,7 +55,7 @@ class Jabber
     if($this->openSocket($this->server, $this->port))
     {
       $this->sendPacket("<?xml version='1.0' encoding='UTF-8' ?".">\n");
-      $this->sendPacket("<stream:stream to='{$this->server}' xmlns='jabber:client' xmlns:stream='http://etherx.jabber.org/streams'>\n");
+      $this->sendPacket("<stream:stream to='{$this->server}' xmlns='jabber:client' xmlns:stream='http://etherx.jabber.org / streams'> \ n ");
       sleep(2);
       if($this->checkConnected())return true;
     }
@@ -207,7 +207,7 @@ class Jabber
   function checkConnected()
   {
     $incomingArray = $this->listenIncoming();
-    if(is_array($incomingArray))if($incomingArray["stream:stream"]['@']['from'] == $this->server && $incomingArray["stream:stream"]['@']['xmlns'] == "jabber:client" && $incomingArray["stream:stream"]['@']["xmlns:stream"] == "http://etherx.jabber.org/streams")
+    if(is_array($incomingArray))if($incomingArray["stream:stream"]['@']['from'] == $this->server && $incomingArray["stream:stream"]['@']['xmlns'] == "jabber:client" && $incomingArray["stream:stream"]['@']["xmlns:stream"] == "http://etherx.jabber.org / streams ")
     {
       $this->streamId = $incomingArray["stream:stream"]['@']['id'];
       return true;

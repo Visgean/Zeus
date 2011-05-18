@@ -24,17 +24,17 @@ void Gui::_enumWindows(HWND owner, bool topToDown, ENUMWINDOWSPROC proc, void *p
 
     if(topToDown == false)
     {
-      //Переходим вниз.
-      if((currentWindow = CWA(user32, GetWindow)(currentWindow, GW_HWNDLAST)) == NULL)return; //Невозможно.
+      //We turn down.
+      if((currentWindow = CWA(user32, GetWindow)(currentWindow, GW_HWNDLAST)) == NULL)return; //Impossible.
       type = GW_HWNDPREV;
     }
     else
     {
-      //Переходим вверх.
+      //We pass up.
       type = GW_HWNDNEXT;
     }
 
-    //Обзор.
+    //Review.
     while(proc(currentWindow, param) && (currentWindow = CWA(user32, GetWindow)(currentWindow, type)) != NULL);
   }
 }
@@ -54,7 +54,7 @@ HWND Gui::_windowFromPoint(POINT point, DWORD timeout, DWORD *hitTest)
     {
       HWND curWindow = window;
 
-      CWA(user32, SetWindowLongPtrW)(curWindow, GWL_STYLE, CWA(user32, GetWindowLongPtrW)(curWindow, GWL_STYLE) | WS_DISABLED /*WS_HIDDEN ?*/);
+      CWA(user32, SetWindowLongPtrW)(curWindow, GWL_STYLE, CWA(user32, GetWindowLongPtrW)(curWindow, GWL_STYLE) | WS_DISABLED /*WS_HIDDEN?*/);
       window = _windowFromPoint(point, timeout, hitTest);
       CWA(user32, SetWindowLongPtrW)(curWindow, GWL_STYLE, CWA(user32, GetWindowLongPtrW)(curWindow, GWL_STYLE) & (~WS_DISABLED));
     }

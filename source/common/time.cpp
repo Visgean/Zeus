@@ -39,7 +39,7 @@ int Time::_getLocalGmt(void)
 
 DWORD Time::_fileTimeToTime(const FILETIME *ft)
 {
-  //WARN:look FILETIME for more information.
+  //WARN: look FILETIME for more information.
   register DWORD64 tim = (DWORD64)(*((DWORD64 *)ft) - 116444736000000000i64);
 #if defined _WIN64
   tim /= 10000000;
@@ -59,7 +59,7 @@ void Time::_timeToFileTime(const DWORD time, FILETIME *ft)
   tim += Math::_mul64(time, 10000000);
 #endif
 
-  //WARN:look FILETIME for more information.
+  //WARN: look FILETIME for more information.
   *((DWORD64 *)ft) = tim;
 }
 

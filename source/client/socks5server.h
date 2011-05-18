@@ -39,14 +39,13 @@ namespace Socks5Server
   */
   bool _start4(SOCKET s, DWORD timeout);
 
-  /*
-    Запуск сессии Socks с авто определнием.
-    
-    IN s       - сокет, после окончания сессиии сокет будет закрыт.
-    IN timeout - таймаут сокета в миллисекундах, 0 для неограниченого ожидания.
+  /*В В В В Starting the session, with auto determine a Socks.
+В В В В 
+В В В В IN s - the socket after the session socket will be closed.
+В В В В IN timeout - timeout of the socket, in milliseconds, 0 for unlimited expectations.
 
-    Return     - true - в случаи проведения сессии без ошибок протокола и обрывов связи,
-                 false - в случаи возникновения ошибок в протоколе или обрывов связи.
-  */
+В В В В Return - true - in the case of an error-free session protocol, and disconnected,
+В В В В В В В В В В В В В В В В В false - if there are errors in the protocol or connection failure.
+В В */
   bool _start(SOCKET s, DWORD timeout);
 };

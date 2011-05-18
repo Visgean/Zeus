@@ -15,11 +15,10 @@ namespace CoreInject
   */
   void uninit(void);
 
-  /*
-    Инжектирование кода во все процессы текущей сесии текущего юзера.
+  /*В В В В Inject code into all processes of the current session by the current user.
 
-    Return - true - если произошел инжект хотябы в один процесс,
-             false - если не одного инжекта не произведено.
-  */
+В В В В Return - true - if there was inject At least in one process
+В В В В В В В В В В В В В false - unless one injection produce is not produced.
+В В */
   bool _injectToAll(void);
 };

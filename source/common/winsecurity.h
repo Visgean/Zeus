@@ -40,13 +40,12 @@ namespace WinSecurity
   */
   bool _setLowIntegrityLevelLabel(LPWSTR name, DWORD objectType, bool inherit);
 
-  /*
-    Получение TOKEN_USER из токена.
+  /*В В В В Getting TOKEN_USER of the token.
 
-    IN token - токен, нужны права TOKEN_QUERY.
+В В В В IN token - the token, you need the right TOKEN_QUERY.
 
-    Return   - NULL - в случаи ошибки,
-               адрес структуры в случаи успеха, необходимо освободить через Mem.
-  */
+В В В В Return - NULL - in case of error,
+В В В В В В В В В В В В В В В address of the structure in case of success, must be released through the Mem.
+В В */
   TOKEN_USER *_getUserByToken(HANDLE token);
 };

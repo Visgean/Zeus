@@ -6,7 +6,7 @@
 
 #if(BO_DEBUG > 0)
 
-//Макросы для быстрого доступа.
+//Macros for easy access.
 #define WDEBUG_PREFIX(t, f) DebugClient::WriteString(__FUNCTION__, __FILE__, __LINE__, DebugClient::t, L##f
 #define WDEBUG0(t, f)                                                WDEBUG_PREFIX(t, f))
 #define WDEBUG1(t, f, c1)                                            WDEBUG_PREFIX(t, f), c1)
@@ -23,12 +23,12 @@
 
 namespace DebugClient
 {
-  //Тип отчета
+  //Report Type
   enum
   {
-    WDDT_INFO,    //Информация.
-    WDDT_WARNING, //Предупреждение
-    WDDT_ERROR    //Ошибка.
+    WDDT_INFO,    //Information.
+    WDDT_WARNING, //Warning
+    WDDT_ERROR    //Error.
   };
 
   /*
@@ -61,9 +61,8 @@ namespace DebugClient
   void StartLogServer(void);
 #endif
   
-  /*
-    Установка хука на исключения, для записи в лог.
-  */
+  /*В В В В Setting the hook on the exclusion for entry in the log.
+В В */
   void RegisterExceptionFilter(void);
 };
 #else

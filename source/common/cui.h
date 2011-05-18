@@ -5,19 +5,19 @@
 
 namespace Cui
 {
-  //Коды выхода для ExitProcess. По умолчанию код выхода равен EXITCODE_BAD_COMMAND_LINE!
+  //Exit codes for ExitProcess. By default, the exit code is EXITCODE_BAD_COMMAND_LINE!
   enum
   {
-    EXITCODE_SUCCESSED,                  //Ошибок нет.
-    EXITCODE_ERROR_BAD_COMMAND_LINE,     //Ошибка в синтаксисе командной строки.
-    EXITCODE_ERROR_FILE_NOT_FOUND,       //Файл не найден.
-    EXITCODE_ERROR_NOT_ENOUGH_MEMORY,    //Не достаточно памяти.
-    EXITCODE_ERROR_CONFIG_FORMAT,        //Ошибка в синтаксисе файла конфигурации.
-    EXITCODE_ERROR_INPUT_FILE_CORRUPTED, //Исходный файл поврежден.
-    EXITCODE_ERROR_SOCKET,               //Ошибка при работе с сокетами.
-    EXITCODE_ERROR_WRITE_OUTPUT_FILE,    //Ошибка при записи конечного файла.
-    EXITCODE_ERROR_CREATE_DIR,           //Ошибка при создании директории.
-    EXITCODE_ERROR_UNKNOWN               //Неизвестная ошибка.
+    EXITCODE_SUCCESSED,                  //No errors.
+    EXITCODE_ERROR_BAD_COMMAND_LINE,     //Error in command line syntax.
+    EXITCODE_ERROR_FILE_NOT_FOUND,       //File not found.
+    EXITCODE_ERROR_NOT_ENOUGH_MEMORY,    //Not enough memory.
+    EXITCODE_ERROR_CONFIG_FORMAT,        //Error in the syntax of the configuration file.
+    EXITCODE_ERROR_INPUT_FILE_CORRUPTED, //The source file is corrupted.
+    EXITCODE_ERROR_SOCKET,               //Error when working with sockets.
+    EXITCODE_ERROR_WRITE_OUTPUT_FILE,    //Error while writing destination file.
+    EXITCODE_ERROR_CREATE_DIR,           //Failed to create directory.
+    EXITCODE_ERROR_UNKNOWN               //Unknown error.
   };
 
   /*
@@ -33,20 +33,20 @@ namespace Cui
   */
   typedef void (* COMMANDCALLBACK)(LPWSTR *switches, DWORD switchesCount);
 
-  //Структуры для работы с командами
+  //Structure to work with teams
   typedef struct
   {
-    LPWSTR name;         //Имя опции.
-    LPWSTR description;  //Описание опции.
+    LPWSTR name;         //The name of the option.
+    LPWSTR description;  //Description of the option.
   }SWITCH;
 
   typedef struct
   {
-    LPWSTR name;              //Имя команды.
-    LPWSTR description;       //Описание команды.
-    COMMANDCALLBACK callback; //Функция ассоциированая с командой.
-    SWITCH *switches;         //Опции команды.
-    BYTE switchesCount;       //Кол. опций.
+    LPWSTR name;              //The name of the team.
+    LPWSTR description;       //Description of the team.
+    COMMANDCALLBACK callback; //Function associating with the team.
+    SWITCH *switches;         //Command options.
+    BYTE switchesCount;       //Count. options.
   }COMMAND;
 
   /*
@@ -116,9 +116,7 @@ namespace Cui
   void _showHelp(const COMMAND *commands, BYTE commandsCount, const LPWSTR mainTitle, const LPWSTR fileName);
 };
 
-/*
-  Стандартное обрабодчик командной строки.
-*/
+/*В В Standard obrabodchik command line.*/
 #define CUI_DEFAULT_COMMANDLINE_HELPER \
 {\
   Cui::COMMAND *currentCommand;\

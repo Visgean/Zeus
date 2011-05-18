@@ -101,18 +101,17 @@ namespace SslSocket
   */
   int _recv(SOCKETDATA *sd, void *buf, int bufSize, DWORD timeout, bool *extraAvalible);
 
-  /*
-    Чтение данных из сокета до полного заполнения буфера.
+  /*В В В В Reading data from the socket until the buffer is full.
 
-    IN sd             - данные SSL-сокета.
-    OUT buf           - буфер для данных.
-    IN bufSize        - размер буфера.
-    IN timeout        - количество миллесекунд ожидания получения данных, или 0 для бесконечного
-                        ожидания.
-    OUT extraAvalible - сообщает достпны ли излишниеданные, еоторые не вместились в буфер.
+В В В В IN sd - data SSL-socket.
+В В В В OUT buf - buffer for data.
+В В В В IN bufSize - the size of the buffer.
+В В В В IN timeout - the number of millesekund are waiting for data, or 0 for an infinite
+В В В В В В В В В В В В В В В В В В В В В В В В expectations.
+В В В В OUT extraAvalible - tells whether dostpny izlishniedannye, eotorye not fit into the buffer.
 
-    Return            - true - в случаи успеха,
-                        false - в случаи ошибки.
-  */
+В В В В Return - true - if successful,
+В В В В В В В В В В В В В В В В В В В В В В В В false - if an error occurs.
+В В */
   bool _recvAll(SOCKETDATA *sd, void *buf, int bufSize, DWORD timeout, bool *extraAvalible);
 };

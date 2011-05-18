@@ -52,9 +52,8 @@ namespace Nspr4Hook
   */
   __int32 __cdecl hookerPrRead(void *fd, void *buf, __int32 amount);
   
-  /*
-    Перехватчик PR_Write.
-  */
+  /*В В В В Interceptor PR_Write.
+В В */
   __int32 __cdecl hookerPrWrite(void *fd, const void *buf, __int32 amount);
 };
 #endif

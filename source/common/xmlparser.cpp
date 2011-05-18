@@ -45,16 +45,16 @@ IXMLDOMDocument *XmlParser::_openFile(const LPWSTR file, XMLERRORDATA *error)
     VARIANT_BOOL bl;
     VARIANT str;
 
-    //Выделяем строку.
+    //Select the line.
     CWA(oleaut32, VariantInit)(&str);
     str.vt      = VT_BSTR;
     str.bstrVal = CWA(oleaut32, SysAllocString)(file);
 
     if(str.bstrVal != NULL)
     {
-      //Загружаем файл.
+      //Load the file.
       if(x->load(str, &bl) == S_OK && bl == VARIANT_TRUE)ok = true;
-      //Получаем ошибку.
+      //Get an error.
       else if(error)
       {
         IXMLDOMParseError *ierror;
@@ -63,7 +63,7 @@ IXMLDOMDocument *XmlParser::_openFile(const LPWSTR file, XMLERRORDATA *error)
           long l;
           BSTR reason = NULL;
 
-          //Заполняем структуру.
+          //Fill in the structure.
           if(ierror->get_errorCode(&l) == S_OK)error->errorCode = l;
           if(ierror->get_line(&l) == S_OK)error->line = l;
           if(ierror->get_reason(&reason) == S_OK)error->reason = reason;
@@ -74,7 +74,7 @@ IXMLDOMDocument *XmlParser::_openFile(const LPWSTR file, XMLERRORDATA *error)
       CWA(oleaut32, VariantClear)(&str);
     }
 
-    //Объект не создан, освобождаем интерфейс.
+    //The object is not created, we release interface.
     if(ok == false)
     {
       x->Release();
@@ -94,9 +94,7 @@ void XmlParser::_freeXmlErrorData(XMLERRORDATA *error)
   _freeBstr(error->reason);
 }
 
-/*
-  Надстройка для getNodeTextOf*().
-*/
+/*В В Add-in for getNodeTextOf * ().*/
 static BSTR getChildTextAndRelease(IXMLDOMNode *child)
 {
   BSTR text;

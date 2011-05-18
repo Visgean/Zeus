@@ -7,15 +7,15 @@
 #include "..\common\mem.h"
 #include "..\common\wsocket.h"
 
-//Внутрении флаги.
-#define S5_CLIENT_IS_IPV4    0x0  //Клинет подключен по IPv4 протоколу.
-#define S5_CLIENT_IS_IPV6    0x1  //Клинет подключен по IPv6 протоколу.
-#define S5_ONREPLY_PEER_NAME 0x2  //Указывается для Socks5Reply, и сообшает что нужно плучать не
-                                  //локальные данные сокета, а удаленные.
+//Internal flags.
+#define S5_CLIENT_IS_IPV4    0x0  //Klinet connected by IPv4 protocol.
+#define S5_CLIENT_IS_IPV6    0x1  //Klinet connected to the IPv6 protocol.
+#define S5_ONREPLY_PEER_NAME 0x2  //Specified for Socks5Reply, and soobshaet that need not pluchat
+                                  //local data socket and remote.
 #pragma pack(push, 1)
 typedef struct
 {
-  //BYTE  version;
+  //BYTE version;
   BYTE  command;
   WORD  destPort;
   DWORD destIp;
@@ -23,7 +23,7 @@ typedef struct
 
 typedef struct
 {
-  BYTE  version;
+  BYTE version;
   BYTE  replyCode;
   WORD  destPort;
   DWORD destIp;
@@ -31,25 +31,25 @@ typedef struct
 
 typedef struct
 {
-  BYTE version;  //Версия
-  BYTE command;  //Команда
-  BYTE reserved; //Зарезервировано
-  BYTE addrType; //Тип адреса
+  BYTE version;  //Version
+  BYTE command;  //Team
+  BYTE reserved; //Reserved
+  BYTE addrType; //Address type
 }SOCKS5_QUERY;
 
 typedef struct
 {
-  BYTE version;   //Версия
-  BYTE replyCode; //Код ответа
-  BYTE reserved;  //Зарезервировано
-  BYTE addrType;  //Тип адреса
+  BYTE version;   //Version
+  BYTE replyCode; //Response code
+  BYTE reserved;  //Reserved
+  BYTE addrType;  //Address type
 }SOCKS5_REPLY;
 
 typedef struct
 {
-  WORD reserved;  //Зарезервировано
-  BYTE fragment;  //Текущий номер фрагмента
-  BYTE addrType;  //Тип адреса
+  WORD reserved;  //Reserved
+  BYTE fragment;  //Current fragment number
+  BYTE addrType;  //Address type
 }UDP_QUERY;
 #pragma pack(pop)
 
@@ -85,7 +85,7 @@ static int socks5Reply(SOCKET sourceSocket, SOCKET nameSocket, BYTE replyCode, D
   LPBYTE ip = replyBuf + sizeof(SOCKS5_REPLY);
   int size;
   
-  //Самостоятельно получаме данные сокета, если это необходимо.
+  //Independently poluchame data socket, if necessary.
   if(nameSocket != INVALID_SOCKET)
   {
     SOCKADDR_STORAGE psa;
@@ -93,11 +93,11 @@ static int socks5Reply(SOCKET sourceSocket, SOCKET nameSocket, BYTE replyCode, D
 
     if(flags & S5_ONREPLY_PEER_NAME)
     {
-      if(CWA(ws2_32, getpeername)(nameSocket, (sockaddr *)&psa, &size) != 0)return -1; //Ошибка сервера.
+      if(CWA(ws2_32, getpeername)(nameSocket, (sockaddr *)&psa, &size) != 0)return -1; //Server Error.
     }
-    else 
+    else
     {
-      if(CWA(ws2_32, getsockname)(nameSocket, (sockaddr *)&psa, &size) != 0)return -1; //Ошибка сервера.
+      if(CWA(ws2_32, getsockname)(nameSocket, (sockaddr *)&psa, &size) != 0)return -1; //Server Error.
     }
     
     if(psa.ss_family == AF_INET)//IPv4
@@ -114,8 +114,8 @@ static int socks5Reply(SOCKET sourceSocket, SOCKET nameSocket, BYTE replyCode, D
       Mem::_copy(ip + IPv6_SIZE , &(((SOCKADDR_IN6 *)&psa)->sin6_port),      IP_PORT_SIZE);
       size = IPv6_SIZE + IP_PORT_SIZE;
     }
-    //Не допустимый формат.
-    else return -1; //Ошибка сервера.
+    //Not a valid format.
+    else return -1; //Server Error.
   }
   else
   {
@@ -139,7 +139,7 @@ bool Socks5Server::_start5(SOCKET s, DWORD timeout)
 {  
   DWORD flags = WSocket::getFamily(s) == AF_INET6 ? S5_CLIENT_IS_IPV6 : S5_CLIENT_IS_IPV4;
   
-  //Aутентификация.
+  //Autentifikatsiya.
   {
     BYTE methodsCount;
     BYTE methods[MAXBYTE];
@@ -150,17 +150,17 @@ bool Socks5Server::_start5(SOCKET s, DWORD timeout)
     WORD authReply = Mem::_getR(methods, 0, methodsCount) == NULL ? MAKEWORD(5, 0xFF) : MAKEWORD(5, 0);
     if(!WSocket::tcpSend(s, &authReply, sizeof(authReply)))return false;
 
-    //Нужная аутентификация не найдена.
+    //Requires authentication is not found.
     if(authReply == MAKEWORD(5, 0xFF))return true;
   }
 
-  //Получение запроса.
+  //Receipt of the request.
   SOCKS5_QUERY sq;
-  BYTE replyCode = 0; //успешный    
+  BYTE replyCode = 0; //successful
 
   if(!WSocket::tcpRecvAll(s, &sq, sizeof(SOCKS5_QUERY), timeout) || sq.version != 5/*Ошибка протокола*/)return false;
 
-  //Приоретет типа IP при запросе к DNS.
+  //Prioretet type IP when querying the DNS.
   int familyList[2];
   if(flags & S5_CLIENT_IS_IPV6)
   {
@@ -173,16 +173,16 @@ bool Socks5Server::_start5(SOCKET s, DWORD timeout)
     familyList[1] = AF_INET6;
   }
 
-  //Получение адреса назначения.
+  //Getting the destination.
   SOCKADDR *destAddr = NULL;
   switch(sq.addrType)
   {
-    //IPv4  
+    //IPv4
     case 1: 
     {
       BYTE bIP[IPv4_SIZE];
       if(!WSocket::tcpRecvAll(s, bIP, sizeof(bIP), timeout))return false;
-      if((destAddr = (SOCKADDR *)Mem::alloc(sizeof(SOCKADDR_IN))) == NULL)replyCode = 1; //ошибка SOCKS-сервера
+      if((destAddr = (SOCKADDR *)Mem::alloc(sizeof(SOCKADDR_IN))) == NULL)replyCode = 1; //SOCKS-server error
       else
       {
         SOCKADDR_IN *t = (SOCKADDR_IN *)destAddr;
@@ -197,7 +197,7 @@ bool Socks5Server::_start5(SOCKET s, DWORD timeout)
     {
       BYTE bIP[IPv6_SIZE];
       if(!WSocket::tcpRecvAll(s, bIP, sizeof(bIP), timeout))return false;
-      if((destAddr = (SOCKADDR *)Mem::alloc(sizeof(SOCKADDR_IN6))) == NULL)replyCode = 1; //ошибка SOCKS-сервера
+      if((destAddr = (SOCKADDR *)Mem::alloc(sizeof(SOCKADDR_IN6))) == NULL)replyCode = 1; //SOCKS-server error
       else
       {
         SOCKADDR_IN6 *t = (SOCKADDR_IN6 *)destAddr;
@@ -207,7 +207,7 @@ bool Socks5Server::_start5(SOCKET s, DWORD timeout)
       break;
     }
 
-    //Домен
+    //Domain
     case 3: 
     {
       BYTE domain[MAXBYTE + 1];
@@ -217,12 +217,12 @@ bool Socks5Server::_start5(SOCKET s, DWORD timeout)
 
       domain[domainLen] = 0;
         
-      //Запрос к DNS
+      //Request to the DNS
       struct addrinfo *addrInfoList = NULL;
-      if(CWA(ws2_32, getaddrinfo)((char *)domain, NULL, NULL, &addrInfoList) != 0)replyCode = 4; //хост недоступен
+      if(CWA(ws2_32, getaddrinfo)((char *)domain, NULL, NULL, &addrInfoList) != 0)replyCode = 4; //host unreachable
       else
       {
-        //Цикл для поиска IPv4 и IPv6.
+        //Cycle to find IPv4 and IPv6.
         for(register BYTE i = 0; i < sizeof(familyList) / sizeof(int); i++)
         {
           register struct addrinfo *curAddrInfo = addrInfoList;
@@ -230,7 +230,7 @@ bool Socks5Server::_start5(SOCKET s, DWORD timeout)
           {
             if(curAddrInfo->ai_family == familyList[i])
             {
-              if((destAddr = (SOCKADDR *)Mem::copyEx(curAddrInfo->ai_addr, curAddrInfo->ai_addrlen)) == NULL)replyCode = 1; //ошибка SOCKS-сервера
+              if((destAddr = (SOCKADDR *)Mem::copyEx(curAddrInfo->ai_addr, curAddrInfo->ai_addrlen)) == NULL)replyCode = 1; //SOCKS-server error
               else HZ_IPV6_CLEAR(destAddr);
               goto IP_FOUNDED;
             }
@@ -238,11 +238,11 @@ bool Socks5Server::_start5(SOCKET s, DWORD timeout)
           }
         }
 
-//Ип не найден.
+//Yip was not found.
 //IP_NOTFOUNDED:
-        replyCode = 4; //хост недоступен
+        replyCode = 4; //host unreachable
 
-//Ип найден или ошибка.
+//Ip is found or an error.
 IP_FOUNDED:
         CWA(ws2_32, freeaddrinfo)(addrInfoList);
       }        
@@ -252,7 +252,7 @@ IP_FOUNDED:
     default: return false;
   }
             
-  //Получаем порт.
+  //Obtain the port.
   u_short port;
   if(!WSocket::tcpRecvAll(s, &port, sizeof(u_short), timeout))
   {
@@ -260,31 +260,31 @@ IP_FOUNDED:
     return false;
   }
   
-  //if(replyCode == 0 && destAddr == NULL)иReplyCode = 1; //ошибка SOCKS-сервера
+  //if(replyCode == 0 && destAddr == NULL)иReplyCode = 1; //SOCKS-server error
   
-  //Ошибок в ходе получения IP не найдено, смотрим команду.
+  //Errors in the receipt of IP is not found, look team.
   bool retVal = true;
   if(replyCode == 0)
   {
-    //Не имеет смысла, позиции одинаковые.
-    //if(destAddr->sa_family == AF_INET)((SOCKADDR_IN *)destAddr)->sin_port = port;
-    //else 
+    //Does not make sense, the same position.
+    //if (destAddr-> sa_family == AF_INET) ((SOCKADDR_IN *) destAddr) -> sin_port = port;
+    //else
     ((SOCKADDR_IN6 *)destAddr)->sin6_port = port;
 
-    //Запуск команды 
+    //Running
     switch(sq.command)
     {
-      //Connect  
+      //Connect
       case 1:
       {
         SOCKET destSocket = WSocket::tcpConnect((SOCKADDR_STORAGE *)destAddr);
-        if(destSocket == INVALID_SOCKET)replyCode = 5; //отказ в соединении
+        if(destSocket == INVALID_SOCKET)replyCode = 5; //connection refused
         else
         {
           WSocket::tcpDisableDelay(destSocket, true);
           int l = socks5Reply(s, destSocket, replyCode, flags);
           if(l == 1)WSocket::tcpTunnel(s, destSocket);
-          else if(l == -1)replyCode = 1;//ошибка SOCKS-сервера
+          else if(l == -1)replyCode = 1;//SOCKS-server error
           else retVal = false;
           WSocket::tcpClose(destSocket);
         }
@@ -296,18 +296,18 @@ IP_FOUNDED:
       {
         SOCKET destSocket;
 
-        //Я ибал в рот тупых уродов написавших тупой rfc и тупорлых говнокодеров,
-        //Я ставлю листинг на проивзольны порт на все IP сервера, и пашел на хуй софт который не
-        //сможет это прочитать. Возможно меня ввел в забулждение FlashFXP 3.6.0. Т.к. в destAddr
-        //он отправляет какие то данные сервера. А по rfc, как я понел, там должны быть данные
-        //сокс-сервера, где нужно ждать сединения.
+        //I ibal mouth stupid freaks wrote to blunt rfc and tuporlyh govnokoderov,
+        //I put a listing on proivzolny port on all IP server and pashel on dick software that is not
+        //be able to read it. Maybe I put in zabulzhdenie FlashFXP 3.6.0. Because in destAddr
+        //He then sends some data to server. And in rfc, I ponel, there must be data
+        //socks-server where you want to wait sedineniya.
         
-        //Ищим свободный порт.
+        //Ischim free port.
         ((SOCKADDR_IN6 *)destAddr)->sin6_port = 0;
         if(destAddr->sa_family == AF_INET6)Mem::_zero(&(((SOCKADDR_IN6 *)destAddr)->sin6_addr), IPv6_SIZE);
         else ((SOCKADDR_IN *)destAddr)->sin_addr.S_un.S_addr = 0;
         
-        if((destSocket = WSocket::tcpListen((SOCKADDR_STORAGE *)destAddr, 1)) == INVALID_SOCKET)replyCode = 5; //отказ в соединении
+        if((destSocket = WSocket::tcpListen((SOCKADDR_STORAGE *)destAddr, 1)) == INVALID_SOCKET)replyCode = 5; //connection refused
         else
         {
           int l = socks5Reply(s, destSocket, replyCode, flags);
@@ -316,7 +316,7 @@ IP_FOUNDED:
             SOCKET incomingSocket = WSocket::tcpWaitForIncomingAndAccept(&destSocket, 1, 0, NULL, NULL, &s, 1);
             WSocket::tcpClose(destSocket);
 
-            if(incomingSocket == INVALID_SOCKET)replyCode = 1; //ошибка SOCKS-сервера
+            if(incomingSocket == INVALID_SOCKET)replyCode = 1; //SOCKS-server error
             else
             {
               WSocket::tcpDisableDelay(incomingSocket, true);
@@ -326,7 +326,7 @@ IP_FOUNDED:
           }
           else WSocket::tcpClose(destSocket);
 
-          if(l == -1)replyCode = 1; //ошибка SOCKS-сервера
+          if(l == -1)replyCode = 1; //SOCKS-server error
           else if(l != 1)retVal = false;
         }
         break;
@@ -340,31 +340,31 @@ IP_FOUNDED:
         int sizeLocal = sizeof(SOCKADDR_STORAGE);
         int sizeRemote = sizeof(SOCKADDR_STORAGE);
         
-        //Запрашиваем данные о клиенте.
-        if(CWA(ws2_32, getsockname)(s, (sockaddr *)&saLocal, &sizeLocal) != 0 || CWA(ws2_32, getpeername)(s, (sockaddr *)&saRemote, &sizeRemote) != 0)replyCode = 1; //ошибка SOCKS-сервера
+        //Obtains data about the customer.
+        if(CWA(ws2_32, getsockname)(s, (sockaddr *)&saLocal, &sizeLocal) != 0 || CWA(ws2_32, getpeername)(s, (sockaddr *)&saRemote, &sizeRemote) != 0)replyCode = 1; //SOCKS-server error
         else
         {
-          //Создаем UDP порт для общения с клиентом, на локальном IP, к которому подключен клиент.
+          //Create an UDP port to communicate with the client on the local IP, which is connected to the client.
           ((SOCKADDR_IN6 *)&saLocal)->sin6_port = 0;
           HZ_IPV6_CLEAR(&saLocal);
           SOCKET clientSocket = WSocket::udpListen(&saLocal);
           
-          if(clientSocket == INVALID_SOCKET)replyCode = 1; //ошибка SOCKS-сервера
+          if(clientSocket == INVALID_SOCKET)replyCode = 1; //SOCKS-server error
           else
           {
             #define UDP_BUFFER 65535
             LPBYTE udpBuf = (LPBYTE)Mem::alloc(UDP_BUFFER);
-            if(udpBuf == NULL)replyCode = 1; //ошибка SOCKS-сервера
+            if(udpBuf == NULL)replyCode = 1; //SOCKS-server error
             else
             {
               int l = socks5Reply(s, clientSocket, replyCode, flags);
               if(l == 1)
               {
-                SOCKET serverSocket = INVALID_SOCKET; //Сокет для обшения с сервером.
-                int serverBuffer = 0;                //Размер данных выделяемый под заголовок SOCKS-UDP заголовка.
+                SOCKET serverSocket = INVALID_SOCKET; //Socket for obsheniya with the server.
+                int serverBuffer = 0;                //Data size allocated under the heading of SOCKS-UDP header.
                 int serverFamily = 0;
 
-                //Данные о порте для переслыке сервер->клиент.
+                //Data on the port for pereslyke server-> client.
                 SOCKADDR_STORAGE saClient;
                 int clientSize = 0;
                 
@@ -376,35 +376,35 @@ IP_FOUNDED:
                   fd.fd_array[1] = clientSocket;
                   fd.fd_array[2] = serverSocket;
                 
-                  if(CWA(ws2_32, select)(0, &fd, NULL, NULL, NULL) <= 0)break; //Ошибка, молча заканчиваем соединение.
+                  if(CWA(ws2_32, select)(0, &fd, NULL, NULL, NULL) <= 0)break; //Error, and silently finish the connection.
 
                   if(WSocket::_fdIsSet(s, &fd))
                   {   
-                    //UDP-связь обрывается, когда обрывается TCP-соединение выполнившее запрос UDP ASSOCIATE.
+                    //UDP-connection terminates when terminates TCP-connection to query the UDP ASSOCIATE.
                     if(CWA(ws2_32, recv)(s, (char  *)udpBuf, UDP_BUFFER, 0) <= 0)break;
                   }
                 
                   int saLen = sizeof(SOCKADDR_STORAGE);
 
-                  //Данные от клиента.
+                  //Data from the client.
                   if(WSocket::_fdIsSet(clientSocket, &fd))
                   {
-                    //Получаме данные.
+                    //Poluchame data.
                     int len = CWA(ws2_32, recvfrom)(clientSocket, (char *)udpBuf, UDP_BUFFER, 0, (sockaddr *)&saLocal, &saLen);
                     if(len <= 0)break;
 
-                    //Пакет слишком мал, игнорируем.
+                    //The package is too small, ignore it.
                     if(len < sizeof(UDP_QUERY) + 2/*AS DOMAIN: SIZE+CHAR*/)goto NEXT1;
 
-                    //Проверка IP отправителя.
+                    //Checking the IP sender.
                     if(saRemote.ss_family != saLocal.ss_family)goto NEXT1;
                     else if(saLocal.ss_family == AF_INET){if(((SOCKADDR_IN *)&saRemote)->sin_addr.S_un.S_addr != ((SOCKADDR_IN *)&saLocal)->sin_addr.S_un.S_addr)goto NEXT1;}
                     else if(saLocal.ss_family == AF_INET6){if(Mem::_compare(((SOCKADDR_IN6 *)&saRemote)->sin6_addr.u.Byte, ((SOCKADDR_IN6 *)&saLocal)->sin6_addr.u.Byte, IPv6_SIZE) != 0)goto NEXT1;}
 
-                    //Проверям заголовок.
+                    //Checking the title.
                     if(((UDP_QUERY *)udpBuf)->fragment != 0 || ((UDP_QUERY *)udpBuf)->reserved != 0)goto NEXT1;
 
-                    //Сохраняем данные об клиентском UDP порте, на который будут пересылватся данные с сервера.
+                    //Store data on the client UDP port on which will peresylvatsya data from the server.
                     if(clientSize == 0)
                     {
                       Mem::_copy(&saClient, &saLocal, saLen);
@@ -412,12 +412,12 @@ IP_FOUNDED:
                       clientSize = saLen;                      
                     }
                     
-                    //Получам IP и сохраняем в saLocal.
+                    //Obtain the IP and save it in saLocal.
                     int offset = sizeof(UDP_QUERY);
                     Mem::_zero(&saLocal, sizeof(SOCKADDR_STORAGE));
                     switch(((UDP_QUERY *)udpBuf)->addrType)
                     {
-                      //IPv4  
+                      //IPv4
                       case 1:
                         if(len <= offset + IPv4_SIZE + IP_PORT_SIZE)goto NEXT1;
                         saLen = sizeof(SOCKADDR_IN);
@@ -435,7 +435,7 @@ IP_FOUNDED:
                         offset += IPv6_SIZE;
                         break;
               
-                      //Домен
+                      //Domain
                       case 3: 
                       {
                         BYTE domainLen = udpBuf[offset];
@@ -446,11 +446,11 @@ IP_FOUNDED:
                         domain[domainLen] = 0;
                         offset += domainLen + sizeof(BYTE);
 
-                        //Запрос к DNS
+                        //Request to the DNS
                         struct addrinfo *addrInfoList = NULL;
                         if(CWA(ws2_32, getaddrinfo)((char *)domain, NULL, NULL, &addrInfoList) != 0)goto NEXT1;
 
-                        //Цикл для поиска IPv4 и IPv6.
+                        //Cycle to find IPv4 and IPv6.
                         for(register BYTE i = 0; i < sizeof(familyList) / sizeof(int); i++)
                         {
                           register struct addrinfo *curAddrInfo = addrInfoList;
@@ -466,10 +466,10 @@ IP_FOUNDED:
                             curAddrInfo = curAddrInfo->ai_next;
                          }
                         }
-                        //Ип не найден.
+                        //Yip was not found.
                         goto NEXT1;
 
-                        //Ип найден
+                        //Ip found
 UDP_IP_FOUNDED:
                         CWA(ws2_32, freeaddrinfo)(addrInfoList);
                         break;
@@ -478,14 +478,14 @@ UDP_IP_FOUNDED:
                       default: goto NEXT1;
                     }
 
-                    //Получаем порт.
+                    //Obtain the port.
                     ((SOCKADDR_IN6 *)&saLocal)->sin6_port = *((u_short *)(udpBuf + offset));
                     offset += IP_PORT_SIZE;
 
-                    //Создаем сокет для сервера если его не сущетвует.
-                    //saLocal - содержит данные  для конекта, создаем сокет с такойже версией IP,
-                    //но с листингом на всех IP, т.к. не известно с какого IP буде производиться
-                    //общение с сервером.
+                    //Create a socket for the server if it is not suschetvuet.
+                    //saLocal - contains data for konekta, create a socket with takoyzhe version of IP,
+                    //but with the listing of all IP, since do not know from what IP bude made
+                    //communication with the server.
                     if(serverSocket == INVALID_SOCKET)
                     {
                       SOCKADDR_STORAGE sockAddr;
@@ -496,17 +496,17 @@ UDP_IP_FOUNDED:
                       serverBuffer = sizeof(UDP_QUERY) + (serverFamily == AF_INET6 ? IPv6_SIZE : IPv4_SIZE) + IP_PORT_SIZE;
                     }
                     
-                    //Отпровляем ответ.
+                    //Otprovlyaem answer.
                     if(len > offset && serverFamily == saLocal.ss_family)CWA(ws2_32, sendto)(serverSocket, (char *)(udpBuf + offset), len - offset, 0, (sockaddr *)&saLocal, saLen);
                   }                                                                             
 NEXT1:    
-                  //Данные от сервера.
+                  //The data from the server.
                   if(serverSocket != INVALID_SOCKET && WSocket::_fdIsSet(serverSocket, &fd))
                   {
                     int len = CWA(ws2_32, recvfrom)(serverSocket, (char *)(udpBuf + serverBuffer), UDP_BUFFER - serverBuffer, 0, (sockaddr *)&saLocal, &saLen);
                     if(len <= 0 && serverFamily != saLocal.ss_family)goto NEXT2;//?
 
-                    //Заполняем данные.
+                    //Fill in the data.
                     ((UDP_QUERY *)udpBuf)->reserved = 0;
                     ((UDP_QUERY *)udpBuf)->fragment = 0;
                     ((UDP_QUERY *)udpBuf)->addrType = saLocal.ss_family == AF_INET6 ? 4 /*IPv6*/ : 1 /*IPv4*/;
@@ -524,7 +524,7 @@ NEXT2:;
 
                 WSocket::tcpClose(serverSocket);
               }
-              else if(l == -1)replyCode = 1; //ошибка SOCKS-сервера
+              else if(l == -1)replyCode = 1; //SOCKS-server error
               else retVal = false;
 
               Mem::free(udpBuf);
@@ -535,14 +535,14 @@ NEXT2:;
         break;
       }
       
-      //Ошибка
-      default: replyCode = 7; //команда не поддерживается
+      //Error
+      default: replyCode = 7; //command is not supported
     }
   }
   
   Mem::free(destAddr);
 
-  //Обработка ошибки.  
+  //Processing errors.
   return (retVal == true && replyCode != 0) ?
          (socks5Reply(s, INVALID_SOCKET, replyCode, flags) != 0 ? true : false) :
          retVal;
@@ -566,7 +566,7 @@ static int socks4Reply(SOCKET sourceSocket, SOCKET nameSocket, BYTE replyCode, D
 {
   SOCKS4_REPLY sr;
 
-  //Самостоятельно получаме данные сокета, если это необходимо.
+  //Independently poluchame data socket, if necessary.
   if(nameSocket != INVALID_SOCKET)
   {
     SOCKADDR_IN sa;
@@ -574,11 +574,11 @@ static int socks4Reply(SOCKET sourceSocket, SOCKET nameSocket, BYTE replyCode, D
     
     if(flags & S5_ONREPLY_PEER_NAME)
     {
-      if(CWA(ws2_32, getpeername)(nameSocket, (SOCKADDR *)&sa, &size) != 0)return -1; //Ошибка сервера.
+      if(CWA(ws2_32, getpeername)(nameSocket, (SOCKADDR *)&sa, &size) != 0)return -1; //Server Error.
     }
-    else 
+    else
     {
-      if(CWA(ws2_32, getsockname)(nameSocket, (SOCKADDR *)&sa, &size) != 0)return -1; //Ошибка сервера.
+      if(CWA(ws2_32, getsockname)(nameSocket, (SOCKADDR *)&sa, &size) != 0)return -1; //Server Error.
     }
     
     sr.destIp   = sa.sin_addr.S_un.S_addr;
@@ -596,18 +596,16 @@ static int socks4Reply(SOCKET sourceSocket, SOCKET nameSocket, BYTE replyCode, D
   return WSocket::tcpSend(sourceSocket, &sr, sizeof(SOCKS4_REPLY)) ? 1 : 0;
 }
 
-/*
-  http://www.sockschain.com/doc/socks4_protocol.htm
-*/
+/*В В http://www.sockschain.com/doc/socks4_protocol.htm*/
 bool Socks5Server::_start4(SOCKET s, DWORD timeout)
 {
   DWORD flags = WSocket::getFamily(s) == AF_INET6 ? S5_CLIENT_IS_IPV6 : S5_CLIENT_IS_IPV4;
   SOCKS4_QUERY sq;
 
-  //Получам заголовок.
+  //Obtain the title.
   if(!WSocket::tcpRecvAll(s, &sq, sizeof(SOCKS4_QUERY), timeout))return false;
 
-  //Получаем UserID
+  //Obtain the UserID
   for(;;)
   {
     BYTE tmp;
@@ -615,9 +613,9 @@ bool Socks5Server::_start4(SOCKET s, DWORD timeout)
     if(tmp == 0)break;
   }
   
-  BYTE replyCode = 90; //успешный    
+  BYTE replyCode = 90; //successful
   
-  //Получаем запрос 4a
+  //Receives a request 4a
   DWORD tmpDword = SWAP_DWORD(sq.destIp);
 
   if(tmpDword > 0 && tmpDword < 256)
@@ -635,7 +633,7 @@ bool Socks5Server::_start4(SOCKET s, DWORD timeout)
     if(CWA(ws2_32, getaddrinfo)((char *)domain, NULL, NULL, &addrInfoList) != 0)replyCode = 91; //request rejected or failed
     else
     {
-      //Цикл для поиска IPv4.
+      //Cycle to find IPv4.
       register struct addrinfo *curAddrInfo = addrInfoList;
       while(curAddrInfo)
       {
@@ -648,14 +646,14 @@ bool Socks5Server::_start4(SOCKET s, DWORD timeout)
       }
       CWA(ws2_32, freeaddrinfo)(addrInfoList);
 
-      //IPv4 не найден
+      //IPv4 can not be found
       if(curAddrInfo == NULL)replyCode = 91; //request rejected or failed
     }
   }
 
   bool retVal = true;
   
-  //Обработка команды.
+  //Processing of the command.
   if(replyCode == 90)
   {
     SOCKADDR_IN sa;
@@ -697,8 +695,8 @@ bool Socks5Server::_start4(SOCKET s, DWORD timeout)
             SOCKET incomingSocket = WSocket::tcpWaitForIncomingAndAccept(&destSocket, 1, 0, NULL, NULL, &s, 1);
             WSocket::tcpClose(destSocket);
 
-            //Вообще здесь нужно проверить с нужного ли IP подключился сервер, но я не считаю 
-            //это нужным.
+            //In general, there need to check whether you need to connect the server IP, but I do not think
+            //it is necessary.
             if(incomingSocket == INVALID_SOCKET)replyCode = 91; //request rejected or failed
             else
             {              
@@ -722,7 +720,7 @@ bool Socks5Server::_start4(SOCKET s, DWORD timeout)
     }
   }   
 
-  //Обработка ошибки.  
+  //Processing errors.
   return (retVal == true && replyCode != 90) ?
          (socks4Reply(s, INVALID_SOCKET, replyCode, flags) != 0 ? true : false) :
           retVal;

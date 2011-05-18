@@ -9,30 +9,30 @@
 
 namespace Fs
 {
-  //Флаги для _fileToMem
+  //Flags for _fileToMem
   enum
   {
 #   if(FS_ALLOW_FILEMAPPING > 0)
-    FTOMF_WRITE_ACCESS = 0x1, //Открыть файл на запись.
+    FTOMF_WRITE_ACCESS = 0x1, //Open file for writing.
 #   endif
-    FTOMF_SHARE_WRITE  = 0x2, //Открыть файл, даже если он чем-то открыт для записи.
+    FTOMF_SHARE_WRITE  = 0x2, //Open the file, even if it is something open for writing.
   };
 
   enum
   {
-    FFFLAG_RECURSIVE      = 0x1, //Рекрусивный поиск.
-    FFFLAG_SEARCH_FOLDERS = 0x2, //Поиск директорий.
-    FFFLAG_SEARCH_FILES   = 0x4, //Поиск файлов.
+    FFFLAG_RECURSIVE      = 0x1, //Rekrusivny search.
+    FFFLAG_SEARCH_FOLDERS = 0x2, //Search directories.
+    FFFLAG_SEARCH_FILES   = 0x4, //Search files.
   };
 
-  //Данные о образе файла в памяти, лимит 4Gb.
+  //Data about the image file in memory, the limit of 4Gb.
   typedef struct
   {
-    LPBYTE data; //Содержимое файла.
-    SIZE_T size; //Размер данных.
-    HANDLE file; //Хэндл файла.
+    LPBYTE data; //The contents of the file.
+    SIZE_T size; //The size of the data.
+    HANDLE file; //File handle.
 #   if(FS_ALLOW_FILEMAPPING > 0)
-    HANDLE map;  //Хэндл образа.
+    HANDLE map;  //The handle of the image.
 #   endif
   }MEMFILE;
 
@@ -374,11 +374,10 @@ namespace Fs
   */
   void _normalizeSlashes(LPWSTR path);
 
-  /*
-    Замена слешей на иной символ.
+  /*В В В В Replacement of slashes on a character.
 
-    IN OUT string - строка для обработки.
-    IN c          - новый символ.
-  */
+В В В В IN OUT string - string to process.
+В В В В IN c - the new symbol.
+В В */
   void _replaceSlashes(LPWSTR string, WCHAR c);
 };

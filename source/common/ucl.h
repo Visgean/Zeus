@@ -22,10 +22,10 @@
 
 namespace UCL
 {
-  //Флаги для Compress.
+  //Flags to Compress.
   enum
   {
-    //Тип сжатия.
+    //Compression type.
 #if(XLIB_UCL_ENABLE_NRV2B > 0)
     CF_NRV2B     = 0x00000001,
 #endif
@@ -36,7 +36,7 @@ namespace UCL
     CF_NRV2E     = 0x00000004,
 #endif
 
-    //Уровень сжатия.
+    //Compression level.
 #if(XLIB_UCL_ONLY_MAX_COMPRESSION > 0)
 #else
     CF_LEVEL_1   = 0x00000008,
@@ -54,17 +54,17 @@ namespace UCL
     CF_LEVEL_MAX = CF_LEVEL_10,
   };
   
-  //Коды ошибок.
+  //Error codes.
   enum
   {
-    E_SUCCESSED,        //Успешное выполнение.
-    E_ERROR,            //Неизвесная ошибка.
-    E_INVALID_ARGUMENT, //Неверные аргументы.
-    E_OUT_OF_MEMORY,    //Не доcтаточно памяти.
-    E_OUT_OF_BUFFER     //Не доcтаточно буфера для сжатых данных.
+    E_SUCCESSED,        //Successful execution.
+    E_ERROR,            //Neizvesnaya error.
+    E_INVALID_ARGUMENT, //Bad arguments.
+    E_OUT_OF_MEMORY,    //Not doctatochno memory.
+    E_OUT_OF_BUFFER     //Not doctatochno buffer for compressed data.
   };
 
-  //Функция для отображения состояния процесса работы.
+  //Function to display the status of the work.
   typedef struct
   {
     /*
@@ -77,7 +77,7 @@ namespace UCL
       IN pData - пользовательские данные.
     */
     void (WINAPI *callback)(DWORD dwTextSize, DWORD dwCodeSize, int iStatus, void *pData);
-    void *pData; //Пользовательские данные. передаваемые в callback.
+    void *pData; //User data. sent to the callback.
   }PROGRESS_CALLBACK;
 
   /*
@@ -106,21 +106,20 @@ namespace UCL
   */
   int _Compress(LPBYTE pSource, DWORD dwSourceSize, LPBYTE pBuffer, LPDWORD pdwBufferSize, PROGRESS_CALLBACK *pCallback, DWORD dwFlags);
 
-  /*
-    Распаковка данных.
+  /*В В В В Unpacking the data.
 
-    IN pSource      - исходные сжатые данные.
-    IN dwSourceSize - размер исходных сжатыx данных в байтах.
-    IN pDest        - буфер для распакованных данных.
-    IN pdwDestSize  - на входе - максимальный размер pBuffer.
-                      на выходе - размер данных.
+В В В В IN pSource - the original compressed data.
+В В В В IN dwSourceSize - szhatyx size of the source data in bytes.
+В В В В IN pDest - Buffer for uncompressed data.
+В В В В IN pdwDestSize - at the entrance - the maximum size of pBuffer.
+В В В В В В В В В В В В В В В В В В В В В В output - the size of the data.
 
-    Return          - true - в случаи успешной распкаковки,
-                      false - в случаи оишибка (повреждение данных).
+В В В В Return - true - in the cases of successful raspkakovki,
+В В В В В В В В В В В В В В В В В В В В В В false - in cases oishibka (data corruption).
 
-    Примечание: Функиции не помеченые постфиксом Safe, могу вызвать исключение, но при этом имеют
-                меньший размер.
-  */
+В В В В Note: Funkitsii not marked postfix Safe, can cause an exception, but they have
+В В В В В В В В В В В В В В В В smaller size.
+В В */
   bool _DecompressNRV2BSafe(LPBYTE pSource, DWORD dwSourceSize, LPBYTE pDest, LPDWORD );
   bool _DecompressNRV2B(LPBYTE pSource, DWORD dwSourceSize, LPBYTE pDest, LPDWORD pdwDestSize);
   bool _DecompressNRV2DSafe(LPBYTE pSource, DWORD dwSourceSize, LPBYTE pDest, LPDWORD pdwDestSize);

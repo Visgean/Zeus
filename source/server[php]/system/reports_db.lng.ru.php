@@ -3,7 +3,7 @@ define('LNG_REPORTS', 'Поиск в базе данных');
 
 define('LNG_REPORTS_BOTSACTION', 'Действие над ботами:');
 
-//Фильтр.
+//P ¤ Pepsi "SЊS, SЂ.
 define('LNG_REPORTS_FILTER_TITLE',      'Фильтр');
 
 define('LNG_REPORTS_FILTER_DATE_P1',    'Искать с даты (дд.мм):');

@@ -122,13 +122,12 @@ namespace Gui
   */
   bool _browseForSaveFile(HWND owner, LPWSTR initialDir, LPWSTR fileBuffer, LPWSTR defaultExtension, LPWSTR filter, DWORD filterIndex);
 
-  /*
-    Инициализация общих контролев (надстройка для InitCommonControlsEx()).
+  /*В В В В Initialize common controls (front-end for InitCommonControlsEx ()).
 
-    IN classes - ICC_*.
+В В В В IN classes - ICC_ *.
 
-    Return     - true - в случаи успеха,
-                 false - в случаи ошибки.
-  */
+В В В В Return - true - if successful,
+В В В В В В В В В В В В В В В В В false - if an error occurs.
+В В */
   bool _loadCommonControl(DWORD classes);
 };

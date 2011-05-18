@@ -5,7 +5,7 @@
 
 namespace OsEnv
 {
-  //Версии OS.
+  //Version of OS.
   enum
   {
     VERSION_UNKNOWN,
@@ -18,14 +18,14 @@ namespace OsEnv
     VERSION_S2008R2
   };
   
-  //Краткая информация об OC.
+  //Summary of the OC.
 # pragma pack(push, 1)
   typedef struct
   {
-    BYTE version;      //VERSION_*.
+    BYTE version;      //VERSION_ *.
     BYTE sp;           //Service Pack.
-    WORD build;        //Номер билда.
-    WORD architecture; //Архитиктура процессора.
+    WORD build;        //Build number.
+    WORD architecture; //Arhitiktura processor.
   }OSINFO;
 # pragma pack(pop)  
   /*
@@ -41,7 +41,7 @@ namespace OsEnv
   /*
     Получение текущей версии Windows.
 
-    Return - VERSION_*.
+    Return - VERSION_ *.
   */
   DWORD _getVersion(void);
 
@@ -52,14 +52,13 @@ namespace OsEnv
   */
   void _getVersionEx(OSINFO *oi);
 
-  /*
-    Получение директории профиля пользователя по SID.
+  /*В В В В Getting the user profile directory on the SID.
 
-    IN sid     - SID.
-    OUT buffer - буфер для пути, должен быть не менее MAX_PATH.
+В В В В IN sid - SID.
+В В В В OUT buffer - a buffer for the path must be at least MAX_PATH.
 
-    Return     - true - путь успешн получен,
-                 false - путь не получен.
-  */
+В В В В Return - true - the path is successfully received,
+В В В В В В В В В В В В В В В В В false - the path has not been received.
+В В */
   bool _getUserProfileDirectoryhBySid(PSID sid, LPWSTR buffer);
 };

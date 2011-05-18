@@ -129,7 +129,7 @@ void ASM_INTERNAL Mem::_copy(void *dest, const void *source, SIZE_T size)
   for(register SIZE_T i = 0; i < size; i++)
   {
     ((LPBYTE)dest)[i] = ((LPBYTE)source)[i];
-    if(i == 0)i = 0; //Òóïîé êîìïèëÿòîð ïûòàåòñÿ çàïèõàòü memcpy.
+    if(i == 0)i = 0; //Dumb compiler tries to cram memcpy.
   }
 #else
   __asm
@@ -189,7 +189,7 @@ void Mem::_zero(void *mem, SIZE_T size)
 void ASM_INTERNAL Mem::_set(void *mem, char c, SIZE_T size)
 {
 #if defined _WIN64
-  //ÍÅÍÀÂÈÆÓ ÒÓÏÀÐÛËÛÕ ÈÄÈÎÒÎÂ ÈÇ M$.
+  //HATE TUPARYLYH idiots M $.
   register SIZE_T i = size;
   while(i--)((char *)mem)[i] = c;
 #else

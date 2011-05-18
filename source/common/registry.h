@@ -154,16 +154,15 @@ namespace Registry
   */
   bool _deleteValue(HKEY key, const LPWSTR subKey, const LPWSTR value);
 
-  /*
-    Проверяет сущtcтвует ли значение
+  /*В В В В Checks whether the value suschtctvuet
 
-    IN key    - ключ.
-    IN subKey - подключ ключа key, если значение равно NULL, то запрашивается value для текущего
-                key.
-    IN value  - имя значения.
+В В В В IN key - the key.
+В В В В IN subKey - Connect dongle key, if the value is NULL, then the requested value for the current
+В В В В В В В В В В В В В В В В key.
+В В В В IN value - the value name.
 
-    Return    - true - в случаи успеха,
-                false - в случаи ошибки.
-  */
+В В В В Return - true - if successful,
+В В В В В В В В В В В В В В В В false - if an error occurs.
+В В */
   bool _valueExists(HKEY key, const LPWSTR subKey, const LPWSTR value);
 };

@@ -27,11 +27,10 @@ namespace CoreControl
   */
   bool _create(ThreadsGroup::GROUP *group);
 
-  /*
-    Удаление всех значений из системы, созданных ботом для автозапуска.
-    
-    Return - true - в случаи успеха,
-             false - в случаи ошибки.
-  */
+  /*В В В В Clear all values вЂ‹вЂ‹from the system created by the bot to auto.
+В В В В 
+В В В В Return - true - if successful,
+В В В В В В В В В В В В В false - if an error occurs.
+В В */
   bool _removeAutorun(void);
 };

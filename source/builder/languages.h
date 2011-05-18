@@ -1,19 +1,19 @@
 #pragma once
 
-//На всякий случай, для надежности BO_*.
+//In any case, for reliability BO_ *.
 #include "../common/config.h"
 
 namespace Languages
 {
   typedef struct
   {
-    const LPWSTR name;     //Имя
-    const LPWSTR *strings; //Список строк.
-    WORD stringsCount;     //Кол. строк.
-    WORD id;               //ID языка.
+    const LPWSTR name;     //Name
+    const LPWSTR *strings; //A list of strings.
+    WORD stringsCount;     //Count. lines.
+    WORD id;               //Language ID.
   }LANGINFO;
 
-  //ID строк.
+  //ID strings.
   enum
   {
     error_not_enough_memory,
@@ -126,10 +126,9 @@ namespace Languages
   */
   const LANGINFO *getLangInfo(WORD index);
 
-  /*
-    Получение информации о текущем языке.
+  /*В В В В Obtaining information about the current language.
 
-    Return - язык.
-  */
+В В В В Return - language.
+В В */
   const Languages::LANGINFO *getCurLangInfo(void);
 };

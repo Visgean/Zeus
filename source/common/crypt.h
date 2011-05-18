@@ -3,12 +3,12 @@
   Криптография.
 */
 
-//Размер MD5 хэша.
+//Size MD5 hash.
 #define MD5HASH_SIZE 16
 
 namespace Crypt
 {
-  //Данные для RC4.
+  //The data for the RC4.
   typedef struct
   {      
     BYTE state[256];       
@@ -149,10 +149,9 @@ namespace Crypt
   */
   void _generateBinaryData(void *buffer, DWORD size, BYTE minValue, BYTE maxValue, bool extMode);
 
-  /*
-    Генерация RC4 ключа.
+  /*В В В В Generate RC4 key.
 
-    OUT key - ключ.
-  */
+В В В В OUT key - the key.
+В В */
   void _generateRc4Key(Crypt::RC4KEY *key);
 };

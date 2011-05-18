@@ -7,12 +7,12 @@ $screenshotTypes = array('jpeg' => 'jpeg', 'gif' => 'gif', 'png' => 'png');
 $llist           = array('en' => 'English', 'ru' => 'Russian (Русский)');
 $errors          = array();
 
-///////////////////////////////////////////////////////////////////////////////////////////////////
-// Обработка данных.
-///////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////// / / ///////////////////////////////////////////////
+// RћR SЂR ° ± P ± RѕS, RєR ° ° RґR RЅRЅS <C ....
+////////////////////////////////////////////////// / / ///////////////////////////////////////////////
 $q = '';
 
-//Обработка основных данных.
+//RћR SЂR ° ± P ± RѕS, RєR ° RѕSЃRЅRѕRІRЅS <C ... RґR ° RЅRЅS <C ....
 $language = strtolower(isset($_POST['language'], $llist[$_POST['language']]) ? $_POST['language'] : $userData['language']);
 if(!isset($llist[$language]))$language = DEFAULT_LANGUAGE;
 $q .= "language='".addslashes($language)."'";
@@ -25,7 +25,7 @@ $screenshotQuality = isset($_POST['screenshotQuality']) ? intval($_POST['screens
 if($screenshotQuality <= 0 || $screenshotQuality > 100)$screenshotQuality = 30;
 $q .= ", ss_quality='".addslashes($screenshotQuality)."'";
 
-//Обработка пароля.
+//RћR SЂR ° ± P ± RѕS, RєR ° ° RїR SЂRѕR "SЏ.
 if(isset($_POST['passold'], $_POST['pass1'], $_POST['pass2']) && strlen($_POST['passold']) > 0 && ($l = strlen($_POST['pass1'])) > 0)
 {
   if(strcasecmp(md5($_POST['passold']), $userData['pass']) !== 0)$errors[] = LNG_SYS_PASSWORD_E1;
@@ -34,7 +34,7 @@ if(isset($_POST['passold'], $_POST['pass1'], $_POST['pass2']) && strlen($_POST['
   else $q .= ", pass='".addslashes(md5($_POST['pass1']))."'";
 }
 
-//Сохранение параметров.
+//RЎRѕS ... SЂR RЅRμRЅReRμ RїR ° ° ° SЂR RјRμS, SЂRѕRІ.
 if(strcmp($_SERVER['REQUEST_METHOD'], 'POST') === 0 && count($errors) == 0)
 {
   if(!mysqlQueryEx('cp_users', "UPDATE cp_users SET {$q} WHERE id='{$userData['id']}' LIMIT 1"))$errors[] = mysqlErrorEx();
@@ -45,11 +45,11 @@ if(strcmp($_SERVER['REQUEST_METHOD'], 'POST') === 0 && count($errors) == 0)
   }
 }
 
-///////////////////////////////////////////////////////////////////////////////////////////////////
-// Вывод.
-///////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////// / / ///////////////////////////////////////////////
+// R'S <RІRѕRґ.
+////////////////////////////////////////////////// / / ///////////////////////////////////////////////
 
-//Заполнение списков.
+//P-P ° RїRѕR "RЅRμRЅReRμ SЃRїReSЃRєRѕRІ.
 $languages = '';
 foreach($llist as $k => $v)
 {
@@ -70,20 +70,20 @@ for($i = 5; $i <= 100; $i += 5)
 
 ThemeBegin(LNG_SYS, 0, 0, 0);
 
-//Вывод ошибок.
+//R'S <RІRѕRґ RѕS € Pepsi ± RѕRє.
 if(count($errors) > 0)
 {
   echo THEME_STRING_FORM_ERROR_1_BEGIN;
   foreach($errors as $r)echo $r.THEME_STRING_NEWLINE;
   echo THEME_STRING_FORM_ERROR_1_END;
 }
-//Вывод сообщений.
+//R'S <RІRѕRґ SЃRѕRѕR ± C ‰ RμRЅReR №.
 else if(isset($_GET['u']))
 {
   echo THEME_STRING_FORM_SUCCESS_1_BEGIN.LNG_SYS_UPDATED.THEME_STRING_NEWLINE.THEME_STRING_FORM_SUCCESS_1_END;
 }
 
-//Вывод формы.
+//R'S <RІRѕRґ C RѕSЂRјS <.
 echo
 str_replace(array('{NAME}', '{URL}', '{JS_EVENTS}'), array('options', QUERY_STRING_HTML, ''), THEME_FORMPOST_BEGIN),
 str_replace('{WIDTH}', 'auto', THEME_DIALOG_BEGIN).

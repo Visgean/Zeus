@@ -65,13 +65,12 @@ namespace WaHook
   */
   bool _isHooked(HANDLE process, void *function);
   
-  /*
-    Выделяет регион памяти, куда можно вносить заменные фрагменты перехваченых функций.
-    
-    IN process      - процесс, в котором происходит модификация.
-    IN maxFunctions - примерное количетсво функций, которые будут перехвачены.
-    
-    Return          - адрес, или NULL в случаи ошибки.
-  */
+  /*В В В В Allocates a region of memory where you can make replacement parts intercepted functions.
+В В В В 
+В В В В IN process - a process in which the modification.
+В В В В IN maxFunctions - approximate kolichetsvo features that will be intercepted.
+В В В В 
+В В В В Return - address, or NULL in case of error.
+В В */
   void *_allocBuffer(HANDLE process, DWORD maxFunctions);
 };

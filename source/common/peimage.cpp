@@ -2,16 +2,16 @@
 
 #include "peimage.h"
 
-//Получение NT-заголовков.
+//Getting the NT-headers.
 #define IMAGE_GET_NT_HEADERS(image) ((void *)((IMAGE_NT_HEADERS32 *)((LPBYTE)(image) + ((IMAGE_DOS_HEADER *)(image))->e_lfanew)))
 
-//Получение типа NT-заголовков IMAGE_NT_OPTIONAL_HDR*.
+//Getting the type of NT-headers IMAGE_NT_OPTIONAL_HDR *.
 #define IMAGE_NT_HEADERS_TYPE(image) ((WORD)(((IMAGE_NT_HEADERS32 *)IMAGE_GET_NT_HEADERS(image))->OptionalHeader.Magic))
 
-//Получение типа процессора IMAGE_FILE_MACHINE_*.
+//Getting type of processor IMAGE_FILE_MACHINE_ *.
 #define IMAGE_MACHINE_TYPE(image)    ((WORD)(((IMAGE_NT_HEADERS32 *)IMAGE_GET_NT_HEADERS(image))->FileHeader.Machine))
 
-//Мааксимальное кол. секций.
+//Maaksimalnoe count. sections.
 #define MAX_SECTIONS 96
 
 typedef PIMAGE_NT_HEADERS (WINAPI *CHECKSUMMAPPEDFILE)(PVOID baseAddress, DWORD fileLength, PDWORD headerSum, PDWORD checkSum);
@@ -102,7 +102,7 @@ void *PeImage::_createFromMemory(PEDATA *pedata, void *mem, DWORD memSize, bool 
           IMAGE_SECTION_HEADER *currenSections = &sections[i];
           DWORD dataOffset;
 
-          //Проверки модуля.
+          //Verification module.
           if(isModule)
           {
             DWORD normalVirtualSize = max(currenSections->SizeOfRawData, currenSections->Misc.VirtualSize); 
@@ -115,7 +115,7 @@ void *PeImage::_createFromMemory(PEDATA *pedata, void *mem, DWORD memSize, bool 
               maxSectionOffset = i;
             }
           }
-          //Проверка файла.
+          //Check the file.
           else
           {
             DWORD normalRawSize = ALIGN_UP(currenSections->SizeOfRawData, fileAligment);
@@ -128,7 +128,7 @@ void *PeImage::_createFromMemory(PEDATA *pedata, void *mem, DWORD memSize, bool 
             }
           }
           
-          //Добавление секции.
+          //Adding section.
           LPBYTE curMem = (LPBYTE)mem + dataOffset;
           if(CWA(kernel32, IsBadReadPtr)(curMem, currenSections->SizeOfRawData) != FALSE || 
              !_addSection(pedata, (LPSTR)currenSections->Name, currenSections->Characteristics, curMem, currenSections->PointerToRawData, currenSections->SizeOfRawData, currenSections->VirtualAddress, currenSections->Misc.VirtualSize, 0))
@@ -137,7 +137,7 @@ void *PeImage::_createFromMemory(PEDATA *pedata, void *mem, DWORD memSize, bool 
           }
         }
 
-        //Вычисляем размер.
+        //Calculate the size.
         {
           void *retVal;
           if(t->FileHeader.NumberOfSections == 0)
@@ -211,7 +211,7 @@ bool PeImage::_setNtHeader(PEDATA *pedata, PENTBASEDATA *basedata)
   
   if(p)
   {
-    //* - значения которые будут исправлены после сборки файла.
+    //* - Values вЂ‹вЂ‹that will be fixed after the assembly file.
     
     IMAGE_NT_HEADERS32 *ntHeader = (IMAGE_NT_HEADERS32 * )p;
 
@@ -360,7 +360,7 @@ bool PeImage::_setNtHeaderFromNtHeader(PEDATA *pedata, void *ntHeader)
       Mem::free(pedata->ntHeader.p32);
       pedata->ntHeader.p32 = (IMAGE_NT_HEADERS32 *)p; 
 
-      //Заполняем dataDirectory.
+      //Fill dataDirectory.
       Mem::_zero(pedata->dataDirectory, sizeof(IMAGE_DATA_DIRECTORY) * IMAGE_NUMBEROF_DIRECTORY_ENTRIES);
 
       #if(PEIMAGE_32 > 0 && PEIMAGE_64 > 0)
@@ -445,7 +445,7 @@ DWORD PeImage::_buildImage(PEDATA *pedata, DWORD flags, DWORD rvaOfEntryPoint, L
   if(output)*output = NULL;
   if(pedata->dosHeader == NULL || pedata->ntHeader.p32 == NULL)return 0;
    
-  //Стартовые позиции.
+  //Starting positions.
   DWORD fileOffset = 0, virtualOffset = 0;
   DWORD fileAlignment, virtualAlignment;
   
@@ -465,11 +465,11 @@ DWORD PeImage::_buildImage(PEDATA *pedata, DWORD flags, DWORD rvaOfEntryPoint, L
   }
 #endif
 
-  //Выделяем память.
+  //Allocate.
   LPBYTE image;
   if(output)
   {
-    //Подсчитываем примерный размер файла.
+    //Calculate the approximate size of the file.
     DWORD imageSize = pedata->dosHeader->e_lfanew + max(sizeof(IMAGE_NT_HEADERS32), sizeof(IMAGE_NT_HEADERS64)) + (sizeof(IMAGE_SECTION_HEADER) * pedata->sectionsCount);
     imageSize = ALIGN_UP(imageSize, fileAlignment);
     for(DWORD i = 0; i < pedata->sectionsCount; i++)imageSize += ALIGN_UP(pedata->sections[i].SizeOfRawData, fileAlignment);
@@ -477,12 +477,12 @@ DWORD PeImage::_buildImage(PEDATA *pedata, DWORD flags, DWORD rvaOfEntryPoint, L
     if((image = (LPBYTE)Mem::alloc(imageSize + pedata->minimalRawOffsetOfSection)) == NULL)return 0;
   }
     
-  //DOS-заголовок.
+  //DOS-header.
   if(output)Mem::_copy(image + fileOffset, pedata->dosHeader, pedata->dosHeader->e_lfanew);
   fileOffset    += pedata->dosHeader->e_lfanew;
   virtualOffset += pedata->dosHeader->e_lfanew;
   
-  //NT-заголовок.
+  //NT-header.
   LPBYTE newNtHeader = (output ? (LPBYTE)(image + fileOffset) : (LPBYTE)pedata->ntHeader.p32);
   
   if(0){}
@@ -503,7 +503,7 @@ DWORD PeImage::_buildImage(PEDATA *pedata, DWORD flags, DWORD rvaOfEntryPoint, L
   }
 #endif  
   
-  //Счетчики.
+  //Counters.
   DWORD sizeOfCode        = 0;
   DWORD initializedData   = 0;
   DWORD uninitializedData = 0;
@@ -512,7 +512,7 @@ DWORD PeImage::_buildImage(PEDATA *pedata, DWORD flags, DWORD rvaOfEntryPoint, L
   DWORD baseOfData        = 0;
   DWORD sizeOfHeaders     = 0;
   
-  //Cекций.
+  //Section's.
   {
     IMAGE_SECTION_HEADER *sections = (IMAGE_SECTION_HEADER *)(image + fileOffset);
 
@@ -522,7 +522,7 @@ DWORD PeImage::_buildImage(PEDATA *pedata, DWORD flags, DWORD rvaOfEntryPoint, L
     virtualOffset += sizeof(IMAGE_SECTION_HEADER) * pedata->sectionsCount;
     virtualOffset  = ALIGN_UP(virtualOffset, virtualAlignment);
     
-    //Выравниваем до минимальной позици секции.
+    //Align to the minimum positioning section.
     if(fileOffset < pedata->minimalRawOffsetOfSection)fileOffset = pedata->minimalRawOffsetOfSection;
 
     sizeOfHeaders = fileOffset;
@@ -558,25 +558,25 @@ DWORD PeImage::_buildImage(PEDATA *pedata, DWORD flags, DWORD rvaOfEntryPoint, L
       if(ps->Characteristics & IMAGE_SCN_CNT_CODE)
       {
         if((flags & BIF_NO_RECALC_RVA) == 0 && baseOfCode == 0)baseOfCode = virtualOffset;
-        sizeOfCode += ps->SizeOfRawData;//ALIGN_UP(realVirtualSize, fileAlignment);
+        sizeOfCode += ps->SizeOfRawData;//ALIGN_UP (realVirtualSize, fileAlignment);
       }
       if(ps->Characteristics & IMAGE_SCN_CNT_INITIALIZED_DATA)
       {
         if((flags & BIF_NO_RECALC_RVA) == 0 && baseOfData == 0 && !(ps->Characteristics & IMAGE_SCN_CNT_CODE))baseOfData = virtualOffset;
-        initializedData += ALIGN_UP(realVirtualSize, fileAlignment);//ps->SizeOfRawData
+        initializedData += ALIGN_UP(realVirtualSize, fileAlignment);//ps-> SizeOfRawData
       }
       if(ps->Characteristics & IMAGE_SCN_CNT_UNINITIALIZED_DATA)
       {
-        uninitializedData += ALIGN_UP(realVirtualSize, fileAlignment);//ps->SizeOfRawData
+        uninitializedData += ALIGN_UP(realVirtualSize, fileAlignment);//ps-> SizeOfRawData
       }
       
-      //Подсчитываем новые позиции.
+      //We compute the new positions.
       fileOffset += ps->SizeOfRawData;
       if((flags & BIF_NO_RECALC_RVA) == 0)virtualOffset += ALIGN_UP(realVirtualSize, virtualAlignment);
     }
   }
 
-  //Обновляем NT-заголовок.
+  //Обновляем NT-header.
   ((IMAGE_NT_HEADERS32 * )newNtHeader)->FileHeader.NumberOfSections = pedata->sectionsCount;
   bool setChecksum = (output && (flags & BIF_CHECKSUM)) ? true : false;
 
@@ -625,7 +625,7 @@ DWORD PeImage::_buildImage(PEDATA *pedata, DWORD flags, DWORD rvaOfEntryPoint, L
       nt64Header->OptionalHeader.SizeOfInitializedData   = initializedData;
       nt64Header->OptionalHeader.SizeOfUninitializedData = uninitializedData;
       nt64Header->OptionalHeader.BaseOfCode              = baseOfCode;
-      //nt64Header->OptionalHeader.BaseOfData              = baseOfData;
+      //nt64Header-> OptionalHeader.BaseOfData = baseOfData;
       nt64Header->OptionalHeader.SizeOfImage             = virtualOffset;
     }
     else
@@ -634,7 +634,7 @@ DWORD PeImage::_buildImage(PEDATA *pedata, DWORD flags, DWORD rvaOfEntryPoint, L
       nt64Header->OptionalHeader.SizeOfInitializedData   = pedata->ntHeader.p64->OptionalHeader.SizeOfInitializedData;
       nt64Header->OptionalHeader.SizeOfUninitializedData = pedata->ntHeader.p64->OptionalHeader.SizeOfUninitializedData;
       nt64Header->OptionalHeader.BaseOfCode              = pedata->ntHeader.p64->OptionalHeader.BaseOfCode;
-      //nt64Header->OptionalHeader.BaseOfData              = pedata->ntHeader.p64->OptionalHeader.BaseOfData;
+      //nt64Header-> OptionalHeader.BaseOfData = pedata-> ntHeader.p64-> OptionalHeader.BaseOfData;
       nt64Header->OptionalHeader.SizeOfImage             = pedata->ntHeader.p64->OptionalHeader.SizeOfImage;
     }
     nt64Header->OptionalHeader.SizeOfHeaders             = sizeOfHeaders;
@@ -702,10 +702,10 @@ DWORD PeImage::_getCurrentRawSize(PEDATA *pedata)
   size += pedata->sectionsCount * sizeof(IMAGE_SECTION_HEADER);
   size = ALIGN_UP(size, alignment);
 
-  //Выравниваем до минимальной позици секции.
+  //Align to the minimum positioning section.
   if(size < pedata->minimalRawOffsetOfSection)size = pedata->minimalRawOffsetOfSection;
   
-  //Секции.
+  //Section.
   for(DWORD i = 0; i < pedata->sectionsCount; i++)size += ALIGN_UP(pedata->sections[i].SizeOfRawData, alignment);
 
   return size;
@@ -830,15 +830,15 @@ void *PeImage::_copyModuleToProcess(HANDLE process, void *image)
 
   if(CWA(kernel32, IsBadReadPtr)(image, imageSize) != 0)return NULL;
   
-  //Выделние памяти для модуля.
+  //Vydelnie memory module.
   LPBYTE remoteMem = (LPBYTE)CWA(kernel32, VirtualAllocEx)(process, NULL, imageSize, MEM_RESERVE | MEM_COMMIT, PAGE_EXECUTE_READWRITE);
   if(remoteMem != NULL)
   {
-    //Создаем локальный буфер, в котором будем вносить измненеия.
+    //Create a local buffer, which will make izmneneiya.
     LPBYTE buf = (LPBYTE)Mem::copyEx(image, imageSize);
     if(buf != NULL)
     {
-      //Изменяем релоки.
+      //Change Relocation.
       IMAGE_DATA_DIRECTORY *relocsDir = &ntHeader->OptionalHeader.DataDirectory[IMAGE_DIRECTORY_ENTRY_BASERELOC];
       
       if(relocsDir->Size > 0 && relocsDir->VirtualAddress > 0)
@@ -849,7 +849,7 @@ void *PeImage::_copyModuleToProcess(HANDLE process, void *image)
       
         while(relHdr->VirtualAddress != 0)
         {
-          if(relHdr->SizeOfBlock >= sizeof(IMAGE_BASE_RELOCATION))//FIXME: Что это?
+          if(relHdr->SizeOfBlock >= sizeof(IMAGE_BASE_RELOCATION))//FIXME: What is it?
           {
             DWORD relCount = (relHdr->SizeOfBlock - sizeof(IMAGE_BASE_RELOCATION)) / sizeof(WORD);
             LPWORD relList = (LPWORD)((LPBYTE)relHdr + sizeof(IMAGE_BASE_RELOCATION));
@@ -865,7 +865,7 @@ void *PeImage::_copyModuleToProcess(HANDLE process, void *image)
           relHdr = (IMAGE_BASE_RELOCATION *)((LPBYTE)relHdr + relHdr->SizeOfBlock);
         }
       
-        //Копируем образ в процесс.
+        //Copy the image in the process.
         ok = CWA(kernel32, WriteProcessMemory)(process, remoteMem, buf, imageSize, NULL) ? true : false;
       }
       
@@ -897,7 +897,7 @@ bool PeImage::_loadImport(void *image, void *loadLibraryA, void *getProcAddress)
   {
     for(IMAGE_IMPORT_DESCRIPTOR *iid = (IMAGE_IMPORT_DESCRIPTOR *)((LPBYTE)image + importDir->VirtualAddress); iid->Characteristics != 0; iid++)
     {
-      //Загружаем DLL.
+      //Load the DLL.
       HMODULE dll = (((liLoadLibraryA)loadLibraryA)((LPSTR)((LPBYTE)image + iid->Name)));
       if(dll == NULL)return false;
     
@@ -911,7 +911,7 @@ bool PeImage::_loadImport(void *image, void *loadLibraryA, void *getProcAddress)
 
       for(; originalThunk->u1.Function != 0; originalThunk++, thunk++)
       {
-        //Получаем имя функции.
+        //Get the name of the function.
         LPSTR name;
         
         #if defined _WIN64
@@ -925,7 +925,7 @@ bool PeImage::_loadImport(void *image, void *loadLibraryA, void *getProcAddress)
           name = (LPSTR)(iin->Name);
         }
 
-        //Получаем адрес.
+        //Obtain the address.
         DWORD_PTR addr = (DWORD_PTR)(((liGetProcAddress)getProcAddress)(dll, name));
         if(addr == NULL)return false;
         thunk->u1.Function = addr;
@@ -972,14 +972,14 @@ bool PeImage::_repalceImportFunction(void *image, const void *oldFunction, const
 
 DWORD PeImage::_rvaToRsa(PEDATA *pedata, DWORD rva, LPWORD sectionIndex)
 {
-  //Ищим секцию которой принадлежит адрес.
+  //Ischim section address belongs.
   DWORD ret = 0;
   for(WORD i = 0; i < pedata->ntHeader.p32->FileHeader.NumberOfSections; i++)
   {
     DWORD a = pedata->sections[i].VirtualAddress;
     if(rva >= a && rva < a + pedata->sections[i].Misc.VirtualSize)
     {
-      rva -= a; //Адрес относительно секции.
+      rva -= a; //Address relative to the section.
       if(/*pedata->sections[i].PointerToRawData > 0 && */rva < pedata->sections[i].SizeOfRawData)
       {
         ret = rva;
@@ -1009,14 +1009,14 @@ bool PeImage::_isPeImage(void *mem, DWORD memSize)
   if(dosHeader->e_magic != IMAGE_DOS_SIGNATURE || dosHeader->e_lfanew < sizeof(WORD) || dosHeader->e_lfanew >= memSize - sizeof(IMAGE_NT_HEADERS32))return false;
   offset += dosHeader->e_lfanew;
 
-  //Получаем NT-заголовок.
-  //Здесь проверяются отсновные параметры для определения 32/64 и предотврашения "buffer overflow".
-  //Делать более жесткую проверку не вижу смысла.
+  //Получаем NT-header.
+  //This checks otsnovnye parameters for determining the 32/64 and predotvrasheniya "buffer overflow".
+  //Making a tougher test does not see the point.
   if(((IMAGE_NT_HEADERS32 *)offset)->Signature != IMAGE_NT_SIGNATURE)return false;
 
   IMAGE_NT_HEADERS32 *t = (IMAGE_NT_HEADERS32 *)offset;
 
-  //Размер заголовков.
+  //The size of the headers.
   if(t->FileHeader.SizeOfOptionalHeader >= (DWORD)(end - (offset + sizeof(IMAGE_FILE_HEADER) + sizeof(DWORD))))return false;
 
   DWORD fileAligment;
@@ -1026,7 +1026,7 @@ bool PeImage::_isPeImage(void *mem, DWORD memSize)
 #   if(PEIMAGE_32 > 0)
     case IMAGE_FILE_MACHINE_I386:
       nt32Header = (IMAGE_NT_HEADERS32 *)t;
-      if(/*dosHeader->e_lfanew >= memSize - sizeof(IMAGE_NT_HEADERS32) || Проверка сушествляется выше.*/nt32Header->OptionalHeader.Magic != IMAGE_NT_OPTIONAL_HDR32_MAGIC)return false;
+      if(/*dosHeader-> e_lfanew> = memSize - sizeof (IMAGE_NT_HEADERS32) | | Check sushestvlyaetsya above.*/nt32Header->OptionalHeader.Magic != IMAGE_NT_OPTIONAL_HDR32_MAGIC)return false;
       fileAligment    = nt32Header->OptionalHeader.FileAlignment;
       virtualAligment = nt32Header->OptionalHeader.SectionAlignment;
       break;
@@ -1045,7 +1045,7 @@ bool PeImage::_isPeImage(void *mem, DWORD memSize)
       return false;
   }
 
-  //Это проверка требуется для защиты от переполенния буфера входе работы с секциями.
+  //This test is required to prevent perepolenniya input buffer with the sections.
   if(fileAligment > MAX_FILE_ALIGMENT || fileAligment < MIN_FILE_ALIGMENT ||
      virtualAligment > MAX_VIRTUAL_ALIGMENT || virtualAligment < MIN_VIRTUAL_ALIGMENT ||
      virtualAligment < fileAligment ||

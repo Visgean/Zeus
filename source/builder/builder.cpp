@@ -74,9 +74,9 @@ static void enableButtons(HWND hwnd, bool enable)
 
 typedef struct
 {
-  BYTE type;               //Тип сборки: 0 - конфигурация, 1 - бота.
-  HWND owner;              //Окно вкладки.
-  Config0::CFGDATA config; //Конфигурация.
+  BYTE type;               //Build type: 0 - configuration 1 - bot.
+  HWND owner;              //Window tab.
+  Config0::CFGDATA config; //Configuration.
 }BUILDDATA;
 
 /*
@@ -93,16 +93,14 @@ static DWORD WINAPI buildThread(void *p)
   if(bd->type == 0)BuildConfig::_run(bd->owner, CWA(user32, GetDlgItem)(bd->owner, IDC_BUILDER_BUILD_OUTPUT), &bd->config, homePath);
   else BuildBot::_run(bd->owner, CWA(user32, GetDlgItem)(bd->owner, IDC_BUILDER_BUILD_OUTPUT), &bd->config, homePath);
   
-  //Выход.
+  //Exit.
   Config0::_Close(&bd->config);
   CWA(user32, SendMessageW)(bd->owner, WM_ENABLE_BUTTONS, 0, 0);
   Mem::free(bd);
   return 0;
 }
 
-/*
-  Обработка вкладки.
-*/
+/*В В Processing tab.*/
 INT_PTR CALLBACK toolBuilderProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
   static WCHAR configFile[MAX_PATH];
@@ -114,7 +112,7 @@ INT_PTR CALLBACK toolBuilderProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lPa
     {
       subThread = NULL;
 
-      //Выставляем строки.
+      //Expose the line.
       CWA(user32, SetDlgItemTextW)(hwnd, IDC_BUILDER_SOURCE_TITLE, Languages::get(Languages::tool_builder_source_title));
       CWA(user32, SetDlgItemTextW)(hwnd, IDC_BUILDER_SOURCE_BROWSE, Languages::get(Languages::tool_builder_source_browse));
       CWA(user32, SetDlgItemTextW)(hwnd, IDC_BUILDER_SOURCE_EDIT, Languages::get(Languages::tool_builder_source_edit));
@@ -124,7 +122,7 @@ INT_PTR CALLBACK toolBuilderProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lPa
       CWA(user32, SendDlgItemMessageW)(hwnd, IDC_BUILDER_SOURCE, EM_LIMITTEXT, MAX_PATH, 0);
       CWA(user32, SendDlgItemMessageW)(hwnd, IDC_BUILDER_BUILD_OUTPUT, EM_LIMITTEXT, 0, 0);
       
-      //Выбираем конфиг по умолчанию.
+      //Choose the configuration by default.
       {
         Config0::CFGDATA config;
         if(Fs::_pathCombine(configFile, homePath, L"config.txt") && loadConfig(hwnd, configFile, &config, false))Config0::_Close(&config);

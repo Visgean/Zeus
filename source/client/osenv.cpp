@@ -34,7 +34,7 @@ DWORD OsEnv::_getVersion(void)
     {
       //Windows 2000 - 5.0
       if(osvi.dwMajorVersion == 5 && osvi.dwMinorVersion == 0)ver = VERSION_2000;
-      //Windows XP -  5.1
+      //Windows XP - 5.1
       else if(osvi.dwMajorVersion == 5 && osvi.dwMinorVersion == 1)ver = VERSION_XP;
       //Windows XP Professional x64 Edition - 5.2
       else if(osvi.dwMajorVersion == 5 && osvi.dwMinorVersion == 2)ver = VERSION_XP;

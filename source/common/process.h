@@ -3,27 +3,27 @@
 */
 #pragma once
 
-//ID текущего процесса.
+//Current process ID.
 #define CURRENT_PROCESS ((HANDLE)-1)
 
 namespace Process
 {
-  //Уровень приложения.
+  //The application layer.
   enum
   {
     INTEGRITY_UNKNOWN,
-    INTEGRITY_LOW,     //Untrusted (Process can only write to low integrity locations, such as the Temporary Internet Files\Low folder or the HKEY_CURRENT_USER\Software\LowRegistry key)
+    INTEGRITY_LOW,     //Untrusted (Process can only write to low integrity locations, such as the Temporary Internet Files \ Low folder or the HKEY_CURRENT_USER \ Software \ LowRegistry key)
     INTEGRITY_MEDIUM,  //User (Process can create and modify files in the user's Documents folder and write to user-specific areas of the registry, such as HKEY_CURRENT_USER.)
     INTEGRITY_HIGH     //Administrative (Process can install files to the Program Files folder and write to sensitive registry areas like HKEY_LOCAL_MACHINE.)
   };
   
-  //Флаги для showShellRunDialog().
+  //Flags for showShellRunDialog ().
   enum
   {
-    RFD_NOBROWSE        = 0x00000001, //Не отображать кнопку "Обзор".
-    RFD_NODEFFILE       = 0x00000002, //Не выбирать файл по умолчанию.
-    RFD_USEFULLPATHDIR  = 0x00000004, //Использолвать рабочию директорию из пути запускаемого файла (игнарируется при workingDir != NULL).
-    RFD_NOSHOWOPEN      = 0x00000008  //Не отображать метку для Edit'а.
+    RFD_NOBROWSE        = 0x00000001, //Do not display the Browse button.
+    RFD_NODEFFILE       = 0x00000002, //Do not choose the default file.
+    RFD_USEFULLPATHDIR  = 0x00000004, //Ispolzolvat working directory path from the executable file (ignariruetsya at workingDir! = NULL).
+    RFD_NOSHOWOPEN      = 0x00000008  //Do not display the label for Edit'a.
   };
 
   /*
@@ -218,14 +218,13 @@ namespace Process
   */
   bool _runBatchForRemoveFile(const LPWSTR fileForRemoving);
 
-  /*
-    Запуск bat-файла с произволным содержимым, и его последущее удаление.
+  /*В В В В Run the bat-file with proizvolnym content and its posleduschego removal.
 
-    IN context - содержимое файла в кодировке OEM, будет добавлены дополнительные перфиксы и
-                 постфиксы.
-    
-    Return     - true - в случаи успеха,
-                 false - в случаи ошибки.
-  */
+В В В В IN context - the contents of the file encoded in OEM, will add an extra perfiksy and
+В В В В В В В В В В В В В В В В В postfix.
+В В В В 
+В В В В Return - true - if successful,
+В В В В В В В В В В В В В В В В В false - if an error occurs.
+В В */
   bool _runTempBatch(const LPSTR context);
 };

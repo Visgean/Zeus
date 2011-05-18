@@ -708,7 +708,7 @@ int UCL::_Compress(LPBYTE pSource, DWORD dwSourceSize, LPBYTE pBuffer, LPDWORD p
   int iRetVal;
   SWD_CONFIG *sc;
   
-  //Выбираем метод сжатия.
+  //Choosing a compression method.
 #if(XLIB_UCL_ONLY_MAX_COMPRESSION > 0)
   sc = (SWD_CONFIG *)&swd_configs[0];
 #else
@@ -835,7 +835,7 @@ LAZY_MATCH_DONE:;
     goto END;
   }
 
-  /* EOF */
+  /*In EOF*/
   bbPutBit(c, 0);
   if(dwFlags & UCL::CF_NRV2B)code_prefix_ss11(c, 0x1000000);
   else code_prefix_ss12(c, 0x1000000);

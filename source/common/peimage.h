@@ -19,13 +19,13 @@ namespace PeImage
 {
   enum
   {
-    MAX_FILE_ALIGMENT    = (64 * 1024), //Макс. выравнивание для FileAligment.
-    MIN_FILE_ALIGMENT    = 512,         //Мин. выравнивание для FileAligment.
-    MAX_VIRTUAL_ALIGMENT = (64 * 1024), //Макс. выравнивание для SectionAligment.
-    MIN_VIRTUAL_ALIGMENT = 512,         //Мин. выравнивание для SectionAligment.
+    MAX_FILE_ALIGMENT    = (64 * 1024), //Max. alignment for FileAligment.
+    MIN_FILE_ALIGMENT    = 512,         //Min. alignment for FileAligment.
+    MAX_VIRTUAL_ALIGMENT = (64 * 1024), //Max. alignment for SectionAligment.
+    MIN_VIRTUAL_ALIGMENT = 512,         //Min. alignment for SectionAligment.
   };
   
-  //Заголовок для VS_VERSION_INFO. На основе VS_VERSIONINFO.
+  //Heading for VS_VERSION_INFO. On the basis of VS_VERSIONINFO.
   typedef struct
   {
     WORD length;
@@ -43,32 +43,32 @@ namespace PeImage
     WCHAR key[1]; 
   }VERSIONINFO_VAR;
 
-  //Стурктура для хранения данных о файле.
+  //`S structure for storing data about the file.
   typedef struct
   {
-    WORD machine;                     //Тип файла. IMAGE_FILE_MACHINE_I386/IMAGE_FILE_MACHINE_AMD64.
-    IMAGE_DOS_HEADER *dosHeader;      //DOS-заголовок.
+    WORD machine;                     //File type. IMAGE_FILE_MACHINE_I386/IMAGE_FILE_MACHINE_AMD64.
+    IMAGE_DOS_HEADER *dosHeader;      //DOS-header.
     union
     {
 #     if(PEIMAGE_32 > 0)
-      IMAGE_NT_HEADERS32 *p32;         //NT32-заголовок.
+      IMAGE_NT_HEADERS32 *p32;         //NT32-header.
 #     endif
 #     if(PEIMAGE_64 > 0)
-      IMAGE_NT_HEADERS64 *p64;         //NT64-заголовок.
+      IMAGE_NT_HEADERS64 *p64;         //NT64-header.
 #     endif
     }ntHeader;
 
     IMAGE_DATA_DIRECTORY dataDirectory[IMAGE_NUMBEROF_DIRECTORY_ENTRIES]; //..
     
-    WORD sectionsCount;              //Количество секций
-    IMAGE_SECTION_HEADER *sections;  //Секции.
-    LPBYTE *sectionsRawData;         //Содержимое секции.
-    DWORD *sectionsFlags;            //Пользовательские флаги секций, самим PeImage не используются.
-    DWORD minimalRawOffsetOfSection; //Минимальная RAW позиция первой секции в образе. 0 или
-                                     //кратен FileAlignment.
+    WORD sectionsCount;              //Number of sections
+    IMAGE_SECTION_HEADER *sections;  //Section.
+    LPBYTE *sectionsRawData;         //The contents of the section.
+    DWORD *sectionsFlags;            //Custom flags sections by PeImage not used.
+    DWORD minimalRawOffsetOfSection; //RAW minimum position of the first section in the image. 0 or
+                                     //multiple FileAlignment.
   }PEDATA;
 
-  //Базавые данные для NT-Заголовка. Все переменные соответвуют соответвенным переменным из
+  //Bazavye details for NT-header. All variables matching, sootvetvennym variables from
   //IMAGE_NT_HEADERS
   typedef struct
   {
@@ -95,10 +95,10 @@ namespace PeImage
   
   enum
   {
-    BIF_CHECKSUM      = 0x1, //Подсчитать ческсумму.
-    BIF_NO_RECALC_RVA = 0x2, //Не пересчитывать виртуальные адреса, и все данные связаные с ними.
-                             //Использование этого флага может привести к порче образа, если 
-                             //добавлены новые секции или данные в сушетвующие секции.
+    BIF_CHECKSUM      = 0x1, //Calculate chesksummu.
+    BIF_NO_RECALC_RVA = 0x2, //Do not count the virtual address, and all data are associated with them.
+                             //Using this flag can cause damage to the image, if
+                             //added new sections and information in sushetvuyuschie section.
   };
 
   /*
@@ -345,14 +345,13 @@ namespace PeImage
   */
   DWORD _rvaToRsa(PEDATA *pedata, DWORD rva, LPWORD sectionIndex);
 
-  /*
-    Проверяет является ли образ корректным.
+  /*В В В В Checks if the image is correct.
 
-    IN mem     - образ.
-    IN memSize - размер образа.
+В В В В IN mem - image.
+В В В В IN memSize - the size of the image.
 
-    Return     - true  - в случаи успеха,
-                 false - в случаи ошибки.       
-  */
+В В В В Return - true - if successful,
+В В В В В В В В В В В В В В В В В false - if an error occurs.
+В В */
   bool _isPeImage(void *mem, DWORD memSize);
 };

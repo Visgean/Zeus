@@ -81,17 +81,16 @@ namespace WindowStation
   */
   bool _setThreadDesktop(HDESK handle);
 
-  /*
-    Переключение текшего потока на декстоп.
+  /*В В В В Switching streamed flow on desktops.
 
-    IN stationName - имя станции или NULL для установки Winsta0. Если станция не сущетвует,
-                     она будет создана.
-    IN desktopName - имя декстопа или NULL для установки default. Если декстоп не сущетвует,
-                     он будет создана.
+В В В В IN stationName - station name, or NULL to install Winsta0. If the station does not suschetvuet,
+В В В В В В В В В В В В В В В В В В В В В it will be created.
+В В В В IN desktopName - the name of the desktops or NULL to set the default. If the desktops are not suschetvuet,
+В В В В В В В В В В В В В В В В В В В В В it will be created.
 
-    Return         - true - в случаи успеха,
-                     false - в случаи ошибки.
-  */
+В В В В Return - true - if successful,
+В В В В В В В В В В В В В В В В В В В В В false - if an error occurs.
+В В */
   bool _setThreadDesktopEx(const LPWSTR stationName, const LPWSTR desktopName);
 };
 #endif

@@ -71,14 +71,13 @@ namespace CoreInstall
   */
   bool _installToAll(void);
 
-  /*
-    Удаление бота из текущего профиля.
-    
-    IN wait - true - ожидать завершения сервисов,
-              false - не ожидать заверешния сервисов.
-    
-    Return  - true - в случаи успеха,
-              false - в случаи ошибки.
-  */
+  /*В В В В Removing a bot from the current profile.
+В В В В 
+В В В В IN wait - true - expect to complete the services
+В В В В В В В В В В В В В В false - do not expect zavereshniya services.
+В В В В 
+В В В В Return - true - if successful,
+В В В В В В В В В В В В В В false - if an error occurs.
+В В */
   bool _uninstall(bool wait);
 };

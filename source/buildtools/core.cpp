@@ -13,14 +13,14 @@
 
 COREDATA coreData;
 
-//ROR 13 Опции
+//ROR 13 Options
 static const Cui::SWITCH ror13Switches[] =
 {
   {lng_switch_nologo,                   lng_switch_nologo_help},
   {lng_switch_inputstring L":[string]", lng_switch_inputstring_help}
 };
 
-//PEINFO Опции
+//PEINFO Options
 static const Cui::SWITCH peInfoSwitches[] =
 {
   {lng_switch_nologo,                    lng_switch_nologo_help},
@@ -30,7 +30,7 @@ static const Cui::SWITCH peInfoSwitches[] =
   {lng_switch_patch_dw L":[rva,dword]",  lng_switch_patch_dw_help}
 };
 
-//Команды
+//Teams
 void commandRor13(LPWSTR *switches, DWORD switchesCount);
 void commandPeInfo(LPWSTR *switches, DWORD switchesCount);
 
@@ -40,7 +40,7 @@ static const Cui::COMMAND commands[] =
   {lng_command_peinfo, lng_command_peinfo_help, commandPeInfo, (Cui::SWITCH *)peInfoSwitches, sizeof(peInfoSwitches) / sizeof(Cui::SWITCH)},
 };
 
-////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////// ////////////////////////////////////////////////
 
 void Core::init(void)
 {
@@ -61,9 +61,9 @@ void Core::showLogo(void)
   Console::writeStringW(lng_logo, sizeof(lng_logo) / sizeof(WCHAR) - 1);
 }
 
-////////////////////////////////////////////////////////////////////////////////////////////////////
-// Точка входа.
-////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////// ////////////////////////////////////////////////
+//В Entry point.
+//////////////////////////////////////////////////// ////////////////////////////////////////////////
 void WINAPI entryPoint(void)
 {
   Mem::init();  

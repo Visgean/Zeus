@@ -1,8 +1,6 @@
 <?php
-/*
-  Получение списка соксов, находящихся в онлайне.
-  Файл должен быть выложен в корень панели управления.
-*/
+/*В В Getting a list of socks that are online.
+В В File should be laid to the root of the control panel.*/
 
 define('__CP__', 1);
 require_once('system/global.php');

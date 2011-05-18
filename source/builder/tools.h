@@ -21,10 +21,8 @@ void writeOutput(HWND hwnd, LPWSTR format, ...);
 */
 void writeOutputError(HWND hwnd, LPWSTR format, ...);
 
-/*
-  Проверяет завершился ли поток.
+/*В В Checks whether the stream ended.
 
-  IN OUT subThread - указатель на хэгдл потока. Если при возрате хэндл == NULL, то поток завершился.
-*/
+В В IN OUT subThread - pointer to hegdl flow. If, returned with the handle == NULL, then the flow ended.*/
 void closeThreadIfFinsinhed(HANDLE *subThread);
 

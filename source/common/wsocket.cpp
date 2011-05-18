@@ -92,7 +92,7 @@ SOCKET WSocket::tcpConnectA(const LPSTR host, const WORD port)
 {
   WORD tcpPort = SWAP_WORD(port);
 
-  //Получаем данные удаленного сервера.
+  //Obtain the data the remote server.
   SOCKADDR_STORAGE *destAddrIpv4 = NULL;
   SOCKADDR_STORAGE *destAddrIpv6 = NULL;
 
@@ -113,14 +113,14 @@ SOCKET WSocket::tcpConnectA(const LPSTR host, const WORD port)
 
   SOCKET s = INVALID_SOCKET;
 
-  //FIXME: поменять приоретет, когда IPv6 станет порулярнее IPv4.
+  //FIXME: change prioretet when IPv6 will become porulyarnee IPv4.
   if(destAddrIpv4 != NULL)
   {
     ((SOCKADDR_IN *)destAddrIpv4)->sin_port = tcpPort;
     s = tcpConnect(destAddrIpv4);
   }
 
-  //Хз на сколько это логично в релаьных условиях.
+  //Xs on how much it is logical to relanyh conditions.
   if(destAddrIpv6 != NULL && s == INVALID_SOCKET)
   {
     ((SOCKADDR_IN6 *)destAddrIpv6)->sin6_port = tcpPort;
@@ -270,7 +270,7 @@ SOCKET WSocket::tcpWaitForIncomingAndAccept(SOCKET *sockets, DWORD socketsCount,
         break;
       }
 
-      //А вдруг...
+      //What if ...
       if(i == socketsCount)
       {
         CWA(ws2_32, WSASetLastError)(WSA_INVALID_HANDLE);
@@ -375,9 +375,9 @@ bool WSocket::_isLocalIp(const SOCKADDR_STORAGE *sockAddr)
     SOCKADDR_IN *sa4 = ((SOCKADDR_IN *)sockAddr);
 
        //RFC 1918
-    if((sa4->sin_addr.S_un.S_un_b.s_b1 == 10)                                                                                     //10.0.0.0    - 10.255.255.255  (10/8 prefix)
+    if((sa4->sin_addr.S_un.S_un_b.s_b1 == 10)                                                                                     //10.0.0.0 - 10.255.255.255 (10 / 8 prefix)
        || (sa4->sin_addr.S_un.S_un_b.s_b1 == 192 && sa4->sin_addr.S_un.S_un_b.s_b2 == 168)                                        //192.168.0.0 - 192.168.255.255 (192.168/16 prefix)
-       || (sa4->sin_addr.S_un.S_un_b.s_b1 == 172 && (sa4->sin_addr.S_un.S_un_b.s_b2 > 15 && sa4->sin_addr.S_un.S_un_b.s_b2 < 32)) //172.16.0.0  - 172.31.255.255  (172.16/12 prefix)
+       || (sa4->sin_addr.S_un.S_un_b.s_b1 == 172 && (sa4->sin_addr.S_un.S_un_b.s_b2 > 15 && sa4->sin_addr.S_un.S_un_b.s_b2 < 32)) //172.16.0.0 - 172.31.255.255 (172.16/12 prefix)
        //RFC 3330
        || (sa4->sin_addr.S_un.S_un_b.s_b1 == 127)
       )return true;

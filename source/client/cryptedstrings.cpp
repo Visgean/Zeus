@@ -6,7 +6,7 @@
 
 #include "cryptedstrings.h"
 
-//Список строк.
+//A list of strings.
 static const CryptedStrings::STRINGINFO strings[] =
 {
 /*STRINGS_DATA_BEGIN*/

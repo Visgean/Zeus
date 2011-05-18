@@ -5,9 +5,7 @@
 #include "main.h"
 #include "languages.h"
 
-/*
-  Обработка вкладки.
-*/
+/*В В Processing tab.*/
 INT_PTR CALLBACK toolSettingsProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
   switch(msg)
@@ -17,7 +15,7 @@ INT_PTR CALLBACK toolSettingsProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lPa
       CWA(user32, SetDlgItemTextW)(hwnd, IDC_SETTINGS_LANGUAGE_TITLE, Languages::get(Languages::tool_settings_language_title));
       CWA(user32, SetDlgItemTextW)(hwnd, IDC_SETTINGS_APPLY, Languages::get(Languages::tool_settings_apply));
 
-      //Заполняем языки.
+      //Fill languages.
       {
         const Languages::LANGINFO *langInfo;
         const Languages::LANGINFO *curLangInfo = Languages::getCurLangInfo();
@@ -46,12 +44,12 @@ INT_PTR CALLBACK toolSettingsProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lPa
     {
       switch(LOWORD(wParam))
       {
-        //Применяем настройки.
+        //Apply the settings.
         case IDC_SETTINGS_APPLY:
         {
           bool ok = true;
           
-          //Изменяем язык.
+          //Change the language.
           {
             HWND cb = CWA(user32, GetDlgItem)(hwnd, IDC_SETTINGS_LANGUAGE);
             int index = (int)CWA(user32, SendMessageW)(cb, CB_GETCURSEL, 0, 0);

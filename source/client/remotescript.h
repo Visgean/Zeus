@@ -17,15 +17,14 @@ namespace RemoteScript
   */
   void uninit(void);
 
-  /*
-    Запуск исполнения скрипта вотделном потоке. Пото не должен запускаться из
-    Process::INTEGRITY_LOW процессов.
+  /*В В В В Run the script execution votdelnom flow. Flow should not be run from
+В В В В Process:: INTEGRITY_LOW processes.
 
-    IN script - скрипт для исполнения. 
-    
-    Return    - true - в случаи успешного запуска исполенния скрипта (script будет освобожден
-                автоматически),
-                false - в случаи ошибки (script нужно освободить самостоятельно).
-  */
+В В В В IN script - a script for execution.
+В В В В 
+В В В В Return - true - in the cases of the successful launch ispolenniya script (script will be released
+В В В В В В В В В В В В В В В В automatically)
+В В В В В В В В В В В В В В В В false - if an error (script to release its own).
+В В */
   bool _exec(BinStorage::STORAGE *script);
 };

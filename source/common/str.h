@@ -5,7 +5,7 @@
   Примечение: Фунции не расчитаны на работу со строками размером более 0x7FFFFFFF симолов.
 */
 
-//Опеределяет пробельный ли это символ.
+//Operedelyaet whitespace if it is a symbol.
 #define IS_SPACE_CHAR(c) ((c) == 0x20 || ((c) >= 0x9 && (c) <= 0xD))
 
 //UTF8 BOM
@@ -20,45 +20,45 @@ namespace Str
 {  
   enum
   {
-    STS_TRIM          = 0x1, //Автоматически вызываь Trim для каждой строки.
-    STS_USE_SEPARATOR = 0x2, //Использовать разделитель вместо стандартного способа \r\n.
+    STS_TRIM          = 0x1, //Automatically call a Trim for each row.
+    STS_USE_SEPARATOR = 0x2, //Use a splitter instead of the standard method \ r \ n.
   };
   
   enum
   {
-    STA_FORMAT_C = 0x1, //Аргументы находяться в формате C-строк.
+    STA_FORMAT_C = 0x1, //Arguments are located in the C-format string.
   };
 
-  //Описание UTF-8 строки.
+  //Description UTF-8 string.
   typedef struct
   {
-    void *data;   //Строка.
-    DWORD lenght; //Размер строки в символах, исключая нулевой символ.
-    DWORD size;   //Размер строки в байтах, исключая нулевой символ.
+    void *data;   //Line.
+    DWORD lenght; //The size of the string in characters, excluding the null character.
+    DWORD size;   //Line size in bytes, excluding the null character.
   }UTF8STRING;
 
   typedef struct
   {
-    char anyCharSymbol;  //Символ одного любого символа, обычно '?'.
-    char anyCharsSymbol; //Символ любого кол. любых символов, обычно '*'.
-    LPSTR mask;          //Маска.
-    DWORD maskSize;      //Размер маски.
-    LPSTR string;        //Строка.
-    DWORD stringSize;    //Размер строки.
-    DWORD beginOfMatch;  //OUT индекс string, с которого начинается сравнение. Всегда 0, если не
-                         //установлен флаг MATCH_SEARCH_SUBSSTRING.
-    DWORD endOfMatch;    //OUT индекс string, на котором остановилось сравнение.
-    DWORD flags;         //Флаги MATCH_*.
+    char anyCharSymbol;  //Symbol of any single character, usually '?'.
+    char anyCharsSymbol; //Symbol of any count. any character, usually '*'.
+    LPSTR mask;          //Mask.
+    DWORD maskSize;      //The size of the mask.
+    LPSTR string;        //Line.
+    DWORD stringSize;    //The size of the string.
+    DWORD beginOfMatch;  //OUT index string, with which to begin the comparison. Always 0 if not
+                         //flag is set MATCH_SEARCH_SUBSSTRING.
+    DWORD endOfMatch;    //OUT index string, which stood comparison.
+    DWORD flags;         //Flags MATCH_ *.
   }MATCHDATAA;
 
-  //Флаги MATCHDATAX.flags.
+  //Flags MATCHDATAX.flags.
   enum
   {
-    MATCH_FULL_EQUAL            = 0x01, //Маска должна распорстарняться до конца строки.    
-    MATCH_UNIVERSAL_NEWLINE     = 0x02, //Не различтаать \r\n и \n.
-    MATCH_CASE_INSENSITIVE      = 0x04, //Без учета регистра.
-    MATCH_CASE_INSENSITIVE_FAST = 0x08, //Без учета регистра для символов A-Z, a-z.
-    MATCH_SEARCH_SUBSSTRING     = 0x10  //Поиск поодстроки в строке. (Аналогично маске "*mask").
+    MATCH_FULL_EQUAL            = 0x01, //The mask should rasporstarnyatsya until the end of the line.
+    MATCH_UNIVERSAL_NEWLINE     = 0x02, //Not razlichtaat \ r \ n and \ n.
+    MATCH_CASE_INSENSITIVE      = 0x04, //Insensitive.
+    MATCH_CASE_INSENSITIVE_FAST = 0x08, //Insensitive for the characters AZ, az.
+    MATCH_SEARCH_SUBSSTRING     = 0x10  //Search poodstroki in a row. (Similarly, the mask "* mask").
   };
   
   /*
@@ -984,15 +984,14 @@ namespace Str
   */
   bool _matchA(MATCHDATAA *md);
 
-  /*
-    Облегченная настрока над _matchA(), для сравнения с символами '*', '?', а тауже без учета
-    регистра.
+  /*В В В В Lightweight Preset over _matchA (), for comparison with the symbols' * ','? "And without tauzhe
+В В В В register.
 
-    IN mask   - маска.
-    IN string - строка.
+В В В В IN mask - a mask.
+В В В В IN string - string.
 
-    Return - true  - совпадение найдено,
-             false - совпадение не найдено.
-  */
+В В В В Return - true - a match is found,
+В В В В В В В В В В В В В false - no match.
+В В */
   bool _matchExA(const LPSTR mask, const LPSTR string);
 };

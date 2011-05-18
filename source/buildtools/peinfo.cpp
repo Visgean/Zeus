@@ -1,6 +1,4 @@
-/*
-  Получение информации из PE-файла.
-*/
+/*В В Getting information from the PE-file.*/
 #include <windows.h>
 
 #include "defines.h"
@@ -22,7 +20,7 @@ void commandPeInfo(LPWSTR *switches, DWORD switchesCount)
     return;
   }
 
-  //Загружаем файл.
+  //Load the file.
   PeImage::PEDATA peData;
   {
     Fs::MEMFILE mf;
@@ -50,7 +48,7 @@ void commandPeInfo(LPWSTR *switches, DWORD switchesCount)
     imageBase = peData.machine == IMAGE_FILE_MACHINE_I386 ? peData.ntHeader.p32->OptionalHeader.ImageBase : peData.ntHeader.p64->OptionalHeader.ImageBase;
   }
   
-  //Поиск в DataDirectory.
+  //Search DataDirectory.
   LPWSTR s;
   if((s = Cui::_getSwitchValue(switches, switchesCount, lng_switch_datadirectory)) != NULL && s != (LPWSTR)1)
   {
@@ -64,7 +62,7 @@ void commandPeInfo(LPWSTR *switches, DWORD switchesCount)
       ddSize = peData.dataDirectory[index].Size;
     }
 
-    //Вывод.
+    //Conclusion.
     if(Cui::_getSwitchValue(switches, switchesCount, lng_switch_nologo) != NULL)
     {
       Console::writeFormatW(imageBase == 0 ? L"0x%08X 0x%08X" : L"0x%p 0x%08X", ddRva, ddSize);
@@ -91,22 +89,22 @@ void commandPeInfo(LPWSTR *switches, DWORD switchesCount)
     }
     else
     {
-      //Получаем RVA и DWORD.
+      //Obtain the RVA and DWORD.
       *separator = 0;
       DWORD_PTR rva  = Str::_ToInt32W(s, NULL) - imageBase;
       DWORD dword = (DWORD)Str::_ToInt32W(separator + 1, NULL);
       
-      //Ищим секцию.    
+      //Ischim section.
       WORD i = 0;
       for(; i < peData.sectionsCount; i++)
       {   
         IMAGE_SECTION_HEADER *section = &peData.sections[i];
         if(rva >= section->VirtualAddress && section->SizeOfRawData >= sizeof(DWORD) && rva <= section->VirtualAddress + section->SizeOfRawData - sizeof(DWORD))
         {
-          //Выситываем файловый offset.
+          //Vysityvaem file offset.
           rva = section->PointerToRawData + (rva - section->VirtualAddress); 
         
-          //Вносим изменения.
+          //Make changes.
           HANDLE fileHandle = CWA(kernel32, CreateFileW)(file, GENERIC_WRITE, FILE_SHARE_READ, NULL, OPEN_EXISTING, 0, NULL);
           DWORD writed;
           if(fileHandle == INVALID_HANDLE_VALUE || !Fs::_setFilePointer(fileHandle, rva, FILE_BEGIN) ||
@@ -126,7 +124,7 @@ void commandPeInfo(LPWSTR *switches, DWORD switchesCount)
         }
       }
 
-      //Секция не найдена.
+      //Section was not found.
       if(i == peData.sectionsCount)
       {
         Console::writeStringW(lng_peinfo_not_patched, sizeof(lng_peinfo_not_patched) / sizeof(WCHAR) - 1);

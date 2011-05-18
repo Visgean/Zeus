@@ -1,10 +1,10 @@
 <?php if(!defined('__CP__'))die();
-define('LIST_ROWS_COUNT', 4);             //Количетсво колонок в списке.
-define('USER_INPUT_TEXT_WIDTH', '600px'); //Ширина edit-боксов для редактирования скрипта.
+define('LIST_ROWS_COUNT', 4);             //RљRѕR "Republic ‡ RμS, SЃRІRѕ RєRѕR" RѕRЅRѕRє RІ SЃRїReSЃRєRμ.
+define('USER_INPUT_TEXT_WIDTH', '600px'); //REReSЂReRЅR ° edit-P ± RѕRєSЃRѕRІ RґR "SЏ SЂRμRґR ° RєS, ReSЂRѕRІR RЅReSЏ SЃRєSЂReRїS °, P °.
 
-///////////////////////////////////////////////////////////////////////////////////////////////////
-// Изменение статуса.
-///////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////// / / ///////////////////////////////////////////////
+////////////////////////////////////////////////// / / ///////////////////////////////////////////////
+////////////////////////////////////////////////// / / ///////////////////////////////////////////////
 
 if(isset($_GET['status'], $_GET['enable']) && is_numeric($_GET['status']) && is_numeric($_GET['enable']))
 {
@@ -17,25 +17,25 @@ if(isset($_GET['status'], $_GET['enable']) && is_numeric($_GET['status']) && is_
   die();
 }
 
-///////////////////////////////////////////////////////////////////////////////////////////////////
-// Дейтсвия над выделеными элементами.
-///////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////// / / ///////////////////////////////////////////////
+// P RμR № C SЃRІReSЏ RЅR ° Rґ RІS <RґRμR "RμRЅS <RјRe SЌR" RμRјRμRЅS, P ° RјRe.
+////////////////////////////////////////////////// / / ///////////////////////////////////////////////
 
 if(isset($_GET['usersaction']) && !empty($_GET['users']) && is_array($_GET['users']))
 {
-  //Преврашаем массив в часть запроса.
+  //RџSЂRμRІSЂR ° C € P ° RμRј RјR SЃSЃReRІ RІ ° C ‡ P ° SЃS, SЊ P · RїSЂRѕSЃR P ° °.
   $sl = '';
   $count = 0;
   foreach($_GET['users'] as $id)if(is_numeric($id) && $id != $userData['id'])$sl .= ($count++ == 0 ? '' : ' OR ')."id='".addslashes($id)."'";
 
   if(strlen($sl) > 4)
   {
-    //Статус.
+    //RЎS, P ° C SѓSЃ.
     if($_GET['usersaction'] == 0 || $_GET['usersaction'] == 1)
     {
       if(!mysqlQueryEx('cp_users', "UPDATE cp_users SET flag_enabled='".($_GET['usersaction'] == 0 ? 1 : 0)."' WHERE {$sl}"))ThemeMySQLError();
     }
-    //Удаление.
+    //RЈRґR ° P "RμRЅReRμ.
     else if($_GET['usersaction'] == 2)
     {
       if(!mysqlQueryEx('cp_users', "DELETE FROM cp_users WHERE {$sl}"))ThemeMySQLError();
@@ -46,21 +46,21 @@ if(isset($_GET['usersaction']) && !empty($_GET['users']) && is_array($_GET['user
   die();
 }
 
-///////////////////////////////////////////////////////////////////////////////////////////////////
-// Изменение/просмотр скрипта.
-///////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////// / / ///////////////////////////////////////////////
+////////////////////////////////////////////////// / / ///////////////////////////////////////////////
+////////////////////////////////////////////////// / / ///////////////////////////////////////////////
 
 if((isset($_GET['edit']) && is_numeric($_GET['edit'])) || isset($_GET['new']))
 {
   $isEdit = isset($_GET['edit']) && is_numeric($_GET['edit']);  
   $errors = array();
 
-  //Создаем список досутпных прав.
+  //RЎRѕR · RґR ° RμRј SЃRїReSЃRѕRє RґRѕSЃSѓS, RїRЅS <C ... RїSЂR ° RІ.
   $rights = array();
   foreach($userData as $k => $v)if(strpos($k, 'r_') === 0)$rights[$k] = 0;
   ksort($rights, SORT_STRING);
 
-  //Внесение изменений.
+  //R'RЅRμSЃRμRЅReRμ Pepsi · RјRμRЅRμRЅReR №.
   if(isset($_POST['name'], $_POST['password'], $_POST['status'], $_POST['comment']))
   {
     if($isEdit && $_GET['edit'] == $userData['id'])$errors[] = LNG_SYS_USER_E4;
@@ -72,20 +72,20 @@ if((isset($_GET['edit']) && is_numeric($_GET['edit'])) || isset($_GET['new']))
     
     if(count($errors) == 0)
     {
-      //Основные данные.
+      //RћSЃRЅRѕRІRЅS <Rμ RґR ° RЅRЅS <Rμ.
       $q = "name='".addslashes($_POST['name'])."',flag_enabled='".($_POST['status'] ? 1 : 0)."',comment='".addslashes($_POST['comment'])."'";
       if($l > 0)$q .= ",pass='".addslashes(md5($_POST['password']))."'";
 
-      //Права.
+      //RџSЂR RІR ° °.
       foreach($rights as $k => $v)$q .= ",{$k}='".(isset($_POST[$k]) && $_POST[$k] > 0 ? 1 : 0)."'";
 
-      //Выбор запроса.
+      //R'S <P ± P RѕSЂ · RїSЂRѕSЃR P ° °.
       if($isEdit)$q = "UPDATE cp_users SET {$q} WHERE id='".addslashes($_GET['edit'])."' LIMIT 1";
       else $q = "INSERT INTO cp_users SET {$q}";
       
       if(!mysqlQueryEx('cp_users', $q))
       {
-        if(@mysql_errno() == 1062 /*(ER_DUP_ENTRY) Duplicate entry '%s' for key %d*/)$errors[] = LNG_SYS_USER_E3;
+        if(@mysql_errno() == 1062 /*(ER_DUP_ENTRY) Duplicate entry '% s' for key% d*/)$errors[] = LNG_SYS_USER_E3;
         else ThemeMySQLError();
       }
       else
@@ -96,7 +96,7 @@ if((isset($_GET['edit']) && is_numeric($_GET['edit'])) || isset($_GET['new']))
     }
   }
     
-  //Получаем данные.
+  //RџRѕR "SѓS ‡ P ° ° RμRј RґR RЅRЅS <Rμ.
   $formPassword = '';
   if(count($errors) > 0)
   {
@@ -126,7 +126,7 @@ if((isset($_GET['edit']) && is_numeric($_GET['edit'])) || isset($_GET['new']))
   }
   unset($v);
   
-  //Сбор прав
+  //RЎR ± RѕSЂ RїSЂR ° RІ
   $rightslist = '';
   foreach($rights as $k => $v)
   {
@@ -137,10 +137,10 @@ if((isset($_GET['edit']) && is_numeric($_GET['edit'])) || isset($_GET['new']))
     THEME_DIALOG_ROW_END;
   }
   
-  //Вывод формы.
+  //R'S <RІRѕRґ C RѕSЂRјS <.
   $data = '';
   
-  //Вывод ошибки.
+  //R'S <RІRѕRґ RѕS € Pepsi ± RєRe.
   if(count($errors) > 0)
   {
     $data .= THEME_STRING_FORM_ERROR_1_BEGIN;
@@ -194,18 +194,18 @@ if((isset($_GET['edit']) && is_numeric($_GET['edit'])) || isset($_GET['new']))
   die();
 }
 
-///////////////////////////////////////////////////////////////////////////////////////////////////
-// JavaScript скрипты.
-///////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////// / / ///////////////////////////////////////////////
+// JavaScript SЃRєSЂReRїS, C <.
+////////////////////////////////////////////////// / / ///////////////////////////////////////////////
 
 $jsScript = 0;
 $jsQa     = addJsSlashes(LNG_SYS_LIST_ACTION_Q);
 $jsScript = jsCheckAll('userslist', 'checkall', 'users[]').
             "function ExecuteAction(){return confirm('{$jsQa}');}";
 
-///////////////////////////////////////////////////////////////////////////////////////////////////
-// Создание списка.
-///////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////// / / ///////////////////////////////////////////////
+// RЎRѕR · RґR RЅReRμ SЃRїReSЃRєR ° °.
+////////////////////////////////////////////////// / / ///////////////////////////////////////////////
 
 $list = '';
 if(!($r = mysqlQueryEx('cp_users', 'SELECT id, name, flag_enabled, comment FROM cp_users ORDER BY name ASC')) || @mysql_affected_rows() === 0)
@@ -236,11 +236,11 @@ else
   }
 }
 
-///////////////////////////////////////////////////////////////////////////////////////////////////
-// Вывод.
-///////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////// / / ///////////////////////////////////////////////
+// R'S <RІRѕRґ.
+////////////////////////////////////////////////// / / ///////////////////////////////////////////////
 
-//Список действий.
+//RЎRїReSЃRѕRє RґRμR number SЃS, RІReR №.
 $al = 
 LNG_SYS_LIST_ACTION.THEME_STRING_SPACE.
 str_replace(array('{NAME}', '{WIDTH}'), array('usersaction', 'auto'), THEME_DIALOG_ITEM_LISTBOX_BEGIN).
@@ -252,7 +252,7 @@ THEME_STRING_SPACE.str_replace(array('{TEXT}', '{JS_EVENTS}'), array(LNG_ACTION_
 THEME_DIALOG_ITEM_ACTION_SEPARATOR.str_replace(array('{TEXT}', '{JS_EVENTS}'), array(LNG_SYS_LIST_ACTION_ADD, ' onclick="window.location=\''.QUERY_STRING_HTML.'&amp;new=-1\'"'), THEME_DIALOG_ITEM_ACTION).
 THEME_STRING_NEWLINE.THEME_STRING_NEWLINE;
 
-//Вывод.
+//R'S <RІRѕRґ.
 ThemeBegin(LNG_SYS, $jsScript, 0, 0);
 echo
 str_replace(array('{NAME}', '{URL}', '{JS_EVENTS}'), array('userslist', QUERY_SCRIPT_HTML, ' onsubmit="return ExecuteAction()"'), THEME_FORMGET_BEGIN).FORM_CURRENT_MODULE.

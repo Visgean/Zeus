@@ -24,7 +24,7 @@ namespace MsCab
 {
   enum
   {
-    CFF_RECURSE = 0x1, //Поиск в поддиректориях.
+    CFF_RECURSE = 0x1, //Search the subdirectories.
   };
 
   /*
@@ -146,19 +146,18 @@ namespace MsCab
   */
   void FDIClose(void *pFDI);
 
-  /*
-    Обертка для FDI.
+  /*В В В В Wrapper for FDI.
 
-    IN pstrPath     - путь к архиву.
-    IN pstrFile     - имя архива. Может быть NULL.
-    IN copyCallback - функция вызываваемая для запроса на копирование файла. Может быть NULL, для
-                      извлечения всех файлов.
-    IN data         - данные для copyCallback. Если copyCallback == NULL, то переменная указывает
-                      на адрес папки, в которую распоковываются файлы.
+В В В В IN pstrPath - the path to the archive.
+В В В В IN pstrFile - the name of the archive. May be NULL.
+В В В В IN copyCallback - vyzyvavaemaya function to request a file copy. May be NULL, for
+В В В В В В В В В В В В В В В В В В В В В В extract all files.
+В В В В IN data - data for copyCallback. If copyCallback == NULL, then the variable points
+В В В В В В В В В В В В В В В В В В В В В В the address of the folder in which raspokovyvayutsya files.
 
-    Return          - true - в случаи успеха,
-                      false - в случаи ошибки.
-  */
+В В В В Return - true - if successful,
+В В В В В В В В В В В В В В В В В В В В В В false - if an error occurs.
+В В */
   bool extractFiles(LPWSTR pstrPath, LPWSTR pstrFile, FDICOPYFILECALLBACK copyCallback, void *data);
 #endif
 };

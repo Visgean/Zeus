@@ -55,12 +55,11 @@ namespace Time
   */
   void _timeToFileTime(const DWORD time, FILETIME *ft);
   
-  /*
-    Конвертация SYSTEMTIME в Unix время.
+  /*В В В В Converting SYSTEMTIME to Unix time.
 
-    IN st  - указатель на SYSTEMTIME.
+В В В В IN st - a pointer to the SYSTEMTIME.
 
-    Return - Unix время.
-  */
+В В В В Return - Unix time.
+В В */
   DWORD _systemTimeToTime(const SYSTEMTIME *st);
 };

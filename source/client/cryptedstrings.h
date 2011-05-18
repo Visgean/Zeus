@@ -3,7 +3,7 @@
 */
 #pragma once
 
-//Макросы для облегчения получения строк.
+//Macros to facilitate the receipt of strings.
 #define CSTR_GETW(var, id) WCHAR var[CryptedStrings::len_##id]; CryptedStrings::_getW(CryptedStrings::id_##id, var);
 #define CSTR_GETA(var, id) char var[CryptedStrings::len_##id]; CryptedStrings::_getA(CryptedStrings::id_##id, var);
 
@@ -11,12 +11,12 @@ namespace CryptedStrings
 {
   typedef struct
   {
-    unsigned char key;   //XOR ключ строки.
-    unsigned short size;  //Размер строки.
-    char *encodedString; //Зашифрованная строка.
+    unsigned char key;   //XOR row key.
+    unsigned short size;  //The size of the string.
+    char *encodedString; //Encrypted string.
   }STRINGINFO;
   
-  //Список ID строк.
+  //A list of ID strings.
   enum
   {
 /*STRINGS_ID_BEGIN*/
@@ -282,7 +282,7 @@ namespace CryptedStrings
 /*STRINGS_ID_END*/
   };
   
-  //Список размеров строк.
+  //List of sizes of lines.
   enum
   {
 /*STRINGS_LENGHT_BEGIN*/
@@ -566,11 +566,10 @@ namespace CryptedStrings
   */
   void _getA(WORD id, LPSTR buffer);
 
-  /*
-    Получение строки как Unicode.
+  /*В В В В Getting the string as Unicode.
 
-    IN id      - id_*.
-    OUT buffer - буффер.
-  */
+В В В В IN id - id_ *.
+В В В В OUT buffer - buffer.
+В В */
   void _getW(WORD id, LPWSTR buffer);
 };

@@ -143,13 +143,12 @@ namespace Math
   */
   typedef int (*qsortProc)(const void *p1, const void *p2);
 
-  /*
-    Алгоритм быстрой сортировки для массива.
+  /*В В В В Quicksort the array.
 
-    IN pBase   - базовый адрес массива.
-    IN dwCount - количетсво элементов в массиве.
-    IN dwWidth - ширина одного элемента.
-    IN pComp   - функция сравнения.
-  */
+В В В В IN pBase - base address of the array.
+В В В В IN dwCount - kolichetsvo elements in the array.
+В В В В IN dwWidth - the width of a single element.
+В В В В IN pComp - a comparison function.
+В В */
   void _qsort(void *pBase, DWORD dwCount, DWORD dwWidth, qsortProc pComp);
 };

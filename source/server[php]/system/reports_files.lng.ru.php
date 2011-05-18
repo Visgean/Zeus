@@ -8,7 +8,7 @@ define('LNG_REPORTS_FILESACTION_REMOVE_EFILE', 'Не удалось удалит
 define('LNG_REPORTS_FILESACTION_REMOVE_EDIR',  'Не удалось удалить папку "%s".');
 define('LNG_REPORTS_FILESACTION_Q',            'Вы дейcтвительно хотите совершить это дейтвие?');
 
-//Фильтр.
+//P ¤ Pepsi "SЊS, SЂ.
 define('LNG_REPORTS_FILTER_TITLE',   'Поиск');
 
 define('LNG_REPORTS_FILTER_BOTS',    'Боты:');

@@ -38,13 +38,12 @@ namespace Console
   */
   DWORD writeStringW(LPWSTR string, DWORD size);
 
-  /*
-    Аналог функции wprintf.
+  /*В В В В Analogue of wprintf.
 
-    IN format - строка-формат вывода.
-    IN ...    - аргументы для строки.
+В В В В IN format - line-format output.
+В В В В IN ... - Arguments for the row.
 
-    Return    - количество записанных символов.
-  */
+В В В В Return - number of characters written.
+В В */
   DWORD writeFormatW(LPWSTR format, ...);
 };

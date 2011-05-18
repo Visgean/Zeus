@@ -16,17 +16,17 @@
 #include "..\common\gui.h"
 #include "..\common\comlibrary.h"
 
-//Глобальные переменные.
-HMODULE currentModule;       //Хэндл текушего модуля.
-WCHAR homePath[MAX_PATH];    //Домашняя директория.
-WCHAR settingsFile[MAX_PATH]; //Файл опций.
+//Global variables.
+HMODULE currentModule;       //Tekusheyu handle to the module.
+WCHAR homePath[MAX_PATH];    //Home directory.
+WCHAR settingsFile[MAX_PATH]; //Options file.
 
 # if defined SUBSYSTEM_CONSOLE
 
 # else
-static HRESULT comResult;     //Значение от ComLibrary::_initThread().
+static HRESULT comResult;     //Value of ComLibrary:: _initThread ().
 
-//Данные о вкладках.
+//Data on the tabs.
 INT_PTR CALLBACK toolInformationProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
 INT_PTR CALLBACK toolBuilderProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
 INT_PTR CALLBACK toolSettingsProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
@@ -78,24 +78,24 @@ static INT_PTR CALLBACK mainDialogProc(HWND hwnd, UINT msg, WPARAM wParam, LPARA
   {
     case WM_INITDIALOG:
     {
-      //Заполняем список вкладок.
+      //Fill in the list of tabs.
       {
         HWND hLB = CWA(user32, GetDlgItem)(hwnd, IDC_TOOLSLIST);
         for(BYTE i = 0; i < toolsCount; i++)CWA(user32, SendMessageW)(hLB, LB_ADDSTRING, 0, (LPARAM)Languages::get(toolsList[i].lngId));
         CWA(user32, SendMessageW)(hLB, LB_SETCURSEL, 0, 0);
       }
 
-      //Загружаем иконку.
+      //Load the icon.
       {
         HICON hIcon = Gui::_loadSharedIcon(currentModule, MAKEINTRESOURCEW(ICON_MAIN));
         CWA(user32, SendMessageW)(hwnd, WM_SETICON, ICON_SMALL, (WPARAM)hIcon);
         CWA(user32, SendMessageW)(hwnd, WM_SETICON, ICON_BIG, (WPARAM)hIcon);
       }
 
-      //Открываем вкладку по умолчанию.
+      //Open the tab by default.
       loadTool(hwnd, 0);
 
-      //Выставляем заголовок.
+      //Expose the title.
       CWA(user32, SetWindowTextW)(hwnd, Languages::get(Languages::main_title));
       break;
     }
@@ -108,7 +108,7 @@ static INT_PTR CALLBACK mainDialogProc(HWND hwnd, UINT msg, WPARAM wParam, LPARA
 
     case WM_CLOSE:
     {
-      //Рассылаем всем вкладкам предложенение о закрытие.
+      //Send out all the tabs predlozhenenie of closure.
       for(BYTE i = 0; i < toolsCount; i++)if(toolsList[i].hwnd)
       {
         if((bool)CWA(user32, SendMessageW)(toolsList[i].hwnd, WM_CANCLOSE, 0, 0) == false)return TRUE;
@@ -139,42 +139,40 @@ static INT_PTR CALLBACK mainDialogProc(HWND hwnd, UINT msg, WPARAM wParam, LPARA
 }
 #endif
 
-/*
-  Точка входа.
-*/
+/*В В Entry point.*/
 void WINAPI entryPoint(void)
 {
-  //Инициализация данных для GUI.
+  //Initialization data of the GUI.
   if(!Gui::_loadCommonControl(ICC_STANDARD_CLASSES) || !ComLibrary::_initThread(&comResult))
   {
     CWA(kernel32, ExitProcess)(1);
     return;
   }
 
-  //Инициализация модулей.
+  //Initialization modules.
   currentModule = CWA(kernel32, GetModuleHandleW)(NULL);
   
   Mem::init();
   Crypt::init();
 
-  //Получаем рабочию директорию.
+  //Obtain the working directory.
   CWA(kernel32, GetModuleFileNameW)(NULL, homePath, MAX_PATH);
   CWA(shlwapi, PathRemoveFileSpecW)(homePath);
   
-  //Получаем файл настроек.
+  //Obtain the configuration file.
   if(CWA(shlwapi, PathCombineW)(settingsFile, homePath, L"settings.ini") == FALSE)settingsFile[0] = 0;
 
   Languages::init();
 
-  //Запускаем главный диалог.
+  //Run main dialog.
   CWA(user32, DialogBoxParamW)(currentModule, MAKEINTRESOURCEW(DIALOG_MAIN), NULL, mainDialogProc, NULL);
 
-  //Деинициализация модулей.
+  //Deinitialization modules.
   Languages::uninit();
   Crypt::uninit();
   Mem::uninit();  
 
-  //Деинициализация данных для GUI.
+  //Deinitialization data for the GUI.
   ComLibrary::_uninitThread(comResult);
   CWA(kernel32, ExitProcess)(0);
 }

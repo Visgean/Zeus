@@ -6,24 +6,24 @@ define('LNG_NO',             'Нет');
 define('LNG_ACCESS_DEFINED', 'Доступ запрещен.');
 define('LNG_ACTION_APPLY',   '&#62;&#62;');
 
-//Форматы данных.
+//P ¤ RѕSЂRјR ° C, C <RґR ° RЅRЅS <C ....
 define('LNG_FORMAT_DATE',   'd.m.Y');
 define('LNG_FORMAT_TIME',   'H:i:s');
 define('LNG_FORMAT_DT',     'd.m.Y H:i:s');
 define('LNG_FORMAT_NOTIME', '--:--:--');
 
-//Список ботнетов.
+//RЎRїReSЃRѕRє P ± RѕS, RЅRμS, RѕRІ.
 define('LNG_BOTNET_ALL',   '[Все]');
 define('LNG_BOTNET_APPLY', '&#62;&#62;');
 
-//Список страниц.
+//RЎRїReSЃRѕRє SЃS, SЂR ° RЅReS †.
 define('LNG_PAGELIST_TITLE', 'Страницы:');
 define('LNG_PAGELIST_NEXT',  'Вперед');
 define('LNG_PAGELIST_PREV',  'Назад');
 define('LNG_PAGELIST_FIRST', '&#171;');
 define('LNG_PAGELIST_LAST',  '&#187;');
 
-//Меню действий.
+//RњRμRЅSЋ RґRμR number SЃS, RІReR №.
 define('LNG_MBA_SEPARATOR',         '--------------------------------------');
 
 define('LNG_MBA_FULLINFO',        'Полная информация');
@@ -73,13 +73,13 @@ define('LNG_BA_PORT_SOCKS_SUCCESS',   'ДОСТУПЕН');
 define('LNG_BA_PORT_SOCKS_FAILED',    'НЕ ДОСТУПЕН');
 define('LNG_BA_PORT_SOCKS_ERROR',     'ОШИБКА!');
 
-//Информация.
+//RњRμRЅSЋ RґRμR number SЃS, RІReR №.
 define('LNG_INFO',          'Информация:');
 define('LNG_INFO_USERNAME', 'Пользователь:');
 define('LNG_INFO_DATE',     'GMT дата:');
 define('LNG_INFO_TIME',     'GMT время:');
 
-//Главное меню.
+//P "P" P ° RІRЅRѕRμ RјRμRЅSЋ.
 define('LNG_MM_STATS',          'Статистика:');
 define('LNG_MM_STATS_MAIN',     'Общая');
 define('LNG_MM_STATS_OS',       'ОС');
@@ -103,7 +103,7 @@ define('LNG_MM_SYSTEM_USERS',   'Пользователи');
 
 define('LNG_MM_LOGOUT',         'Выход');
 
-//Типы отчетов.
+//RўReRїS <RѕS, C ‡ RμS, RѕRІ.
 define('LNG_BLT_UNKNOWN',               'Неизвестный формат');
 define('LNG_BLT_COOKIES',               'Кукисы браузеров');
 define('LNG_BLT_FILE',                  'Файл');

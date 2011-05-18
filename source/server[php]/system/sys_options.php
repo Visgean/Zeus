@@ -3,9 +3,9 @@
 define('INPUT_WIDTH', '300px');
 $errors   = array();
 
-///////////////////////////////////////////////////////////////////////////////////////////////////
-// Обработка данных.
-///////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////// / / ///////////////////////////////////////////////
+// RћR SЂR ° ± P ± RѕS, RєR ° ° RґR RЅRЅS <C ....
+////////////////////////////////////////////////// / / ///////////////////////////////////////////////
 
 $is_post = strcmp($_SERVER['REQUEST_METHOD'], 'POST') === 0 ? true : false;
 
@@ -31,7 +31,7 @@ else
   $botnet_cryptkey = $_POST['botnet_cryptkey'];
 }
 
-//Сохранение параметров.
+//RЎRѕS ... SЂR RЅRμRЅReRμ RїR ° ° ° SЂR RјRμS, SЂRѕRІ.
 if($is_post && count($errors) == 0)
 {
   $updateList['reports_path']    = $reports_path;
@@ -49,26 +49,26 @@ if($is_post && count($errors) == 0)
   }
 }
 
-///////////////////////////////////////////////////////////////////////////////////////////////////
-// Вывод.
-///////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////// / / ///////////////////////////////////////////////
+// R'S <RІRѕRґ.
+////////////////////////////////////////////////// / / ///////////////////////////////////////////////
 
 ThemeBegin(LNG_SYS, 0, 0, 0);
 
-//Вывод ошибок.
+//R'S <RІRѕRґ RѕS € Pepsi ± RѕRє.
 if(count($errors) > 0)
 {
   echo THEME_STRING_FORM_ERROR_1_BEGIN;
   foreach($errors as $r)echo $r.THEME_STRING_NEWLINE;
   echo THEME_STRING_FORM_ERROR_1_END;
 }
-//Вывод сообщений.
+//R'S <RІRѕRґ SЃRѕRѕR ± C ‰ RμRЅReR №.
 else if(isset($_GET['u']))
 {
   echo THEME_STRING_FORM_SUCCESS_1_BEGIN.LNG_SYS_UPDATED.THEME_STRING_NEWLINE.THEME_STRING_FORM_SUCCESS_1_END;
 }
 
-//Вывод формы.
+//R'S <RІRѕRґ C RѕSЂRјS <.
 echo
 str_replace(array('{NAME}', '{URL}', '{JS_EVENTS}'), array('options', QUERY_STRING_HTML, ''), THEME_FORMPOST_BEGIN),
 str_replace('{WIDTH}', 'auto', THEME_DIALOG_BEGIN).

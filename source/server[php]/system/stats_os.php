@@ -1,16 +1,16 @@
 <?php if(!defined('__CP__'))die();
 
-define('OSLIST_WIDTH', 500); //Ширина колонки
-define('STAT_WIDTH',  '1%'); //Ширина колонки статистики.
+define('OSLIST_WIDTH', 500); //REReSЂReRЅR ° RєRѕR "RѕRЅRєRe
+define('STAT_WIDTH',  '1%'); //REReSЂReRЅR ° RєRѕR "RѕRЅRєRe статистики.
 
-//Текущий ботнет.
+//RўRμRєSѓS Pepsi № ‰ P ± RѕS, RЅRμS.
 define('CURRENT_BOTNET', (!empty($_GET['botnet']) ? $_GET['botnet'] : ''));
 
-///////////////////////////////////////////////////////////////////////////////////////////////////
-// Вывод общей информации.
-///////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////// / / ///////////////////////////////////////////////
+// R'S <RІRѕRґ RѕR ± C ‰ RμR number ReRЅS "RѕSЂRјR ° C † ReRe.
+////////////////////////////////////////////////// / / ///////////////////////////////////////////////
 
-//Получем список OC.
+//RџRѕR "SѓS ‡ RμRј SЃRїReSЃRѕRє OC.
 $osList = '';
 $query = ((CURRENT_BOTNET == '') ? '' : 'WHERE `botnet`=\''.addslashes(CURRENT_BOTNET).'\' ');
 if(($r = mysqlQueryEx('botnet_list', "SELECT `os_version`, COUNT(`os_version`) FROM `botnet_list` {$query}GROUP BY `os_version`")) && mysql_affected_rows() > 0)
@@ -30,7 +30,7 @@ if(($r = mysqlQueryEx('botnet_list', "SELECT `os_version`, COUNT(`os_version`) F
     $i++;
   }
 }
-//Ошибка.
+//RћS € Pepsi ± RєR °.
 else
 {
   $osList .=

@@ -7,45 +7,45 @@
   #error NTDLL_IMPORT not defined!
 #endif
 
-////////////////////////////////////////////////////////////////////////////////////////////////////
-// NT статусы.
-////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////// ////////////////////////////////////////////////
+//В NT status.
+//////////////////////////////////////////////////// ////////////////////////////////////////////////
 
 typedef LONG NTSTATUS;
 
-// Generic test for success on any status value (non-negative numbers indicate success).
+//In the Generic test for success on any status value (non-negative numbers indicate success).
 #define NT_SUCCESS(Status) (((NTSTATUS)(Status)) >= 0)
 
-// Generic test for information on any status value.
+//In the Generic test for information on any status value.
 #define NT_INFORMATION(Status) ((((ULONG)(Status)) >> 30) == 1)
 
-// Generic test for warning on any status value.
+//In the Generic test for warning on any status value.
 #define NT_WARNING(Status) ((((ULONG)(Status)) >> 30) == 2)
 
-// Generic test for error on any status value.
+//In the Generic test for error on any status value.
 #define NT_ERROR(Status) ((((ULONG)(Status)) >> 30) == 3)
 
-////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////// ////////////////////////////////////////////////
 
 //The success status codes.
 #define STATUS_SUCCESS                   ((NTSTATUS)0x00000000L)
 
-//The file %hs does not exist.
+//The file% hs does not exist.
 #define STATUS_NO_SUCH_FILE              ((NTSTATUS)0xC000000FL)
 
-////////////////////////////////////////////////////////////////////////////////////////////////////
-// Разные определния.
-////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////// ////////////////////////////////////////////////
+//В Determine a different.
+//////////////////////////////////////////////////// ////////////////////////////////////////////////
 typedef LONG KPRIORITY;
 
-//Флаги для NtCreateUserProcess.CreateProcessFlags
+//Flags for NtCreateUserProcess.CreateProcessFlags
 #define CREATE_PROCESS_INHERIT_HANDLES 0x0004
 #define CREATE_PROCESS_PROTECTED       0x0040
 
-//Флаги для NtCreateUserProcess.CreateThreadFlags
+//Flags for NtCreateUserProcess.CreateThreadFlags
 #define CREATE_THREAD_SUSPENDED 0x0001
 
-//Режимы создания файла.
+//File mode creation.
 #define FILE_SUPERSEDE           0x00000000
 #define FILE_OPEN                0x00000001
 #define FILE_CREATE              0x00000002
@@ -54,7 +54,7 @@ typedef LONG KPRIORITY;
 #define FILE_OVERWRITE_IF        0x00000005
 #define FILE_MAXIMUM_DISPOSITION 0x00000005
 
-//Опции создания файла.
+//Option to create the file.
 #define FILE_DIRECTORY_FILE            0x00000001
 #define FILE_WRITE_THROUGH             0x00000002
 #define FILE_SEQUENTIAL_ONLY           0x00000004
@@ -95,7 +95,7 @@ typedef enum
   ProcessLdtInformation,
   ProcessLdtSize,
   ProcessDefaultHardErrorMode,
-  ProcessIoPortHandlers,          // Note: this is kernel mode only
+  ProcessIoPortHandlers,          //In Note: this is kernel mode only
   ProcessPooledUsageAndLimits,
   ProcessWorkingSetWatch,
   ProcessUserModeIOPL,
@@ -127,60 +127,60 @@ typedef enum
   ProcessWorkingSetWatchEx,
   ProcessImageFileNameWin32,
   ProcessImageFileMapping,
-  MaxProcessInfoClass             // MaxProcessInfoClass should always be the last enum
+  MaxProcessInfoClass             //In MaxProcessInfoClass should always be the last enum
 }PROCESSINFOCLASS;
 
 typedef enum
 {
   FileDirectoryInformation         = 1,
-  FileFullDirectoryInformation,   // 2
-  FileBothDirectoryInformation,   // 3
-  FileBasicInformation,           // 4
-  FileStandardInformation,        // 5
-  FileInternalInformation,        // 6
-  FileEaInformation,              // 7
-  FileAccessInformation,          // 8
-  FileNameInformation,            // 9
-  FileRenameInformation,          // 10
-  FileLinkInformation,            // 11
-  FileNamesInformation,           // 12
-  FileDispositionInformation,     // 13
-  FilePositionInformation,        // 14
-  FileFullEaInformation,          // 15
-  FileModeInformation,            // 16
-  FileAlignmentInformation,       // 17
-  FileAllInformation,             // 18
-  FileAllocationInformation,      // 19
-  FileEndOfFileInformation,       // 20
-  FileAlternateNameInformation,   // 21
-  FileStreamInformation,          // 22
-  FilePipeInformation,            // 23
-  FilePipeLocalInformation,       // 24
-  FilePipeRemoteInformation,      // 25
-  FileMailslotQueryInformation,   // 26
-  FileMailslotSetInformation,     // 27
-  FileCompressionInformation,     // 28
-  FileObjectIdInformation,        // 29
-  FileCompletionInformation,      // 30
-  FileMoveClusterInformation,     // 31
-  FileQuotaInformation,           // 32
-  FileReparsePointInformation,    // 33
-  FileNetworkOpenInformation,     // 34
-  FileAttributeTagInformation,    // 35
-  FileTrackingInformation,        // 36
-  FileIdBothDirectoryInformation, // 37
-  FileIdFullDirectoryInformation, // 38
-  FileValidDataLengthInformation, // 39
-  FileShortNameInformation,       // 40
-  FileIoCompletionNotificationInformation, // 41
-  FileIoStatusBlockRangeInformation,       // 42
-  FileIoPriorityHintInformation,           // 43
-  FileSfioReserveInformation,              // 44
-  FileSfioVolumeInformation,               // 45
-  FileHardLinkInformation,                 // 46
-  FileProcessIdsUsingFileInformation,      // 47
-  FileNormalizedNameInformation,           // 48
-  FileNetworkPhysicalNameInformation,      // 49
+  FileFullDirectoryInformation,   //In 2
+  FileBothDirectoryInformation,   //The 3
+  FileBasicInformation,           //In 4
+  FileStandardInformation,        //At 5
+  FileInternalInformation,        //In 6
+  FileEaInformation,              //In 7
+  FileAccessInformation,          //At 8
+  FileNameInformation,            //At 9
+  FileRenameInformation,          //In 10
+  FileLinkInformation,            //In 11
+  FileNamesInformation,           //In 12
+  FileDispositionInformation,     //In 13
+  FilePositionInformation,        //In 14
+  FileFullEaInformation,          //In 15
+  FileModeInformation,            //In 16
+  FileAlignmentInformation,       //In 17
+  FileAllInformation,             //In 18
+  FileAllocationInformation,      //In 19
+  FileEndOfFileInformation,       //In 20
+  FileAlternateNameInformation,   //In 21
+  FileStreamInformation,          //In 22
+  FilePipeInformation,            //In 23
+  FilePipeLocalInformation,       //In 24
+  FilePipeRemoteInformation,      //In 25
+  FileMailslotQueryInformation,   //In 26
+  FileMailslotSetInformation,     //In 27
+  FileCompressionInformation,     //In 28
+  FileObjectIdInformation,        //In 29
+  FileCompletionInformation,      //The 30
+  FileMoveClusterInformation,     //The 31
+  FileQuotaInformation,           //The 32
+  FileReparsePointInformation,    //The 33
+  FileNetworkOpenInformation,     //The 34
+  FileAttributeTagInformation,    //The 35
+  FileTrackingInformation,        //The 36
+  FileIdBothDirectoryInformation, //The 37
+  FileIdFullDirectoryInformation, //The 38
+  FileValidDataLengthInformation, //The 39
+  FileShortNameInformation,       //In 40
+  FileIoCompletionNotificationInformation, //In 41
+  FileIoStatusBlockRangeInformation,       //In 42
+  FileIoPriorityHintInformation,           //In 43
+  FileSfioReserveInformation,              //In 44
+  FileSfioVolumeInformation,               //In 45
+  FileHardLinkInformation,                 //In 46
+  FileProcessIdsUsingFileInformation,      //In 47
+  FileNormalizedNameInformation,           //In 48
+  FileNetworkPhysicalNameInformation,      //In 49
   FileMaximumInformation
 }FILE_INFORMATION_CLASS, *PFILE_INFORMATION_CLASS;
 
@@ -228,7 +228,7 @@ typedef enum
   SystemPrioritySeperation,
   SystemPlugPlayBusInformation,
   SystemDockInformation,
-  SystemPowerInformation1, //Конфиликт с winnt.h
+  SystemPowerInformation1, //Konfilikt with winnt.h
   SystemProcessorSpeedInformation,
   SystemCurrentTimeZoneInformation,
   SystemLookasideInformation
@@ -243,9 +243,9 @@ typedef enum
   ObjectDataInformation
 }OBJECT_INFORMATION_CLASS, *POBJECT_INFORMATION_CLASS;
 
-////////////////////////////////////////////////////////////////////////////////////////////////////
-// Структуры.
-////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////// ////////////////////////////////////////////////
+//В Structure.
+//////////////////////////////////////////////////// ////////////////////////////////////////////////
 typedef struct
 {
   USHORT Length;
@@ -266,8 +266,8 @@ typedef struct
   HANDLE RootDirectory;
   PUNICODE_STRING ObjectName;
   ULONG Attributes;
-  PVOID SecurityDescriptor;        // Points to type SECURITY_DESCRIPTOR
-  PVOID SecurityQualityOfService;  // Points to type SECURITY_QUALITY_OF_SERVICE
+  PVOID SecurityDescriptor;        //In the Points to type SECURITY_DESCRIPTOR
+  PVOID SecurityQualityOfService;  //In the Points to type SECURITY_QUALITY_OF_SERVICE
 }OBJECT_ATTRIBUTES, *POBJECT_ATTRIBUTES;
 
 typedef struct
@@ -403,9 +403,9 @@ typedef struct
   WCHAR FileName[1];
 }FILE_ID_BOTH_DIR_INFORMATION, *PFILE_ID_BOTH_DIR_INFORMATION;
 
-////////////////////////////////////////////////////////////////////////////////////////////////////
-// Функции.
-////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////// ////////////////////////////////////////////////
+//В Function.
+//////////////////////////////////////////////////// ////////////////////////////////////////////////
 typedef VOID (NTAPI *PIO_APC_ROUTINE)
 (
  PVOID ApcContext,

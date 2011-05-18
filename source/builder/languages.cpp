@@ -6,7 +6,7 @@
 
 #include "..\common\str.h"
 
-//Английский язык.
+//English.
 static const LPWSTR languageEn[] =
 {
   L"Not enough memory",
@@ -81,7 +81,7 @@ static const LPWSTR languageEn[] =
   L"Failed to save all settings.",
 };
 
-//Русский язык.
+//Russian language.
 static const LPWSTR languageRu[] =
 {
   L"Недостаточно памяти.",
@@ -156,26 +156,26 @@ static const LPWSTR languageRu[] =
   L"Не удалось сохранить все настройки.",
 };
 
-//Список доступных языков.
+//A list of available languages.
 static const Languages::LANGINFO languages[] =
 {
   {L"English",           languageEn, sizeof(languageEn) / sizeof(LPWSTR), 1033},
   {L"Русский (Russian)", languageRu, sizeof(languageRu) / sizeof(LPWSTR), 1049}
 };
 
-//Данные текущего языка.
+//Of the current language.
 static const Languages::LANGINFO *languageCur;
 
 void Languages::init(void)
 {
-  //Язык по умолчанию.
+  //Default language.
   languageCur = &languages[0];
   
-  //Получаем язык из системы.
+  //Obtain the language of the system.
   WORD langId = CWA(kernel32, GetUserDefaultUILanguage)();
   for(BYTE i = 0; i < sizeof(languages) / sizeof(Languages::LANGINFO); i++)if(langId == languages[i].id){languageCur = &languages[i]; break;}
   
-  //Получем язык из конфига.
+  //Obtain language from the config.
   langId = CWA(kernel32, GetPrivateProfileIntW)(L"settings", L"language", langId, settingsFile);
   for(BYTE i = 0; i < sizeof(languages) / sizeof(Languages::LANGINFO); i++)if(langId == languages[i].id){languageCur = &languages[i]; break;}
 }

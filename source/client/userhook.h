@@ -48,9 +48,8 @@ namespace UserHook
   */
   HANDLE WINAPI hookerGetClipboardData(UINT format);
 
-  /*
-    Перехватчик SetWindowTextW.
-  */
+  /*В В В В Interceptor SetWindowTextW.
+В В */
 #if defined HOOKER_SETWINDOWTEXT
   BOOL WINAPI hookerSetWindowTextW(HWND window, const LPWSTR string);
 #endif

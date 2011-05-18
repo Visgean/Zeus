@@ -11,8 +11,8 @@ namespace ThreadsGroup
 {
   typedef struct
   {
-    BYTE count;                           //Количетсво нитей.
-    HANDLE handles[MAXIMUM_WAIT_OBJECTS]; //Хэндлы нитей.
+    BYTE count;                           //Kolichetsvo threads.
+    HANDLE handles[MAXIMUM_WAIT_OBJECTS]; //Handles threads.
   }GROUP;
   
   /*
@@ -76,10 +76,9 @@ namespace ThreadsGroup
   */
   bool _waitForAllExit(GROUP *group, DWORD timeout);
 
-  /*
-    Закрытие хэнделов группы нитей (не завершение нитей).
+  /*В В В В Closure of the Handel group of threads (not the end of threads).
 
-    IN group - группа нитей.
-  */
+В В В В IN group - a group of threads.
+В В */
   void _closeGroup(GROUP *group);
 };

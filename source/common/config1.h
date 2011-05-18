@@ -10,8 +10,8 @@
     subarg1 subarg2 subargX
   }
   
-  //marker - произволный маркер для обозначения конца данных.
-  //внутри таких блоков находяться произвольные данные,
+  //marker - proizvolny marker to indicate the end of the data.
+  //within these blocks are located arbitrary data,
   arg1 arg2
   [marker
 
@@ -22,22 +22,22 @@
 
 namespace Config1
 {
-  //Описание переменной.
+  //Variable description.
   typedef struct _VAR
   {
-    DWORD dwSourceLine;  //Позиция переменной в исходном файле.
-    LPWSTR *ppstrValues; //Аргументы переменной.
-    DWORD dwValuesCount; //Количетсво аргуменов.
+    DWORD dwSourceLine;  //Position variable in the source file.
+    LPWSTR *ppstrValues; //Arguments variable.
+    DWORD dwValuesCount; //Kolichetsvo argumenov.
     
-    _VAR *pvChilds;      //Массив дочерных элементов.
-    DWORD dwChildsCount; //Количетсво дочерных элементов.
+    _VAR *pvChilds;      //An array of child elements.
+    DWORD dwChildsCount; //Kolichetsvo children.
   }VAR;
 
-  //Файл конигурации.
+  //File koniguratsii.
   typedef struct
   {
-    VAR *pvVars;        //Массив перменных.
-    DWORD dwVarsCount;  //Количетсво переменных.
+    VAR *pvVars;        //Array permennyh.
+    DWORD dwVarsCount;  //Kolichetsvo variables.
   }CONFIGFILE;
 
   /*
@@ -97,10 +97,9 @@ namespace Config1
   */
   void _FreeVar(VAR *pvVar);
 
-  /*
-    Закрытие файла конфигурации и освобождение памяти.
+  /*В В В В Closure of the configuration file and release memory.
 
-    IN pcf - файл для обработки.
-  */
+В В В В IN pcf - file for processing.
+В В */
   void _CloseFile(CONFIGFILE *pcf);
 };

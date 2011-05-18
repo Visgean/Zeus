@@ -7,12 +7,12 @@
 
 namespace XmlParser
 {
-  //Данные об ошибки.
+  //Data on errors.
   typedef struct
   {
-    int line;       //Номер строки.
-    int errorCode;  //Код ошибки.
-    LPWSTR reason;  //Текст ошибки.
+    int line;       //Line number.
+    int errorCode;  //Error code.
+    LPWSTR reason;  //The text of the error.
   }XMLERRORDATA;
 
   /*
@@ -74,10 +74,9 @@ namespace XmlParser
   */
   BSTR _getNodeTextOfNode(IXMLDOMNode *root, const BSTR node);
 
-  /*
-    Освобождение BSTR через SysFreeString().
+  /*В В В В Exemption BSTR through SysFreeString ().
 
-    IN OUT string - строка.
-  */
+В В В В IN OUT string - string.
+В В */
   void _freeBstr(BSTR string);
 };

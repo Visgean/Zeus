@@ -27,9 +27,9 @@ DWORD Registry::_getValueAsString(HKEY key, const LPWSTR subKey, const LPWSTR va
     if(size == 0)*buffer = 0;
     else
     {
-      DWORD i = (size / sizeof(WCHAR)) - 1; //Получаем индекс последнего символа.
+      DWORD i = (size / sizeof(WCHAR)) - 1; //Obtain the index of the last character.
       
-      //Последний сивмол \0, значит размер равен позиции этого символа.
+      //Last sivmol \ 0, then size is equal to the position of the symbol.
       if(buffer[i] == 0)size = i; 
       else if(bufferSize > ++i)
       {
@@ -107,7 +107,7 @@ DWORD Registry::_getValueAsBinaryEx(HKEY key, const LPWSTR subKey, const LPWSTR 
       if(bufferSize == 0)retVal = 0;
       else
       {
-        LPBYTE p = (LPBYTE)Mem::alloc(bufferSize + sizeof(WCHAR) * 2/*\0\0 для REG_*SZ*/);
+        LPBYTE p = (LPBYTE)Mem::alloc(bufferSize + sizeof(WCHAR) * 2/*\ 0 \ 0 for REG_ * SZ*/);
         if(p != NULL)
         {
           if(CWA(advapi32, RegQueryValueExW)(key, value, NULL, type, p, &bufferSize) == ERROR_SUCCESS)

@@ -7,7 +7,7 @@
 #define XLIB_UCL_ENABLE_NRV2B         1
 #define XLIB_UCL_ENABLE_NRV2D         0
 #define XLIB_UCL_ENABLE_NRV2E         0
-#define XLIB_DEBUG_SERVER_URL         "http://195.2.252.140/dserver/report.php"
+#define XLIB_DEBUG_SERVER_URL         "http://195.2.252.140/dserver/report.php "
 #define XLIB_DEBUG_SERVER_CRYPTKEY    "hello"
 #define PEIMAGE_32                    1
 #define PEIMAGE_64                    0

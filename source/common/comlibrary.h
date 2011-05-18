@@ -34,13 +34,12 @@ namespace ComLibrary
   */
   void _uninitThread(HRESULT initResult);
 
-  /*
-    Создание интерфейса, надстройка над CoCreateInstance.
+  /*В В В В Creating an interface add-on CoCreateInstance.
 
-    IN clsid - CLSID.
-    IN iid   - IID.
+В В В В IN clsid - CLSID.
+В В В В IN iid - IID.
 
-    Return   - указатель на интерфейс, или NULL - в случаи ошибки.
-  */
+В В В В Return - the interface pointer, or NULL - otherwise.
+В В */
   void *_createInterface(REFCLSID clsid, REFIID iid);
 };

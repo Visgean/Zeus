@@ -1,11 +1,11 @@
 <?php if(!defined('__CP__'))die();
-define('COLUMNS_COUNT', 4); //Количетсво колонок в таблице файлов.
+define('COLUMNS_COUNT', 4); //RљRѕR "Republic ‡ RμS, SЃRІRѕ RєRѕR" RѕRЅRѕRє RІ C, P ° P ± P "Res Rμ † C" P ° P № R "RѕRІ.
 
 $_allow_remove = !empty($userData['r_reports_files_edit']);
 
-///////////////////////////////////////////////////////////////////////////////////////////////////
-// Определяем данные для фильтра.
-///////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////// / / ///////////////////////////////////////////////
+// RћRїSЂRμRґRμR "SЏRμRј RґR ° RЅRЅS <Rμ RґR" SЏ with "Pepsi" SЊS, SЂR °.
+////////////////////////////////////////////////// / / ///////////////////////////////////////////////
 
 $_FILTER['path']    = isset($_GET['path']) ? $_GET['path'] : '';
 
@@ -15,25 +15,25 @@ $_FILTER['botnets'] = isset($_GET['botnets']) ? $_GET['botnets'] : '';
 $_FILTER['mask']    = isset($_GET['mask']) ? $_GET['mask'] : '';
 $_FILTER['q']       = isset($_GET['q'])    ? $_GET['q'] : '';
 $_FILTER['cs']      = empty($_GET['cs'])   ? 0 : 1;
-//В текущей папке мы можем искать только когда не указаны bots и botnets.
+//P 'C ‰ RμRєSѓS RμR number RїR ° RїRєRμ RјS <RјRѕR ¶ RμRј ReSЃRєR ° C SЊ C RѕR "SЊRєRѕ RєRѕRіRґR ° RЅRμ SѓRєR ° F ° F · RЅS <bots Re botnets.
 $_FILTER['cd']      = (empty($_GET['cd']) || $_FILTER['bots'] != '' || $_FILTER['botnets'] != '')  ? 0 : 1;
 
-$_is_browser = !isset($_GET['q']); //Режим браузера/поиска
+$_is_browser = !isset($_GET['q']); //P RμR ¶ ReRј P ± SЂR ° SѓR · RμSЂR ° / ° RїRѕReSЃRєR
 
-///////////////////////////////////////////////////////////////////////////////////////////////////
-// Обрабатываем $_FILTER['path'].
-///////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////// / / ///////////////////////////////////////////////
+// RћR SЂR ° ± P ± P ° C, C <RІR ° RμRј $ _FILTER ['path'].
+////////////////////////////////////////////////// / / ///////////////////////////////////////////////
 
-//ИМХО: Т.к. переменная path автоматическая, и не как не должна изменяться пользователем, исправление ошибок не производиться.
-//Здесь конечно мы не защищены от вмешательсва в http-запрос. Нех вмешиваться.
+////////////////////////////////////////////////// / / ///////////////////////////////////////////////
+//P RґRμSЃSЊ RєRѕRЅRμS ‡ RЅRѕ RјS <RЅRμ P · P ° C ‰ ‰ Res RμRЅS <RѕS, RІRјRμS € P ° C RμR "SЊSЃRІR ° RІ http-P · P ° RїSЂRѕSЃ. RќRμS ... RІRјRμS € ReRІR ° C SЊSЃSЏ.
 
 if(isset($_GET['sub']) && strlen($_GET['sub']) > 0)$_FILTER['path'] .= ($_FILTER['path'] == '' ? '' : '/').$_GET['sub'];
 if(pathUpLevelExists($_FILTER['path']))die('WOW!');
 $_CUR_PATH = $_FILTER['path'] == '' ? $config['reports_path'] : $config['reports_path'].'/'.$_FILTER['path'];
 
-///////////////////////////////////////////////////////////////////////////////////////////////////
-// Загрузка файла.
-///////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////// / / ///////////////////////////////////////////////
+// P-P ° RіSЂSѓR · RєR ° C "P ° P № P" P °.
+////////////////////////////////////////////////// / / ///////////////////////////////////////////////
 
 if(isset($_GET['file']))
 {
@@ -46,21 +46,21 @@ if(isset($_GET['file']))
   die();
 }
 
-///////////////////////////////////////////////////////////////////////////////////////////////////
-// Создание архива/Удаление файлов.
-///////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////// / / ///////////////////////////////////////////////
+// RЎRѕR · RґR RЅReRμ ° F ° SЂS ... ReRІR ° / ° F RЈRґR "RμRЅReRμ C" P ° P № R "RѕRІ.
+////////////////////////////////////////////////// / / ///////////////////////////////////////////////
 
 if(isset($_POST['filesaction']) && is_numeric($_POST['filesaction']) && !empty($_POST['files']) && is_array($_POST['files']))
 {
   foreach($_POST['files'] as $file)if(pathUpLevelExists($file))die('PUPER WOW!');
   
-  //Удаление файлов.
+  //RЈRґR ° P "RμRЅReRμ C" P ° P № R "RѕRІ.
   if($_POST['filesaction'] == 0 && $_allow_remove)
   {
     $_errors = array();
     foreach($_POST['files'] as $file)if(strlen($file) > 0)ClearDF($_CUR_PATH.'/'.$file, $_errors);
   }
-  //Создание архива.
+  //RЎRѕR · RґR RЅReRμ ° F ° SЂS ... ReRІR °.
   else if($_POST['filesaction'] == 1)
   {
     $list = array();
@@ -79,9 +79,9 @@ if(isset($_POST['filesaction']) && is_numeric($_POST['filesaction']) && !empty($
   }
 }
 
-///////////////////////////////////////////////////////////////////////////////////////////////////
-// Вывод.
-///////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////// / / ///////////////////////////////////////////////
+// R'S <RІRѕRґ.
+////////////////////////////////////////////////// / / ///////////////////////////////////////////////
 
 if(isset($_GET['search']))
 {
@@ -100,21 +100,21 @@ if(isset($_GET['search']))
   
   if($_FILTER['bots'] != '' || $_FILTER['botnets'] != '')
   {
-    //!При таком способе обзора, алгоритм получается требовательным к памяти, но кажеться сколнен к быстродейтствию. Время покажет.
+    //! RџSЂRe C, P ° RєRѕRј SЃRїRѕSЃRѕR ± Rμ RѕR ± R · RѕSЂR °, P ° P "RіRѕSЂReS, Rј RїRѕR" SѓS ‡ P ° RμS, SЃSЏ C SЂRμR ± RѕRІR ° C RμR "SЊRЅS <Rј Rє RїR ° RјSЏS , Fe, RЅRѕ RєR ° P ¶ RμS, SЊSЃSЏ SЃRєRѕR "RЅRμRЅ Rє P ± C <SЃS, SЂRѕRґRμR № C SЃS, RІReSЋ. R'SЂRμRјSЏ RїRѕRєR ° P ¶ RμS.
     
-    //Получаем корневые папки.
+    //RџRѕR "SѓS ‡ P ° RμRј RєRѕSЂRЅRμRІS <Rμ RїR ° RїRєRe.
     $root = GetAllDirs($config['reports_path'], $ci);
     foreach($root as $rdir)
     {
       $tr = $config['reports_path'].'/'.$rdir;
       
-      //Получаем список ботнетов.
+      //RџRѕR "SѓS ‡ P ° P ± RμRј SЃRїReSЃRѕRє RѕS, RЅRμS, RѕRІ.
       $botnets = GetAllDirs($tr, $ci);
       foreach($botnets as $bn)if($_FILTER['botnets'] == '' || matchStringInExpression(urldecode($bn), $_FILTER['botnets'], 0, 1))
       {
         $tb = $tr.'/'.$bn;
         
-        //Получаем список ботов.
+        //RџRѕR "SѓS ‡ P ° P ± RμRј SЃRїReSЃRѕRє RѕS, RѕRІ.
         $bots = GetAllDirs($tb, $ci);
         foreach($bots as $b)if($_FILTER['bots'] == '' || matchStringInExpression(urldecode($b), $_FILTER['bots'], 0, 1))SearchDF($tb.'/'.$b, $rdir.'/'.$bn.'/'.$b, $ci, $counter, $lastfolder);
         unset($bots);
@@ -135,10 +135,10 @@ if(isset($_GET['search']))
 }
 else
 {
-  define('INPUT_WIDTH',  '200px'); //Ширина input.text.
-  define('INPUTQ_WIDTH', '500px'); //Ширина input.text.
+  define('INPUT_WIDTH',  '200px'); //REReSЂReRЅR ° input.text.
+  define('INPUTQ_WIDTH', '500px'); //REReSЂReRЅR ° input.text.
 
-  //Создаем JS-скрипт.
+  //RЎRѕR · RґR ° RμRј JS-SЃRєSЂReRїS.
   $fl_onsubmit  = ' onsubmit="return ExecuteAction()"';
   $js_qa     = addJsSlashes(LNG_REPORTS_FILESACTION_Q);
   $js_script = jsCheckAll('fileslist', 'checkall', 'files[]').
@@ -184,7 +184,7 @@ JS_SCRIPT;
 
   ThemeBegin(LNG_REPORTS, $js_script, $_is_browser ? 0 : getBotJsMenu('botmenu'), $_is_browser ? 0 : ' onload="SearchFiles(0, 0)"');
   
-  //Фильтр.
+  //P ¤ Pepsi "SЊS, SЂ.
   echo 
   str_replace(array('{NAME}', '{URL}', '{JS_EVENTS}'), array('filter', QUERY_SCRIPT_HTML, ''), THEME_FORMGET_BEGIN).
     FORM_CURRENT_MODULE.
@@ -192,7 +192,7 @@ JS_SCRIPT;
     str_replace('{WIDTH}', 'auto', THEME_DIALOG_BEGIN).
       str_replace(array('{COLUMNS_COUNT}', '{TEXT}'), array(2, LNG_REPORTS_FILTER_TITLE), THEME_DIALOG_TITLE).
     
-      //Стандартный фильтр.
+      //RЎS, P ° ° RЅRґR SЂS, RЅS <P № C "Pepsi" SЊS, SЂ.
       THEME_DIALOG_ROW_BEGIN.
         str_replace('{COLUMNS_COUNT}', 1, THEME_DIALOG_GROUP_BEGIN).
           THEME_DIALOG_ROW_BEGIN.
@@ -205,7 +205,7 @@ JS_SCRIPT;
         THEME_DIALOG_GROUP_END.
       THEME_DIALOG_ROW_END.
     
-      //Строка поиска.
+      //RЎS, SЂRѕRєR RїRѕReSЃRєR ° °.
       THEME_DIALOG_ROW_BEGIN.
         str_replace('{COLUMNS_COUNT}', 2, THEME_DIALOG_GROUP_BEGIN).
           THEME_DIALOG_ROW_BEGIN.
@@ -225,7 +225,7 @@ JS_SCRIPT;
         THEME_DIALOG_GROUP_END.
       THEME_DIALOG_ROW_END.
     
-      //Управление.
+      //RЈRїSЂR ° RІR "RμRЅReRμ.
       str_replace('{COLUMNS_COUNT}', 2, THEME_DIALOG_ACTIONLIST_BEGIN).
         str_replace(array('{TEXT}', '{JS_EVENTS}'), array(LNG_REPORTS_FILTER_RESET, ''), THEME_DIALOG_ITEM_ACTION_RESET).
         THEME_STRING_SPACE.
@@ -235,7 +235,7 @@ JS_SCRIPT;
   THEME_FORMGET_END.
   THEME_VSPACE;
 
-  //Вывод ошибок.
+  //R'S <RІRѕRґ RѕS € Pepsi ± RѕRє.
   if(!empty($_errors))
   {
     $i = 0;
@@ -251,17 +251,17 @@ JS_SCRIPT;
     echo THEME_LIST_END.THEME_VSPACE;
   }
 
-  //Список дейтсвий.
+  //RЎRїReSЃRѕRє RґRμR № C SЃRІReR №.
   $al = LNG_REPORTS_FILESACTION.THEME_STRING_SPACE.str_replace(array('{NAME}', '{WIDTH}'), array('filesaction', 'auto'), THEME_DIALOG_ITEM_LISTBOX_BEGIN);
   if($_allow_remove)$al .= str_replace(array('{VALUE}', '{TEXT}'), array(0, LNG_REPORTS_FILESACTION_REMOVE), THEME_DIALOG_ITEM_LISTBOX_ITEM);
   $al .= str_replace(array('{VALUE}', '{TEXT}'), array(1, LNG_REPORTS_FILESACTION_CREATEARC), THEME_DIALOG_ITEM_LISTBOX_ITEM).
          THEME_DIALOG_ITEM_LISTBOX_END.
          THEME_STRING_SPACE.str_replace(array('{TEXT}', '{JS_EVENTS}'), array(LNG_ACTION_APPLY, ''), THEME_DIALOG_ITEM_ACTION_SUBMIT).THEME_STRING_NEWLINE.THEME_STRING_NEWLINE;
 
-  //Обзор.
+  //RћR ± R · RѕSЂ.
   if($_is_browser)
   {
-    //Определяем данные текущей сортировки.
+    //RћRїSЂRμRґRμR "SЏRμRј RґR ° RЅRЅS <Rμ C RμRєSѓS ‰ RμR number SЃRѕSЂS, ReSЂRѕRІRєRe.
     $_uri_sortmode_html = htmlEntitiesEx(assocateSortMode(array(0, 1, 2)));
     
     echo
@@ -279,7 +279,7 @@ JS_SCRIPT;
               writeSortColumn(LNG_REPORTS_LIST_MTIME, 2, 1).
             THEME_LIST_ROW_END;  
     
-    //Определяем URL'ы.
+    //RћRїSЂRμRґRμR "SЏRμRј URL'S <.
     $up = dirname($_FILTER['path']);
     if(strcmp($up, '.') === 0 || strcmp($up, '/') === 0 || strcmp($up, '\\') === 0)$up = '';
       
@@ -287,7 +287,7 @@ JS_SCRIPT;
     $_url_subdir   = QUERY_STRING_HTML.'&amp;path='.htmlEntitiesEx(urlencode($_FILTER['path'])).$_uri_sortmode_html.'&amp;sub=';
     $_url_updir    = QUERY_STRING_HTML.'&amp;path='.htmlEntitiesEx(urlencode($up)).$_uri_sortmode_html;
       
-    //Читаем каталог. К сожелению алгоритм очень медленный...
+    //§ P Res, P ° RμRј RєR ° C, P ° P "RѕRі. Rљ SЃRѕR ¶ RμR "RμRЅReSЋ P ° P" RіRѕSЂReS, Rј RѕS ‡ RμRЅSЊ RјRμRґR "RμRЅRЅS <P № ...
     $files = array();
     $dirs  = array();
     $size  = 0;
@@ -296,7 +296,7 @@ JS_SCRIPT;
     if(($dr = @opendir($_CUR_PATH)) === false)$msg = LNG_REPORTS_RESULT_ERRORDIR;
     else
     {
-      //Читаем каталог.
+      //§ P Res, P ° RμRј RєR ° C, P ° P "RѕRі.
       while(($fl = @readdir($dr)) !== false)if(strcmp($fl, '..') !== 0 && strcmp($fl, '.') !== 0)
       {
         $cur = $_CUR_PATH.'/'.$fl;
@@ -319,21 +319,21 @@ JS_SCRIPT;
   
     $c = 0;
       
-    //Добавляем уровень вверх.
+    //P RѕR ± P ° RІR "SЏRμRј SѓSЂRѕRІRμRЅSЊ RІRІRμSЂS ....
     if($_FILTER['path'] != '')echo ListElement($c, 0, str_replace(array('{URL}', '{TEXT}'), array($_url_updir, htmlEntitiesEx('[..]')), THEME_LIST_ANCHOR), LNG_REPORTS_LIST_UP, @filemtime($_CUR_PATH));
       
     if($msg != '')                                             echo str_replace(array('{COLUMNS_COUNT}', '{TEXT}'), array(COLUMNS_COUNT, $msg), THEME_LIST_ITEM_EMPTY_1);
     else if(count($files) == 0 && count($dirs) == 0 && $c == 0)echo str_replace(array('{COLUMNS_COUNT}', '{TEXT}'), array(COLUMNS_COUNT, LNG_REPORTS_RESULT_EMPTYDIR), THEME_LIST_ITEM_EMPTY_1);
     else
     {
-      //Вывод директорий.
+      //R'S <RІRѕRґ RґReSЂRμRєS, RѕSЂReR №.
       foreach($dirs as $fl)
       {
         $a = str_replace(array('{URL}', '{TEXT}'), array($_url_subdir.htmlEntitiesEx(urlencode($fl[0])), htmlEntitiesEx('['.urldecode($fl[0]).']')), THEME_LIST_ANCHOR);
         echo ListElement($c, $fl[0], $a, LNG_REPORTS_LIST_DIR, $fl[2]);
       }
 
-      //Вывод файлов.
+      //R'S <RІRѕRґ C "P ° P № R" RѕRІ.
       foreach($files as $fl)
       {
         $a = str_replace(array('{URL}', '{TEXT}'), array($_url_download.htmlEntitiesEx(urlencode($fl[0])), htmlEntitiesEx(urldecode($fl[0]))), THEME_LIST_ANCHOR);
@@ -348,10 +348,10 @@ JS_SCRIPT;
     
     echo THEME_LIST_END.THEME_DIALOG_ITEM_CHILD_END.THEME_DIALOG_ROW_END.THEME_DIALOG_END.THEME_FORMPOST_END;
   }
-  //Результат поиска.
+  //P RμR · SѓR "SЊS, P ° C RїRѕReSЃRєR °.
   else
   {
-    //Результат.
+    //P RμR · SѓR "SЊS, P ° C.
     echo
     str_replace(array('{NAME}', '{URL}', '{JS_EVENTS}'), array('fileslist', QUERY_STRING_HTML, $fl_onsubmit), THEME_FORMPOST_BEGIN).
       str_replace('{WIDTH}', 'auto', THEME_DIALOG_BEGIN).
@@ -374,9 +374,9 @@ JS_SCRIPT;
 die();
 
 
-///////////////////////////////////////////////////////////////////////////////////////////////////
-// Функции.
-///////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////// / / ///////////////////////////////////////////////
+// P ¤ † SѓRЅRєS ReRe.
+////////////////////////////////////////////////// / / ///////////////////////////////////////////////
 
 /*
   Алгоритм сортровки по имени/размеру/дате.
@@ -388,7 +388,7 @@ function sort_proc($a, $b)
   
   $r = 0;
   if($_sortColumnId == 0)     $r = strcasecmp($a[0], $b[0]);
-  else if($_sortColumnId == 1)$r = ($a[1] > $b[1] ? 1 : ($a[1] < $b[1] ? -1 : 0)); //FIXME: Неправильная сортировка для файлов более 2Гб.
+  else if($_sortColumnId == 1)$r = ($a[1] > $b[1] ? 1 : ($a[1] < $b[1] ? -1 : 0)); //FIXME: RќRμRїSЂR ° RІReR "SЊRЅR ° SЏ SЃRѕSЂS, ReSЂRѕRІRєR ° RґR" SЏ C "P ° P № R" RѕRІ P ± RѕR "RμRμ 2P" P ±.
   else if($_sortColumnId == 2)$r = ($a[2] > $b[2] ? 1 : ($a[2] < $b[2] ? -1 : 0));
   
   if($r == 0 && $_sortColumnId != 0)$r = strcasecmp($a[0], $b[0]);
@@ -439,7 +439,7 @@ function SearchDF($path, $upath, &$ci, &$counter, &$lastfolder)
   {
     $subdirs = array(); 
     
-    //Работаем на скорость. Есть повторяющиеся фрагменты!
+    //P P ° P ± RѕS, P ° ° RμRј RЅR SЃRєRѕSЂRѕSЃS, SЊ. P • SЃS, SЊ RїRѕRІS, RѕSЂSЏSЋS ‰ ReRμSЃSЏ C SЂR ° RіRјRμRЅS, C <!
     while(($file = readdir($dh)) !== false)if(strcmp($file, '.') !== 0 && strcmp($file, '..') !== 0)
     {
       $npath  = $path.'/'.$file;
@@ -520,7 +520,7 @@ function SearchString($str, $cs, $file, &$ci)
     return false;
   }
 
-  //Работаем на скорость.
+  //P P ° P ± RѕS, P ° ° RμRј RЅR SЃRєRѕSЂRѕSЃS, SЊ.
   if($cs)
   {
     do if(@mb_strpos(@fread($f, $buf_size), $str) !== false)
@@ -564,17 +564,15 @@ function GetAllDirs($path, &$ci)
   return $r;
 }
 
-/*
-  Создание элемента для списока.
-  
-  IN OUT $ci  - int, счетчик элемента.
-  IN $pd_name - string, данные для POST['files'] (без обработки htmlEntitiesEx), или 0.
-  IN $text    - текст элемента.
-  IN $size    - int/string, размер элемента в байтах, или -1, или строка (с оброботкой htmlEntitiesEx).
-  IN $mtime   - int, время модификации элемента, или 0.
-  
-  Retrurn     - string, элемент.
-*/
+/*  RЎRѕR · RґR ° RЅReRμ SЌR "RμRјRμRЅS, P ° RґR" SЏ SЃRїReSЃRѕRєR °.
+  
+  IN OUT $ ci - int, SЃS RμS ‡, C ‡ ReRє SЌR "RμRјRμRЅS, P °.
+  IN $ pd_name - string, RґR ° RЅRЅS <Rμ RґR "SЏ POST ['files'] (P ± RμR · RѕR SЂR ° ± P ± RѕS, RєRe htmlEntitiesEx), Pepsi" Fe 0.
+  IN $ text - C RμRєSЃS, SЌR "RμRјRμRЅS, P °.
+  IN $ size - int / string, SЂR ° F · RјRμSЂ SЌR "RμRјRμRЅS, RІ P ° P ± P ° P № C, P ° C ... Pepsi" Pe -1, Pepsi "Re SЃS, SЂRѕRєR ° (SЃ RѕR ± SЂRѕR ± RѕS, RєRѕR № htmlEntitiesEx).
+  IN $ mtime - int, RІSЂRμRјSЏ RјRѕRґReS "ReRєR ° C † ReRe SЌR" RμRјRμRЅS, P °, Pepsi "Fe 0.
+  
+  Retrurn - string, SЌR "RμRјRμRЅS.*/
 function ListElement(&$ci, $pd_name, $text, $size, $mtime)
 {
   $theme = $ci % 2 ? THEME_LIST_ITEM_LTEXT_U2 : THEME_LIST_ITEM_LTEXT_U1;

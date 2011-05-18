@@ -68,9 +68,8 @@ namespace WininetHook
   */
   BOOL WINAPI hookerInternetQueryDataAvailable(HINTERNET handle, LPDWORD numberOfBytesAvailable, DWORD flags, DWORD_PTR context);
   
-  /*
-    Перехватчик HttpQueryInfoA. Также вызывается от HttpQueryInfoW.
-  */
+  /*В В В В Interceptor HttpQueryInfoA. Also called on HttpQueryInfoW.
+В В */
   BOOL WINAPI hookerHttpQueryInfoA(HINTERNET request, DWORD infoLevel, LPVOID buffer, LPDWORD bufferLength, LPDWORD index);
 };
 #endif

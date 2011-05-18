@@ -3,10 +3,10 @@
 #include "wsocket.h"
 #include "sslsocket.h"
 
-//Размер буфера сокета.
+//Socket buffer size.
 #define SOCKET_IO_BUFFER 0x10000
 
-//Флаги для InitializeSecurityContext (Необходимость флагов потверждена через IE).
+//Flags for InitializeSecurityContext (Need flags potverzhdena through IE).
 #define ISC_FLAGS (ISC_REQ_ALLOCATE_MEMORY | ISC_REQ_CONFIDENTIALITY | ISC_REQ_EXTENDED_ERROR | ISC_REQ_MANUAL_CRED_VALIDATION |  ISC_REQ_REPLAY_DETECT | ISC_REQ_SEQUENCE_DETECT | ISC_REQ_STREAM)
 
 static void safeFreeContextBuffer(SecBuffer *buffer)
@@ -72,7 +72,7 @@ bool SslSocket::_serverHandshake(SERVERDATA *sd, void *recv, DWORD recvSize, voi
   SecBuffer     outBuffers[2];
   DWORD         contextAttr;
 
-  //recv от клиента.
+  //recv from the client.
   inBuffers[0].pvBuffer    = (void *)recv;
   inBuffers[0].cbBuffer    = recvSize;
   inBuffers[0].BufferType  = SECBUFFER_TOKEN;
@@ -85,7 +85,7 @@ bool SslSocket::_serverHandshake(SERVERDATA *sd, void *recv, DWORD recvSize, voi
   inBuffer.pBuffers        = inBuffers;
   inBuffer.ulVersion       = SECBUFFER_VERSION;
   
-  //send клиенту.
+  //send to the client.
   outBuffers[0].pvBuffer   = NULL;
   outBuffers[0].BufferType = SECBUFFER_TOKEN;
   outBuffers[0].cbBuffer   = 0;
@@ -94,7 +94,7 @@ bool SslSocket::_serverHandshake(SERVERDATA *sd, void *recv, DWORD recvSize, voi
   outBuffer.pBuffers       = outBuffers;
   outBuffer.ulVersion      = SECBUFFER_VERSION;
 
-  //Обробатываем этап.
+  //Obrobatyvaem stage.
 /*  SECURITY_STATUS status = CWA(secur32, AcceptSecurityContext)(&sd->credHandle,
                                                                sd->flags & SDF_STATUS_HANDSHAKE ? &sd->ctxtHandle : NULL,
                                                                &inBuffer,
@@ -123,7 +123,7 @@ bool SslSocket::_startClientEncryption(SOCKET socket, LPWSTR serverName, SOCKETD
   bool ok = false;
   Mem::_zero(sd, sizeof(SOCKETDATA));
 
-  //Инициализация.
+  //Initialization.
   {
     SCHANNEL_CRED sc;
 
@@ -157,7 +157,7 @@ bool SslSocket::_startClientEncryption(SOCKET socket, LPWSTR serverName, SOCKETD
   OutBuffer.pBuffers  = OutBuffers;
   OutBuffer.ulVersion = SECBUFFER_VERSION;
 
-  //Начинаем handshake.
+  //Getting handshake.
   SECURITY_STATUS ssFirst = CWA(secur32, InitializeSecurityContextW)(&sd->sh, NULL, serverName, ISC_FLAGS, 0, 0, NULL, 0, &sd->ch, &OutBuffer, &dwContextAttr, NULL);
 
   #if defined(WDEBUG1)
@@ -168,7 +168,7 @@ bool SslSocket::_startClientEncryption(SOCKET socket, LPWSTR serverName, SOCKETD
   {
     safeFreeContextBuffer(&OutBuffers[0]);
 
-    //Создаем буфер для обмена сообщенияеми.
+    //Create a buffer for the exchange soobscheniyaemi.
     LPBYTE recvBuffer = (LPBYTE)Mem::alloc(SOCKET_IO_BUFFER);
     DWORD recvSize   = 0;
 
@@ -180,7 +180,7 @@ bool SslSocket::_startClientEncryption(SOCKET socket, LPWSTR serverName, SOCKETD
 
       while(ssLoop == SEC_I_CONTINUE_NEEDED || ssLoop == SEC_E_INCOMPLETE_MESSAGE)
       {
-        //Читаем ответ от сервера.
+        //Read the response from the server.
         if(recvSize == 0 || ssLoop == SEC_E_INCOMPLETE_MESSAGE)
         {
           int r = WSocket::tcpRecv(socket, recvBuffer + recvSize, SOCKET_IO_BUFFER - recvSize, timeout);
@@ -188,7 +188,7 @@ bool SslSocket::_startClientEncryption(SOCKET socket, LPWSTR serverName, SOCKETD
           recvSize += r;
         }
 
-        //Подготавливаем буферы.
+        //Prepare buffers.
         InBuffers[0].pvBuffer    = (void *)recvBuffer;
         InBuffers[0].cbBuffer    = recvSize;
         InBuffers[0].BufferType  = SECBUFFER_TOKEN;
@@ -219,14 +219,14 @@ bool SslSocket::_startClientEncryption(SOCKET socket, LPWSTR serverName, SOCKETD
         if(ssLoop == SEC_E_INCOMPLETE_MESSAGE)continue;
         if(ssLoop == SEC_E_OK || ssLoop == SEC_I_CONTINUE_NEEDED || ((FAILED(ssLoop)) && (dwContextAttr & ISC_RET_EXTENDED_ERROR)))
         {
-          //Отправляем ответ.
+          //Sends a response.
           if(OutBuffers[0].cbBuffer != 0 && OutBuffers[0].pvBuffer != NULL)
           {
             if(!WSocket::tcpSend(socket, OutBuffers[0].pvBuffer, OutBuffers[0].cbBuffer))break;
             safeFreeContextBuffer(&OutBuffers[0]);
           }
 
-          //Проверяем есть ли лишние данные.
+          //Check whether there is extra data.
           if(InBuffers[1].BufferType == SECBUFFER_EXTRA)
           {
             #if defined(WDEBUG1)
@@ -287,10 +287,10 @@ bool SslSocket::_startClientEncryption(SOCKET socket, LPWSTR serverName, SOCKETD
 
 void SslSocket::_close(SOCKETDATA *sd)
 {
-  //Закрываем SSL.
-  //FIXME: IE его не закрывает, мы не будем тоже тратить на это время и байты (Не хрена не документиовано как правильно закрывать SSL).
+  //Close the SSL.
+  //FIXME: IE does not close it, we will not also spend time on it and bytes (Do not fuck do not dokumentiovano how to close the SSL).
 
-  //Освобождаем память.
+  //Free memory.
   Mem::free(sd->pendingData);
   Mem::free(sd->extraBuffer);
   Mem::free(sd->ioBuffer);
@@ -318,7 +318,7 @@ bool SslSocket::_send(SOCKETDATA *sd, void *buf, int bufSize)
     dwDataToSend -= dwCurLen;
     pPos += dwCurLen;
 
-    //Заполняем буферы.
+    //Fill the buffer.
     Buffers[0].pvBuffer   = sd->ioBuffer;
     Buffers[0].cbBuffer   = sd->streamSizes.cbHeader;
     Buffers[0].BufferType = SECBUFFER_STREAM_HEADER;
@@ -339,10 +339,10 @@ bool SslSocket::_send(SOCKETDATA *sd, void *buf, int bufSize)
     Message.cBuffers      = 4;
     Message.pBuffers      = Buffers;
 
-    //Шифруем.
+    //Encrypt.
     if(CWA(secur32, EncryptMessage)(&sd->ch, 0, &Message, 0) != SEC_E_OK)return false;
 
-    //Отправляем.
+    //Ship.
     for(BYTE i = 0; i < 3; i++)if(Buffers[i].cbBuffer > 0 && !WSocket::tcpSend(sd->socket, Buffers[i].pvBuffer, Buffers[i].cbBuffer))return false;
   }
   return true;
@@ -350,7 +350,7 @@ bool SslSocket::_send(SOCKETDATA *sd, void *buf, int bufSize)
 
 int SslSocket::_recv(SOCKETDATA *sd, void *buf, int bufSize, DWORD timeout, bool *extraAvalible)
 {
-  //Не полученные данные с предыдушего вызова функции.
+  //Not received data from the previous one function call.
   if(sd->pendingDataSize > 0)
   {
     #if defined(WDEBUG0)
@@ -371,7 +371,7 @@ int SslSocket::_recv(SOCKETDATA *sd, void *buf, int bufSize, DWORD timeout, bool
     return (int)size;
   }
 
-  //Полчение из сокета.
+  //Polchenie from the socket.
   SecBufferDesc Message;
   SecBuffer     Buffers[4];
   DWORD dwReaded = 0;
@@ -381,7 +381,7 @@ int SslSocket::_recv(SOCKETDATA *sd, void *buf, int bufSize, DWORD timeout, bool
   {
     DWORD dwCurLen;
 
-    //Читаем данные.
+    //Read the data.
     if(sd->extraBufferSize > 0)
     {
       #if defined(WDEBUG0)
@@ -400,9 +400,9 @@ int SslSocket::_recv(SOCKETDATA *sd, void *buf, int bufSize, DWORD timeout, bool
       if(dwCurLen == 0 || dwCurLen == (DWORD)SOCKET_ERROR){r = (int)dwCurLen; break;}
     }
 
-    dwReaded += dwCurLen; //Всего байт в буфере.
+    dwReaded += dwCurLen; //Total number of bytes in the buffer.
 
-    //Заполняем буферы.
+    //Fill the buffer.
     Buffers[0].pvBuffer   = sd->ioBuffer;
     Buffers[0].cbBuffer   = dwReaded;
     Buffers[0].BufferType = SECBUFFER_DATA;
@@ -418,7 +418,7 @@ int SslSocket::_recv(SOCKETDATA *sd, void *buf, int bufSize, DWORD timeout, bool
     Message.cBuffers  = 4;
     Message.pBuffers  = Buffers;
 
-    //Расшифровываем данные.
+    //Decrypts the data.
     SECURITY_STATUS ss = CWA(secur32, DecryptMessage)(&sd->ch, &Message, 0, NULL);
     if(ss == SEC_E_INCOMPLETE_MESSAGE)
     {
@@ -428,10 +428,10 @@ int SslSocket::_recv(SOCKETDATA *sd, void *buf, int bufSize, DWORD timeout, bool
       continue;
     }
 
-    //FIXME: коды SEC_I_CONTEXT_EXPIRED (не делаю по причине как и в _Close), SEC_I_RENEGOTIATE не на чем пока тестировать.
+    //FIXME: code SEC_I_CONTEXT_EXPIRED (do not do because of how and _Close), SEC_I_RENEGOTIATE nothing to test yet.
     if(ss == SEC_E_OK)
     {
-      //Ищим обработанные данные.
+      //Ischim processed data.
       SecBuffer *pData  = NULL;
       SecBuffer *pExtra = NULL;
       for(BYTE i = 1; i < 4; i++)
@@ -440,7 +440,7 @@ int SslSocket::_recv(SOCKETDATA *sd, void *buf, int bufSize, DWORD timeout, bool
         else if(pExtra == NULL && Buffers[i].BufferType == SECBUFFER_EXTRA && Buffers[i].cbBuffer > 0)pExtra = &Buffers[i];
       }
 
-      //Копируем данные в pBuf.
+      //Copy data to pBuf.
       if(pData)
       {
         #if defined(WDEBUG1)
@@ -456,7 +456,7 @@ int SslSocket::_recv(SOCKETDATA *sd, void *buf, int bufSize, DWORD timeout, bool
         Mem::_copy(buf, pData->pvBuffer, dwCurLen);
       }
 
-      //Сохраняем лишние данные.
+      //Save the extra data.
       if(pExtra != NULL)
       {
         #if defined(WDEBUG1)
@@ -466,14 +466,13 @@ int SslSocket::_recv(SOCKETDATA *sd, void *buf, int bufSize, DWORD timeout, bool
         if((sd->extraBuffer = Mem::copyEx((LPBYTE)sd->ioBuffer + dwReaded - pExtra->cbBuffer, pExtra->cbBuffer)) == NULL)break;
         sd->extraBufferSize = pExtra->cbBuffer;
 
-        /*
-          Sometimes an application will read data from the remote party, attempt to decrypt it by
-          using DecryptMessage (Schannel), and discover that DecryptMessage (Schannel) succeeded
-          but the output buffers are empty. This is normal behavior, and applications must be able
-          to deal with it.
+        /*В В В В В В В В В В Sometimes an application will read data from the remote party, attempt to decrypt it by
+В В В В В В В В В В using DecryptMessage (Schannel), and discover that DecryptMessage (Schannel) succeeded
+В В В В В В В В В В but the output buffers are empty. This is normal behavior, and applications must be able
+В В В В В В В В В В to deal with it.
 
-          Видемо оно.
-        */
+В В В В В В В В В В Videm it.
+В В В В В В В В */
         if(pData == NULL)continue;
       }
 

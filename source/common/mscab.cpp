@@ -47,10 +47,10 @@ typedef struct
   ERF error;
   CCAB cab;
   
-  bool bCurrentFileNameAsAnsi;    //Сохранять имя файла в ANSI кодировки.
-  WCHAR strCurrentFile[MAX_PATH]; //Текущий файл для сжатия.
-  WCHAR strOutputFile[MAX_PATH];  //Текущий файл архива.
-  WCHAR strTempPath[MAX_PATH];    //Временная папка.
+  bool bCurrentFileNameAsAnsi;    //Save the file name in ANSI encoding.
+  WCHAR strCurrentFile[MAX_PATH]; //Current file compression.
+  WCHAR strOutputFile[MAX_PATH];  //The current archive file.
+  WCHAR strTempPath[MAX_PATH];    //The temporary folder.
 }FCIDATA;
 #endif
 
@@ -65,14 +65,14 @@ typedef struct
 #endif
 
 static DWORD ref_count;
-static HANDLE hMsCabHeap; //Данная гениальная библиотека с 93-го года не научилась убирать за собой свой
-                     //мусор поэтому я создаю для нее отдельную кучу.
+static HANDLE hMsCabHeap; //This brilliant library with 93-year has not learned to clean up after themselves their
+                     //rubbish so I created for her a separate pile.
 static HMODULE hDll;
 
 #if(XLIB_MSCAB_FCI > 0)
 static fFciCreate       mf_FciCreate;
 static fFciAddFile      mf_FciAddFile;
-//static fFciFlushFolder  mf_FciFlushFolder;
+//static fFciFlushFolder mf_FciFlushFolder;
 static fFciFlushCabinet mf_FciFlushCabinet;
 static fFciDestroy      mf_FciDestroy;
 #endif
@@ -80,7 +80,7 @@ static fFciDestroy      mf_FciDestroy;
 #if(XLIB_MSCAB_FDI > 0)
 static fFdiCreate       mf_FdiCreate;
 static fFdiCopy         mf_FdiCopy;
-//static fFdiIsCabinet    mf_FdiIsCabinet;
+//static fFdiIsCabinet mf_FdiIsCabinet;
 static fFdiDestroy      mf_FdiDestroy;
 #endif
 
@@ -122,7 +122,7 @@ static INT_PTR __FxIOpen(LPWSTR pszFile, int oflag, int pmode)
     default: return -1;
   }
 
-  //if(oflag & _O_CREAT && !(pmode & _S_IWRITE))dwFlagsAndAttributes |= FILE_ATTRIBUTE_READONLY;
+  //if (oflag & _O_CREAT & &! (pmode & _S_IWRITE)) dwFlagsAndAttributes | = FILE_ATTRIBUTE_READONLY;
 
   /*if(oflag & _O_TEMPORARY)
   {
@@ -131,10 +131,10 @@ static INT_PTR __FxIOpen(LPWSTR pszFile, int oflag, int pmode)
   dwShareMode          |= FILE_SHARE_DELETE;
   }*/
 
-  //if(oflag & _O_SHORT_LIVED)dwFlagsAndAttributes |= FILE_ATTRIBUTE_TEMPORARY;
+  //if (oflag & _O_SHORT_LIVED) dwFlagsAndAttributes | = FILE_ATTRIBUTE_TEMPORARY;
 
-  //if(oflag & _O_SEQUENTIAL)dwFlagsAndAttributes |= FILE_FLAG_SEQUENTIAL_SCAN;
-  //else if(oflag & _O_RANDOM)dwFlagsAndAttributes |= FILE_FLAG_RANDOM_ACCESS;
+  //if (oflag & _O_SEQUENTIAL) dwFlagsAndAttributes | = FILE_FLAG_SEQUENTIAL_SCAN;
+  //else if (oflag & _O_RANDOM) dwFlagsAndAttributes | = FILE_FLAG_RANDOM_ACCESS;
 
   HANDLE h = CWA(kernel32, CreateFileW)(pszFile, dwDesiredAccess, dwShareMode, NULL, dwCreationDisposition, dwFlagsAndAttributes, NULL);
   if(h != INVALID_HANDLE_VALUE)
@@ -143,7 +143,7 @@ static INT_PTR __FxIOpen(LPWSTR pszFile, int oflag, int pmode)
     if(p == NULL)CWA(kernel32, CloseHandle)(h);
     else
     {
-      p->fileName = Str::_CopyExW(pszFile, -1); //Это параметр не критичен, не проверяем его.
+      p->fileName = Str::_CopyExW(pszFile, -1); //This parameter is not critical, do not check it.
       p->handle = h;
       p->oflags = oflag;
       return (INT_PTR)p;
@@ -216,12 +216,12 @@ static bool PathToNormal(LPSTR pszPath, LPWSTR pBuffer, void *pv)
   }
   else if(Mem::_compare(pszPath, STR_TEMP_FILE, STR_TEMP_FILE_SIZE) == 0)
   {
-    //Имена временных файлов всегда состоят из US символов, поэтому работа с UTF8 не требуется.
+    //Temporary file names always consist of US characters, so working with UTF8 is not required.
     WCHAR path[MAX_PATH];
     Str::_ansiToUnicode(pszPath + STR_TEMP_FILE_SIZE + 1, -1, path, MAX_PATH);
     if(!Fs::_pathCombine(pBuffer, ((FCIDATA *)pv)->strTempPath, path))r = false;
   }
-  else r = false; //Другие пути не поддерживаются.
+  else r = false; //Other paths are not supported.
 
   return r;
 }
@@ -267,7 +267,7 @@ static BOOL DIAMONDAPI __FCITempFile(char *pszTempName, int cbTempName, void *pv
 
   if(CWA(kernel32, GetTempFileNameW)(p->strTempPath, L"cab", 0, file) > 0 && Fs::_removeFile(file))
   {
-    //Имена временных файлов всегда состоят из US символов, поэтому работа с UTF8 не требуется.
+    //Temporary file names always consist of US characters, so working with UTF8 is not required.
     Str::_unicodeToAnsi(CWA(shlwapi, PathFindFileNameW)(file), -1, pszTempName + STR_TEMP_FILE_SIZE + 1, cbTempName - (STR_TEMP_FILE_SIZE + 1));
     Mem::_copy(pszTempName, STR_TEMP_FILE, STR_TEMP_FILE_SIZE);
     pszTempName[STR_TEMP_FILE_SIZE] = '\\';
@@ -305,7 +305,7 @@ static INT_PTR DIAMONDAPI __FCIOpenInfo(char *pszName, USHORT *pdate, USHORT *pt
       CWA(kernel32, FileTimeToLocalFileTime)(&inf.ftLastWriteTime, &ft);
       CWA(kernel32, FileTimeToDosDateTime)(&ft, pdate, ptime);
       
-      //Атрибуты FILE_ATTRIBUTE_* совпадают с _A_*.
+      //Attributes FILE_ATTRIBUTE_ * coincide with the _A_ *.
       *pattribs = (USHORT)(inf.dwFileAttributes & (FILE_ATTRIBUTE_READONLY | FILE_ATTRIBUTE_HIDDEN | FILE_ATTRIBUTE_SYSTEM | FILE_ATTRIBUTE_ARCHIVE));
       if(p->bCurrentFileNameAsAnsi == false)*pattribs |=_A_NAME_IS_UTF;
       r = (INT_PTR)pd;
@@ -350,7 +350,7 @@ static long DIAMONDAPI __FDISeek(INT_PTR hf, long dist, int seektype)
 }
 #endif
 
-////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////// ////////////////////////////////////////////////
 
 static bool AddRef(void)
 {
@@ -361,14 +361,14 @@ static bool AddRef(void)
 #     if(XLIB_MSCAB_FCI > 0)
       mf_FciCreate       = (fFciCreate)      CWA(kernel32, GetProcAddress)(hDll, "FCICreate");
       mf_FciAddFile      = (fFciAddFile)     CWA(kernel32, GetProcAddress)(hDll, "FCIAddFile");
-      //mf_FciFlushFolder  = (fFciFlushFolder) CWA(kernel32, GetProcAddress)(hDll, "FCIFlushFolder");
+      //mf_FciFlushFolder = (fFciFlushFolder) CWA (kernel32, GetProcAddress) (hDll, "FCIFlushFolder");
       mf_FciFlushCabinet = (fFciFlushCabinet)CWA(kernel32, GetProcAddress)(hDll, "FCIFlushCabinet");
       mf_FciDestroy      = (fFciDestroy)     CWA(kernel32, GetProcAddress)(hDll, "FCIDestroy");
 #     endif      
 #     if(XLIB_MSCAB_FDI > 0)
       mf_FdiCreate    = (fFdiCreate)   CWA(kernel32, GetProcAddress)(hDll, "FDICreate");;
       mf_FdiCopy      = (fFdiCopy)     CWA(kernel32, GetProcAddress)(hDll, "FDICopy");;
-      //mf_FdiIsCabinet = (fFdiIsCabinet)CWA(kernel32, GetProcAddress)(hDll, "FDIIsCabinet");;
+      //mf_FdiIsCabinet = (fFdiIsCabinet) CWA (kernel32, GetProcAddress) (hDll, "FDIIsCabinet");;
       mf_FdiDestroy   = (fFdiDestroy)  CWA(kernel32, GetProcAddress)(hDll, "FDIDestroy");;
 #     endif      
       if(
@@ -446,8 +446,8 @@ void *MsCab::FCICreate(LPWSTR pstrPath, LPWSTR pstrFile, LPWSTR pstrTempPath)
           p->cab.cbFolderThresh = CB_MAX_DISK;
           p->cab.iCab           = 1;
           p->cab.iDisk          = 1;
-          //p->cab.setID          = 0;
-          Mem::_copy(p->cab.szCab, MSCAB_DLL, sizeof(MSCAB_DLL)); //Не имеет смысла.
+          //p-> cab.setID = 0;
+          Mem::_copy(p->cab.szCab, MSCAB_DLL, sizeof(MSCAB_DLL)); //It makes no sense.
           Mem::_copy(p->cab.szCabPath, STR_OUTPUT_FILE, STR_OUTPUT_FILE_SIZE);
 
           p->hFCI = mf_FciCreate(&p->error, __FCIFileDest, __FxIAlloc, __FxIFree, __FCIOpen, __FCIRead, __FCIWrite, __FCIClose, __FCISeek, __FCIDelete, __FCITempFile, &p->cab, p);
@@ -532,7 +532,7 @@ bool MsCab::createFromFolder(LPWSTR outputFile, LPWSTR sourceFolder, LPWSTR temp
     cs.filesCount    = 0;
     cs.cabPathOffset = Str::_LengthW(sourceFolder);
     
-    //Если путь не кончается на слеш.
+    //If the path does not end on a slash.
     if(cs.cabPathOffset > 0 && sourceFolder[cs.cabPathOffset - 1] != '\\')cs.cabPathOffset++;
 
     Fs::_findFiles(sourceFolder, fileMask, fileMaskCount, (flags & MsCab::CFF_RECURSE ? Fs::FFFLAG_RECURSIVE : 0) | Fs::FFFLAG_SEARCH_FILES, createFromFolderProc, &cs, NULL, 0, 0);

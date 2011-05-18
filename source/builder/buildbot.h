@@ -17,16 +17,15 @@ namespace BuildBot
   */
   void uninit(void);
 
-  /*
-    Запуск сборки бота.
+  /*В В В В Run the build bot.
 
-    IN owner      - оснвоное окно.
-    IN output     - окно для вывода статуса.
-    IN config     - конфигурация.
-    IN destFolder - папка назначения для конечного файла.
+В В В В IN owner - osnvonoe window.
+В В В В IN output - a window to display status.
+В В В В IN config - configuration.
+В В В В IN destFolder - destination folder for the destination file.
 
-    Return        - true - в случаи успеха,
-                    false - в случаи ошибки.
-  */
+В В В В Return - true - if successful,
+В В В В В В В В В В В В В В В В В В В В false - if an error occurs.
+В В */
   bool _run(HWND owner, HWND output, Config0::CFGDATA *config, LPWSTR destFolder);
 };

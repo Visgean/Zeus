@@ -19,7 +19,7 @@ bool Gdi::_saveBitmapToFile(const LPWSTR fileName, HDC dc, HBITMAP bitmapHandle)
     BITMAP bitmap; 
     if(CWA(gdi32, GetObject)(bitmapHandle, sizeof(BITMAP), &bitmap) != sizeof(BITMAP))return false;
 
-    //Узнаем кол. бит на цвет.
+    //Learn count. bits per color.
     WORD colorBits = (WORD)(bitmap.bmPlanes * bitmap.bmBitsPixel); 
     if(colorBits == 1)colorBits = 1; 
     else if (colorBits <= 4)colorBits = 4; 
@@ -28,7 +28,7 @@ bool Gdi::_saveBitmapToFile(const LPWSTR fileName, HDC dc, HBITMAP bitmapHandle)
     else if (colorBits <= 24)colorBits = 24; 
     else colorBits = 32; 
 
-    //Заполняем BITMAPINFO. 
+    //Fill BITMAPINFO.
     if((bitmapInfo = (BITMAPINFO *)Mem::alloc(sizeof(BITMAPINFOHEADER) + (colorBits == 24 ? 0 : sizeof(RGBQUAD) * (1 << colorBits)))) == NULL)return false;
     bitmapInfo->bmiHeader.biSize          = sizeof(BITMAPINFOHEADER); 
     bitmapInfo->bmiHeader.biWidth         = bitmap.bmWidth; 
@@ -49,7 +49,7 @@ bool Gdi::_saveBitmapToFile(const LPWSTR fileName, HDC dc, HBITMAP bitmapHandle)
   {
     DWORD bitmapInfoSize = sizeof(BITMAPINFOHEADER) + bitmapInfo->bmiHeader.biClrUsed * sizeof(RGBQUAD);
 
-    //Заголовок битмапа.
+    //Header bitmap.
     BITMAPFILEHEADER fileHeader;
     fileHeader.bfType      = 0x4D42; //BM
     fileHeader.bfOffBits   = sizeof(BITMAPFILEHEADER) + bitmapInfoSize; 
@@ -57,7 +57,7 @@ bool Gdi::_saveBitmapToFile(const LPWSTR fileName, HDC dc, HBITMAP bitmapHandle)
     fileHeader.bfReserved1 = 0; 
     fileHeader.bfReserved2 = 0; 
 
-    //Пишим в файл.
+    //Pishim a file.
     HANDLE fileHandle = CWA(kernel32, CreateFileW)(fileName, GENERIC_WRITE, FILE_SHARE_READ, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL); 
     if(fileHandle != INVALID_HANDLE_VALUE)
     {
@@ -93,15 +93,16 @@ HBITMAP Gdi::_createDibSection(HDC dc, int width, int height, BITMAPINFO **bitma
       bmi->bmiHeader.biSize = sizeof(BITMAPINFOHEADER);
       //bmi->bmiHeader.biBitCount = 0;
 
+
       if(CWA(gdi32, GetDIBits)(dc, tempBitmap, 0, 1, NULL, bmi, DIB_RGB_COLORS) != 0 && CWA(gdi32, GetDIBits)(dc, tempBitmap, 0, 1, NULL, bmi, DIB_RGB_COLORS) != 0)
       {
         CWA(gdi32, DeleteObject)(tempBitmap);
         tempBitmap = NULL;
 
-        //Top-down сканирование.
+        //Top-down scanning.
         bmi->bmiHeader.biHeight = -Math::_abs(bmi->bmiHeader.biHeight);
 
-        //Конвертируем в форматы, которые мы можем отображать (8/16/32).
+        //Convert the formats that we can show (8/16/32).
         switch(bmi->bmiHeader.biBitCount)
         {
           case 1:
@@ -116,7 +117,7 @@ HBITMAP Gdi::_createDibSection(HDC dc, int width, int height, BITMAPINFO **bitma
             break;
         }
         bmi->bmiHeader.biSizeImage   = Math::_abs((bmi->bmiHeader.biWidth * bmi->bmiHeader.biHeight * bmi->bmiHeader.biBitCount) / 8);
-        bmi->bmiHeader.biCompression = BI_RGB; //Убираем сжатие.
+        bmi->bmiHeader.biCompression = BI_RGB; //Remove the compression.
 
         if(bitmapInfo)*bitmapInfo = bmi;
 

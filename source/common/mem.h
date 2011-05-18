@@ -16,21 +16,21 @@
 #  error MEM_ALLOC_SAFE_BYTES not defined!
 #endif
 
-//Структура для указания параметров блока памяти
+//Structure to specify the parameters of the memory block
 typedef struct
 {
   void *data;
   SIZE_T size;
 }MEMDATA;
 
-//Оффсет в структуре.
+//Offset in the structure.
 #define OFFSETOF(v, m)  ((DWORD_PTR)(&((v *)(NULL))->m))
 
-//Выравнивание.
+//Alignment.
 #define ALIGN_DOWN(x, align)  ((x) & ~(align - 1))
 #define ALIGN_UP(x, align) (((x) & (align - 1)) ? ALIGN_DOWN(x, align) + align : (x))
 
-//Размер страницы виртуальной памяти.
+//The size of virtual memory pages.
 #define VM_PAGE_SIZE 4096
 
 #define VM_STEP_MASK (~0xFFFF)
@@ -241,23 +241,21 @@ namespace Mem
 
   /*
     Подмена DWORD значения.
+В В В В IN originalValue - the old value.
+В В В В IN newValue - the new value.
+В В В В IN OUT mem - memory for processing.
+В В В В IN memSize - size pMem.
 
-    IN originalValue - старое значение.
-    IN newValue      - новое значение.
-    IN OUT mem       - память для обработки.
-    IN memSize       - размер pMem.
-
-    Return           - кол. измененных занчений.
-  */
+В В В В Return - col. Modified zancheny.
+В В */
   SIZE_T _replaceDword(DWORD originalValue, DWORD newValue, void *mem, SIZE_T memSize);
 
-  /*
-    IN originalValue - старое значение.
-    IN newValue      - новое значение.
-    IN OUT mem       - память для обработки.
-    IN memSize       - размер pMem.
+  /*В В В В IN originalValue - the old value.
+В В В В IN newValue - the new value.
+В В В В IN OUT mem - memory for processing.
+В В В В IN memSize - size pMem.
 
-    Return           - кол. измененных занчений.
-  */
+В В В В Return - col. Modified zancheny.
+В В */
   SIZE_T _replaceQword(DWORD64 originalValue, DWORD64 newValue, void *mem, SIZE_T memSize);
 };

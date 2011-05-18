@@ -56,13 +56,12 @@ namespace Sync
   */
   HANDLE _createUniqueMutex(SECURITY_ATTRIBUTES *mutexAttributes, LPWSTR name);
 
-  /*
-    Проверяет, существует ли мютекс.
+  /*В В В В Checks whether there myuteks.
 
-    IN name - имя мютекса.
+В В В В IN name - the name myuteksa.
 
-    Return  - true - существует,
-              false - не сущетвует.
-  */
+В В В В Return - true - there is,
+В В В В В В В В В В В В В В false - do not suschetvuet.
+В В */
   bool _mutexExists(LPWSTR name);
 };

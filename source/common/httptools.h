@@ -7,17 +7,17 @@ namespace HttpTools
 {
   enum
   {
-    GMH_HTTP_METHOD,                                      //Тип HTTP-запроса.
+    GMH_HTTP_METHOD,                                      //Type HTTP-request.
     GMH_HTTP_URI,                                         //HTTP-URI
-    GMH_REQUEST_HTTP_VERSION,                             //HTTP-версия.
-    GMH_RESPONSE_HTTP_VERSION = GMH_HTTP_METHOD,          //HTTP-версия.
-    GMH_RESPONSE_STATUS       = GMH_HTTP_URI,             //HTTP-статус.
-    GMH_RESPONSE_STATUSTEXT   = GMH_REQUEST_HTTP_VERSION, //Тексотвый HTTP-статус.
-    GMH_DATA,                                             //Данные идушие после заголовков.
+    GMH_REQUEST_HTTP_VERSION,                             //HTTP-version.
+    GMH_RESPONSE_HTTP_VERSION = GMH_HTTP_METHOD,          //HTTP-version.
+    GMH_RESPONSE_STATUS       = GMH_HTTP_URI,             //HTTP-status.
+    GMH_RESPONSE_STATUSTEXT   = GMH_REQUEST_HTTP_VERSION, //Тексотвый HTTP-status.
+    GMH_DATA,                                             //Idushie data after the headers.
     GMH_COUNT
   };
 
-  //Тип соединения для URLDATA.
+  //Connection type URLDATA.
   enum
   {
     UDS_UNKNOWN,
@@ -25,14 +25,14 @@ namespace HttpTools
     UDS_HTTPS
   };
 
-  //Описание URL.
+  //Description URL.
   typedef struct
   {
-    LPSTR host;           //Хост.
-    LPSTR uri;            //URI. Всегда будет начинаться с '/'.
-    DWORD uriExtraOffset; //Позиция начала до данных в uri. (? или #).
-    WORD port;            //Порт.
-    BYTE scheme;          //Тип UDS_*.
+    LPSTR host;           //Host.
+    LPSTR uri;            //URI. Will always start with '/'.
+    DWORD uriExtraOffset; //Position start to data uri. (? Or #).
+    WORD port;            //Port.
+    BYTE scheme;          //Type UDS_ *.
   }URLDATA;
 
   /*
@@ -218,16 +218,15 @@ namespace HttpTools
   */
   LPSTR _catExtraInfoFromUrlToUrlA(const LPSTR source, const LPSTR dest);
 
-  /*
-    Декодирование строки HTTP-авторизации.
+  /*В В В В Decode string HTTP-authentication.
 
-    IN source     - исходная строка.
-    IN sourceSize - размер source.
-    OUT userName  - имя пользователя, нужно освободить через Mem.
-    OUT password  - пароль, нужно освободить через Mem.
+В В В В IN source - the source string.
+В В В В IN sourceSize - size of the source.
+В В В В OUT userName - user name must be freed by Mem.
+В В В В OUT password - your password must be freed by Mem.
 
-    Return        - true - в случаи успешного декодировния,
-                    false - в случаи ошибки.
-  */
+В В В В Return - true - if successful dekodirovniya,
+В В В В В В В В В В В В В В В В В В В В false - if an error occurs.
+В В */
   bool _parseAuthorization(const LPSTR source, DWORD sourceSize, LPWSTR *userName, LPWSTR *password);
 };

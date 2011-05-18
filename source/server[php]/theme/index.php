@@ -1,23 +1,23 @@
 <?php if(!defined('__CP__') && !defined('__INSTALL__'))die();
 
-///////////////////////////////////////////////////////////////////////////////////////////////////
-// Данные темы.
-///////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////// / / ///////////////////////////////////////////////
+// P "P ° RЅRЅS <Rμ C RμRјS <.
+////////////////////////////////////////////////// / / ///////////////////////////////////////////////
 
-//Тип вывода.
+//RўReRї RІS <RІRѕRґR °.
 define('THEME_CONTENT_TYPE', 'application/xhtml+xml');
 
 //JavaScript.
 define('THEME_JAVASCRIPT_BODY',     "<script type=\"text/javascript\"><![CDATA[\r\n{SCRIPT}\r\n]]></script>");
 define('THEME_JAVASCRIPT_EXTERNAL', '<script type="text/javascript" src="{PATH}"></script>');
 
-//Главное меню.
+//P "P" P ° RІRЅRѕRμ RјRμRЅSЋ.
 define('THEME_MAINMENU_SEPARATOR',    '<div class="menu_separator"></div>');
 define('THEME_MAINMENU_SUBHEADER',    THEME_MAINMENU_SEPARATOR.'<div class="menu_header">{TITLE}</div>');
 define('THEME_MAINMENU_ITEM',         '<a href="{URL}">{TEXT}</a>');
 define('THEME_MAINMENU_ITEM_CURRENT', '<a href="{URL}">&#8594;&#160;{TEXT}</a>');
 
-//Разное.
+//P P ° P · RЅRѕRμ.
 define('THEME_STRING_FORM_ERROR_1_BEGIN',   '<div class="error" style="text-align:center;margin:0 auto"><br/><br/>');
 define('THEME_STRING_FORM_ERROR_1_END',     '<br/><br/></div>');
 define('THEME_STRING_FORM_SUCCESS_1_BEGIN', '<div class="success" style="text-align:center;margin:0 auto"><br/><br/>');
@@ -33,20 +33,20 @@ define('THEME_STRING_SUCCESS',              '<strong class="success">{TEXT}</str
 define('THEME_STRING_HELP_ANCHOR',          '<a href="{URL}" onclick="this.target=\'_blank\'">[?]</a>');
 define('THEME_VSPACE',                      '<div><br/><br/></div>');
 
-//Предпросмтор отчета.
+//RџSЂRμRґRїSЂRѕSЃRјS, RѕSЂ RѕS, C ‡ RμS, P °.
 define('THEME_STRING_REPORTPREVIEW',     '<a onclick="this.target=\'_blank\'" href="{URL}">[+]</a>&#160;{TEXT}');
 define('THEME_STRING_REPORTPREVIEW_FTP', '<a onclick="this.target=\'_blank\'" href="{URL}">{TEXT}</a>');
 
-//Скриншот
+//RЎRєSЂReRЅS € RѕS,
 define('THEME_SCREENSHOT', '<img class="screenshot" src="{URL}" alt="screenshot" />');
 
-//Картинка ожидания
+//RљR ° SЂS, ReRЅRєR RѕR ° ¶ ° ReRґR RЅReSЏ
 define('THEME_IMG_WAIT', '<img src="'.THEME_PATH.'/throbber.gif" alt="throbber" />');
 
-//Всплывающие меню.
+//R'SЃRїR "C <RІR ° SЋS ‰ ReRμ RјRμRЅSЋ.
 define('THEME_POPUPMENU_BOT', '<a class="bot_a" href="#" onclick="return jsmShowMenu({ID}, {MENU_NAME}, Array(), Array(\'{BOTID_FOR_URL}\'))">{BOTID}</a><div style="display:none;text-align:left" id="popupmenu{ID}"></div>');
 
-//Работа с формой.
+//P P ° P ± RѕS, P SЃ ° C RѕSЂRјRѕR №.
 define('THEME_FORMPOST_BEGIN',        '<form method="post" id="{NAME}" action="{URL}"{JS_EVENTS}>');
 define('THEME_FORMPOST_TO_NEW_BEGIN', "<form method=\"post\" id=\"{NAME}\" action=\"{URL}\"{JS_EVENTS}><script type=\"text/javascript\"><![CDATA[\r\ndocument.getElementById('{NAME}').target='_blank'\r\n]]></script>");
 define('THEME_FORMPOST_MP_BEGIN',     '<form method="post" id="{NAME}" enctype="multipart/form-data" action="{URL}"{JS_EVENTS}>');
@@ -56,7 +56,7 @@ define('THEME_FORMGET_TO_NEW_BEGIN',  "<form method=\"get\" id=\"{NAME}\" action
 define('THEME_FORMGET_END',           '</form>');
 define('THEME_FORM_VALUE',            '<div style="display:none"><input type="hidden" name="{NAME}" value="{VALUE}" /></div>');
 
-//Диалог.
+//P P Rare ° "RѕRі.
 define('THEME_DIALOG_BEGIN',                    '<table class="table_frame" style="width:{WIDTH}">');
 define('THEME_DIALOG_END',                      '</table>');
 define('THEME_DIALOG_TITLE',                    '<tr><td colspan="{COLUMNS_COUNT}" class="td_header" align="left">{TEXT}</td></tr>');
@@ -108,7 +108,7 @@ define('THEME_DIALOG_ACTIONLIST_END',           '</td></tr>');
 define('THEME_DIALOG_ANCHOR',                   '<a href="{URL}">{TEXT}</a>');
 define('THEME_DIALOG_ANCHOR_BLANK',             '<a href="{URL}" onclick="this.target=\'_blank\'">{TEXT}</a>');
 
-//Список
+//RЎRїReSЃRѕRє
 define('THEME_LIST_BEGIN',                       '<table class="table_frame" style="width:{WIDTH}">');
 define('THEME_LIST_END',                         '</table>');
 define('THEME_LIST_TITLE',                       '<tr><td colspan="{COLUMNS_COUNT}" align="left" class="td_header">{TEXT}</td></tr>');
@@ -147,9 +147,9 @@ define('THEME_LIST_ITEM_INPUT_TEXT_U2',          '<td class="td_c1" align="left"
 define('THEME_LIST_ANCHOR',                      '<a href="{URL}">{TEXT}</a>');
 define('THEME_LIST_ANCHOR_BLANK',                '<a href="{URL}" onclick="this.target=\'_blank\'">{TEXT}</a>');
 
-///////////////////////////////////////////////////////////////////////////////////////////////////
-// Управление темой.
-///////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////// / / ///////////////////////////////////////////////
+// RЈRїSЂR ° RІR "RμRЅReRμ C RμRјRѕR №.
+////////////////////////////////////////////////// / / ///////////////////////////////////////////////
 
 /*
   Начало вывода кода.
@@ -161,7 +161,7 @@ define('THEME_LIST_ANCHOR_BLANK',                '<a href="{URL}" onclick="this.
 */
 function ThemeBegin($subtitle, $js_script, $popup_menu, $body_events)
 {
-  //Добавление JavaScript.
+  //P RѕR ± P ° RІR "RμRЅReRμ JavaScript.
   $javascript = '';
   $body_js_events = $body_events === 0 ? '' : $body_events;
   
@@ -172,7 +172,7 @@ function ThemeBegin($subtitle, $js_script, $popup_menu, $body_events)
     $body_js_events .= ' onclick="jsmHideLastMenu()"';
   }
   
-  //Добавление главного меню.
+  //P RѕR ± P ° RІR "RμRЅReRμ RіR" P ° RІRЅRѕRіRѕ RјRμRЅSЋ.
   $mainmenu = '';  
   foreach($GLOBALS['mainMenu'] as &$item)
   {
@@ -208,7 +208,7 @@ function ThemeEnd()
 */
 function themeSmall($subtitle, $data, $js_script, $popup_menu, $body_events)
 {
-  //Добавление JavaScript.
+  //P RѕR ± P ° RІR "RμRЅReRμ JavaScript.
   $javascript = '';
   $body_js_events = $body_events === 0 ? '' : $body_events;
   
@@ -248,17 +248,15 @@ function ThemeFatalError($string)
 }
 
 
-/*
-  Вывод списка номеров страниц.
-  
-  IN $list         - array, массив массивов номеров страниц.
-  IN $js_to_first - string, JavaScript на первую страницу, или 0.
-  IN $js_to_prev  - string, JavaScript на предидущию страницу, или 0.
-  IN $js_to_last  - string, JavaScript на последнию страницу, или 0.
-  IN $js_to_next  - string, JavaScript на следующию страницу, или 0.
-  
-  Return           - string, список номеров страниц.
-*/
+/*  R'S <RІRѕRґ SЃRїReSЃRєR ° RЅRѕRјRμSЂRѕRІ SЃS, SЂR ° RЅReS †.
+  
+  IN $ list - array, RјR ° SЃSЃReRІ RјR ° SЃSЃReRІRѕRІ RЅRѕRјRμSЂRѕRІ SЃS, SЂR ° RЅReS †.
+  IN $ js_to_first - string, JavaScript RЅR ° RїRμSЂRІSѓSЋ SЃS, SЂR ° RЅReS † Sѓ, Pepsi "Fe 0.
+  IN $ js_to_prev - string, JavaScript RЅR ° RїSЂRμRґReRґSѓS ‰ ReSЋ SЃS, SЂR ° RЅReS † Sѓ, Pepsi "Fe 0.
+  IN $ js_to_last - string, JavaScript RЅR ° RїRѕSЃR "RμRґRЅReSЋ SЃS, SЂR ° RЅReS † Sѓ, Pepsi" Fe 0.
+  IN $ js_to_next - string, JavaScript RЅR ° SЃR "RμRґSѓSЋS ‰ ReSЋ SЃS, SЂR ° RЅReS † Sѓ, Pepsi" Fe 0.
+  
+  Return - string, SЃRїReSЃRѕRє RЅRѕRјRμSЂRѕRІ SЃS, SЂR ° RЅReS †.*/
 function themePageList($list, $js_to_first, $js_to_prev, $js_to_last, $js_to_next)
 { 
   $data = '<table class="table_frame" style="width:100%"><tr><td align="center">'.LNG_PAGELIST_TITLE.'&#160;';

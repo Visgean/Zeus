@@ -12,20 +12,20 @@
 
 namespace Config0
 {
-  //Описание переменной.
+  //Variable description.
   typedef struct _VAR
   {
-    LPSTR *pValues;         //Массив значений
-    BYTE bValuesCount;      //Количетсво значений.
-    _VAR *pChilds;          //Массив потомков.
-    DWORD dwChildsCount;    //Количетсво потомков.
+    LPSTR *pValues;         //An array of values
+    BYTE bValuesCount;      //Kolichetsvo values.
+    _VAR *pChilds;          //An array of descendants.
+    DWORD dwChildsCount;    //Kolichetsvo descendants.
   }VAR;
 
-  //Описание файла.
+  //Description of the file.
   typedef struct
   {
-    VAR *pVars;        //Список корневых переменных.
-    DWORD dwVarsCount; //Количетсво переменных.
+    VAR *pVars;        //List of root variables.
+    DWORD dwVarsCount; //Kolichetsvo variables.
   }CFGDATA;
 
   /*
@@ -76,16 +76,15 @@ namespace Config0
   */
   VAR *_AddVar(VAR *pvParent, CFGDATA *pCD, LPSTR *pValues, BYTE bValuesCount);
 
-  /*
-    Получение переменной из списка.
+  /*В В В В Getting a variable from the list.
 
-    IN pvParent     - родительская переменная, может быть NULL если поиск происходит в корне.
-    IN pCD          - CFGDATA, может быть NULL если pvParent != NULL.
-    IN pstrName     - имя переменной, может быть NULL если ишется вхождение.
-    IN pstrValue    - дополнительное условие если pstrName != NULL, и имя вхождения если
-                      pstrName == NULL.
-    
-    Return          - указатель на переменную, или NULL в случаи ошибки.
-  */
+В В В В IN pvParent - parent variable may be NULL if the search is at the root.
+В В В В IN pCD - CFGDATA, may be NULL if pvParent! = NULL.
+В В В В IN pstrName - variable name may be NULL if ishetsya occurrence.
+В В В В IN pstrValue - an additional condition if pstrName! = NULL, and the name of the entry if
+В В В В В В В В В В В В В В В В В В В В В В pstrName == NULL.
+В В В В 
+В В В В Return - a pointer to a variable, or NULL if an error occurs.
+В В */
   VAR *_GetVar(VAR *pvParent, CFGDATA *pCD, LPSTR pstrName, LPSTR pstrValue);
 };

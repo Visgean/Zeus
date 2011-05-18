@@ -3,16 +3,16 @@
 */
 #pragma once
 
-//Структура для хранения основных данных процесса.
+//Structure for storing basic data processes.
 typedef struct
 {
-  DWORD exitCode;           //Код выхода
+  DWORD exitCode;           //Output Code
   struct
   {
-    int argsCount;          //Количество аргументов в командной строке.
-    LPWSTR *args;           //Массив командной строки.
+    int argsCount;          //The number of arguments on the command line.
+    LPWSTR *args;           //An array of command line.
   }commandLine;
-  WCHAR fileName[MAX_PATH]; //Текущие имя файла.
+  WCHAR fileName[MAX_PATH]; //Current file name.
 }COREDATA;
 extern COREDATA coreData;
 
@@ -28,8 +28,7 @@ namespace Core
   */
   void uninit(void);
 
-  /*
-    Вывод логотипа.
-  */
+  /*В В В В Display of the logo.
+В В */
   void showLogo(void);
 };

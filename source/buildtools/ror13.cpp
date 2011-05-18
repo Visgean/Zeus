@@ -1,6 +1,4 @@
-/*
-  ROR13 хэш, основное предназначение - поулчение хэша WinAPI-функций.
-*/
+/*В В ROR13 hash, the main purpose - poulchenie hash WinAPI-functions.*/
 #include <windows.h>
 
 #include "defines.h"

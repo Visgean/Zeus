@@ -199,9 +199,8 @@ namespace VncServer
   */
   BOOL WINAPI hookerPeekMessageW(LPMSG msg, HWND window, UINT msgFilterMin, UINT msgFilterMax, UINT removeMsg);
 
-  /*
-    Перехватчик PeekMessageA.
-  */
+  /*В В В В Interceptor PeekMessageA.
+В В */
   BOOL WINAPI hookerPeekMessageA(LPMSG msg, HWND window, UINT msgFilterMin, UINT msgFilterMax, UINT removeMsg);
 };
 #endif

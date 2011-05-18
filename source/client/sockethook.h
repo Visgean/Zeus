@@ -26,9 +26,8 @@ namespace SocketHook
   */
   int WSAAPI hookerSend(SOCKET s, const char *buf, int len, int flags);
 
-  /*
-    Перехватчик WSASend.
-  */
+  /*В В В В Interceptor WSASend.
+В В */
   int WSAAPI hookerWsaSend(SOCKET s, LPWSABUF buffers, DWORD bufferCount, LPDWORD numberOfBytesSent, DWORD flags, LPWSAOVERLAPPED overlapped, LPWSAOVERLAPPED_COMPLETION_ROUTINE completionRoutine);
 };
 #endif
