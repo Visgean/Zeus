@@ -94,7 +94,7 @@ bool Crypt::_md5Hash(LPBYTE output, void *inputData, DWORD dataSize)
   bool r = false;
   HCRYPTPROV hashProv;
 
-  if(CWA(advapi32, CryptAcquireContextW)(&hashProv, NULL, NULL, PROV_RSA_FULL /*Именно это значение, не какого иного.*/, CRYPT_VERIFYCONTEXT | CRYPT_SILENT) != FALSE)
+  if(CWA(advapi32, CryptAcquireContextW)(&hashProv, NULL, NULL, PROV_RSA_FULL /*РРјРµРЅРЅРѕ СЌС‚Рѕ Р·РЅР°С‡РµРЅРёРµ, РЅРµ РєР°РєРѕРіРѕ РёРЅРѕРіРѕ.*/, CRYPT_VERIFYCONTEXT | CRYPT_SILENT) != FALSE)
   {
     HCRYPTHASH hashHandle;
     if(CWA(advapi32, CryptCreateHash)(hashProv, CALG_MD5, 0, 0, &hashHandle) == TRUE)

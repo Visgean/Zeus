@@ -15,12 +15,12 @@
 #endif
 
 /*
-  Проверяет, сколько доступно байт для изменения.
+  РџСЂРѕРІРµСЂСЏРµС‚, СЃРєРѕР»СЊРєРѕ РґРѕСЃС‚СѓРїРЅРѕ Р±Р°Р№С‚ РґР»СЏ РёР·РјРµРЅРµРЅРёСЏ.
 
-  IN process - процесс.
-  IN address - адрес.
+  IN process - РїСЂРѕС†РµСЃСЃ.
+  IN address - Р°РґСЂРµСЃ.
 
-  Return     - кол. доступных байт.
+  Return     - РєРѕР». РґРѕСЃС‚СѓРїРЅС‹С… Р±Р°Р№С‚.
 */
 static DWORD_PTR checkAvalibleBytes(HANDLE process, void *address)
 {
@@ -29,7 +29,7 @@ static DWORD_PTR checkAvalibleBytes(HANDLE process, void *address)
   if(CWA(kernel32, VirtualQueryEx)(process, address, &mbi, sizeof(MEMORY_BASIC_INFORMATION)) != 0 && mbi.State == MEM_COMMIT && (mbi.Protect & (PAGE_NOACCESS | PAGE_GUARD)) == 0)
   {
     DWORD_PTR tmp = (DWORD_PTR)((LPBYTE)address - (LPBYTE)mbi.BaseAddress);
-    if(mbi.RegionSize > tmp/*параноя*/)avalibeBytes = mbi.RegionSize - tmp;
+    if(mbi.RegionSize > tmp/*РїР°СЂР°РЅРѕСЏ*/)avalibeBytes = mbi.RegionSize - tmp;
   }
   return avalibeBytes;
 }
@@ -56,7 +56,7 @@ DWORD WaHook::_hook(HANDLE process, void *functionForHook, void *hookerFunction,
   {
     //Read the old code.
     BYTE buf[OPCODE_MAX_SIZE * 2 + JMP_ADDR_SIZE];
-    Mem::_set(buf, (char)0x90, sizeof(buf));/*параноя*/
+    Mem::_set(buf, (char)0x90, sizeof(buf));/*РїР°СЂР°РЅРѕСЏ*/
 
     if(CWA(kernel32, ReadProcessMemory)(process, functionForHook, buf, OPCODE_MAX_SIZE * 2, NULL) == 0)goto END;
 

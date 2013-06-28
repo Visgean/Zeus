@@ -48,7 +48,7 @@ sockethook_user_anonymous     "anonymous"
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-// wininethook.cpp. FIXME: названия переменных
+// wininethook.cpp. FIXME: РЅР°Р·РІР°РЅРёСЏ РїРµСЂРµРјРµРЅРЅС‹С…
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 #if(BO_WININET > 0)
 regpath_ie_startpage              "Software\\Microsoft\\Internet Explorer\\Main"
@@ -273,7 +273,7 @@ remotescript_command_user_emailclients_get   "user_emailclients_get"
 remotescript_command_user_flashplayer_get    "user_flashplayer_get"
 remotescript_command_user_flashplayer_remove "user_flashplayer_remove"
 
-//Ошибки.
+//РћС€РёР±РєРё.
 remotescript_error_not_enough_memory         "Not enough memory."
 remotescript_error_already_executed          "Script already executed."
 remotescript_error_failed_to_load            "Failed to load local configuration."
@@ -312,7 +312,7 @@ core_botid_format_error       "fatal_error"
 core_botid_unknown            "unknown"
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-// Модули и их функции.
+// РњРѕРґСѓР»Рё Рё РёС… С„СѓРЅРєС†РёРё.
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 module_wtsapi32                     "wtsapi32.dll"
 wtsapi32_enumeratesessions          "WTSEnumerateSessionsW"

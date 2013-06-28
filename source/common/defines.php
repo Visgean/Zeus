@@ -1,10 +1,10 @@
 <?php
 /*
-  Список макросов общих для C и PHP.
-  Файл подключаеся в make.php
+  РЎРїРёСЃРѕРє РјР°РєСЂРѕСЃРѕРІ РѕР±С‰РёС… РґР»СЏ C Рё PHP.
+  Р¤Р°Р№Р» РїРѕРґРєР»СЋС‡Р°РµСЃСЏ РІ make.php
   
-  Примечание: Т.к. PHP использует только тип int(знаковый), то во всех макросов нужно использовать
-              знак минус для высоких значений.
+  РџСЂРёРјРµС‡Р°РЅРёРµ: Рў.Рє. PHP РёСЃРїРѕР»СЊР·СѓРµС‚ С‚РѕР»СЊРєРѕ С‚РёРї int(Р·РЅР°РєРѕРІС‹Р№), С‚Рѕ РІРѕ РІСЃРµС… РјР°РєСЂРѕСЃРѕРІ РЅСѓР¶РЅРѕ РёСЃРїРѕР»СЊР·РѕРІР°С‚СЊ
+              Р·РЅР°Рє РјРёРЅСѓСЃ РґР»СЏ РІС‹СЃРѕРєРёС… Р·РЅР°С‡РµРЅРёР№.
 */
 
 //ID for BinStorage elements.
@@ -40,7 +40,7 @@ $_COMMON_DEFINE['CFGID_HTTP_POSTDATA_FILTER']  = '20006'; //Multi-line for post-
 $_COMMON_DEFINE['CFGID_HTTP_INJECTS_LIST']     = '20007'; //List HTTP-inzhektov/feykov.
 $_COMMON_DEFINE['CFGID_DNS_LIST']              = '20008'; //List of DNS.
 
-//Values ​​for SBCID_BOTLOG_TYPE.
+//Values вЂ‹вЂ‹for SBCID_BOTLOG_TYPE.
 $_COMMON_DEFINE['BLT_UNKNOWN']                 = '0';   //Neivestny report.
 
 $_COMMON_DEFINE['BLT_COOKIES']                 = '1';   //Cookies browsers.

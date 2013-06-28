@@ -15,13 +15,13 @@
 #include "..\common\process.h"
 
 /*
-  ��������� ��������� � ������� � ������ ����.
+  РџРѕР»СѓС‡РµРЅРёРµ СЃС‚СЂСѓРєС‚СѓСЂС‹ СЃ РґР°РЅРЅС‹РјРё Рѕ С‚РµРєС‰РµРј Р±РѕС‚Рµ.
 
-  IN hwnd - �������� edit'� � ������.
-  OUT bs  - ������ ����.
+  IN hwnd - СЂРѕРґРёС‚РµР»СЊ edit'Р° СЃ РєР»СЋС‡РµРј.
+  OUT bs  - СЃС‚Р°С‚СѓСЃ Р±РѕС‚Р°.
 
-  Return  - true - � ������ ������,
-            false - � ������ ������.
+  Return  - true - РІ СЃР»СѓС‡Р°Рё СѓСЃРїРµС…Р°,
+            false - РІ СЃР»СѓС‡Р°Рё РѕС€РёР±РєРё.
 */
 static bool getBotStatus(HWND hwnd, BotStatus::VER1 **bs)
 {
@@ -87,9 +87,9 @@ static bool getBotStatus(HWND hwnd, BotStatus::VER1 **bs)
 }
 
 /*
-  ��������� ��������� ����.
+  РџРѕР»СѓС‡РµРЅРёРµ СЃРѕСЃС‚РѕСЏРЅРёРµ Р±РѕС‚Р°.
 
-  IN hwnd - ����� �������.
+  IN hwnd - С…СЌРЅРґР» РІРєР»Р°РґРєРё.
 */
 static void refreshBotStatus(HWND hwnd)
 {
@@ -114,9 +114,9 @@ static void refreshBotStatus(HWND hwnd)
 }
 
 /*
-  ����� �������� ����.
+  РџРѕС‚РѕРє СѓРґР°Р»РµРЅРёСЏ Р±РѕС‚Р°.
 
-  IN p   - HWND �������.
+  IN p   - HWND РІРєР»Р°РґРєРё.
 
   Return - 0.
 */
@@ -150,7 +150,7 @@ static DWORD WINAPI removeBot(void *p)
   return 0;
 }
 
-/*  Processing tab.*/
+/*Р’В Р’В Processing tab.*/
 INT_PTR CALLBACK toolInformationProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
   //Handle to remove the stream bot.

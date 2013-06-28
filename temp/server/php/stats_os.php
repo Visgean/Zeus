@@ -1,16 +1,16 @@
 <?php if(!defined('__CP__'))die();
 
-define('OSLIST_WIDTH', 500); //Ширина колонки
-define('STAT_WIDTH',  '1%'); //Ширина колонки статистики.
+define('OSLIST_WIDTH', 500); //РЁРёСЂРёРЅР° РєРѕР»РѕРЅРєРё
+define('STAT_WIDTH',  '1%'); //РЁРёСЂРёРЅР° РєРѕР»РѕРЅРєРё СЃС‚Р°С‚РёСЃС‚РёРєРё.
 
-//Текущий ботнет.
+//РўРµРєСѓС‰РёР№ Р±РѕС‚РЅРµС‚.
 define('CURRENT_BOTNET', (!empty($_GET['botnet']) ? $_GET['botnet'] : ''));
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-// Вывод общей информации.
+// Р’С‹РІРѕРґ РѕР±С‰РµР№ РёРЅС„РѕСЂРјР°С†РёРё.
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
-//Получем список OC.
+//РџРѕР»СѓС‡РµРј СЃРїРёСЃРѕРє OC.
 $osList = '';
 $query = ((CURRENT_BOTNET == '') ? '' : 'WHERE `botnet`=\''.addslashes(CURRENT_BOTNET).'\' ');
 if(($r = mysqlQueryEx('botnet_list', "SELECT `os_version`, COUNT(`os_version`) FROM `botnet_list` {$query}GROUP BY `os_version`")) && mysql_affected_rows() > 0)
@@ -30,7 +30,7 @@ if(($r = mysqlQueryEx('botnet_list', "SELECT `os_version`, COUNT(`os_version`) F
     $i++;
   }
 }
-//Ошибка.
+//РћС€РёР±РєР°.
 else
 {
   $osList .=

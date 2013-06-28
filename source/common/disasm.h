@@ -1,8 +1,8 @@
 /*
-  Дизассамблер на движке BeaEngine.
+  Р”РёР·Р°СЃСЃР°РјР±Р»РµСЂ РЅР° РґРІРёР¶РєРµ BeaEngine.
   http://beatrix2004.free.fr/BeaEngine /
 
-  ПРИМИЧАНИЕ: Движок доволно грамозткий, однако это компенсируется его унивирсальностю под x32,
+  РџР РРњРР§РђРќРР•: Р”РІРёР¶РѕРє РґРѕРІРѕР»РЅРѕ РіСЂР°РјРѕР·С‚РєРёР№, РѕРґРЅР°РєРѕ СЌС‚Рѕ РєРѕРјРїРµРЅСЃРёСЂСѓРµС‚СЃСЏ РµРіРѕ СѓРЅРёРІРёСЂСЃР°Р»СЊРЅРѕСЃС‚СЋ РїРѕРґ x32,
               x64.
 */
 #pragma once
@@ -10,20 +10,20 @@
 namespace Disasm
 {
   /*
-    Инициализация.
+    РРЅРёС†РёР°Р»РёР·Р°С†РёСЏ.
   */
   void init(void);
 
   /*
-    Деинициализация.
+    Р”РµРёРЅРёС†РёР°Р»РёР·Р°С†РёСЏ.
   */
   void uninit(void);
 
-  /*В В В В Getting the length of the opcode.
+  /*Р’В Р’В Р’В Р’В Getting the length of the opcode.
 
-В В В В IN pAddress - opcode address.
+Р’В Р’В Р’В Р’В IN pAddress - opcode address.
 
-В В В В Return - the length of the opcode, or ((DWORD) -1) in case of error.
-В В */
+Р’В Р’В Р’В Р’В Return - the length of the opcode, or ((DWORD) -1) in case of error.
+Р’В Р’В */
   DWORD _getOpcodeLength(void *pAddress);
 };

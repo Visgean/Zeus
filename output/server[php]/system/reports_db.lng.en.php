@@ -3,7 +3,7 @@ define('LNG_REPORTS', 'Search in database');
 
 define('LNG_REPORTS_BOTSACTION', 'Bots action:');
 
-//Фильтр.
+//Р¤РёР»СЊС‚СЂ.
 define('LNG_REPORTS_FILTER_TITLE',      'Filter');
 
 define('LNG_REPORTS_FILTER_DATE_P1',    'Search from date (dd.mm):');

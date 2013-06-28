@@ -67,12 +67,12 @@ BinStorage::STORAGE *DynamicConfig::getCurrent(void)
 }
 
 /*
-  Загрузка обвнолвения бота, используя данные из текущей конфигурации.
+  Р—Р°РіСЂСѓР·РєР° РѕР±РІРЅРѕР»РІРµРЅРёСЏ Р±РѕС‚Р°, РёСЃРїРѕР»СЊР·СѓСЏ РґР°РЅРЅС‹Рµ РёР· С‚РµРєСѓС‰РµР№ РєРѕРЅС„РёРіСѓСЂР°С†РёРё.
 
   IN force - Force update bot nezavisimvo on the version.
 
-  Return   - true - обновление успешно запущено,
-             false - произошла ошибка.
+  Return   - true - РѕР±РЅРѕРІР»РµРЅРёРµ СѓСЃРїРµС€РЅРѕ Р·Р°РїСѓС‰РµРЅРѕ,
+             false - РїСЂРѕРёР·РѕС€Р»Р° РѕС€РёР±РєР°.
 */
 static bool tryToUpdateBot(bool force)
 {
@@ -127,14 +127,14 @@ enum
   UCF_FORCEUPDATE = 0x1, //Force update bot nezavisimvo on the version.
 };
 
-/*В В Obnovolenie kontsiguratsii and bot.
+/*Р’В Р’В Obnovolenie kontsiguratsii and bot.
 
-В В IN baseConfig - basic configuration.
-В В IN OUT md - config from the server. .
-В В IN flags - UCF_ *.
+Р’В Р’В IN baseConfig - basic configuration.
+Р’В Р’В IN OUT md - config from the server. .
+Р’В Р’В IN flags - UCF_ *.
 
-В В Return - true - config successfully orbnovlen,
-В В В В В В В В В В В В В В В В В В false - do not udalosb obnvoit config.*/
+Р’В Р’В Return - true - config successfully orbnovlen,
+Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В false - do not udalosb obnvoit config.*/
 static bool updateConfig(BASECONFIG *baseConfig, MEMDATA *md, DWORD flags)
 {
   bool retVal = false;

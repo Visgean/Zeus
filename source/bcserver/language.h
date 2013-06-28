@@ -1,16 +1,16 @@
-/*  Language.*/
+/*Р вЂ™Р’В Р вЂ™Р’В Language.*/
 #pragma once
 
 #include "..\common\cui[en].h"
 
 //////////////////////////////////////////////////// ////////////////////////////////////////////////
-// Logo.
+//Р вЂ™Р’В Logo.
 //////////////////////////////////////////////////// ////////////////////////////////////////////////
 
 #define lng_logo BO_NAME L" Backconnect Server %u.%u.%u.%u.\nBuild time: " BO_BUILDTIME L".\n\n"
 
 //////////////////////////////////////////////////// ////////////////////////////////////////////////
-// Commands and options.
+//Р вЂ™Р’В Commands and options.
 //////////////////////////////////////////////////// ////////////////////////////////////////////////
 
 #define lng_command_listen         L"listen"
@@ -20,7 +20,7 @@
 #define lng_switch_botport_help    L"TCP port for accepting a connection from bot."
 
 #define lng_switch_clientport      L"cp"
-#define lng_switch_clientport_help L"TCP port for accepting a connection from �lient."
+#define lng_switch_clientport_help L"TCP port for accepting a connection from РЎРѓlient."
 
 #define lng_switch_ipv4            L"ipv4"
 #define lng_switch_ipv4_help       L"Listen on IPv4 port."

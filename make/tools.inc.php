@@ -1,15 +1,15 @@
 <?php
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-// Различные инструменты.
+// Р Р°Р·Р»РёС‡РЅС‹Рµ РёРЅСЃС‚СЂСѓРјРµРЅС‚С‹.
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
 /*
-  Замена fnmatch с нужными свойствами.
+  Р—Р°РјРµРЅР° fnmatch СЃ РЅСѓР¶РЅС‹РјРё СЃРІРѕР№СЃС‚РІР°РјРё.
   
-  IN $pattern - string, маска.
-  IN $string  - string, строка.
+  IN $pattern - string, РјР°СЃРєР°.
+  IN $string  - string, СЃС‚СЂРѕРєР°.
   
-  Return      - bool, true - в случаи совпадения, или иначе false.
+  Return      - bool, true - РІ СЃР»СѓС‡Р°Рё СЃРѕРІРїР°РґРµРЅРёСЏ, РёР»Рё РёРЅР°С‡Рµ false.
 */
 function fnmatchEx($pattern, $string)
 {
@@ -17,12 +17,12 @@ function fnmatchEx($pattern, $string)
 }
 
 /*
-  Подмена переменных
+  РџРѕРґРјРµРЅР° РїРµСЂРµРјРµРЅРЅС‹С…
   
-  IN $custVars - array, типа перемання => значение.
-  IN $str      - string, строка для обработки.
+  IN $custVars - array, С‚РёРїР° РїРµСЂРµРјР°РЅРЅСЏ => Р·РЅР°С‡РµРЅРёРµ.
+  IN $str      - string, СЃС‚СЂРѕРєР° РґР»СЏ РѕР±СЂР°Р±РѕС‚РєРё.
   
-  Return       - string, результат подмены переменных.
+  Return       - string, СЂРµР·СѓР»СЊС‚Р°С‚ РїРѕРґРјРµРЅС‹ РїРµСЂРµРјРµРЅРЅС‹С….
 */
 function replaceVarables($custVars, $str)
 {
@@ -30,9 +30,9 @@ function replaceVarables($custVars, $str)
 }
 
 /*
-  Возращает булево значение настройки $config.
+  Р’РѕР·СЂР°С‰Р°РµС‚ Р±СѓР»РµРІРѕ Р·РЅР°С‡РµРЅРёРµ РЅР°СЃС‚СЂРѕР№РєРё $config.
   
-  IN $name - string, название переменной.
+  IN $name - string, РЅР°Р·РІР°РЅРёРµ РїРµСЂРµРјРµРЅРЅРѕР№.
 */
 function configBool($name)
 {
@@ -41,10 +41,10 @@ function configBool($name)
 }
 
 /*
-  Проверяет активна ли платформа для компонента.
+  РџСЂРѕРІРµСЂСЏРµС‚ Р°РєС‚РёРІРЅР° Р»Рё РїР»Р°С‚С„РѕСЂРјР° РґР»СЏ РєРѕРјРїРѕРЅРµРЅС‚Р°.
   
-  IN $app      - string, названия компоненента.
-  IN $platform - искомая платформа.
+  IN $app      - string, РЅР°Р·РІР°РЅРёСЏ РєРѕРјРїРѕРЅРµРЅРµРЅС‚Р°.
+  IN $platform - РёСЃРєРѕРјР°СЏ РїР»Р°С‚С„РѕСЂРјР°.
   
   Return       - bool.
 */
@@ -56,9 +56,9 @@ function platformEnabled($app, $platform)
 }
 
 /*
-  Стандартный заголовок для генерируемого H-файла.
+  РЎС‚Р°РЅРґР°СЂС‚РЅС‹Р№ Р·Р°РіРѕР»РѕРІРѕРє РґР»СЏ РіРµРЅРµСЂРёСЂСѓРµРјРѕРіРѕ H-С„Р°Р№Р»Р°.
   
-  Return - string, заголовок.
+  Return - string, Р·Р°РіРѕР»РѕРІРѕРє.
 */
 function headerOfHfile()
 {
@@ -66,10 +66,10 @@ function headerOfHfile()
 }
 
 /*
-  Шифрование RC4.
+  РЁРёС„СЂРѕРІР°РЅРёРµ RC4.
   
-  IN $data - string, данные для шифрования.
-  IN $key  - string, ключ шифрования.
+  IN $data - string, РґР°РЅРЅС‹Рµ РґР»СЏ С€РёС„СЂРѕРІР°РЅРёСЏ.
+  IN $key  - string, РєР»СЋС‡ С€РёС„СЂРѕРІР°РЅРёСЏ.
 */
 function rc4($data, $key)
 {
@@ -110,10 +110,10 @@ function rc4($data, $key)
 }
 
 /*
-  Шифрование XOR.
+  РЁРёС„СЂРѕРІР°РЅРёРµ XOR.
 
-  IN $data - string, данные для шифрования.
-  IN $key  - string, ключ шифрования.
+  IN $data - string, РґР°РЅРЅС‹Рµ РґР»СЏ С€РёС„СЂРѕРІР°РЅРёСЏ.
+  IN $key  - string, РєР»СЋС‡ С€РёС„СЂРѕРІР°РЅРёСЏ.
 */
 function xorCrypt($data, $key)
 {
@@ -131,12 +131,12 @@ function xorCrypt($data, $key)
 }
 
 /*
-  Преобразование бинарных данных в C массив типа BYTE.
+  РџСЂРµРѕР±СЂР°Р·РѕРІР°РЅРёРµ Р±РёРЅР°СЂРЅС‹С… РґР°РЅРЅС‹С… РІ C РјР°СЃСЃРёРІ С‚РёРїР° BYTE.
   
-  IN $data   - string, данные.
-  IN $xorKey - string, ключ шифрования или 0.
+  IN $data   - string, РґР°РЅРЅС‹Рµ.
+  IN $xorKey - string, РєР»СЋС‡ С€РёС„СЂРѕРІР°РЅРёСЏ РёР»Рё 0.
   
-  Return     - string, в формате {0xXX, 0xXX, ...}
+  Return     - string, РІ С„РѕСЂРјР°С‚Рµ {0xXX, 0xXX, ...}
 */
 function binDataToCArray($data, $xorKey)
 {
@@ -155,12 +155,12 @@ function binDataToCArray($data, $xorKey)
 }
 
 /*
-  Преобразование бинарного файла в C массив типа BYTE.
+  РџСЂРµРѕР±СЂР°Р·РѕРІР°РЅРёРµ Р±РёРЅР°СЂРЅРѕРіРѕ С„Р°Р№Р»Р° РІ C РјР°СЃСЃРёРІ С‚РёРїР° BYTE.
   
-  IN $data   - string, имя файла.
-  IN $xorKey - string, ключ шифрования или 0.
+  IN $data   - string, РёРјСЏ С„Р°Р№Р»Р°.
+  IN $xorKey - string, РєР»СЋС‡ С€РёС„СЂРѕРІР°РЅРёСЏ РёР»Рё 0.
   
-  Return     - string, в формате {0xXX, 0xXX, ...}
+  Return     - string, РІ С„РѕСЂРјР°С‚Рµ {0xXX, 0xXX, ...}
 */
 function binFileToCArray($file, $xorKey)
 {
@@ -170,12 +170,12 @@ function binFileToCArray($file, $xorKey)
 }
 
 /*
-  Генерация пароля.
+  Р“РµРЅРµСЂР°С†РёСЏ РїР°СЂРѕР»СЏ.
   
-  IN $min - int, минимальное количество символов.
-  IN $max - int, максимальное количество символов.
+  IN $min - int, РјРёРЅРёРјР°Р»СЊРЅРѕРµ РєРѕР»РёС‡РµСЃС‚РІРѕ СЃРёРјРІРѕР»РѕРІ.
+  IN $max - int, РјР°РєСЃРёРјР°Р»СЊРЅРѕРµ РєРѕР»РёС‡РµСЃС‚РІРѕ СЃРёРјРІРѕР»РѕРІ.
   
-  Return  - string, пароль.
+  Return  - string, РїР°СЂРѕР»СЊ.
 */
 function generatePassword($min, $max)
 {
@@ -188,13 +188,13 @@ function generatePassword($min, $max)
 }
 
 /*
-  Получение VA перменной/функции из map-файла.
+  РџРѕР»СѓС‡РµРЅРёРµ VA РїРµСЂРјРµРЅРЅРѕР№/С„СѓРЅРєС†РёРё РёР· map-С„Р°Р№Р»Р°.
   
-  IN $app      - string, названия компоненента.
-  IN $platform - string, платформа компоненента.
-  IN $name     - string, имя объекта для поиска.
+  IN $app      - string, РЅР°Р·РІР°РЅРёСЏ РєРѕРјРїРѕРЅРµРЅРµРЅС‚Р°.
+  IN $platform - string, РїР»Р°С‚С„РѕСЂРјР° РєРѕРјРїРѕРЅРµРЅРµРЅС‚Р°.
+  IN $name     - string, РёРјСЏ РѕР±СЉРµРєС‚Р° РґР»СЏ РїРѕРёСЃРєР°.
   
-  Return       - int - искомый адрес.
+  Return       - int - РёСЃРєРѕРјС‹Р№ Р°РґСЂРµСЃ.
 */
 function getVaFromMap($app, $platform, $name)
 {
@@ -210,11 +210,11 @@ function getVaFromMap($app, $platform, $name)
 }
 
 /*
-  Подсчет ROR13 хэша строки.
+  РџРѕРґСЃС‡РµС‚ ROR13 С…СЌС€Р° СЃС‚СЂРѕРєРё.
   
-  IN $str - string, строка.
+  IN $str - string, СЃС‚СЂРѕРєР°.
   
-  Return - string, хзш в формате 0x%08X.
+  Return - string, С…Р·С€ РІ С„РѕСЂРјР°С‚Рµ 0x%08X.
 */
 function getRor13Hash($str)
 {
@@ -226,12 +226,12 @@ function getRor13Hash($str)
 }
 
 /*
-  Получение RVA и размера из DataDirectory.
+  РџРѕР»СѓС‡РµРЅРёРµ RVA Рё СЂР°Р·РјРµСЂР° РёР· DataDirectory.
   
-  IN $file  - string, файл.
-  IN $index - int индекст в DataDirectory.
+  IN $file  - string, С„Р°Р№Р».
+  IN $index - int РёРЅРґРµРєСЃС‚ РІ DataDirectory.
   OUT $rva  - int, RVA.
-  OUT $size - int, размер.
+  OUT $size - int, СЂР°Р·РјРµСЂ.
 */
 function getPeDataDirectory($file, $index, &$rva, &$size)
 {
@@ -250,11 +250,11 @@ function getPeDataDirectory($file, $index, &$rva, &$size)
 }
 
 /*
-  Изменения DWORD в PE-файле.
+  РР·РјРµРЅРµРЅРёСЏ DWORD РІ PE-С„Р°Р№Р»Рµ.
   
-  IN $file   - string, файл.
-  IN $offset - int, VA в файле.
-  IN $dword  - int, DWORD для записи.
+  IN $file   - string, С„Р°Р№Р».
+  IN $offset - int, VA РІ С„Р°Р№Р»Рµ.
+  IN $dword  - int, DWORD РґР»СЏ Р·Р°РїРёСЃРё.
 */
 function patchPeDword($file, $va, $dword)
 {
@@ -263,11 +263,11 @@ function patchPeDword($file, $va, $dword)
 }
 
 /*
-  Конвертация Asm кода в C-массив.
+  РљРѕРЅРІРµСЂС‚Р°С†РёСЏ Asm РєРѕРґР° РІ C-РјР°СЃСЃРёРІ.
   
-  IN $x          - int, платформа 32 или 64.
-  IN $prefix     - string, префикс для макроса и массива.
-  IN $sourceFile - string, исходный asm-файл.
+  IN $x          - int, РїР»Р°С‚С„РѕСЂРјР° 32 РёР»Рё 64.
+  IN $prefix     - string, РїСЂРµС„РёРєСЃ РґР»СЏ РјР°РєСЂРѕСЃР° Рё РјР°СЃСЃРёРІР°.
+  IN $sourceFile - string, РёСЃС…РѕРґРЅС‹Р№ asm-С„Р°Р№Р».
 */
 function asmToCArray($x, $prefix, $sourceFile)
 {
@@ -283,12 +283,12 @@ function asmToCArray($x, $prefix, $sourceFile)
 }
 
 /*
-  Генерация define макросов для С или PHP.
+  Р“РµРЅРµСЂР°С†РёСЏ define РјР°РєСЂРѕСЃРѕРІ РґР»СЏ РЎ РёР»Рё PHP.
   
-  IN $list - array, в формате $list[$name] = $value.
-  IN $type - string, язык "c" для C, "php" для PHP.
+  IN $list - array, РІ С„РѕСЂРјР°С‚Рµ $list[$name] = $value.
+  IN $type - string, СЏР·С‹Рє "c" РґР»СЏ C, "php" РґР»СЏ PHP.
   
-  Return   - список defines в формате языка
+  Return   - СЃРїРёСЃРѕРє defines РІ С„РѕСЂРјР°С‚Рµ СЏР·С‹РєР°
 */
 function generateXDefines($list, $type)
 {
@@ -308,10 +308,10 @@ function generateXDefines($list, $type)
 }
 
 /*
-  Упаковка директории.
+  РЈРїР°РєРѕРІРєР° РґРёСЂРµРєС‚РѕСЂРёРё.
   
-  IN $dirs   - array, директории.
-  IN $output - string, выходной файл, без расширения.
+  IN $dirs   - array, РґРёСЂРµРєС‚РѕСЂРёРё.
+  IN $output - string, РІС‹С…РѕРґРЅРѕР№ С„Р°Р№Р», Р±РµР· СЂР°СЃС€РёСЂРµРЅРёСЏ.
 */
 function packDir($dirs, $output)
 {
@@ -325,10 +325,10 @@ function packDir($dirs, $output)
 }
 
 /*
-  Упаковка файла.
+  РЈРїР°РєРѕРІРєР° С„Р°Р№Р»Р°.
   
-  IN $files  - array, файлы.
-  IN $output - string, выходной файл, без расширения.
+  IN $files  - array, С„Р°Р№Р»С‹.
+  IN $output - string, РІС‹С…РѕРґРЅРѕР№ С„Р°Р№Р», Р±РµР· СЂР°СЃС€РёСЂРµРЅРёСЏ.
 */
 function packFile($file, $output)
 {
@@ -342,10 +342,10 @@ function packFile($file, $output)
 }
 
 /*
-  Запись файла.
+  Р—Р°РїРёСЃСЊ С„Р°Р№Р»Р°.
   
-  IN $file - string, имя файла для записи.
-  IN $data - string, данные для записи в файл.
+  IN $file - string, РёРјСЏ С„Р°Р№Р»Р° РґР»СЏ Р·Р°РїРёСЃРё.
+  IN $data - string, РґР°РЅРЅС‹Рµ РґР»СЏ Р·Р°РїРёСЃРё РІ С„Р°Р№Р».
 */
 function writeFile($file, $data)
 { 
@@ -360,11 +360,11 @@ function writeFile($file, $data)
 }
 
 /*
-  Чтение файла.
+  Р§С‚РµРЅРёРµ С„Р°Р№Р»Р°.
   
-  IN $file - string, имя файла для записи.
+  IN $file - string, РёРјСЏ С„Р°Р№Р»Р° РґР»СЏ Р·Р°РїРёСЃРё.
   
-  Return   - содержимое файла.
+  Return   - СЃРѕРґРµСЂР¶РёРјРѕРµ С„Р°Р№Р»Р°.
 */
 function getFileContext($file)
 { 
@@ -374,10 +374,10 @@ function getFileContext($file)
 }
 
 /*
-  Копирование файла.
+  РљРѕРїРёСЂРѕРІР°РЅРёРµ С„Р°Р№Р»Р°.
   
-  IN $source - string, исходный файл.
-  IN $dest   - string, конечный файл.
+  IN $source - string, РёСЃС…РѕРґРЅС‹Р№ С„Р°Р№Р».
+  IN $dest   - string, РєРѕРЅРµС‡РЅС‹Р№ С„Р°Р№Р».
 */
 function copyFile($source, $dest)
 {
@@ -386,10 +386,10 @@ function copyFile($source, $dest)
 }
 
 /*
-  Копирование файла, если он сущетвует.
+  РљРѕРїРёСЂРѕРІР°РЅРёРµ С„Р°Р№Р»Р°, РµСЃР»Рё РѕРЅ СЃСѓС‰РµС‚РІСѓРµС‚.
   
-  IN $source - string, исходный файл.
-  IN $dest   - string, конечный файл.
+  IN $source - string, РёСЃС…РѕРґРЅС‹Р№ С„Р°Р№Р».
+  IN $dest   - string, РєРѕРЅРµС‡РЅС‹Р№ С„Р°Р№Р».
 */
 function copyFileIfExists($source, $dest)
 {
@@ -397,9 +397,9 @@ function copyFileIfExists($source, $dest)
 }
 
 /*
-  Создание дерева директорий
+  РЎРѕР·РґР°РЅРёРµ РґРµСЂРµРІР° РґРёСЂРµРєС‚РѕСЂРёР№
   
-  IN $dir - string, полный путь конечной директории.
+  IN $dir - string, РїРѕР»РЅС‹Р№ РїСѓС‚СЊ РєРѕРЅРµС‡РЅРѕР№ РґРёСЂРµРєС‚РѕСЂРёРё.
 */
 function createSubDir($dir)
 {
@@ -413,13 +413,13 @@ function createSubDir($dir)
 }
 
 /*
-  Получение списка файлов из директории, влючая поддеректории.
+  РџРѕР»СѓС‡РµРЅРёРµ СЃРїРёСЃРєР° С„Р°Р№Р»РѕРІ РёР· РґРёСЂРµРєС‚РѕСЂРёРё, РІР»СЋС‡Р°СЏ РїРѕРґРґРµСЂРµРєС‚РѕСЂРёРё.
   
-  IN $dir    - string, стартовая директория.
-  IN $ext    - array, массив масок файлов, для поиска.
-  IN $quotes - bool, заключать ли файлы в кавычки.
+  IN $dir    - string, СЃС‚Р°СЂС‚РѕРІР°СЏ РґРёСЂРµРєС‚РѕСЂРёСЏ.
+  IN $ext    - array, РјР°СЃСЃРёРІ РјР°СЃРѕРє С„Р°Р№Р»РѕРІ, РґР»СЏ РїРѕРёСЃРєР°.
+  IN $quotes - bool, Р·Р°РєР»СЋС‡Р°С‚СЊ Р»Рё С„Р°Р№Р»С‹ РІ РєР°РІС‹С‡РєРё.
   
-  Return     - array, массив с полными именами файлов отнсотительно $dir.
+  Return     - array, РјР°СЃСЃРёРІ СЃ РїРѕР»РЅС‹РјРё РёРјРµРЅР°РјРё С„Р°Р№Р»РѕРІ РѕС‚РЅСЃРѕС‚РёС‚РµР»СЊРЅРѕ $dir.
 */
 function getDirList($dir, $ext, $quotes)
 {
@@ -438,9 +438,9 @@ function getDirList($dir, $ext, $quotes)
 }
 
 /*
-  Очистка директории.
+  РћС‡РёСЃС‚РєР° РґРёСЂРµРєС‚РѕСЂРёРё.
   
-  IN $dir - string, дирекория для очитски.
+  IN $dir - string, РґРёСЂРµРєРѕСЂРёСЏ РґР»СЏ РѕС‡РёС‚СЃРєРё.
 */
 function clearDir($dir)
 {
@@ -459,9 +459,9 @@ function clearDir($dir)
 }
 
 /*
-  Удаление временных файлов.
+  РЈРґР°Р»РµРЅРёРµ РІСЂРµРјРµРЅРЅС‹С… С„Р°Р№Р»РѕРІ.
   
-  IN $create - bool, создавать ли директории вновь после очистки.
+  IN $create - bool, СЃРѕР·РґР°РІР°С‚СЊ Р»Рё РґРёСЂРµРєС‚РѕСЂРёРё РІРЅРѕРІСЊ РїРѕСЃР»Рµ РѕС‡РёСЃС‚РєРё.
 */
 function clearTemp($create)
 {
@@ -485,7 +485,7 @@ function clearTemp($create)
 }
 
 /*
-  Загрузка файла глобальной конфигурации.
+  Р—Р°РіСЂСѓР·РєР° С„Р°Р№Р»Р° РіР»РѕР±Р°Р»СЊРЅРѕР№ РєРѕРЅС„РёРіСѓСЂР°С†РёРё.
 */
 function loadGlobalConfig()
 {
@@ -498,11 +498,11 @@ function loadGlobalConfig()
 }
 
 /*
-  Генерация стандартого файла конфигурации для C.
+  Р“РµРЅРµСЂР°С†РёСЏ СЃС‚Р°РЅРґР°СЂС‚РѕРіРѕ С„Р°Р№Р»Р° РєРѕРЅС„РёРіСѓСЂР°С†РёРё РґР»СЏ C.
   
-  IN $adv_data - string, дополнительные данные для записи в файл.
+  IN $adv_data - string, РґРѕРїРѕР»РЅРёС‚РµР»СЊРЅС‹Рµ РґР°РЅРЅС‹Рµ РґР»СЏ Р·Р°РїРёСЃРё РІ С„Р°Р№Р».
   
-  Return       - string, полноценное содержимое файла.
+  Return       - string, РїРѕР»РЅРѕС†РµРЅРЅРѕРµ СЃРѕРґРµСЂР¶РёРјРѕРµ С„Р°Р№Р»Р°.
 */  
 function generateDefaultConfigHeader($adv_data)
 {
@@ -518,7 +518,7 @@ function generateDefaultConfigHeader($adv_data)
   $platforms_postfix_size = strlen('_platforms');
   foreach($GLOBALS['config'] as $k => $v)if(!is_array($v))
   {
-    //Проверка не платформа ли это указана.
+    //РџСЂРѕРІРµСЂРєР° РЅРµ РїР»Р°С‚С„РѕСЂРјР° Р»Рё СЌС‚Рѕ СѓРєР°Р·Р°РЅР°.
     if(strlen($k) > $platforms_postfix_size && strcmp(substr($k, -$platforms_postfix_size), '_platforms') == 0)
     {
       $platforms = @explode(',', $v);
@@ -539,7 +539,7 @@ function generateDefaultConfigHeader($adv_data)
 }
 
 /*
-  Хелпер для buildBin.
+  РҐРµР»РїРµСЂ РґР»СЏ buildBin.
 */
 function fileInList($array, $fileName)
 {
@@ -548,17 +548,17 @@ function fileInList($array, $fileName)
 }
 
 /*
-  Компиляция.
+  РљРѕРјРїРёР»СЏС†РёСЏ.
   
-  IN $app     - string, названия компоненента для компиляции.
-  IN $crypt   - int, шифрование/сжатие конечного файла, если платформа это позволяет.
-                0 - не сжимать.
-                1 - сжать.
-                2 - шифровать.
-  IN $clearMz - bool, для winX, если true - очистить MSDOS заголовок.
-  IN $randBin - bool, для winX, рандомизировать содержимое конечного файла, путем перемешивания obj-файлов.
+  IN $app     - string, РЅР°Р·РІР°РЅРёСЏ РєРѕРјРїРѕРЅРµРЅРµРЅС‚Р° РґР»СЏ РєРѕРјРїРёР»СЏС†РёРё.
+  IN $crypt   - int, С€РёС„СЂРѕРІР°РЅРёРµ/СЃР¶Р°С‚РёРµ РєРѕРЅРµС‡РЅРѕРіРѕ С„Р°Р№Р»Р°, РµСЃР»Рё РїР»Р°С‚С„РѕСЂРјР° СЌС‚Рѕ РїРѕР·РІРѕР»СЏРµС‚.
+                0 - РЅРµ СЃР¶РёРјР°С‚СЊ.
+                1 - СЃР¶Р°С‚СЊ.
+                2 - С€РёС„СЂРѕРІР°С‚СЊ.
+  IN $clearMz - bool, РґР»СЏ winX, РµСЃР»Рё true - РѕС‡РёСЃС‚РёС‚СЊ MSDOS Р·Р°РіРѕР»РѕРІРѕРє.
+  IN $randBin - bool, РґР»СЏ winX, СЂР°РЅРґРѕРјРёР·РёСЂРѕРІР°С‚СЊ СЃРѕРґРµСЂР¶РёРјРѕРµ РєРѕРЅРµС‡РЅРѕРіРѕ С„Р°Р№Р»Р°, РїСѓС‚РµРј РїРµСЂРµРјРµС€РёРІР°РЅРёСЏ obj-С„Р°Р№Р»РѕРІ.
   
-  Return      - array, список платформ.
+  Return      - array, СЃРїРёСЃРѕРє РїР»Р°С‚С„РѕСЂРј.
 */
 function buildBinary($app, $crypt, $clearMz, $randBin)
 {
@@ -576,7 +576,7 @@ function buildBinary($app, $crypt, $clearMz, $randBin)
     $dirOutput = $GLOBALS['dir']['output'][$app];
     $dirSource = $GLOBALS['dir']['source'][$app];
 
-    //Сборка PHP.
+    //РЎР±РѕСЂРєР° PHP.
     if($pf == 'php')
     {
       createSubDir($dirTmp);
@@ -615,7 +615,7 @@ function buildBinary($app, $crypt, $clearMz, $randBin)
         else copyFile($fileSource, $fileOutput);
       }
     }
-    //Комплияция
+    //РљРѕРјРїР»РёСЏС†РёСЏ
     else
     {
       createSubDir($dirTmp);
@@ -625,7 +625,7 @@ function buildBinary($app, $crypt, $clearMz, $randBin)
       $listRc  = array('*.rc');
       $listObj = array('*.obj', '*.res', '*.o');      
 
-      //Сборка objects.
+      //РЎР±РѕСЂРєР° objects.
       writeLn('['.$pf."] Compiling...\r\n");
 
       $list = getDirList($dirSource, $listCpp, true);
@@ -639,7 +639,7 @@ function buildBinary($app, $crypt, $clearMz, $randBin)
       if($r !=  0)die(1);
       writeLn('');
 
-      //Сборка ресурсов.
+      //РЎР±РѕСЂРєР° СЂРµСЃСѓСЂСЃРѕРІ.
       $list = getDirList($dirSource, $listRc, false);
       if(count($list) != 0)foreach($list as $k => $v)
       {
@@ -652,7 +652,7 @@ function buildBinary($app, $crypt, $clearMz, $randBin)
         writeLn('');
       }
       
-      //Сборка bin
+      //РЎР±РѕСЂРєР° bin
       writeLn('['.$pf."] Linking...\r\n");
       $list = getDirList($dirTmp, $listObj, true);
       if(count($list) == 0)fatalError('Failed to find object files.');
@@ -675,7 +675,7 @@ function buildBinary($app, $crypt, $clearMz, $randBin)
       if($r != 0)die(1);
       writeLn('');
       
-      //Вызов функции предварительной обработки.
+      //Р’С‹Р·РѕРІ С„СѓРЅРєС†РёРё РїСЂРµРґРІР°СЂРёС‚РµР»СЊРЅРѕР№ РѕР±СЂР°Р±РѕС‚РєРё.
       if($crypt > 0)
       {
         $functionName = "{$app}BeforeCrypt";
@@ -708,24 +708,24 @@ function buildBinary($app, $crypt, $clearMz, $randBin)
 }
 
 /*
-  Исполняет перпроцесорный код внутри PHP шаблонов, и прочии оптимизации.
+  РСЃРїРѕР»РЅСЏРµС‚ РїРµСЂРїСЂРѕС†РµСЃРѕСЂРЅС‹Р№ РєРѕРґ РІРЅСѓС‚СЂРё PHP С€Р°Р±Р»РѕРЅРѕРІ, Рё РїСЂРѕС‡РёРё РѕРїС‚РёРјРёР·Р°С†РёРё.
   
-  IN $fileIn  - string, входящий файл.
-  IN $fileOut - string, исходящий файл.
+  IN $fileIn  - string, РІС…РѕРґСЏС‰РёР№ С„Р°Р№Р».
+  IN $fileOut - string, РёСЃС…РѕРґСЏС‰РёР№ С„Р°Р№Р».
 */
 function evalPhpTemplate($fileIn, $fileOut)
 {
   $data = getFileContext($fileIn);
   while(preg_match('|\/\*EVAL\_BEGIN\*\/(.*)(\/\*EVAL\_END\*\/)|msUu', $data, $m, PREG_OFFSET_CAPTURE) > 0)
   {
-    //Запускаем код.
+    //Р—Р°РїСѓСЃРєР°РµРј РєРѕРґ.
     $code_data = eval(substr($data, $m[1][1], $m[2][1] - $m[1][1]));
 
-    //Подменяем данные.
+    //РџРѕРґРјРµРЅСЏРµРј РґР°РЅРЅС‹Рµ.
     $data = substr_replace($data, $code_data == NULL ? "" : $code_data, $m[0][1], $m[2][1] + 12 - $m[0][1]);
     $tr = substr($data, $m[0][1]);
     
-    //Если коду принадлежала строка, удаляем ее.
+    //Р•СЃР»Рё РєРѕРґСѓ РїСЂРёРЅР°РґР»РµР¶Р°Р»Р° СЃС‚СЂРѕРєР°, СѓРґР°Р»СЏРµРј РµРµ.
     $delCount = 0;
     if(ord($tr[0]) == 0xD && ord($tr[1]) == 0xA)$delCount = 2;
     else if(ord($tr[0]) == 0xA)$delCount = 1;
@@ -735,9 +735,9 @@ function evalPhpTemplate($fileIn, $fileOut)
 }
 
 /*
-  Загрузка файла конфигурации сборки.
+  Р—Р°РіСЂСѓР·РєР° С„Р°Р№Р»Р° РєРѕРЅС„РёРіСѓСЂР°С†РёРё СЃР±РѕСЂРєРё.
   
-  IN $fn - string, файл конфигурации.
+  IN $fn - string, С„Р°Р№Р» РєРѕРЅС„РёРіСѓСЂР°С†РёРё.
 */
 function loadPackageConfig($fn)
 {
@@ -773,9 +773,9 @@ function loadPackageConfig($fn)
 }
 
 /*
-  Генерация шифрованых строк.
+  Р“РµРЅРµСЂР°С†РёСЏ С€РёС„СЂРѕРІР°РЅС‹С… СЃС‚СЂРѕРє.
   
-  IN $fileName - string, имя файл без расширения.
+  IN $fileName - string, РёРјСЏ С„Р°Р№Р» Р±РµР· СЂР°СЃС€РёСЂРµРЅРёСЏ.
 */
 function generateCryptedStrings($fileName)
 {
@@ -794,10 +794,10 @@ function generateCryptedStrings($fileName)
   {
     $string = trim($string);
     
-    //Комментарий.
+    //РљРѕРјРјРµРЅС‚Р°СЂРёР№.
     if(strlen($string) === 0 || strpos($string, '//') === 0 || strpos($string, ';') === 0)continue;
     
-    //Препроцесорная команда.
+    //РџСЂРµРїСЂРѕС†РµСЃРѕСЂРЅР°СЏ РєРѕРјР°РЅРґР°.
     if(strpos($string, '#') === 0)
     {
       $outputStruct  .= "{$string}\r\n";
@@ -806,7 +806,7 @@ function generateCryptedStrings($fileName)
       continue;
     }
     
-    //Парсим.
+    //РџР°СЂСЃРёРј.
     $e = explode(' ', $string, 2);
     if(!is_array($e) || count($e) !== 2 || strlen(($id = trim($e[0]))) === 0|| @eval("\$value = ".trim($e[1]).";") !== NULL)
     {
@@ -831,12 +831,12 @@ function generateCryptedStrings($fileName)
   }
   unset($list);
   
-  //Добавляем концовку.
+  //Р”РѕР±Р°РІР»СЏРµРј РєРѕРЅС†РѕРІРєСѓ.
   $outputStruct  .= "{$structProlog}{  0,   0, NULL}";
   $outputEnum    .= "{$enumProlog}count";
   $outputLenEnum .= "{$lenEnumProlog}max = ({$maxLen} + 1)";
   
-  //Сохраняем.
+  //РЎРѕС…СЂР°РЅСЏРµРј.
   $output = getFileContext($fileName.'.h');
   $output = preg_replace('|(\/\*STRINGS\_ID\_BEGIN\*\/)(.*)(\/\*STRINGS\_ID\_END\*\/)|msU', "\$1\r\n".$outputEnum."\r\n$3", $output);
   $output = preg_replace('|(\/\*STRINGS\_LENGHT\_BEGIN\*\/)(.*)(\/\*STRINGS\_LENGHT\_END\*\/)|msU', "\$1\r\n".$outputLenEnum."\r\n$3", $output);
@@ -848,7 +848,7 @@ function generateCryptedStrings($fileName)
 }
 
 /*
-  Вывод сообщения об успешной сборки и выход.
+  Р’С‹РІРѕРґ СЃРѕРѕР±С‰РµРЅРёСЏ РѕР± СѓСЃРїРµС€РЅРѕР№ СЃР±РѕСЂРєРё Рё РІС‹С…РѕРґ.
 */
 function goodEnd()
 {
@@ -857,9 +857,9 @@ function goodEnd()
 }
 
 /*
-  Ожидание нажатия клавишы
+  РћР¶РёРґР°РЅРёРµ РЅР°Р¶Р°С‚РёСЏ РєР»Р°РІРёС€С‹
   
-  Return - код клавишы, или 0 в случаи ошибки.
+  Return - РєРѕРґ РєР»Р°РІРёС€С‹, РёР»Рё 0 РІ СЃР»СѓС‡Р°Рё РѕС€РёР±РєРё.
 */
 function waitAnyKey()
 {
@@ -874,9 +874,9 @@ function waitAnyKey()
 }
 
 /*
-  Вывод строки в консоль.
+  Р’С‹РІРѕРґ СЃС‚СЂРѕРєРё РІ РєРѕРЅСЃРѕР»СЊ.
   
-  IN $str - string, строка для вывода.
+  IN $str - string, СЃС‚СЂРѕРєР° РґР»СЏ РІС‹РІРѕРґР°.
 */
 function writeLn($str)
 {
@@ -884,9 +884,9 @@ function writeLn($str)
 }
 
 /*
-  Вывод этапа сборки.
+  Р’С‹РІРѕРґ СЌС‚Р°РїР° СЃР±РѕСЂРєРё.
   
-  IN $name - string, заголовок этапа.
+  IN $name - string, Р·Р°РіРѕР»РѕРІРѕРє СЌС‚Р°РїР°.
 */
 $___curstep = 0;
 function writeStep($name)
@@ -897,9 +897,9 @@ function writeStep($name)
 }
 
 /*
-  Вывод фатальной ошибки и выход.
+  Р’С‹РІРѕРґ С„Р°С‚Р°Р»СЊРЅРѕР№ РѕС€РёР±РєРё Рё РІС‹С…РѕРґ.
   
-  IN $str - string, текст для вывода.
+  IN $str - string, С‚РµРєСЃС‚ РґР»СЏ РІС‹РІРѕРґР°.
 */
 function fatalError($str)
 {
@@ -908,9 +908,9 @@ function fatalError($str)
 }
 
 /*
-  Вывод предупреждения.
+  Р’С‹РІРѕРґ РїСЂРµРґСѓРїСЂРµР¶РґРµРЅРёСЏ.
   
-  IN $str - string, текст для вывода.
+  IN $str - string, С‚РµРєСЃС‚ РґР»СЏ РІС‹РІРѕРґР°.
 */
 function writeWarning($str)
 {

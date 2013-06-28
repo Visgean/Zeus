@@ -1,133 +1,133 @@
 /*
-  Работа с GUI.
+  Р Р°Р±РѕС‚Р° СЃ GUI.
 */
 #pragma once
 
 namespace Gui
 {
   /*
-    Инициализация.
+    РРЅРёС†РёР°Р»РёР·Р°С†РёСЏ.
   */
   void init(void);
 
   /*
-    Деинициализация.
+    Р”РµРёРЅРёС†РёР°Р»РёР·Р°С†РёСЏ.
   */
   void uninit(void);
 
   /*
-    Кээлбэк для _enumWindows().
+    РљСЌСЌР»Р±СЌРє РґР»СЏ _enumWindows().
 
-    IN window - окно.
-    IN param  - параметр.
+    IN window - РѕРєРЅРѕ.
+    IN param  - РїР°СЂР°РјРµС‚СЂ.
     
-    Return    - true  - продолжить поиск,
-                false - прервать поиск.
+    Return    - true  - РїСЂРѕРґРѕР»Р¶РёС‚СЊ РїРѕРёСЃРє,
+                false - РїСЂРµСЂРІР°С‚СЊ РїРѕРёСЃРє.
   */
   typedef bool (ENUMWINDOWSPROC)(HWND window, void *param);
 
   /*
-    Перечисление дочерных окон.
+    РџРµСЂРµС‡РёСЃР»РµРЅРёРµ РґРѕС‡РµСЂРЅС‹С… РѕРєРѕРЅ.
 
-    IN owner     - родитель, может быть NULL.
-    IN topToDown - true - перечислять с верху вниз, false - снизу вверх.
-    IN proc      - кэлбэк.
-    IN param     - параметр для кэлбэка.
+    IN owner     - СЂРѕРґРёС‚РµР»СЊ, РјРѕР¶РµС‚ Р±С‹С‚СЊ NULL.
+    IN topToDown - true - РїРµСЂРµС‡РёСЃР»СЏС‚СЊ СЃ РІРµСЂС…Сѓ РІРЅРёР·, false - СЃРЅРёР·Сѓ РІРІРµСЂС….
+    IN proc      - РєСЌР»Р±СЌРє.
+    IN param     - РїР°СЂР°РјРµС‚СЂ РґР»СЏ РєСЌР»Р±СЌРєР°.
   */
   void _enumWindows(HWND owner, bool topToDown, ENUMWINDOWSPROC proc, void *param);
 
   /*
-    Данная функция является обреткой для WindowFromPoint(), которая пропускает HTTRANSPARENT.
-    Способ реализации доволно наивен, но мне не удалсоь найти более нормального способа.
+    Р”Р°РЅРЅР°СЏ С„СѓРЅРєС†РёСЏ СЏРІР»СЏРµС‚СЃСЏ РѕР±СЂРµС‚РєРѕР№ РґР»СЏ WindowFromPoint(), РєРѕС‚РѕСЂР°СЏ РїСЂРѕРїСѓСЃРєР°РµС‚ HTTRANSPARENT.
+    РЎРїРѕСЃРѕР± СЂРµР°Р»РёР·Р°С†РёРё РґРѕРІРѕР»РЅРѕ РЅР°РёРІРµРЅ, РЅРѕ РјРЅРµ РЅРµ СѓРґР°Р»СЃРѕСЊ РЅР°Р№С‚Рё Р±РѕР»РµРµ РЅРѕСЂРјР°Р»СЊРЅРѕРіРѕ СЃРїРѕСЃРѕР±Р°.
 
-    IN point    - координаты для поиска окна.
-    IN timeout  - таймаут для WM_NCHITTEST.
-    OUT hitTest - HitTest окна. Может быть NULL.
+    IN point    - РєРѕРѕСЂРґРёРЅР°С‚С‹ РґР»СЏ РїРѕРёСЃРєР° РѕРєРЅР°.
+    IN timeout  - С‚Р°Р№РјР°СѓС‚ РґР»СЏ WM_NCHITTEST.
+    OUT hitTest - HitTest РѕРєРЅР°. РњРѕР¶РµС‚ Р±С‹С‚СЊ NULL.
 
-    Return      - хэндл окна, или NULL.
+    Return      - С…СЌРЅРґР» РѕРєРЅР°, РёР»Рё NULL.
   */
   HWND _windowFromPoint(POINT point, DWORD timeout, DWORD *hitTest);
 
   /*
-    Проверяет имеет ли стиль окна бордюры с изменением размера.
+    РџСЂРѕРІРµСЂСЏРµС‚ РёРјРµРµС‚ Р»Рё СЃС‚РёР»СЊ РѕРєРЅР° Р±РѕСЂРґСЋСЂС‹ СЃ РёР·РјРµРЅРµРЅРёРµРј СЂР°Р·РјРµСЂР°.
 
-    IN style - стиль окна.
+    IN style - СЃС‚РёР»СЊ РѕРєРЅР°.
 
-    Return   - true - стиль имеед бордюры,
-               false - не имеет.
+    Return   - true - СЃС‚РёР»СЊ РёРјРµРµРґ Р±РѕСЂРґСЋСЂС‹,
+               false - РЅРµ РёРјРµРµС‚.
   */
   bool _styleHaveSizeBorders(DWORD style);
 
   /*
-    Загрузка иконки как shared (не трубует удаления).
+    Р—Р°РіСЂСѓР·РєР° РёРєРѕРЅРєРё РєР°Рє shared (РЅРµ С‚СЂСѓР±СѓРµС‚ СѓРґР°Р»РµРЅРёСЏ).
 
-    IN module - моудль.
+    IN module - РјРѕСѓРґР»СЊ.
     IN id     - ID.
   */
   HICON _loadSharedIcon(HMODULE module, const LPWSTR id);
   
   /*
-    Получение текста окна с выделением памяти.
+    РџРѕР»СѓС‡РµРЅРёРµ С‚РµРєСЃС‚Р° РѕРєРЅР° СЃ РІС‹РґРµР»РµРЅРёРµРј РїР°РјСЏС‚Рё.
 
-    IN window - окно.
-    OUT size  - размер строки без нулевого соимвола. Может быть NULL.
+    IN window - РѕРєРЅРѕ.
+    OUT size  - СЂР°Р·РјРµСЂ СЃС‚СЂРѕРєРё Р±РµР· РЅСѓР»РµРІРѕРіРѕ СЃРѕРёРјРІРѕР»Р°. РњРѕР¶РµС‚ Р±С‹С‚СЊ NULL.
 
-    Return    - текст окна (нужно освободить через NULL), или NULL в случаи ошибки.
+    Return    - С‚РµРєСЃС‚ РѕРєРЅР° (РЅСѓР¶РЅРѕ РѕСЃРІРѕР±РѕРґРёС‚СЊ С‡РµСЂРµР· NULL), РёР»Рё NULL РІ СЃР»СѓС‡Р°Рё РѕС€РёР±РєРё.
   */
   LPWSTR _getWindowText(HWND window, LPDWORD size);
 
   /*
-    Загрузка курсора как shared (не трубует удаления).
+    Р—Р°РіСЂСѓР·РєР° РєСѓСЂСЃРѕСЂР° РєР°Рє shared (РЅРµ С‚СЂСѓР±СѓРµС‚ СѓРґР°Р»РµРЅРёСЏ).
 
-    IN module - моудль.
+    IN module - РјРѕСѓРґР»СЊ.
     IN id     - ID.
   */
   HCURSOR _loadSharedCursor(HMODULE module, const LPWSTR id);
 
   /*
-    Создание шрифта FONT_DIALOG.
+    РЎРѕР·РґР°РЅРёРµ С€СЂРёС„С‚Р° FONT_DIALOG.
 
-    IN pointSize - размер шрифта в поинтах, рекомендуется значение 8.
+    IN pointSize - СЂР°Р·РјРµСЂ С€СЂРёС„С‚Р° РІ РїРѕРёРЅС‚Р°С…, СЂРµРєРѕРјРµРЅРґСѓРµС‚СЃСЏ Р·РЅР°С‡РµРЅРёРµ 8.
 
-    Return       - хэндл шрифта, или NULL в случаи ошибки.
+    Return       - С…СЌРЅРґР» С€СЂРёС„С‚Р°, РёР»Рё NULL РІ СЃР»СѓС‡Р°Рё РѕС€РёР±РєРё.
   */
   HFONT _createDialogFont(BYTE pointSize);
 
   /*
-    Запуск диалога выбора файла.
+    Р—Р°РїСѓСЃРє РґРёР°Р»РѕРіР° РІС‹Р±РѕСЂР° С„Р°Р№Р»Р°.
 
-    IN owner          - хэндл родителя
-    IN initialDir     - директория отностиельно который открывается диалог. Может быть NULL.
-    IN OUT fileBuffer - на входе - инициализационный путь/файл,
-                        на выходе - выбранный файл.
+    IN owner          - С…СЌРЅРґР» СЂРѕРґРёС‚РµР»СЏ
+    IN initialDir     - РґРёСЂРµРєС‚РѕСЂРёСЏ РѕС‚РЅРѕСЃС‚РёРµР»СЊРЅРѕ РєРѕС‚РѕСЂС‹Р№ РѕС‚РєСЂС‹РІР°РµС‚СЃСЏ РґРёР°Р»РѕРі. РњРѕР¶РµС‚ Р±С‹С‚СЊ NULL.
+    IN OUT fileBuffer - РЅР° РІС…РѕРґРµ - РёРЅРёС†РёР°Р»РёР·Р°С†РёРѕРЅРЅС‹Р№ РїСѓС‚СЊ/С„Р°Р№Р»,
+                        РЅР° РІС‹С…РѕРґРµ - РІС‹Р±СЂР°РЅРЅС‹Р№ С„Р°Р№Р».
 
-    Return            - true - в случаи успеха,
-                        false - в случаи провала.
+    Return            - true - РІ СЃР»СѓС‡Р°Рё СѓСЃРїРµС…Р°,
+                        false - РІ СЃР»СѓС‡Р°Рё РїСЂРѕРІР°Р»Р°.
   */
   bool _browseForFile(HWND owner, LPWSTR initialDir, LPWSTR fileBuffer);
 
   /*
-    Запуск диалога сохранения файла.
+    Р—Р°РїСѓСЃРє РґРёР°Р»РѕРіР° СЃРѕС…СЂР°РЅРµРЅРёСЏ С„Р°Р№Р»Р°.
 
-    IN owner            - хэндл родителя
-    IN initialDir       - директория отностиельно который открывается диалог. Может быть NULL.
-    IN OUT fileBuffer   - на входе - инициализационный путь/файл,
-                          на выходе - выбранный файл.
-    IN defaultExtension - расширение по умолчанию (без точки). Может быть NULL.
-    IN filter           - фильтр. См. OPENFILENAME.lpstrFilter.
-    IN filterIndex      - выделеный индекс элемента в filter.
+    IN owner            - С…СЌРЅРґР» СЂРѕРґРёС‚РµР»СЏ
+    IN initialDir       - РґРёСЂРµРєС‚РѕСЂРёСЏ РѕС‚РЅРѕСЃС‚РёРµР»СЊРЅРѕ РєРѕС‚РѕСЂС‹Р№ РѕС‚РєСЂС‹РІР°РµС‚СЃСЏ РґРёР°Р»РѕРі. РњРѕР¶РµС‚ Р±С‹С‚СЊ NULL.
+    IN OUT fileBuffer   - РЅР° РІС…РѕРґРµ - РёРЅРёС†РёР°Р»РёР·Р°С†РёРѕРЅРЅС‹Р№ РїСѓС‚СЊ/С„Р°Р№Р»,
+                          РЅР° РІС‹С…РѕРґРµ - РІС‹Р±СЂР°РЅРЅС‹Р№ С„Р°Р№Р».
+    IN defaultExtension - СЂР°СЃС€РёСЂРµРЅРёРµ РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ (Р±РµР· С‚РѕС‡РєРё). РњРѕР¶РµС‚ Р±С‹С‚СЊ NULL.
+    IN filter           - С„РёР»СЊС‚СЂ. РЎРј. OPENFILENAME.lpstrFilter.
+    IN filterIndex      - РІС‹РґРµР»РµРЅС‹Р№ РёРЅРґРµРєСЃ СЌР»РµРјРµРЅС‚Р° РІ filter.
 
-    Return              - true - в случаи успеха,
-                          false - в случаи провала.
+    Return              - true - РІ СЃР»СѓС‡Р°Рё СѓСЃРїРµС…Р°,
+                          false - РІ СЃР»СѓС‡Р°Рё РїСЂРѕРІР°Р»Р°.
   */
   bool _browseForSaveFile(HWND owner, LPWSTR initialDir, LPWSTR fileBuffer, LPWSTR defaultExtension, LPWSTR filter, DWORD filterIndex);
 
-  /*В В В В Initialize common controls (front-end for InitCommonControlsEx ()).
+  /*Р’В Р’В Р’В Р’В Initialize common controls (front-end for InitCommonControlsEx ()).
 
-В В В В IN classes - ICC_ *.
+Р’В Р’В Р’В Р’В IN classes - ICC_ *.
 
-В В В В Return - true - if successful,
-В В В В В В В В В В В В В В В В В false - if an error occurs.
-В В */
+Р’В Р’В Р’В Р’В Return - true - if successful,
+Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В false - if an error occurs.
+Р’В Р’В */
   bool _loadCommonControl(DWORD classes);
 };

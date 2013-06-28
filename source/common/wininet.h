@@ -1,6 +1,6 @@
 #pragma once
 /*
-  Инструменты для работы с Wininet.
+  РРЅСЃС‚СЂСѓРјРµРЅС‚С‹ РґР»СЏ СЂР°Р±РѕС‚С‹ СЃ Wininet.
 */
 
 //The maximum amount of data allocated for skachvanie in memory.
@@ -48,156 +48,156 @@ namespace Wininet
   };
 
   /*
-    Инициализация.
+    РРЅРёС†РёР°Р»РёР·Р°С†РёСЏ.
   */
   void Init(void);
 
   /*
-    Деинициализация.
+    Р”РµРёРЅРёС†РёР°Р»РёР·Р°С†РёСЏ.
   */
   void Uninit(void);
 
   /*
-    Подключение к серверу по HTTP/HTTPS протоколу.
+    РџРѕРґРєР»СЋС‡РµРЅРёРµ Рє СЃРµСЂРІРµСЂСѓ РїРѕ HTTP/HTTPS РїСЂРѕС‚РѕРєРѕР»Сѓ.
 
-    IN pstrUserAgent - User-Agent, если NULL, то используюется значение по умолчанию.
-    IN pstrHost      - адрес сервера, IP или домен.
-    IN wPort         - порт сервера.
-    IN dwFlags       - флаги WICF_*.
+    IN pstrUserAgent - User-Agent, РµСЃР»Рё NULL, С‚Рѕ РёСЃРїРѕР»СЊР·СѓСЋРµС‚СЃСЏ Р·РЅР°С‡РµРЅРёРµ РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ.
+    IN pstrHost      - Р°РґСЂРµСЃ СЃРµСЂРІРµСЂР°, IP РёР»Рё РґРѕРјРµРЅ.
+    IN wPort         - РїРѕСЂС‚ СЃРµСЂРІРµСЂР°.
+    IN dwFlags       - С„Р»Р°РіРё WICF_*.
 
-    Return           - хэндл соединения или NULL.
+    Return           - С…СЌРЅРґР» СЃРѕРµРґРёРЅРµРЅРёСЏ РёР»Рё NULL.
   */
   HINTERNET _Connect(LPSTR pstrUserAgent, LPSTR pstrHost, WORD wPort, DWORD dwFlags);
 
   /*
-    Закрытие соединения, открытого при помощи _Connect.
+    Р—Р°РєСЂС‹С‚РёРµ СЃРѕРµРґРёРЅРµРЅРёСЏ, РѕС‚РєСЂС‹С‚РѕРіРѕ РїСЂРё РїРѕРјРѕС‰Рё _Connect.
 
-    IN hConnect - хэндл соединения.
+    IN hConnect - С…СЌРЅРґР» СЃРѕРµРґРёРЅРµРЅРёСЏ.
   */
   void _CloseConnection(HINTERNET hConnect);
 
   /*
-    Закрытие хэндла, и всех его родителей.
+    Р—Р°РєСЂС‹С‚РёРµ С…СЌРЅРґР»Р°, Рё РІСЃРµС… РµРіРѕ СЂРѕРґРёС‚РµР»РµР№.
 
-    IN OUT handle - хэндл.
+    IN OUT handle - С…СЌРЅРґР».
   */
   void _closeWithParents(HINTERNET handle);
 
   /*
-    Вызов InternetStatusCallback.
+    Р’С‹Р·РѕРІ InternetStatusCallback.
 
-    ... -  согласно InternetStatusCallback.
+    ... -  СЃРѕРіР»Р°СЃРЅРѕ InternetStatusCallback.
 
-    Return - true - функция вызвана,
-             false - функция не вызвана.
+    Return - true - С„СѓРЅРєС†РёСЏ РІС‹Р·РІР°РЅР°,
+             false - С„СѓРЅРєС†РёСЏ РЅРµ РІС‹Р·РІР°РЅР°.
   */
   bool callCallback(HINTERNET handle, DWORD_PTR context, DWORD internetStatus, LPVOID statusInformation, DWORD statusInformationLength);
 
   /*
-    Отправка запроса.
+    РћС‚РїСЂР°РІРєР° Р·Р°РїСЂРѕСЃР°.
 
-    IN hConnect       - хэндл соединения.
-    IN pstrURI        - запрашаваемый объект.
-    IN pstrReferer    - реферел или NULL.
-    IN pPostData      - пост данные или NULL.
-    IN dwPostDataSize - размер pPostData.
+    IN hConnect       - С…СЌРЅРґР» СЃРѕРµРґРёРЅРµРЅРёСЏ.
+    IN pstrURI        - Р·Р°РїСЂР°С€Р°РІР°РµРјС‹Р№ РѕР±СЉРµРєС‚.
+    IN pstrReferer    - СЂРµС„РµСЂРµР» РёР»Рё NULL.
+    IN pPostData      - РїРѕСЃС‚ РґР°РЅРЅС‹Рµ РёР»Рё NULL.
+    IN dwPostDataSize - СЂР°Р·РјРµСЂ pPostData.
     IN dwFlags        - Flags WISRF_ *.
 
-    Return            - в случаи успеха хэнло полученый от HttpOpenRequest, или NULL в случаи ошибки.
+    Return            - РІ СЃР»СѓС‡Р°Рё СѓСЃРїРµС…Р° С…СЌРЅР»Рѕ РїРѕР»СѓС‡РµРЅС‹Р№ РѕС‚ HttpOpenRequest, РёР»Рё NULL РІ СЃР»СѓС‡Р°Рё РѕС€РёР±РєРё.
   */
   HINTERNET _SendRequest(HINTERNET hConnect, LPSTR pstrURI, LPSTR pstrReferer, void *pPostData, DWORD dwPostDataSize, DWORD dwFlags);
 
   /*
-    Скачивание данных.
+    РЎРєР°С‡РёРІР°РЅРёРµ РґР°РЅРЅС‹С….
 
-    IN hRequest    - хэндл запроса.
-    OUT pBuf       - буффер для данных, после использование необходимо удалить через Mem. Может
-                     быть NULL.
-    IN dwSizeLimit - лимит скачиваемых байт, если равно 0 или больше WININET_MAXBYTES_TO_MEM, то
+    IN hRequest    - С…СЌРЅРґР» Р·Р°РїСЂРѕСЃР°.
+    OUT pBuf       - Р±СѓС„С„РµСЂ РґР»СЏ РґР°РЅРЅС‹С…, РїРѕСЃР»Рµ РёСЃРїРѕР»СЊР·РѕРІР°РЅРёРµ РЅРµРѕР±С…РѕРґРёРјРѕ СѓРґР°Р»РёС‚СЊ С‡РµСЂРµР· Mem. РњРѕР¶РµС‚
+                     Р±С‹С‚СЊ NULL.
+    IN dwSizeLimit - Р»РёРјРёС‚ СЃРєР°С‡РёРІР°РµРјС‹С… Р±Р°Р№С‚, РµСЃР»Рё СЂР°РІРЅРѕ 0 РёР»Рё Р±РѕР»СЊС€Рµ WININET_MAXBYTES_TO_MEM, С‚Рѕ
                      dwSizeLimit =  WININET_MAXBYTES_TO_MEM;
-    IN hStopEvent  - хэндл события для прерывания скачивания или NULL.
+    IN hStopEvent  - С…СЌРЅРґР» СЃРѕР±С‹С‚РёСЏ РґР»СЏ РїСЂРµСЂС‹РІР°РЅРёСЏ СЃРєР°С‡РёРІР°РЅРёСЏ РёР»Рё NULL.
 
-    Return         - true - в случаи успеха,
-                     false - в случаи ошибки, в том числе срабатываении hStopEvent и привышения
-                     dwSizeLimit. Если возникла ошибка, то соединение необходимо закрыть.
+    Return         - true - РІ СЃР»СѓС‡Р°Рё СѓСЃРїРµС…Р°,
+                     false - РІ СЃР»СѓС‡Р°Рё РѕС€РёР±РєРё, РІ С‚РѕРј С‡РёСЃР»Рµ СЃСЂР°Р±Р°С‚С‹РІР°РµРЅРёРё hStopEvent Рё РїСЂРёРІС‹С€РµРЅРёСЏ
+                     dwSizeLimit. Р•СЃР»Рё РІРѕР·РЅРёРєР»Р° РѕС€РёР±РєР°, С‚Рѕ СЃРѕРµРґРёРЅРµРЅРёРµ РЅРµРѕР±С…РѕРґРёРјРѕ Р·Р°РєСЂС‹С‚СЊ.
   */
   bool _DownloadData(HINTERNET hRequest, MEMDATA *pBuf, DWORD dwSizeLimit, HANDLE hStopEvent);
   
   /*
-    Скачивание данных в файл.
+    РЎРєР°С‡РёРІР°РЅРёРµ РґР°РЅРЅС‹С… РІ С„Р°Р№Р».
 
-    IN hRequest     - хэндл запроса.
-    IN pstrFileName - имя файла, в который будут сохранены данные.
-    IN dwSizeLimit  - лимит скачиваемых байт, если равно 0, то ограничения нет.
-    IN hStopEvent   - хэндл события для прерывания скачивания или NULL.
+    IN hRequest     - С…СЌРЅРґР» Р·Р°РїСЂРѕСЃР°.
+    IN pstrFileName - РёРјСЏ С„Р°Р№Р»Р°, РІ РєРѕС‚РѕСЂС‹Р№ Р±СѓРґСѓС‚ СЃРѕС…СЂР°РЅРµРЅС‹ РґР°РЅРЅС‹Рµ.
+    IN dwSizeLimit  - Р»РёРјРёС‚ СЃРєР°С‡РёРІР°РµРјС‹С… Р±Р°Р№С‚, РµСЃР»Рё СЂР°РІРЅРѕ 0, С‚Рѕ РѕРіСЂР°РЅРёС‡РµРЅРёСЏ РЅРµС‚.
+    IN hStopEvent   - С…СЌРЅРґР» СЃРѕР±С‹С‚РёСЏ РґР»СЏ РїСЂРµСЂС‹РІР°РЅРёСЏ СЃРєР°С‡РёРІР°РЅРёСЏ РёР»Рё NULL.
 
-    Return          - true - в случаи успеха,
-                      false - в случаи ошибки, в том числе срабатываении hStopEvent или привышения
-                      dwSizeLimit. Если возникла ошибка, то соединение необходимо закрыть.
+    Return          - true - РІ СЃР»СѓС‡Р°Рё СѓСЃРїРµС…Р°,
+                      false - РІ СЃР»СѓС‡Р°Рё РѕС€РёР±РєРё, РІ С‚РѕРј С‡РёСЃР»Рµ СЃСЂР°Р±Р°С‚С‹РІР°РµРЅРёРё hStopEvent РёР»Рё РїСЂРёРІС‹С€РµРЅРёСЏ
+                      dwSizeLimit. Р•СЃР»Рё РІРѕР·РЅРёРєР»Р° РѕС€РёР±РєР°, С‚Рѕ СЃРѕРµРґРёРЅРµРЅРёРµ РЅРµРѕР±С…РѕРґРёРјРѕ Р·Р°РєСЂС‹С‚СЊ.
   */
   bool _DownloadDataToFile(HINTERNET hRequest, LPWSTR pstrFileName, DWORD dwSizeLimit, HANDLE hStopEvent);
 
   /*
-    Оболочка для _Connect + _SendRequest + _DownloadData(ToFile).
+    РћР±РѕР»РѕС‡РєР° РґР»СЏ _Connect + _SendRequest + _DownloadData(ToFile).
 
-    IN pcud  - параметры URL;
-    OUT pBuf - буффер для данных, после использование необходимо удалить через Mem. Может быть NULL.
-               При pcud->DownloadData_pstrFileName != NULL не имеет смысла.
+    IN pcud  - РїР°СЂР°РјРµС‚СЂС‹ URL;
+    OUT pBuf - Р±СѓС„С„РµСЂ РґР»СЏ РґР°РЅРЅС‹С…, РїРѕСЃР»Рµ РёСЃРїРѕР»СЊР·РѕРІР°РЅРёРµ РЅРµРѕР±С…РѕРґРёРјРѕ СѓРґР°Р»РёС‚СЊ С‡РµСЂРµР· Mem. РњРѕР¶РµС‚ Р±С‹С‚СЊ NULL.
+               РџСЂРё pcud->DownloadData_pstrFileName != NULL РЅРµ РёРјРµРµС‚ СЃРјС‹СЃР»Р°.
 
-    Return   - true - в случаи успеха,
-               false - в случаи ошибки.
+    Return   - true - РІ СЃР»СѓС‡Р°Рё СѓСЃРїРµС…Р°,
+               false - РІ СЃР»СѓС‡Р°Рё РѕС€РёР±РєРё.
   */
   bool _CallURL(CALLURLDATA *pcud, MEMDATA *pBuf);
 
   /*
-    Получение User-Agent от Internet Explorer.
+    РџРѕР»СѓС‡РµРЅРёРµ User-Agent РѕС‚ Internet Explorer.
 
-    Return - User-Agent, или NULL в случаи оишбки. Память должна быть освобождена через Mem.
+    Return - User-Agent, РёР»Рё NULL РІ СЃР»СѓС‡Р°Рё РѕРёС€Р±РєРё. РџР°РјСЏС‚СЊ РґРѕР»Р¶РЅР° Р±С‹С‚СЊ РѕСЃРІРѕР±РѕР¶РґРµРЅР° С‡РµСЂРµР· Mem.
   */
   LPSTR _GetIEUserAgent(void);
 
   /*
-    Тест сокрости загрузки URL.
+    РўРµСЃС‚ СЃРѕРєСЂРѕСЃС‚Рё Р·Р°РіСЂСѓР·РєРё URL.
 
     IN url       - URL.
-    IN stopEvent - событие остановки или NULL.
+    IN stopEvent - СЃРѕР±С‹С‚РёРµ РѕСЃС‚Р°РЅРѕРІРєРё РёР»Рё NULL.
 
-    Return       - затраченое время в ms, или 0 - в случаи ошибки.
+    Return       - Р·Р°С‚СЂР°С‡РµРЅРѕРµ РІСЂРµРјСЏ РІ ms, РёР»Рё 0 - РІ СЃР»СѓС‡Р°Рё РѕС€РёР±РєРё.
   */
   DWORD _testDownloadDelay(LPSTR url, HANDLE stopEvent);
 
   /*
-    Настройка над InternetQueryOptionA с автовыледением памяти.
+    РќР°СЃС‚СЂРѕР№РєР° РЅР°Рґ InternetQueryOptionA СЃ Р°РІС‚РѕРІС‹Р»РµРґРµРЅРёРµРј РїР°РјСЏС‚Рё.
 
-    IN internet - хэндл.
-    IN option   - опция.
-    OUT lenght  - размер данных. Если это строка, размер будет возрашен без нулеового символа.
+    IN internet - С…СЌРЅРґР».
+    IN option   - РѕРїС†РёСЏ.
+    OUT lenght  - СЂР°Р·РјРµСЂ РґР°РЅРЅС‹С…. Р•СЃР»Рё СЌС‚Рѕ СЃС‚СЂРѕРєР°, СЂР°Р·РјРµСЂ Р±СѓРґРµС‚ РІРѕР·СЂР°С€РµРЅ Р±РµР· РЅСѓР»РµРѕРІРѕРіРѕ СЃРёРјРІРѕР»Р°.
 
-    Return      - данные (нужно освободить через Mem), если это строка, то он будет с окончанием на
-                  нулевой символ. Или NULL в случаи ошибки.
+    Return      - РґР°РЅРЅС‹Рµ (РЅСѓР¶РЅРѕ РѕСЃРІРѕР±РѕРґРёС‚СЊ С‡РµСЂРµР· Mem), РµСЃР»Рё СЌС‚Рѕ СЃС‚СЂРѕРєР°, С‚Рѕ РѕРЅ Р±СѓРґРµС‚ СЃ РѕРєРѕРЅС‡Р°РЅРёРµРј РЅР°
+                  РЅСѓР»РµРІРѕР№ СЃРёРјРІРѕР». РР»Рё NULL РІ СЃР»СѓС‡Р°Рё РѕС€РёР±РєРё.
   */
   void *_queryOptionExA(HINTERNET internet, DWORD option, LPDWORD lenght);
 
   /*
-    Настройка над InternetQueryOptionW с автовыледением памяти.
+    РќР°СЃС‚СЂРѕР№РєР° РЅР°Рґ InternetQueryOptionW СЃ Р°РІС‚РѕРІС‹Р»РµРґРµРЅРёРµРј РїР°РјСЏС‚Рё.
 
-    IN internet - хэндл.
-    IN option   - опция.
-    OUT lenght  - размер данных в БАЙТАХ. Если это строка, размер будет возрашен без нулеового символа.
+    IN internet - С…СЌРЅРґР».
+    IN option   - РѕРїС†РёСЏ.
+    OUT lenght  - СЂР°Р·РјРµСЂ РґР°РЅРЅС‹С… РІ Р‘РђР™РўРђРҐ. Р•СЃР»Рё СЌС‚Рѕ СЃС‚СЂРѕРєР°, СЂР°Р·РјРµСЂ Р±СѓРґРµС‚ РІРѕР·СЂР°С€РµРЅ Р±РµР· РЅСѓР»РµРѕРІРѕРіРѕ СЃРёРјРІРѕР»Р°.
 
-    Return      - данные (нужно освободить через Mem), если это строка, то он будет с окончанием на
-                  нулевой символ. Или NULL в случаи ошибки.
+    Return      - РґР°РЅРЅС‹Рµ (РЅСѓР¶РЅРѕ РѕСЃРІРѕР±РѕРґРёС‚СЊ С‡РµСЂРµР· Mem), РµСЃР»Рё СЌС‚Рѕ СЃС‚СЂРѕРєР°, С‚Рѕ РѕРЅ Р±СѓРґРµС‚ СЃ РѕРєРѕРЅС‡Р°РЅРёРµРј РЅР°
+                  РЅСѓР»РµРІРѕР№ СЃРёРјРІРѕР». РР»Рё NULL РІ СЃР»СѓС‡Р°Рё РѕС€РёР±РєРё.
   */
   void *_queryOptionExW(HINTERNET internet, DWORD option, LPDWORD lenght);
 
-  /*В В В В Customize over HttpQueryInfoA with avtovyledeniem memory.
+  /*Р’В Р’В Р’В Р’В Customize over HttpQueryInfoA with avtovyledeniem memory.
 
-В В В В IN internet - the handle.
-В В В В IN infoLevel - flags indicating data to get.
-В В В В OUT lenght - the size of a string without the null character.
+Р’В Р’В Р’В Р’В IN internet - the handle.
+Р’В Р’В Р’В Р’В IN infoLevel - flags indicating data to get.
+Р’В Р’В Р’В Р’В OUT lenght - the size of a string without the null character.
 
-В В В В Return - string ending in a null character (must be freed by Mem),
-В В В В В В В В В В В В В В В В В В or NULL in case of error.
-В В */
+Р’В Р’В Р’В Р’В Return - string ending in a null character (must be freed by Mem),
+Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В or NULL in case of error.
+Р’В Р’В */
   LPSTR _queryInfoExA(HINTERNET request, DWORD infoLevel, LPDWORD lenght, LPDWORD index);
 };

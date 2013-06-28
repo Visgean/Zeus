@@ -12,16 +12,16 @@
 
 /*
   TODO:
-    1. Сделать поддержку ENCODER_DesktopSize(WM_DISPLAYCHANGE).
-    2. Сделать поддержку VNCAuth.
-    3. Реагировать на изменеие палитры (WM_SYSCOLORCHANGE, WM_PALETTECHANGED).
-    4. Реагировать на завершение работы ос.
-    5. Сделать SetColourMapEntries, в данный момент не на чем тестить.
-    6. Понять почему при увелечнии разрешения цикл вылетает.
-    7. Конвертация палитры.
-    8. Оптимизировать кодеки.
-    9. Придумат  алгоритм чтобы во время длительного получения команд от клиента, между ними отправлять
-       запрос на прорисовку.
+    1. РЎРґРµР»Р°С‚СЊ РїРѕРґРґРµСЂР¶РєСѓ ENCODER_DesktopSize(WM_DISPLAYCHANGE).
+    2. РЎРґРµР»Р°С‚СЊ РїРѕРґРґРµСЂР¶РєСѓ VNCAuth.
+    3. Р РµР°РіРёСЂРѕРІР°С‚СЊ РЅР° РёР·РјРµРЅРµРёРµ РїР°Р»РёС‚СЂС‹ (WM_SYSCOLORCHANGE, WM_PALETTECHANGED).
+    4. Р РµР°РіРёСЂРѕРІР°С‚СЊ РЅР° Р·Р°РІРµСЂС€РµРЅРёРµ СЂР°Р±РѕС‚С‹ РѕСЃ.
+    5. РЎРґРµР»Р°С‚СЊ SetColourMapEntries, РІ РґР°РЅРЅС‹Р№ РјРѕРјРµРЅС‚ РЅРµ РЅР° С‡РµРј С‚РµСЃС‚РёС‚СЊ.
+    6. РџРѕРЅСЏС‚СЊ РїРѕС‡РµРјСѓ РїСЂРё СѓРІРµР»РµС‡РЅРёРё СЂР°Р·СЂРµС€РµРЅРёСЏ С†РёРєР» РІС‹Р»РµС‚Р°РµС‚.
+    7. РљРѕРЅРІРµСЂС‚Р°С†РёСЏ РїР°Р»РёС‚СЂС‹.
+    8. РћРїС‚РёРјРёР·РёСЂРѕРІР°С‚СЊ РєРѕРґРµРєРё.
+    9. РџСЂРёРґСѓРјР°С‚  Р°Р»РіРѕСЂРёС‚Рј С‡С‚РѕР±С‹ РІРѕ РІСЂРµРјСЏ РґР»РёС‚РµР»СЊРЅРѕРіРѕ РїРѕР»СѓС‡РµРЅРёСЏ РєРѕРјР°РЅРґ РѕС‚ РєР»РёРµРЅС‚Р°, РјРµР¶РґСѓ РЅРёРјРё РѕС‚РїСЂР°РІР»СЏС‚СЊ
+       Р·Р°РїСЂРѕСЃ РЅР° РїСЂРѕСЂРёСЃРѕРІРєСѓ.
 */
 
 #if(BO_VNC > 0)
@@ -49,11 +49,11 @@ void Rfb::uninit(void)
 }
 
 /*
-  Быстрое копированиие пикселей.
+  Р‘С‹СЃС‚СЂРѕРµ РєРѕРїРёСЂРѕРІР°РЅРёРёРµ РїРёРєСЃРµР»РµР№.
 
-  OUT dest        - адрес назначения.
-  IN source       - исходный адрес.
-  IN widthinbytes - кол. байтов занемаемых пикселями.
+  OUT dest        - Р°РґСЂРµСЃ РЅР°Р·РЅР°С‡РµРЅРёСЏ.
+  IN source       - РёСЃС…РѕРґРЅС‹Р№ Р°РґСЂРµСЃ.
+  IN widthinbytes - РєРѕР». Р±Р°Р№С‚РѕРІ Р·Р°РЅРµРјР°РµРјС‹С… РїРёРєСЃРµР»СЏРјРё.
 */
 #define COPY_RECT_LINE(dest, source, widthinbytes) \
 {\
@@ -373,15 +373,15 @@ namespace RawEncoder
 }
 
 /*
-  Отправка изменных областей клиенту.
+  РћС‚РїСЂР°РІРєР° РёР·РјРµРЅРЅС‹С… РѕР±Р»Р°СЃС‚РµР№ РєР»РёРµРЅС‚Сѓ.
 
-  IN s   - сокет.
-  IN pid - данные.
+  IN s   - СЃРѕРєРµС‚.
+  IN pid - РґР°РЅРЅС‹Рµ.
 
-  Return - -1 - внутрення ошибка.
-            0 - ошибка отправки.
-            1 - данные отправлены.
-            2 - измененых областей не найдено.
+  Return - -1 - РІРЅСѓС‚СЂРµРЅРЅСЏ РѕС€РёР±РєР°.
+            0 - РѕС€РёР±РєР° РѕС‚РїСЂР°РІРєРё.
+            1 - РґР°РЅРЅС‹Рµ РѕС‚РїСЂР°РІР»РµРЅС‹.
+            2 - РёР·РјРµРЅРµРЅС‹С… РѕР±Р»Р°СЃС‚РµР№ РЅРµ РЅР°Р№РґРµРЅРѕ.
 */
 static int SendChangedRects(SOCKET s, Rfb::INTERNAL_DATA *pid, Rfb::RECTANGLE *pr)
 {
@@ -478,12 +478,12 @@ static int SendChangedRects(SOCKET s, Rfb::INTERNAL_DATA *pid, Rfb::RECTANGLE *p
 }
 
 /*
-  Проверяет валидные ли данные о пиксиле.
+  РџСЂРѕРІРµСЂСЏРµС‚ РІР°Р»РёРґРЅС‹Рµ Р»Рё РґР°РЅРЅС‹Рµ Рѕ РїРёРєСЃРёР»Рµ.
 
-  IN ppf - стуктура для проверки.
+  IN ppf - СЃС‚СѓРєС‚СѓСЂР° РґР»СЏ РїСЂРѕРІРµСЂРєРё.
 
-  Return - true - если валидные,
-           false - не валидные.
+  Return - true - РµСЃР»Рё РІР°Р»РёРґРЅС‹Рµ,
+           false - РЅРµ РІР°Р»РёРґРЅС‹Рµ.
 */
 static bool IsValidPIXEL_FORMAT(Rfb::PIXEL_FORMAT *ppf, bool bIsLocal)
 {
@@ -496,11 +496,11 @@ static bool IsValidPIXEL_FORMAT(Rfb::PIXEL_FORMAT *ppf, bool bIsLocal)
 }
 
 /*
-  Преобразует маску цвета в макс. значение цвета и смещение.
+  РџСЂРµРѕР±СЂР°Р·СѓРµС‚ РјР°СЃРєСѓ С†РІРµС‚Р° РІ РјР°РєСЃ. Р·РЅР°С‡РµРЅРёРµ С†РІРµС‚Р° Рё СЃРјРµС‰РµРЅРёРµ.
 
-  IN dwMask   - маска.
-  OUT pdwMax  - максимальное значение.
-  OUT pbShift - смешение цвета.
+  IN dwMask   - РјР°СЃРєР°.
+  OUT pdwMax  - РјР°РєСЃРёРјР°Р»СЊРЅРѕРµ Р·РЅР°С‡РµРЅРёРµ.
+  OUT pbShift - СЃРјРµС€РµРЅРёРµ С†РІРµС‚Р°.
 */
 static void MaskToMaxAndShift(DWORD dwMask, LPWORD pwMax, LPBYTE pbShift)
 {
@@ -512,11 +512,11 @@ static void MaskToMaxAndShift(DWORD dwMask, LPWORD pwMax, LPBYTE pbShift)
 }
 
 /*
-  Полная инициализация Rfb::INTERNAL_DATA. (на основе UltaVNC).
+  РџРѕР»РЅР°СЏ РёРЅРёС†РёР°Р»РёР·Р°С†РёСЏ Rfb::INTERNAL_DATA. (РЅР° РѕСЃРЅРѕРІРµ UltaVNC).
 
-  IN memoryDc - DC для работы.
+  IN memoryDc - DC РґР»СЏ СЂР°Р±РѕС‚С‹.
 
-  Return     - Rfb::INTERNAL_DATA, или NULL в случаи ошибки.
+  Return     - Rfb::INTERNAL_DATA, РёР»Рё NULL РІ СЃР»СѓС‡Р°Рё РѕС€РёР±РєРё.
 */
 static inline Rfb::INTERNAL_DATA *InitINTERNAL_DATA(HDC memoryDc, POINT *pSize, HANDLE hDIBMap, DWORD mapOffset)
 {
@@ -590,9 +590,9 @@ static inline Rfb::INTERNAL_DATA *InitINTERNAL_DATA(HDC memoryDc, POINT *pSize, 
 }
 
 /*
-  Полное освобождение ресурсов занятых под Rfb::INTERNAL_DATA.
+  РџРѕР»РЅРѕРµ РѕСЃРІРѕР±РѕР¶РґРµРЅРёРµ СЂРµСЃСѓСЂСЃРѕРІ Р·Р°РЅСЏС‚С‹С… РїРѕРґ Rfb::INTERNAL_DATA.
 
-  IN pid - стукрута для удаления.
+  IN pid - СЃС‚СѓРєСЂСѓС‚Р° РґР»СЏ СѓРґР°Р»РµРЅРёСЏ.
 */
 static void FreeINTERNAL_DATA(Rfb::INTERNAL_DATA *pid)
 {
@@ -605,13 +605,13 @@ static void FreeINTERNAL_DATA(Rfb::INTERNAL_DATA *pid)
 }
 
 /*
-  Отправка ANSI-сообщения в формате [DWORD][BYTE[x]].
+  РћС‚РїСЂР°РІРєР° ANSI-СЃРѕРѕР±С‰РµРЅРёСЏ РІ С„РѕСЂРјР°С‚Рµ [DWORD][BYTE[x]].
 
-  IN s           - сокет.
-  IN pstrMessage - сообщение.
+  IN s           - СЃРѕРєРµС‚.
+  IN pstrMessage - СЃРѕРѕР±С‰РµРЅРёРµ.
 
-  Return         - true - в случаи успеха,
-                   false - в случаи ошибки.
+  Return         - true - РІ СЃР»СѓС‡Р°Рё СѓСЃРїРµС…Р°,
+                   false - РІ СЃР»СѓС‡Р°Рё РѕС€РёР±РєРё.
 */
 static bool SendANSIMessage(SOCKET s, LPSTR pstrMessage)
 {
@@ -675,7 +675,7 @@ void Rfb::_ServerThread(SOCKET s, DWORD dwTimeout, SERVER_CALLBACKS *pCallbacks,
   }
 
   /*
-    Once the client and server are sure that they’re happy to talk to one another using the
+    Once the client and server are sure that theyвЂ™re happy to talk to one another using the
     agreed security type, the protocol passes to the initialisation phase. The client sends a
     ClientInit message followed by the server sending a ServerInit message
   */
@@ -686,7 +686,7 @@ void Rfb::_ServerThread(SOCKET s, DWORD dwTimeout, SERVER_CALLBACKS *pCallbacks,
 
   /*
     After receiving the ClientInit message, the server sends a ServerInit message. This
-    tells the client the width and height of the server’s framebuffer, its pixel format and the
+    tells the client the width and height of the serverвЂ™s framebuffer, its pixel format and the
     name associated with the desktop
   */
   

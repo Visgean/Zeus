@@ -5,7 +5,7 @@
 #include "main.h"
 #include "languages.h"
 
-/*  Processing tab.*/
+/*Р вЂ™Р’В Р вЂ™Р’В Processing tab.*/
 INT_PTR CALLBACK toolSettingsProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
   switch(msg)

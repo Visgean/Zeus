@@ -1082,7 +1082,7 @@
  0001:000166b4       ?hookerGetDcEx@VncServer@@YGPAUHDC__@@PAUHWND__@@PAUHRGN__@@K@Z 004176b4 f   vncpaint.obj
  0001:0001670f       ?hookerGetDc@VncServer@@YGPAUHDC__@@PAUHWND__@@@Z 0041770f f   vncpaint.obj
  0001:0001674e       ?hookerGetWindowDc@VncServer@@YGPAUHDC__@@PAUHWND__@@@Z 0041774e f   vncpaint.obj
- 0001:0001678d       ?hookerReleaseD�@VncServer@@YGHPAUHWND__@@PAUHDC__@@@Z 0041778d f   vncpaint.obj
+ 0001:0001678d       ?hookerReleaseDРЎРѓ@VncServer@@YGHPAUHWND__@@PAUHDC__@@@Z 0041778d f   vncpaint.obj
  0001:000167cd       ?hookerGetUpdateRect@VncServer@@YGHPAUHWND__@@PAUtagRECT@@H@Z 004177cd f   vncpaint.obj
  0001:00016860       ?hookerGetUpdateRgn@VncServer@@YGHPAUHWND__@@PAUHRGN__@@H@Z 00417860 f   vncpaint.obj
  0001:000169c2       ?startAsPaintThread@VncServer@@YI_NXZ 004179c2 f   vncpaint.obj
@@ -1229,7 +1229,7 @@
  0001:0000c7cf       ?onSecurityType@@YIXPAXPAKPAPAD@Z 0040d7cf f    CIL library: CIL module
  0001:0000c7d2       ?onClientInit@@YI_NPAXE@Z  0040d7d2 f    CIL library: CIL module
  0001:0000c7d5       ?onServerInit@@YIPAUHDC__@@PAXPAPADPAUtagPOINT@@@Z 0040d7d5 f    CIL library: CIL module
- 0001:0000c7f9       ?onUpdateD�@@YIXPAX@Z      0040d7f9 f    CIL library: CIL module
+ 0001:0000c7f9       ?onUpdateDРЎРѓ@@YIXPAX@Z      0040d7f9 f    CIL library: CIL module
  0001:0000c840       ?onKeyEvent@@YIXPAXK_N@Z   0040d840 f    CIL library: CIL module
  0001:0000c875       ?onPointerEvent@@YIXPAXKJJK@Z 0040d875 f    CIL library: CIL module
  0001:0000c88c       ?vncMessage@@YIJPAUHWND__@@IJ@Z 0040d88c f    CIL library: CIL module

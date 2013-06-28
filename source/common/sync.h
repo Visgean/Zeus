@@ -1,67 +1,67 @@
 #pragma once
 /*
-  Набор функций для синхронизации между нитями и процессами.
+  РќР°Р±РѕСЂ С„СѓРЅРєС†РёР№ РґР»СЏ СЃРёРЅС…СЂРѕРЅРёР·Р°С†РёРё РјРµР¶РґСѓ РЅРёС‚СЏРјРё Рё РїСЂРѕС†РµСЃСЃР°РјРё.
 */
 
 namespace Sync
 {
   /*
-    Инициализация.
+    РРЅРёС†РёР°Р»РёР·Р°С†РёСЏ.
   */
   void init(void);
 
   /*
-    Деинициализация.
+    Р”РµРёРЅРёС†РёР°Р»РёР·Р°С†РёСЏ.
   */
   void uninit(void);
 
   /*
-    Ожидание освобождения мютекса и его захват.
+    РћР¶РёРґР°РЅРёРµ РѕСЃРІРѕР±РѕР¶РґРµРЅРёСЏ РјСЋС‚РµРєСЃР° Рё РµРіРѕ Р·Р°С…РІР°С‚.
 
-    IN mutexAttributes - SECURITY_ATTRIBUTES для мютекса или NULL.
-    IN name            - имя мютекса.
+    IN mutexAttributes - SECURITY_ATTRIBUTES РґР»СЏ РјСЋС‚РµРєСЃР° РёР»Рё NULL.
+    IN name            - РёРјСЏ РјСЋС‚РµРєСЃР°.
 
-    Return             - хэндл мютекса.
+    Return             - С…СЌРЅРґР» РјСЋС‚РµРєСЃР°.
 
-    Примечание: Для освобождения мютекса необходимо вызвать _freeMutex().
+    РџСЂРёРјРµС‡Р°РЅРёРµ: Р”Р»СЏ РѕСЃРІРѕР±РѕР¶РґРµРЅРёСЏ РјСЋС‚РµРєСЃР° РЅРµРѕР±С…РѕРґРёРјРѕ РІС‹Р·РІР°С‚СЊ _freeMutex().
   */
   HANDLE _waitForMutex(SECURITY_ATTRIBUTES *mutexAttributes, LPWSTR name);
 
   /*
-    Ожидание событие, и обработка всех оконных сообщений потока.
+    РћР¶РёРґР°РЅРёРµ СЃРѕР±С‹С‚РёРµ, Рё РѕР±СЂР°Р±РѕС‚РєР° РІСЃРµС… РѕРєРѕРЅРЅС‹С… СЃРѕРѕР±С‰РµРЅРёР№ РїРѕС‚РѕРєР°.
 
-    IN count        - кол. объектов.
-    IN handles      - объекты.
-    IN waitAll      - ждать всех обектов.
-    IN milliseconds - время ожидания в мс, INFINITE для бескоенчного ожидания.
+    IN count        - РєРѕР». РѕР±СЉРµРєС‚РѕРІ.
+    IN handles      - РѕР±СЉРµРєС‚С‹.
+    IN waitAll      - Р¶РґР°С‚СЊ РІСЃРµС… РѕР±РµРєС‚РѕРІ.
+    IN milliseconds - РІСЂРµРјСЏ РѕР¶РёРґР°РЅРёСЏ РІ РјСЃ, INFINITE РґР»СЏ Р±РµСЃРєРѕРµРЅС‡РЅРѕРіРѕ РѕР¶РёРґР°РЅРёСЏ.
 
-    Return          - согласно WaitForMultipleObjects().
+    Return          - СЃРѕРіР»Р°СЃРЅРѕ WaitForMultipleObjects().
   */
   DWORD _waitForMultipleObjectsAndDispatchMessages(DWORD count, const HANDLE* handles, bool waitAll, DWORD milliseconds);
 
   /*
-    Освобождение мютекса захваченного через WaitForMutex.
+    РћСЃРІРѕР±РѕР¶РґРµРЅРёРµ РјСЋС‚РµРєСЃР° Р·Р°С…РІР°С‡РµРЅРЅРѕРіРѕ С‡РµСЂРµР· WaitForMutex.
 
-    IN mutex - хэндл мютекса.
+    IN mutex - С…СЌРЅРґР» РјСЋС‚РµРєСЃР°.
   */
   void _freeMutex(HANDLE mutex);
 
   /*
-    Создание уникального мютекса.
+    РЎРѕР·РґР°РЅРёРµ СѓРЅРёРєР°Р»СЊРЅРѕРіРѕ РјСЋС‚РµРєСЃР°.
 
-    IN mutexAttributes - SECURITY_ATTRIBUTES для мютекса или NULL.
-    IN name            - имя мютекса.
+    IN mutexAttributes - SECURITY_ATTRIBUTES РґР»СЏ РјСЋС‚РµРєСЃР° РёР»Рё NULL.
+    IN name            - РёРјСЏ РјСЋС‚РµРєСЃР°.
 
-    Return             - хэндл мютекса, или NULL в случаи ошибки или если мютекс уже существует.
+    Return             - С…СЌРЅРґР» РјСЋС‚РµРєСЃР°, РёР»Рё NULL РІ СЃР»СѓС‡Р°Рё РѕС€РёР±РєРё РёР»Рё РµСЃР»Рё РјСЋС‚РµРєСЃ СѓР¶Рµ СЃСѓС‰РµСЃС‚РІСѓРµС‚.
   */
   HANDLE _createUniqueMutex(SECURITY_ATTRIBUTES *mutexAttributes, LPWSTR name);
 
-  /*В В В В Checks whether there myuteks.
+  /*Р’В Р’В Р’В Р’В Checks whether there myuteks.
 
-В В В В IN name - the name myuteksa.
+Р’В Р’В Р’В Р’В IN name - the name myuteksa.
 
-В В В В Return - true - there is,
-В В В В В В В В В В В В В В false - do not suschetvuet.
-В В */
+Р’В Р’В Р’В Р’В Return - true - there is,
+Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В false - do not suschetvuet.
+Р’В Р’В */
   bool _mutexExists(LPWSTR name);
 };

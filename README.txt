@@ -51,7 +51,7 @@ Second:
 Configuration File Entries
 The file consists of two sections StaticConfig and DynamicConfig.
 
-StaticConfig, the values ​​prescribed in this section directly to the bot file, ie in exe, and define the basic behavior of the bot on a victim's computer.
+StaticConfig, the values вЂ‹вЂ‹prescribed in this section directly to the bot file, ie in exe, and define the basic behavior of the bot on a victim's computer.
 Depending on your build, some details may not have value for you, all the significant parameters prescribed in the example that came with the package assembly.
 botnet [string] - specifies the name of a botnet, which owns the boat.
 string - the name of a botnet to 4 characters, or 0 - for the default value.
@@ -82,10 +82,10 @@ url_compip [url] [number] - specifies the site where you can check your IP, is u
 url - specifies the URL of the web
 number - Specifies the kolichetsvo bytes that enough to swing from the site to see in the downloaded your IP.
 
-blacklist_languages ​​[number1] [number2] ... [chisloX] - specifies a list of language codes Windows, for which the bot will always spyashem is in Safe Mode, ie it will not send the logs and statistics, but will appeal to the configuration file.
+blacklist_languages вЂ‹вЂ‹[number1] [number2] ... [chisloX] - specifies a list of language codes Windows, for which the bot will always spyashem is in Safe Mode, ie it will not send the logs and statistics, but will appeal to the configuration file.
 chisloX - language code, for example RU - 1049, EN - 1033.
 
-DynamicConfig, the values ​​prescribed in this section, the final configuration file.
+DynamicConfig, the values вЂ‹вЂ‹prescribed in this section, the final configuration file.
 Depending on your build, some details may not have value for you, all the significant parameters prescribed in the example that came with the package assembly.
 url_loader [url] - specifies the URL, which you can download the update bot. This option is relevant only if you are running the botnet new version of the bot and prescribed configuration of him for the same URL, as the old configuration, in which case the old version of the bot will start to upgrade by downloading the file specified in this record.
 

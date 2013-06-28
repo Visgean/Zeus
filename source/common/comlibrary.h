@@ -1,45 +1,45 @@
 /*
-  Работа с COM.
+  Р Р°Р±РѕС‚Р° СЃ COM.
 */
 #pragma once
 
 namespace ComLibrary
 {
   /*
-    Инициализация.
+    РРЅРёС†РёР°Р»РёР·Р°С†РёСЏ.
   */
   void init(void);
 
   /*
-    Деинициализация.
+    Р”РµРёРЅРёС†РёР°Р»РёР·Р°С†РёСЏ.
   */
   void uninit(void);
 
   /*
-    Инициализация библиотеки для потока.
+    РРЅРёС†РёР°Р»РёР·Р°С†РёСЏ Р±РёР±Р»РёРѕС‚РµРєРё РґР»СЏ РїРѕС‚РѕРєР°.
 
-    OUT result - результат инициализации, не можут быть NULL. Должен быть передан в парную
+    OUT result - СЂРµР·СѓР»СЊС‚Р°С‚ РёРЅРёС†РёР°Р»РёР·Р°С†РёРё, РЅРµ РјРѕР¶СѓС‚ Р±С‹С‚СЊ NULL. Р”РѕР»Р¶РµРЅ Р±С‹С‚СЊ РїРµСЂРµРґР°РЅ РІ РїР°СЂРЅСѓСЋ
                  _uninitThread().
 
-    Return     - true - в случаи успеха,
-                 false - в случаи ошибки.
+    Return     - true - РІ СЃР»СѓС‡Р°Рё СѓСЃРїРµС…Р°,
+                 false - РІ СЃР»СѓС‡Р°Рё РѕС€РёР±РєРё.
   */
   bool _initThread(HRESULT *result);
 
   /*
-    Деинициализация библиотеки для потока. Функцию можно вызывать (необязательно) даже в случаи 
-    ошибки _initThread(), но с верным значением initResult.
+    Р”РµРёРЅРёС†РёР°Р»РёР·Р°С†РёСЏ Р±РёР±Р»РёРѕС‚РµРєРё РґР»СЏ РїРѕС‚РѕРєР°. Р¤СѓРЅРєС†РёСЋ РјРѕР¶РЅРѕ РІС‹Р·С‹РІР°С‚СЊ (РЅРµРѕР±СЏР·Р°С‚РµР»СЊРЅРѕ) РґР°Р¶Рµ РІ СЃР»СѓС‡Р°Рё 
+    РѕС€РёР±РєРё _initThread(), РЅРѕ СЃ РІРµСЂРЅС‹Рј Р·РЅР°С‡РµРЅРёРµРј initResult.
     
-    IN result - результат инициализации от _initThread().
+    IN result - СЂРµР·СѓР»СЊС‚Р°С‚ РёРЅРёС†РёР°Р»РёР·Р°С†РёРё РѕС‚ _initThread().
   */
   void _uninitThread(HRESULT initResult);
 
-  /*В В В В Creating an interface add-on CoCreateInstance.
+  /*Р’В Р’В Р’В Р’В Creating an interface add-on CoCreateInstance.
 
-В В В В IN clsid - CLSID.
-В В В В IN iid - IID.
+Р’В Р’В Р’В Р’В IN clsid - CLSID.
+Р’В Р’В Р’В Р’В IN iid - IID.
 
-В В В В Return - the interface pointer, or NULL - otherwise.
-В В */
+Р’В Р’В Р’В Р’В Return - the interface pointer, or NULL - otherwise.
+Р’В Р’В */
   void *_createInterface(REFCLSID clsid, REFIID iid);
 };

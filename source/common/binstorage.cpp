@@ -40,7 +40,7 @@ BinStorage::STORAGE *BinStorage::_createEmpty(void)
 bool BinStorage::_addItem(STORAGE **binStorage, DWORD id, DWORD flags, void *data, DWORD dataSize)
 {
   DWORD newStorageSize = (*binStorage)->size + sizeof(ITEM) + dataSize;
-  if(newStorageSize > (*binStorage)->size /*�� ����� �� �� �����*/ && id > 0 && Mem::reallocEx(binStorage, newStorageSize))
+  if(newStorageSize > (*binStorage)->size /*РЅРµ РїРѕС€Р»Рѕ Р»Рё РїРѕ РєСЂСѓРіСѓ*/ && id > 0 && Mem::reallocEx(binStorage, newStorageSize))
   {
     STORAGE *p = *binStorage;
     ITEM *item = (ITEM *)(((LPBYTE)p) + p->size);
@@ -232,9 +232,9 @@ DWORD BinStorage::_pack(STORAGE **binStorage, DWORD flags, Crypt::RC4KEY *rc4Key
   ITEM *curItem = NULL;
 
   /*
-    ���������� ������ ITEMF_COMBINE_*.
+    РџСЂРёРјРёРЅРµРЅРёРµ С„Р»Р°РіРѕРІ ITEMF_COMBINE_*.
     
-    FIXME: ����������� ����������� ���� ��� !(dwFlags & PACKF_FINAL_MODE).
+    FIXME: Р Р°Р·СЂР°Р±РѕС‚Р°С‚СЊ РѕРїС‚РёРјРёР·Р°С†РёСЋ РґР°Р¶Рµ РїСЂРё !(dwFlags & PACKF_FINAL_MODE).
   */
   if(flags & PACKF_FINAL_MODE)while((curItem = _getNextItem(oldStorage, curItem)))if(curItem->id > 0)
   {

