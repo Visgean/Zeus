@@ -1,4 +1,4 @@
-/*Р вЂ™Р’В Р вЂ™Р’В ROR13 hash, the main purpose - poulchenie hash WinAPI-functions.*/
+/*  ROR13 hash, the main purpose - poulchenie hash WinAPI-functions.*/
 #include <windows.h>
 
 #include "defines.h"

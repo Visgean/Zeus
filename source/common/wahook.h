@@ -1,76 +1,76 @@
 /*
-  РџРµСЂРµС…РІР°С‚ WinAPI.
+  Перехват WinAPI.
 */
 #pragma once
 
 namespace WaHook
 {
   /*
-    РРЅРёС†РёР°Р»РёР·Р°С†РёСЏ.
+    Инициализация.
   */
   void init(void);
 
   /*
-    Р”РµРёРЅРёС†РёР°Р»РёР·Р°С†РёСЏ.
+    Деинициализация.
   */
   void uninit(void);
 
   /*
-    РљСЌСЌР»Р±РµРє РґР»СЏ _hook().
+    Кээлбек для _hook().
 
-    IN functionForHook  - СѓРєР°Р·Р°С‚РµР»СЊ РЅР° С„СѓРЅРєС†РёСЋ, РєРѕС‚РѕСЂР°СЏ Р±СѓРґРµС‚ РїРµСЂРµС…РІР°С‡РµРЅР°.
-    IN originalFunction - Р°РґСЂРµСЃ, РїРѕ РєРѕС‚РѕСЂРѕРјСѓ СѓР¶Рµ Р·Р°РїРёСЃР°РЅРѕ СЃС‚Р°СЂРѕРµ СЃРѕРґРµСЂР¶РёРјРѕРµ С„СѓРЅРєС†РёРё, СЌС‚РѕС‚ Р°РґСЂРµСЃ
-                          РЅРµРѕР±С…РѕРґРёРјРѕ РІС‹Р·С‹РІР°С‚СЊ РґР»СЏ РІС‹Р·РѕРІР° РѕСЂРёРіРёРЅР°Р»СЊРЅРѕР№ С„СѓРЅРєС†РёРё РїРѕСЃР»Рµ СѓСЃС‚Р°РЅРѕРІРєРё С…СѓРєР°.
+    IN functionForHook  - указатель на функцию, которая будет перехвачена.
+    IN originalFunction - адрес, по которому уже записано старое содержимое функции, этот адрес
+                          необходимо вызывать для вызова оригинальной функции после установки хука.
   */
   typedef void (*HOTPATCHCALLBACK)(const void *functionForHook, const void *originalFunction);
   
   /*
-    РЈСЃС‚Р°РЅРѕРІРєР° С…СѓРєР°.
+    Установка хука.
 
-    IN process             - РїСЂРѕС†РµСЃСЃ, РІ РєРѕС‚РѕСЂРѕРј РїСЂРѕРёСЃС…РѕРґРёС‚ РјРѕРґРёС„РёРєР°С†РёСЏ.
-    IN OUT functionForHook - СѓРєР°Р·Р°С‚РµР»СЊ РЅР° С„СѓРЅРєС†РёСЋ, РєРѕС‚РѕСЂР°СЏ Р±СѓРґРµС‚ РїРµСЂРµС…РІР°С‡РµРЅР°.
-    IN hookerFunction      - СѓРєР°Р·Р°С‚РµР»СЊ РЅР° РЅРѕРІСѓСЋ С„СѓРЅРєС†РёСЋ.
-    OUT originalFunction   - Р°РґСЂРµСЃ, РїРѕ РєРѕС‚РѕСЂРѕРјСѓ Р±СѓРґРµС‚ Р·Р°РїРёСЃР°РЅРѕ СЃС‚Р°СЂРѕРµ СЃРѕРґРµСЂР¶РёРјРѕРµ С„СѓРЅРєС†РёРё, СЌС‚РѕС‚ Р°РґСЂРµСЃ
-                             РЅРµРѕР±С…РѕРґРёРјРѕ РІС‹Р·С‹РІР°С‚СЊ РґР»СЏ РІС‹Р·РѕРІР° РѕСЂРёРіРёРЅР°Р»СЊРЅРѕР№ С„СѓРЅРєС†РёРё РїРѕСЃР»Рµ СѓСЃС‚Р°РЅРѕРІРєРё
-                             С…СѓРєР°.
-    IN hotPatchCallback    - С„СѓРЅРєС†РёСЏ, РєРѕС‚РѕСЂР°СЏ РІС‹Р·С‹РІР°РµС‚СЃСЏ РЅРµРјРµРґР»РµРЅРЅРѕ РїРµСЂРµРґ Р·Р°РїРёСЃСЊСЋ С…СѓРєР° РІ
-                             РѕСЂРёРіРёРЅР°Р»СЊРЅСѓСЋ С„СѓРЅРєС†РёСЋ.
+    IN process             - процесс, в котором происходит модификация.
+    IN OUT functionForHook - указатель на функцию, которая будет перехвачена.
+    IN hookerFunction      - указатель на новую функцию.
+    OUT originalFunction   - адрес, по которому будет записано старое содержимое функции, этот адрес
+                             необходимо вызывать для вызова оригинальной функции после установки
+                             хука.
+    IN hotPatchCallback    - функция, которая вызывается немедленно перед записью хука в
+                             оригинальную функцию.
     
-    Return                 - СЂР°Р·РјРµСЂ РґР°РЅРЅС‹С… РїРѕРјРµС€РµРЅРЅС‹С… РїРѕ Р°РґСЂРµСЃСѓ originalFunction, РёР»Рё 0 РІ СЃР»СѓС‡Р°Рё
-                             РѕС€РёР±РєРё.
+    Return                 - размер данных помешенных по адресу originalFunction, или 0 в случаи
+                             ошибки.
   */
   DWORD _hook(HANDLE process, void *functionForHook, void *hookerFunction, void *originalFunction, HOTPATCHCALLBACK hotPatchCallback);
 
   /*
-    РЎРЅСЏС‚РёРµ С…СѓРєР°.
+    Снятие хука.
 
-    IN process             - РїСЂРѕС†РµСЃСЃ, РІ РєРѕС‚РѕСЂРѕРј РїСЂРѕРёСЃС…РѕРґРёС‚ РјРѕРґРёС„РёРєР°С†РёСЏ.
-    IN OUT functionForHook - СѓРєР°Р·Р°С‚РµР»СЊ РЅР° РїРµСЂРµС…РІР°С‡РµРЅСѓСЋ С„СѓРЅРєС†РёСЋ.
-    IN originalFunction    - Р°РґСЂРµСЃ РїРѕ РєРѕС‚РѕСЂРѕРјСѓ Р·Р°РїРёСЃР°РЅС‹ РѕСЂРёРіР°РЅР»СЊРЅС‹Рµ РѕРїРєРѕРґС‹.
-    IN size                - СЂР°Р·РјРµСЂ originalFunction.
+    IN process             - процесс, в котором происходит модификация.
+    IN OUT functionForHook - указатель на перехваченую функцию.
+    IN originalFunction    - адрес по которому записаны ориганльные опкоды.
+    IN size                - размер originalFunction.
 
-    Return                 - true - РІ СЃР»СѓС‡Р°Рё СѓСЃРїРµС…Р°,
-                             false - РІ СЃР»СѓС‡Р°Рё РѕС€РёР±РєРё.
+    Return                 - true - в случаи успеха,
+                             false - в случаи ошибки.
   */
   bool _unhook(HANDLE process, void *hookedFunction, void *originalFunction, DWORD size);
 
   /*
-    РџСЂРѕРІРµСЂСЏРµС‚ СЏРІР»СЏРµС‚СЃСЏ Р»Рё С„СѓРЅРєС†РёСЏ РїРµСЂС…РІР°С‡РµРЅРЅРѕР№, СЃС‡РёС‚С‹РІР°СЏ РїРµСЂРІС‹Рµ РѕРїРєРѕРґС‹.
+    Проверяет является ли функция перхваченной, считывая первые опкоды.
 
-    IN process  - РїСЂРѕС†РµСЃСЃ
-    IN function - С„СѓРЅРєС†РёСЏ.
+    IN process  - процесс
+    IN function - функция.
 
-    Return      - true - РїРµСЂРµС…РІР°С‡РµРЅР°,
-                  false - РЅРµ РїРµСЂРµС…РІР°С‡РµРЅР°.
+    Return      - true - перехвачена,
+                  false - не перехвачена.
   */
   bool _isHooked(HANDLE process, void *function);
   
-  /*Р’В Р’В Р’В Р’В Allocates a region of memory where you can make replacement parts intercepted functions.
-Р’В Р’В Р’В Р’В 
-Р’В Р’В Р’В Р’В IN process - a process in which the modification.
-Р’В Р’В Р’В Р’В IN maxFunctions - approximate kolichetsvo features that will be intercepted.
-Р’В Р’В Р’В Р’В 
-Р’В Р’В Р’В Р’В Return - address, or NULL in case of error.
-Р’В Р’В */
+  /*В В В В Allocates a region of memory where you can make replacement parts intercepted functions.
+В В В В 
+В В В В IN process - a process in which the modification.
+В В В В IN maxFunctions - approximate kolichetsvo features that will be intercepted.
+В В В В 
+В В В В Return - address, or NULL in case of error.
+В В */
   void *_allocBuffer(HANDLE process, DWORD maxFunctions);
 };

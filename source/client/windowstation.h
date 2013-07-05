@@ -1,8 +1,8 @@
 /*
-  Р Р°Р±РѕС‚Р° СЃ Window Station's Рё Desktop's.
+  Работа с Window Station's и Desktop's.
 
-  РџСЂРёРјРµС‡Р°РЅРёРµ: Рў.Рє. РґР°РЅРЅС‹Рµ РІРѕР·РјРѕР¶РЅРѕСЃС‚Рё РґРѕРєСѓРјРµРЅС‚РёСЂРѕРІР°РЅС‹ РѕС‡РµРЅСЊ Р±РµРґРЅРѕ, РїСЂРёРЅРёРјР°РµРј РјРµСЂС‹ РјР°РєСЃРёРјР°Р»СЊРЅРѕР№
-              Р±РµР·РѕРїР°СЃРЅРѕСЃС‚Рё, РІ РѕР±РјРµРЅ РЅР° СЂР°Р·РјРµСЂ.
+  Примечание: Т.к. данные возможности документированы очень бедно, принимаем меры максимальной
+              безопасности, в обмен на размер.
 */
 #pragma once
 
@@ -10,87 +10,87 @@
 namespace WindowStation
 {
   /*
-    РРЅРёС†РёР°Р»РёР·Р°С†РёСЏ.
+    Инициализация.
   */
   void init(void);
 
   /*
-    Р”РµРёРЅРёС†РёР°Р»РёР·Р°С†РёСЏ.
+    Деинициализация.
   */
   void uninit(void);
 
   /*
-    РџРѕР»СѓС‡РµРЅРёРµ РёРјРµРЅРё РѕР±СЉРµРєС‚Р°.
+    Получение имени объекта.
 
-    IN handle - РѕР±СЉРµРєС‚.
+    IN handle - объект.
 
-    Return    - РёРјСЏ РѕР±СЉРµРєС‚Р°, РЅРµРѕР±С…РѕРґРёРјРѕ РѕСЃРІРѕР±РѕРґРёС‚СЊ С‡РµСЂРµР· Mem. РР»Рё NULL РІ СЃР»СѓС‡Р°Рё РѕС€РёР±РєРё.
+    Return    - имя объекта, необходимо освободить через Mem. Или NULL в случаи ошибки.
   */
   LPWSTR _getObjectName(HANDLE handle);
 
   /*
-    РџСЂРѕРІРµСЂСЏРµС‚ СѓРєР°Р·С‹РІР°СЋС‚ Р»Рё С…СЌРЅРґР»С‹ РЅР° РѕРґРёРЅ Рё С‚РѕС‚Р¶Рµ РѕР±СЉРµРєС‚.
+    Проверяет указывают ли хэндлы на один и тотже объект.
 
-    IN handle1 - РѕР±СЉРµРєС‚ 1.
-    IN handle2 - РѕР±СЉРµРєС‚ 2.
+    IN handle1 - объект 1.
+    IN handle2 - объект 2.
 
-    Return     - true - РµСЃР»Рё С…СЌРЅРґР»С‹ РїСЂРёРЅР°РґР»РµР¶Р°С‚ РѕРґРЅРѕРјСѓ Рё С‚РѕРјРѕСѓР¶Рµ РѕР±СЉРµРєС‚Сѓ,
-                 false - РІ РїСЂРѕС‚РёРІРЅРѕРј СЃР»СѓС‡Р°Рё.
+    Return     - true - если хэндлы принадлежат одному и томоуже объекту,
+                 false - в противном случаи.
   */
   bool _isEqualObjects(HANDLE handle1, HANDLE handle2);
 
   /*
-    РћС‚РєСЂС‹РІР°РµС‚ РёР»Рё СЃРѕР·РґР°РµС‚ СЃС‚Р°РЅС†РёСЋ.
+    Открывает или создает станцию.
     
-    IN name          - РёРјСЏ СЃС‚Р°РЅС†РёРё РёР»Рё NULL РґР»СЏ СѓСЃС‚Р°РЅРѕРІРєРё Winsta0.
-    IN desiredAccess - РјР°СЃРєР° РґРѕСЃС‚СѓРїР°.
+    IN name          - имя станции или NULL для установки Winsta0.
+    IN desiredAccess - маска доступа.
 
-    Return           - С…СЌРЅРґР» СЃС‚Р°РЅС†РёРё (РЅСѓР¶РЅРѕ Р·Р°РєР°СЂС‹С‚СЊ С‡РµСЂРµР· CloseWindowStation),
-                       РёР»Рё NULL РІ СЃР»СѓС‡Р°Рё РѕС€РёР±РєРё.
+    Return           - хэндл станции (нужно закарыть через CloseWindowStation),
+                       или NULL в случаи ошибки.
   */
   HWINSTA _openWindowStation(const LPWSTR name, ACCESS_MASK desiredAccess);
 
   /*
-    РЈСЃС‚Р°РЅРѕРІРєР° С‚РµРєСѓС‰РµР№ СЃС‚Р°РЅС†РёРё РґР»СЏ РїСЂРѕС†РµСЃСЃ.
+    Установка текущей станции для процесс.
 
-    IN handle - СЃС‚Р°РЅС†РёСЏ РґР»СЏ СѓСЃС‚Р°РЅРѕРІРєРё.
+    IN handle - станция для установки.
 
-    Return    - true - РІ СЃР»СѓС‡Р°Рё СѓСЃРїРµС…Р°,
-                false - РІ СЃР»СѓС‡Р°Рё РѕС€РёР±РєРё.
+    Return    - true - в случаи успеха,
+                false - в случаи ошибки.
   */
   bool _setProcessWindowStation(HWINSTA handle);
 
   /*
-    РћС‚РєСЂС‹РІР°РµС‚ РёР»Рё СЃРѕР·РґР°РµС‚ РґРµСЃРєС‚РѕРї.
+    Открывает или создает десктоп.
 
-    IN name          - РёРјСЏ РґРµРєСЃС‚РѕРїР° РёР»Рё NULL РґР»СЏ СѓСЃС‚Р°РЅРѕРІРєРё default.
-    IN desiredAccess - РјР°СЃРєР° РґРѕСЃС‚СѓРїР°.
+    IN name          - имя декстопа или NULL для установки default.
+    IN desiredAccess - маска доступа.
 
-    Return           - С…СЌРЅРґР» РґРµСЃРєС‚РѕРї (РЅСѓР¶РЅРѕ Р·Р°РєР°СЂС‹С‚СЊ С‡РµСЂРµР· CloseDesktop),
-                       РёР»Рё NULL РІ СЃР»СѓС‡Р°Рё РѕС€РёР±РєРё.
+    Return           - хэндл десктоп (нужно закарыть через CloseDesktop),
+                       или NULL в случаи ошибки.
   */
   HDESK _openDesktop(const LPWSTR name, ACCESS_MASK desiredAccess);
 
   /*
-    РџРµСЂРµРєР»СЋС‡РµРЅРёРµ С‚РµРєС€РµРіРѕ РїРѕС‚РѕРєР° РЅР° РґРµРєСЃС‚РѕРї.
+    Переключение текшего потока на декстоп.
 
-    IN handle - РґРµСЃС‚РѕРї РЅР° РєРѕС‚РѕСЂС‹Р№ СЃР»РµРґСѓРµС‚ РїРµСЂРµРєР»СЋС‡РёС‚СЊСЃСЏ.
+    IN handle - дестоп на который следует переключиться.
 
-    Return    - true - РІ СЃР»СѓС‡Р°Рё СѓСЃРїРµС…Р°,
-                false - РІ СЃР»СѓС‡Р°Рё РѕС€РёР±РєРё.
+    Return    - true - в случаи успеха,
+                false - в случаи ошибки.
   */
   bool _setThreadDesktop(HDESK handle);
 
-  /*Р’В Р’В Р’В Р’В Switching streamed flow on desktops.
+  /*В В В В Switching streamed flow on desktops.
 
-Р’В Р’В Р’В Р’В IN stationName - station name, or NULL to install Winsta0. If the station does not suschetvuet,
-Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В it will be created.
-Р’В Р’В Р’В Р’В IN desktopName - the name of the desktops or NULL to set the default. If the desktops are not suschetvuet,
-Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В it will be created.
+В В В В IN stationName - station name, or NULL to install Winsta0. If the station does not suschetvuet,
+В В В В В В В В В В В В В В В В В В В В В it will be created.
+В В В В IN desktopName - the name of the desktops or NULL to set the default. If the desktops are not suschetvuet,
+В В В В В В В В В В В В В В В В В В В В В it will be created.
 
-Р’В Р’В Р’В Р’В Return - true - if successful,
-Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В false - if an error occurs.
-Р’В Р’В */
+В В В В Return - true - if successful,
+В В В В В В В В В В В В В В В В В В В В В false - if an error occurs.
+В В */
   bool _setThreadDesktopEx(const LPWSTR stationName, const LPWSTR desktopName);
 };
 #endif

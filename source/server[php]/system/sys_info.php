@@ -7,7 +7,7 @@ ThemeBegin(LNG_SYS, 0, 0, 0);
 echo
 str_replace('{WIDTH}', 'auto', THEME_LIST_BEGIN).
 
-//R'RОјSР‚SРѓReRe RСџRС›.
+//R'RμSЂSЃReRe RџRћ.
 str_replace(array('{COLUMNS_COUNT}', '{TEXT}'), array(2, LNG_SYS_VERSIONS), THEME_LIST_TITLE).
   THEME_LIST_ROW_BEGIN.
     str_replace(array('{WIDTH}', '{TEXT}'), array('auto', 'Operation system:'),                              THEME_LIST_ITEM_LTEXT_U1).
@@ -34,7 +34,7 @@ str_replace(array('{COLUMNS_COUNT}', '{TEXT}'), array(2, LNG_SYS_VERSIONS), THEM
     str_replace(array('{WIDTH}', '{TEXT}'), array('auto', htmlEntitiesEx(mysql_get_client_info())),          THEME_LIST_ITEM_LTEXT_U2).
   THEME_LIST_ROW_END.
 
-//RСџSС“S, Fe.
+//RџSѓS, Fe.
 str_replace(array('{COLUMNS_COUNT}', '{TEXT}'), array(2, LNG_SYS_PATHS), THEME_LIST_TITLE).
   THEME_LIST_ROW_BEGIN.
     str_replace(array('{WIDTH}', '{TEXT}'), array('auto', 'Local path:'),                                    THEME_LIST_ITEM_LTEXT_U1).
@@ -45,7 +45,7 @@ str_replace(array('{COLUMNS_COUNT}', '{TEXT}'), array(2, LNG_SYS_PATHS), THEME_L
     str_replace(array('{WIDTH}', '{TEXT}'), array('auto', htmlEntitiesEx($dir.'/'.$config['reports_path'])), THEME_LIST_ITEM_LTEXT_U2).
   THEME_LIST_ROW_END.
 
-//RС™R "ReRОјRР…S.
+//RљR "ReRμRЅS.
 str_replace(array('{COLUMNS_COUNT}', '{TEXT}'), array(2, LNG_SYS_CLIENT), THEME_LIST_TITLE).
   THEME_LIST_ROW_BEGIN.
     str_replace(array('{WIDTH}', '{TEXT}'), array('auto', 'User agent:'),                                    THEME_LIST_ITEM_LTEXT_U1).

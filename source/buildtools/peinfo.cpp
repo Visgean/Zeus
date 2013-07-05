@@ -1,4 +1,4 @@
-/*Р вЂ™Р’В Р вЂ™Р’В Getting information from the PE-file.*/
+/*  Getting information from the PE-file.*/
 #include <windows.h>
 
 #include "defines.h"

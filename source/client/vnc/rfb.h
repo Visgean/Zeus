@@ -1,6 +1,6 @@
 /*
-  РџСЂРѕС‚РѕРєРѕР» RFB.
-  РќР° РѕСЃРЅРѕРІРµ http://www.uvnc.com/
+  Протокол RFB.
+  На основе http://www.uvnc.com/
 
 */
 #pragma once
@@ -123,106 +123,106 @@ namespace Rfb
     void *param; //Arbitrary parameter functions.
 
     /*
-      РЈСЃС‚Р°РЅРѕРІРєР° СЃРїРѕСЃРѕР±Р° Р°РІС‚РѕСЂРёР·Р°С†РёРё РЅР° СЃРµСЂРІРµСЂРµ.
+      Установка способа авторизации на сервере.
 
-      OUT securityType - РѕРґРЅРѕ РёР· Р·РЅР°С‡РµРЅРёР№ ST_*. РџРѕ СѓРјРѕР»С‡Р°РЅРёСЋ Р·РЅР°С‡РµРЅРёРµ СЂР°РІРЅРѕ ST_NONE.
-      OUT errorMessage - РІ СЃР»СѓС‡Р°Рё РµСЃР»Рё *pdwSecurityType == ST_INVALID, СѓРєР°Р·С‹РІР°РµС‚СЃСЏ СЃРѕРѕР±С‰РµРЅРёРµ
-                         РѕР± РѕС€РёР±РєРё, РёРЅР°С‡Р° РёРіРЅР°СЂРёСЂСѓРµС‚СЃСЏ. РЎРѕРґРµСЂР¶РёРјРѕРµ *ppstrErrorMessage РЅРµ Р±СѓРґРµС‚
-                         Р°РІС‚РѕРјР°С‚РёС‡РµСЃРєРё РѕСЃРІРѕР±РѕР¶РґРµРЅРѕ!
+      OUT securityType - одно из значений ST_*. По умолчанию значение равно ST_NONE.
+      OUT errorMessage - в случаи если *pdwSecurityType == ST_INVALID, указывается сообщение
+                         об ошибки, инача игнарируется. Содержимое *ppstrErrorMessage не будет
+                         автоматически освобождено!
     */
     void (*onSecurityType)(void *param, LPDWORD securityType, LPSTR *errorMessage);
     
     /*
-      РџРѕР»СѓС‡РµРЅРёРµ РѕС‚ РєР»РёРµРЅС‚Р° СЃРѕРѕР±С‰РµРЅРёСЏ ClientInit.
+      Получение от клиента сообщения ClientInit.
 
-      IN shared - СЃРѕСЃС‚РѕСЏРЅРёРµ С„Р»Р°РіР° Shared-flag.
+      IN shared - состояние флага Shared-flag.
 
-      Return    - true - РґР»СЏ РїСЂРѕРґРѕР»Р¶РµРЅРёСЏ СЂР°Р±РѕС‚С‹,
-                  false - РґР»СЏ РєРѕСЂСЂРµРєС‚РЅРѕРіРѕ Р·Р°РІРµСЂРµС€РЅРёСЏ СЂР°Р±РѕС‚С‹.
+      Return    - true - для продолжения работы,
+                  false - для корректного заверешния работы.
     */
     bool (*onClientInit)(void *param, BYTE shared);
     
     /*
-      Р’С‹Р·С‹РІР°РµС‚СЃСЏ РїРµСЂРµРґ РѕС‚РїСЂР°РІРєРѕР№ СЃРѕРѕР±С‰РµРЅРёСЏ ServerInit.
+      Вызывается перед отправкой сообщения ServerInit.
 
-      OUT name - СѓРєР°Р·Р°С‚РµР»СЊ РЅР° РёРјСЏ СЃРµСЂРІРµСЂР°. Р‘СѓС„РµСЂ РЅРµ РѕСЃРІРѕР¶РґР°РµС‚СЃСЏ Р°РІС‚РѕРјР°С‚РёС‡РµСЃРєРё!
-      OUT size - СЂР°Р·РјРµСЂ РёР·РѕР±СЂРѕР¶РµРЅРёСЏ.
+      OUT name - указатель на имя сервера. Буфер не освождается автоматически!
+      OUT size - размер изоброжения.
 
-      Return   - Memory DC - Р±СѓРґРµС‚ РёСЃРїРѕР»СЊР·РѕРІР°С‚СЃСЏ РґР»СЏ СЂР°Р±РѕС‚С‹ СЃРµСЂРІРµСЂР°, Р±СѓРґРµС‚ РѕСЃРІРѕР±РѕР¶РґРµРЅ
-                 СЃР°РјРѕСЃС‚РѕСЏС‚РµР»СЊРЅРѕ.
-                 NULL - РґР»СЏ РєРѕСЂСЂРµРєС‚РЅРѕРіРѕ Р·Р°РІРµСЂРµС€РЅРёСЏ СЂР°Р±РѕС‚С‹. 
+      Return   - Memory DC - будет использоватся для работы сервера, будет освобожден
+                 самостоятельно.
+                 NULL - для корректного заверешния работы. 
    */
     HDC (*onServerInit)(void *param, LPSTR *name, POINT *size);
 
     /*
-      РџРѕРґРіРѕС‚РѕРІРєР° Рє РїРѕРёСЃРєСѓ РѕР±РЅРѕРІРѕР»РµРЅРёР№ РёР·РѕР±СЂР°Р¶РµРЅРёСЏ.
+      Подготовка к поиску обноволений изображения.
     */
     void (*OnUpdateDC)(void *pParam);
 
     /*
-      РР·РјРµРЅРµРЅРёРµ СЃРѕСЃС‚РѕСЏРЅРёРµ РєР»Р°РІРёС€Рё.
+      Изменение состояние клавиши.
 
       IN keySym - KeySym.
-      IN down   - true - РЅР°Р¶Р°С‚РёРµ, false - РѕС‚РїСЃСѓРєР°РЅРёРµ.
+      IN down   - true - нажатие, false - отпсукание.
     */
     void (*onKeyEvent)(void *param, DWORD keySym, bool down);
     
     /*
-      РР·РјРµРЅРµРЅРёРµ СЃРѕСЃС‚РѕСЏРЅРёСЏ СѓРєР°Р·Р°С‚РµР»СЏ.
+      Изменение состояния указателя.
 
-      IN ..       - РїРѕР»РЅС‹Р№ Р°РЅР°Р»РѕРі mouse_event.
+      IN ..       - полный аналог mouse_event.
     */
     void (*OnPointerEvent)(void *pParam, DWORD dwFlags, LONG wX, LONG wY, DWORD dwData);
 
     /*
-      Р’СЃС‚Р°РІРєР° С‚РµРєСЃС‚Р°.
+      Вставка текста.
       
-      IN dwLen      - СЂР°Р·РјРµСЂ С‚РµРєСЃС‚Р°.
-      IN pstrString - СЃС‚СЂРѕРєР°.
+      IN dwLen      - размер текста.
+      IN pstrString - строка.
     */
     void (*OnClientCutText)(void *pParam, DWORD dwLen, LPSTR pstrString);
   }SERVER_CALLBACKS;
   
   /*
-    РРЅРёС†РёР°Р»РёР·Р°С†РёСЏ.
+    Инициализация.
   */
   void init(void);
 
   /*
-    Р”РµРёРЅРёС†РёР°Р»РёР·Р°С†РёСЏ.
+    Деинициализация.
   */
   void uninit(void);
 
   /*
-    Р—Р°РїСѓСЃРє RFB РїСЂС‚РѕРєРѕР»Р°.
+    Запуск RFB пртокола.
 
-    IN s                 - СЃРѕРєРµС‚.
-    IN dwTimeout         - С‚Р°Р№РјР°СѓС‚ РѕР¶РёРґР°РЅРёРµ РѕС‚РІРµС‚РѕРІ РѕС‚ РєР»РёРµРЅС‚Р°, РёР»Рё 0 РґР»СЏ Р±РµСЃРєРѕРЅРµС‡РЅРѕРіРѕ РѕР¶РёРґР°РЅРёСЏ.
-    IN pCallbacks        - СЃРїРёСЃРѕРє РєСЌСЌР»Р±СЌРє С„СѓРЅРєС†РёР№.
-    IN hDIBMap           - Map-file РґР»СЏ Р±РёС‚РјР°РїР°, РёР·РјРµРЅРµРЅРёСЏ РєРѕС‚РѕСЂРѕРіРѕ Р±СѓРґСѓС‚ РїСЂРѕРІРµСЂСЏС‚СЊСЃСЏ, РёР»Рё NULL.
-    IN updateMutex       - РјСЋС‚РµРєСЃ Р±Р»РѕРєРёСЂРѕРІРєРё РѕР±РЅРІРѕР»РµРЅРёР№ Р±РёС‚РјР°РїР°, РёР»Рё NULL.
-    IN dwRefreshInterval - Р·Р°РґРµСЂР¶РєР° РјРµР¶РґСѓ РїРѕРёСЃРєРѕРј РёР·РјРµРЅРµРЅРёР№ РёР·РѕР±СЂР°Р¶РµРЅРёСЏ.
+    IN s                 - сокет.
+    IN dwTimeout         - таймаут ожидание ответов от клиента, или 0 для бесконечного ожидания.
+    IN pCallbacks        - список кээлбэк функций.
+    IN hDIBMap           - Map-file для битмапа, изменения которого будут проверяться, или NULL.
+    IN updateMutex       - мютекс блокировки обнволений битмапа, или NULL.
+    IN dwRefreshInterval - задержка между поиском изменений изображения.
   */
   void _ServerThread(SOCKET s, DWORD dwTimeout, SERVER_CALLBACKS *pCallbacks, HANDLE hDIBMap, DWORD mapOffset, HANDLE updateMutex, DWORD dwRefreshInterval);
 
   /*
-    РџСЂРѕРёРіСЂР°С‚СЊ Р·РІСѓРєРѕРІРѕР№ СЃРёРіРЅР°Р» РЅР° РєР»РёРµРЅС‚Рµ.
+    Проиграть звуковой сигнал на клиенте.
 
-    IN s   - СЃРѕРєРµС‚ РєР»РёРµРЅС‚Р°.
+    IN s   - сокет клиента.
 
-    Return - true - РІ СЃР»СѓС‡Р°Рё СѓСЃРїРµС…Р°,
-             false - РІ СЃР»СѓС‡Р°Рё РѕС€РёР±РєРё.
+    Return - true - в случаи успеха,
+             false - в случаи ошибки.
   */
   bool _SendBell(SOCKET s);
   
-  /*Р’В Р’В Р’В Р’В Send a "buffer" the text to the client.
-Р’В Р’В Р’В Р’В 
-Р’В Р’В Р’В Р’В IN s - the client socket.
-Р’В Р’В Р’В Р’В IN pstrText - text to send.
+  /*В В В В Send a "buffer" the text to the client.
+В В В В 
+В В В В IN s - the client socket.
+В В В В IN pstrText - text to send.
 
-Р’В Р’В Р’В Р’В Return - true - if successful,
-Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В false - if an error occurs.
-Р’В Р’В */
+В В В В Return - true - if successful,
+В В В В В В В В В В В В В false - if an error occurs.
+В В */
   bool _CopyText(SOCKET s, LPSTR pstrText);
 };
 

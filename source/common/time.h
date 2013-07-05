@@ -1,65 +1,65 @@
 /*
-  РќР°Р±РѕСЂ С„СѓРЅРєС†РёР№ РґР»СЏ СЂР°Р±РѕС‚С‹ СЃРѕ РІСЂРµРјРµРЅРµРј РІ С„РѕСЂРјР°С‚Рµ Unix.
+  Набор функций для работы со временем в формате Unix.
 */
 #pragma once
 
 namespace Time
 {
   /*
-    РРЅРёС†РёР°Р»РёР·Р°С†РёСЏ.
+    Инициализация.
   */
   void init(void);
 
   /*
-    Р”РµРёРЅРёС†РёР°Р»РёР·Р°С†РёСЏ.
+    Деинициализация.
   */
   void uninit(void);
 
   /*
-    РџРѕР»СѓС‡РµРЅРёРµ С‚РµРєСѓС‰РµРіРѕ РІСЂРµРјРµРЅРё.
+    Получение текущего времени.
 
-    Return - С‚РµРєСѓС‰РµРµ РІСЂРµРјСЏ.
+    Return - текущее время.
   */
   DWORD _getTime(void);
 
   /*
-    РџРѕР»СѓС‡РµРЅРёРµ С‚РµРєСѓС‰РµРіРѕ РІСЂРµРјРµРЅРё GMT.
+    Получение текущего времени GMT.
 
-    Return - С‚РµРєСѓС‰РµРµ РІСЂРµРјСЏ.
+    Return - текущее время.
   */
   DWORD _getLocalTime(void);
 
   /*
-    РџРѕР»СѓС‡РµРЅРёРµ С‚РµРєСѓС‰РµРіРѕ GMT.
+    Получение текущего GMT.
 
-    Return - С‚РµРєСѓС‰РµРµ GMT РІ СЃРµРєСѓРЅРґР°С….
+    Return - текущее GMT в секундах.
   */
   int _getLocalGmt(void);
 
   /*
-    РљРѕРЅРІРµСЂС‚Р°С†РёСЏ FILETIME РІ Unix РІСЂРµРјСЏ.
+    Конвертация FILETIME в Unix время.
 
-    IN ft  - СѓРєР°Р·Р°С‚РµР»СЊ РЅР° FILETIME.
+    IN ft  - указатель на FILETIME.
 
-    Return - Unix РІСЂРµРјСЏ.
+    Return - Unix время.
   */
   DWORD _fileTimeToTime(const FILETIME *ft);
 
   /*
-    РљРѕРЅРІРµСЂС‚Р°С†РёСЏ Unix РІСЂРµРјРµРЅРё РІ FILETIME.
+    Конвертация Unix времени в FILETIME.
 
-    IN time - РІСЂРµРјСЏ.
-    OUT ft  - СѓРєР°Р·Р°С‚РµР»СЊ РЅР° FILETIME.
+    IN time - время.
+    OUT ft  - указатель на FILETIME.
 
-    Return  - Unix РІСЂРµРјСЏ.
+    Return  - Unix время.
   */
   void _timeToFileTime(const DWORD time, FILETIME *ft);
   
-  /*Р’В Р’В Р’В Р’В Converting SYSTEMTIME to Unix time.
+  /*В В В В Converting SYSTEMTIME to Unix time.
 
-Р’В Р’В Р’В Р’В IN st - a pointer to the SYSTEMTIME.
+В В В В IN st - a pointer to the SYSTEMTIME.
 
-Р’В Р’В Р’В Р’В Return - Unix time.
-Р’В Р’В */
+В В В В Return - Unix time.
+В В */
   DWORD _systemTimeToTime(const SYSTEMTIME *st);
 };

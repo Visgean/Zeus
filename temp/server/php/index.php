@@ -1,23 +1,23 @@
 <?php if(!defined('__CP__') && !defined('__INSTALL__'))die();
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-// Р”Р°РЅРЅС‹Рµ С‚РµРјС‹.
+// Данные темы.
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
-//РўРёРї РІС‹РІРѕРґР°.
+//Тип вывода.
 define('THEME_CONTENT_TYPE', 'application/xhtml+xml');
 
 //JavaScript.
 define('THEME_JAVASCRIPT_BODY',     "<script type=\"text/javascript\"><![CDATA[\r\n{SCRIPT}\r\n]]></script>");
 define('THEME_JAVASCRIPT_EXTERNAL', '<script type="text/javascript" src="{PATH}"></script>');
 
-//Р“Р»Р°РІРЅРѕРµ РјРµРЅСЋ.
+//Главное меню.
 define('THEME_MAINMENU_SEPARATOR',    '<div class="menu_separator"></div>');
 define('THEME_MAINMENU_SUBHEADER',    THEME_MAINMENU_SEPARATOR.'<div class="menu_header">{TITLE}</div>');
 define('THEME_MAINMENU_ITEM',         '<a href="{URL}">{TEXT}</a>');
 define('THEME_MAINMENU_ITEM_CURRENT', '<a href="{URL}">&#8594;&#160;{TEXT}</a>');
 
-//Р Р°Р·РЅРѕРµ.
+//Разное.
 define('THEME_STRING_FORM_ERROR_1_BEGIN',   '<div class="error" style="text-align:center;margin:0 auto"><br/><br/>');
 define('THEME_STRING_FORM_ERROR_1_END',     '<br/><br/></div>');
 define('THEME_STRING_FORM_SUCCESS_1_BEGIN', '<div class="success" style="text-align:center;margin:0 auto"><br/><br/>');
@@ -33,20 +33,20 @@ define('THEME_STRING_SUCCESS',              '<strong class="success">{TEXT}</str
 define('THEME_STRING_HELP_ANCHOR',          '<a href="{URL}" onclick="this.target=\'_blank\'">[?]</a>');
 define('THEME_VSPACE',                      '<div><br/><br/></div>');
 
-//РџСЂРµРґРїСЂРѕСЃРјС‚РѕСЂ РѕС‚С‡РµС‚Р°.
+//Предпросмтор отчета.
 define('THEME_STRING_REPORTPREVIEW',     '<a onclick="this.target=\'_blank\'" href="{URL}">[+]</a>&#160;{TEXT}');
 define('THEME_STRING_REPORTPREVIEW_FTP', '<a onclick="this.target=\'_blank\'" href="{URL}">{TEXT}</a>');
 
-//РЎРєСЂРёРЅС€РѕС‚
+//Скриншот
 define('THEME_SCREENSHOT', '<img class="screenshot" src="{URL}" alt="screenshot" />');
 
-//РљР°СЂС‚РёРЅРєР° РѕР¶РёРґР°РЅРёСЏ
+//Картинка ожидания
 define('THEME_IMG_WAIT', '<img src="'.THEME_PATH.'/throbber.gif" alt="throbber" />');
 
-//Р’СЃРїР»С‹РІР°СЋС‰РёРµ РјРµРЅСЋ.
+//Всплывающие меню.
 define('THEME_POPUPMENU_BOT', '<a class="bot_a" href="#" onclick="return jsmShowMenu({ID}, {MENU_NAME}, Array(), Array(\'{BOTID_FOR_URL}\'))">{BOTID}</a><div style="display:none;text-align:left" id="popupmenu{ID}"></div>');
 
-//Р Р°Р±РѕС‚Р° СЃ С„РѕСЂРјРѕР№.
+//Работа с формой.
 define('THEME_FORMPOST_BEGIN',        '<form method="post" id="{NAME}" action="{URL}"{JS_EVENTS}>');
 define('THEME_FORMPOST_TO_NEW_BEGIN', "<form method=\"post\" id=\"{NAME}\" action=\"{URL}\"{JS_EVENTS}><script type=\"text/javascript\"><![CDATA[\r\ndocument.getElementById('{NAME}').target='_blank'\r\n]]></script>");
 define('THEME_FORMPOST_MP_BEGIN',     '<form method="post" id="{NAME}" enctype="multipart/form-data" action="{URL}"{JS_EVENTS}>');
@@ -56,7 +56,7 @@ define('THEME_FORMGET_TO_NEW_BEGIN',  "<form method=\"get\" id=\"{NAME}\" action
 define('THEME_FORMGET_END',           '</form>');
 define('THEME_FORM_VALUE',            '<div style="display:none"><input type="hidden" name="{NAME}" value="{VALUE}" /></div>');
 
-//Р”РёР°Р»РѕРі.
+//Диалог.
 define('THEME_DIALOG_BEGIN',                    '<table class="table_frame" style="width:{WIDTH}">');
 define('THEME_DIALOG_END',                      '</table>');
 define('THEME_DIALOG_TITLE',                    '<tr><td colspan="{COLUMNS_COUNT}" class="td_header" align="left">{TEXT}</td></tr>');
@@ -108,7 +108,7 @@ define('THEME_DIALOG_ACTIONLIST_END',           '</td></tr>');
 define('THEME_DIALOG_ANCHOR',                   '<a href="{URL}">{TEXT}</a>');
 define('THEME_DIALOG_ANCHOR_BLANK',             '<a href="{URL}" onclick="this.target=\'_blank\'">{TEXT}</a>');
 
-//РЎРїРёСЃРѕРє
+//Список
 define('THEME_LIST_BEGIN',                       '<table class="table_frame" style="width:{WIDTH}">');
 define('THEME_LIST_END',                         '</table>');
 define('THEME_LIST_TITLE',                       '<tr><td colspan="{COLUMNS_COUNT}" align="left" class="td_header">{TEXT}</td></tr>');
@@ -148,20 +148,20 @@ define('THEME_LIST_ANCHOR',                      '<a href="{URL}">{TEXT}</a>');
 define('THEME_LIST_ANCHOR_BLANK',                '<a href="{URL}" onclick="this.target=\'_blank\'">{TEXT}</a>');
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-// РЈРїСЂР°РІР»РµРЅРёРµ С‚РµРјРѕР№.
+// Управление темой.
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
 /*
-  РќР°С‡Р°Р»Рѕ РІС‹РІРѕРґР° РєРѕРґР°.
+  Начало вывода кода.
   
-  IN $subtitle   - string, РїРѕРґР·Р°РіРѕР»РѕРІРѕРє СЃС‚СЂР°РЅРёС†С‹.
-  IN $js_script  - string, РґРѕРїРѕР»СЊРЅРёС‚РµР»РЅС‹Р№ JavaScript СЃРєСЂРёРїС‚, РёР»Рё 0, РµСЃР»Рё РѕРЅ РЅРµ РЅСѓР¶РµРЅ.
-  IN $popup_menu - string, РґР°РЅРЅС‹Рµ РґР»СЏ РІСЃРїР»С‹РІР°СЋС‰РµРіРѕ РјРµРЅСЋ, РёР»Рё 0, РµСЃР»Рё РѕРЅРѕ РЅРµ РЅСѓР¶РЅРѕ.
-  IN $body_events - string, JavaScript-СЃРѕР±С‹С‚РёСЏ РґР»СЏ РґРѕРєСѓРјРµРЅС‚Р°, РёР»Рё 0, РµСЃР»Рё РѕРЅРѕ РЅРµ РЅСѓР¶РЅРѕ.
+  IN $subtitle   - string, подзаголовок страницы.
+  IN $js_script  - string, допольнителный JavaScript скрипт, или 0, если он не нужен.
+  IN $popup_menu - string, данные для всплывающего меню, или 0, если оно не нужно.
+  IN $body_events - string, JavaScript-события для документа, или 0, если оно не нужно.
 */
 function ThemeBegin($subtitle, $js_script, $popup_menu, $body_events)
 {
-  //Р”РѕР±Р°РІР»РµРЅРёРµ JavaScript.
+  //Добавление JavaScript.
   $javascript = '';
   $body_js_events = $body_events === 0 ? '' : $body_events;
   
@@ -172,7 +172,7 @@ function ThemeBegin($subtitle, $js_script, $popup_menu, $body_events)
     $body_js_events .= ' onclick="jsmHideLastMenu()"';
   }
   
-  //Р”РѕР±Р°РІР»РµРЅРёРµ РіР»Р°РІРЅРѕРіРѕ РјРµРЅСЋ.
+  //Добавление главного меню.
   $mainmenu = '';  
   foreach($GLOBALS['mainMenu'] as &$item)
   {
@@ -190,7 +190,7 @@ function ThemeBegin($subtitle, $js_script, $popup_menu, $body_events)
 }
 
 /*
-  РљРѕРЅРµС† РІС‹РІРѕРґР° РєРѕРґР°.
+  Конец вывода кода.
 */  
 function ThemeEnd()
 {
@@ -198,17 +198,17 @@ function ThemeEnd()
 }
 
 /*
-  Р’С‹РІРѕРґР° РєРѕРґР° РґР»СЏ РЅРµР±РѕР»СЊС€РёС… СЃС‚СЂР°РЅРёС†.
+  Вывода кода для небольших страниц.
   
-  IN $subtitle    - string, РїРѕРґР·Р°РіРѕР»РѕРІРѕРє СЃС‚СЂР°РЅРёС†С‹.
-  IN $data        - string, СЃРѕРґРµСЂР¶РёРјРѕРµ СЃСЂР°РЅРёС†С‹.
-  IN $js_script   - string, РґРѕРїРѕР»СЊРЅРёС‚РµР»РЅС‹Р№ JavaScript СЃРєСЂРёРїС‚, РёР»Рё 0, РµСЃР»Рё РѕРЅ РЅРµ РЅСѓР¶РµРЅ.
-  IN $popup_menu  - string, РґР°РЅРЅС‹Рµ РґР»СЏ РІСЃРїР»С‹РІР°СЋС‰РµРіРѕ РјРµРЅСЋ, РёР»Рё 0, РµСЃР»Рё РѕРЅРѕ РЅРµ РЅСѓР¶РµРЅРѕ.
-  IN $body_events - string, JavaScript-СЃРѕР±С‹С‚РёСЏ РґР»СЏ РґРѕРєСѓРјРµРЅС‚Р°, РёР»Рё 0, РµСЃР»Рё РѕРЅРѕ РЅРµ РЅСѓР¶РЅРѕ.
+  IN $subtitle    - string, подзаголовок страницы.
+  IN $data        - string, содержимое сраницы.
+  IN $js_script   - string, допольнителный JavaScript скрипт, или 0, если он не нужен.
+  IN $popup_menu  - string, данные для всплывающего меню, или 0, если оно не нужено.
+  IN $body_events - string, JavaScript-события для документа, или 0, если оно не нужно.
 */
 function themeSmall($subtitle, $data, $js_script, $popup_menu, $body_events)
 {
-  //Р”РѕР±Р°РІР»РµРЅРёРµ JavaScript.
+  //Добавление JavaScript.
   $javascript = '';
   $body_js_events = $body_events === 0 ? '' : $body_events;
   
@@ -228,7 +228,7 @@ function themeSmall($subtitle, $data, $js_script, $popup_menu, $body_events)
 }
 
 /*
-  Р’С‹РІРѕРґ СЃРѕРѕР±С‰РµРЅРёСЏ РѕР± MySQL РѕС€РёР±РєРё Рё РІС‹С…РѕРґ.
+  Вывод сообщения об MySQL ошибки и выход.
 */
 function ThemeMySQLError()
 {
@@ -237,9 +237,9 @@ function ThemeMySQLError()
 }
 
 /*
-  Р’С‹РІРѕРґ СЃРѕРѕР±С‰РµРЅРёСЏ РѕР± РѕС€РёР±РєРё Рё РІС‹С…РѕРґ.
+  Вывод сообщения об ошибки и выход.
   
-  IN $string - string, СЃРѕРѕР±С‰РµРЅРёРµ РѕР± РѕС€РёР±РєРё.
+  IN $string - string, сообщение об ошибки.
 */
 function ThemeFatalError($string)
 {
@@ -249,15 +249,15 @@ function ThemeFatalError($string)
 
 
 /*
-  Р’С‹РІРѕРґ СЃРїРёСЃРєР° РЅРѕРјРµСЂРѕРІ СЃС‚СЂР°РЅРёС†.
+  Вывод списка номеров страниц.
   
-  IN $list         - array, РјР°СЃСЃРёРІ РјР°СЃСЃРёРІРѕРІ РЅРѕРјРµСЂРѕРІ СЃС‚СЂР°РЅРёС†.
-  IN $js_to_first - string, JavaScript РЅР° РїРµСЂРІСѓСЋ СЃС‚СЂР°РЅРёС†Сѓ, РёР»Рё 0.
-  IN $js_to_prev  - string, JavaScript РЅР° РїСЂРµРґРёРґСѓС‰РёСЋ СЃС‚СЂР°РЅРёС†Сѓ, РёР»Рё 0.
-  IN $js_to_last  - string, JavaScript РЅР° РїРѕСЃР»РµРґРЅРёСЋ СЃС‚СЂР°РЅРёС†Сѓ, РёР»Рё 0.
-  IN $js_to_next  - string, JavaScript РЅР° СЃР»РµРґСѓСЋС‰РёСЋ СЃС‚СЂР°РЅРёС†Сѓ, РёР»Рё 0.
+  IN $list         - array, массив массивов номеров страниц.
+  IN $js_to_first - string, JavaScript на первую страницу, или 0.
+  IN $js_to_prev  - string, JavaScript на предидущию страницу, или 0.
+  IN $js_to_last  - string, JavaScript на последнию страницу, или 0.
+  IN $js_to_next  - string, JavaScript на следующию страницу, или 0.
   
-  Return           - string, СЃРїРёСЃРѕРє РЅРѕРјРµСЂРѕРІ СЃС‚СЂР°РЅРёС†.
+  Return           - string, список номеров страниц.
 */
 function themePageList($list, $js_to_first, $js_to_prev, $js_to_last, $js_to_next)
 { 

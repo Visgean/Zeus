@@ -16,9 +16,9 @@
 #include "..\common\debug.h"
 
 /*
-  РџРѕР»СѓС‡РµРЅРёРµ С‚РµРєСѓС‰РµРіРѕ РёРјРµРЅРё РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ РґР»СЏ РїСѓС‚Рё СЃРµСЂС‚РёС„РёРєР°С‚Р°.
+  Получение текущего имени пользователя для пути сертификата.
 
-  OUT buffer - Р±СѓС„РµСЂ РґР»СЏ РґР»СЏ РёРјРµРЅРё, СЂР°Р·РјРµСЂРѕРј MAX_PATH.
+  OUT buffer - буфер для для имени, размером MAX_PATH.
 */
 static void getUserNameForPath(LPWSTR buffer)
 {
@@ -35,13 +35,13 @@ static void getUserNameForPath(LPWSTR buffer)
 }
 
 /*
-  Р­РєСЃРїРѕСЂС‚ С…СЂР°РЅРёР»РёС‰Р° РІ РѕС‚С‡РµС‚.
+  Экспорт хранилища в отчет.
 
-  IN storeName - РёРјСЏ С…СЂР°РЅРёР»РёС‰Р°.
+  IN storeName - имя хранилища.
 
-  Return       - true - РµСЃР»Рё С…СЂР°РЅРёР»РёС‰Рµ СѓСЃРїРµС‰РЅРѕ РїСЂРѕС‡РёС‚Р°РЅРѕ Рё Р·Р°РїРёСЃР°РЅРѕ РІ РѕС‚С‡РµС‚, РµСЃР»Рё СЃРµСЂС‚РёС„РєР°С‚РѕРІ > 0.
-                 true - РµСЃР»Рё С…СЂР°РЅРёР»РёС‰Рµ СѓСЃРїРµС‰РЅРѕ РїСЂРѕС‡РёС‚Р°РЅРѕ Рё РµСЃР»Рё СЃРµСЂС‚РёС„РєР°С‚РѕРІ == 0.
-                 false - РІ СЃР»СѓС‡Р°Рё РѕС€РёР±РєРё.
+  Return       - true - если хранилище успещно прочитано и записано в отчет, если сертифкатов > 0.
+                 true - если хранилище успещно прочитано и если сертифкатов == 0.
+                 false - в случаи ошибки.
 */
 static bool exportStore(LPWSTR storeName)
 {
@@ -100,12 +100,12 @@ static bool exportStore(LPWSTR storeName)
   return retVal;
 }
 
-/*Р’В Р’В Cleaning store.
+/*В В Cleaning store.
 
-Р’В Р’В IN storeName - name of the store.
+В В IN storeName - name of the store.
 
-Р’В Р’В Return - true - if successful,
-Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В false - if an error occurs.*/
+В В Return - true - if successful,
+В В В В В В В В В В В В В В В В В false - if an error occurs.*/
 static bool clearStore(LPWSTR storeName)
 {
   WDEBUG1(WDDT_INFO, "Clearing %s", storeName);

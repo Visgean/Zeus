@@ -1,6 +1,6 @@
 #pragma once
 /*
-  РЎРёСЃС‚РµРјР° РґР»СЏ СЃРѕР·РґР°РЅРёСЏ Рё РѕС‚РїСЂР°РІРєРё РѕС‚Р»Р°РґРѕС‡РЅС‹С… РѕС‚С‡РµС‚РѕРІ РЅР° СЃРµСЂРІРµСЂ (BO_DEBUG == 2) РёР»Рё Р»РѕРєР°Р»СЊРЅРѕ
+  Система для создания и отправки отладочных отчетов на сервер (BO_DEBUG == 2) или локально
   (BO_DEBUG == 1).
 */
 
@@ -32,37 +32,37 @@ namespace DebugClient
   };
 
   /*
-    РРЅРёС†РёР°Р»РёР·Р°С†РёСЏ.
+    Инициализация.
   */
   void Init(void);
 
   /*
-    Р”РµРёРЅРёС†РёР°Р»РёР·Р°С†РёСЏ.
+    Деинициализация.
   */
   void Uninit(void);
 
   /*
-    Р—Р°РїРёСЃСЊ СЃС‚СЂРѕРєРё РІ РѕС‚Р»Р°РґРѕС‡РЅС‹Р№ РѕС‚С‡РµС‚.
+    Запись строки в отладочный отчет.
 
-    IN pstrFuncName   - РёРјСЏ С‚РµРєСѓС‰РµР№ С„СѓРЅРєС†РёРё.
-    IN pstrSourceFile - РёРјСЏ С‚РµРєСѓС‰РµРіРѕ С„Р°Р№Р»Р°.
-    IN dwLineNumber   - РЅРѕРјРµСЂ С‚РµРєС‰РµР№ СЃС‚СЂРѕРєРё РІ С‚РµРєС‰РµРј С„Р°Р№Р»Рµ.
-    IN bType          - РѕРґРЅРѕ РёР· Р·РЅР°С‡РµРЅРёР№ WDDT_*.
-    IN pstrFormat     - С„РѕСЂРјР°С‚ СЃС‚СЂРѕРєРё Р°РЅРѕР»РѕРіРёС‡РЅРѕ sprintf.
-    IN ...            - РЅР°Р±РѕСЂ Р°СЂРіСѓРјРµРЅС‚РѕРІ РґР»СЏ pstrFormat.
+    IN pstrFuncName   - имя текущей функции.
+    IN pstrSourceFile - имя текущего файла.
+    IN dwLineNumber   - номер текщей строки в текщем файле.
+    IN bType          - одно из значений WDDT_*.
+    IN pstrFormat     - формат строки анологично sprintf.
+    IN ...            - набор аргументов для pstrFormat.
   */
   void WriteString(LPSTR pstrFuncName, LPSTR pstrSourceFile, DWORD dwLineNumber, BYTE bType, LPWSTR pstrFormat, ...);
 
   /*
-    Р—Р°РїСѓСЃРє Р»РѕРєР°Р»СЊРЅРѕРіРѕ СЃРµСЂРІРµСЂР° РґР»СЏ РїСЂРёРµРјР° Р»РѕРіРѕРІ РѕС‚ WriteString РІСЃРµС… РїСЂРѕС†РµСЃСЃРѕРІ, Рё РѕС‚РїСЂР°РІРєРё РёС… РЅР°
-    СЃРµСЂРІРµСЂ.
+    Запуск локального сервера для приема логов от WriteString всех процессов, и отправки их на
+    сервер.
   */
 #if(BO_DEBUG == 2)
   void StartLogServer(void);
 #endif
   
-  /*Р’В Р’В Р’В Р’В Setting the hook on the exclusion for entry in the log.
-Р’В Р’В */
+  /*В В В В Setting the hook on the exclusion for entry in the log.
+В В */
   void RegisterExceptionFilter(void);
 };
 #else

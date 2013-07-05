@@ -1,6 +1,6 @@
 /*
-  РЈРїСЂР°РІР»РµРЅРёРµ Р»РѕРєР°Р»СЊРЅС‹РјРё РЅР°СЃС‚СЂРѕР№РєР°РјРё.
-  Р—РґРµСЃСЊ С…СЂР°РЅСЏС‚СЃСЏ РЅР°СЃС‚СЂРѕР№РєРё Рє РєРѕС‚РѕСЂРѕС‹Рј С‚СЂРµР±СѓРµС‚СЃСЏ Р±С‹СЃС‚СЂС‹Р№ Рё С‡Р°СЃС‚С‹Р№ РґРѕСЃС‚СѓРї.
+  Управление локальными настройками.
+  Здесь хранятся настройки к котороым требуется быстрый и частый доступ.
 */
 #pragma once
 
@@ -36,39 +36,39 @@ namespace LocalSettings
 # pragma pack(pop)
 
   /*
-    РРЅРёС†РёР°Р»РёР·Р°С†РёСЏ.
+    Инициализация.
   */
   void init(void);
 
   /*
-    Р”РµРёРЅРёС†РёР°Р»РёР·Р°С†РёСЏ.
+    Деинициализация.
   */
   void uninit(void);
 
   /*
-    РџРѕР»СѓС‡РµРЅРёРµ С‚РµРєСѓС‰РёС… РЅР°СЃС‚СЂРѕРµРє Р±РµР· Р±Р»РѕРєРёСЂРѕРІРєРё.
+    Получение текущих настроек без блокировки.
 
-    OUT settings - Р±СѓС„РµСЂ РґР»СЏ РЅР°СЃС‚СЂРѕРµРє.
+    OUT settings - буфер для настроек.
   */
   void getCurrent(SETTINGS *settings);
   
   /*
-    РџРѕР»СѓС‡РµРЅРёРµ С‚РµРєСѓС‰РёС… РЅР°СЃС‚СЂРѕРµРє СЃ Р±Р»РѕРєРёСЂРѕРІРєРѕР№ РґРѕСЃС‚СѓРїР° РґР»СЏ РґСЂСѓРіРёС… РїРѕС‚РѕРєРѕРІ Рё РїСЂРѕС†РµСЃСЃРѕРІ.
+    Получение текущих настроек с блокировкой доступа для других потоков и процессов.
 
-    OUT settings - Р±СѓС„РµСЂ РґР»СЏ РЅР°СЃС‚СЂРѕРµРє.
+    OUT settings - буфер для настроек.
 
-    Return       - true - РЅР°СЃС‚СЂРѕРєРё РїСЂРѕС‡РёС‚Р°РЅС‹, РґРѕСЃС‚СѓРї Р·Р°Р±Р»РѕРєРёСЂРѕРІР°РЅ,
-                   false - РїСЂРѕРёР·РѕС€Р»Р° РѕС€РёР±РєР°.
+    Return       - true - настроки прочитаны, доступ заблокирован,
+                   false - произошла ошибка.
   */
   bool beginReadWrite(SETTINGS *settings);
 
-  /*Р’В Р’В Р’В Р’В Unlock established beginReadWrite () and save the changes.
+  /*В В В В Unlock established beginReadWrite () and save the changes.
 
-Р’В Р’В Р’В Р’В IN OUT settings - settings for the conservation, preservation, or NULL if not required. At the exit
-Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В buffer content is not suitable for use.
-Р’В Р’В Р’В Р’В 
-Р’В Р’В Р’В Р’В Return - true - settings successfully saved,
-Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В false - the settings are not saved.
-Р’В Р’В */
+В В В В IN OUT settings - settings for the conservation, preservation, or NULL if not required. At the exit
+В В В В В В В В В В В В В В В В В В В В В В buffer content is not suitable for use.
+В В В В 
+В В В В Return - true - settings successfully saved,
+В В В В В В В В В В В В В В В В В В В В В В false - the settings are not saved.
+В В */
   bool endReadWrite(SETTINGS *settings);
 };

@@ -64,19 +64,19 @@ void Socks5Server::uninit(void)
 }
 
 /*
-  РћС‚РїСЂР°РІРєР° РѕС‚РІРµС‚Р° РєР»РёРµРЅС‚Сѓ Socks5.
+  Отправка ответа клиенту Socks5.
 
-  IN sourceSocket - СЃРѕРєРµС‚, РЅР° РєРѕС‚РѕС‹СЂР№ Р±СѓРґРµС‚ РѕС‚РїСЂР°РІР»РµРЅ РѕС‚РІРµС‚.
-  IN nameSocket   - СЃРѕРєРµС‚, РґР°РЅРЅС‹Рµ РєРѕС‚РѕСЂРѕРіРѕ РЅСѓР¶РЅРѕ РїРѕР»СѓС‡РёС‚СЊ РёР»Рё INVALID_SOCKET РґР»СЏ РѕС‚РІРµС‚Рµ СЃ IP Рё
-                    РїРѕСЂС‚РѕРј Р·Р°РїРѕР»РЅРёРЅР°РјРё РЅСѓР»СЏРјРё.
-  IN replyCode    - РєРѕРґ РѕС‚РІРµС‚Р°.
-  IN flags        - С„Р»Р°РіРё S5_*.
+  IN sourceSocket - сокет, на котоырй будет отправлен ответ.
+  IN nameSocket   - сокет, данные которого нужно получить или INVALID_SOCKET для ответе с IP и
+                    портом заполнинами нулями.
+  IN replyCode    - код ответа.
+  IN flags        - флаги S5_*.
   
-  Return          - (-1) - РІ СЃСѓР»С‡Р°Рё РѕС€РёР±РєРё РїРѕР»СѓС‡РµРЅРёСЏ РґР°РЅРЅС‹С… РѕР± IP, РѕС‚РІРµС‚ РїСЂРё СЌС‚РѕРј РЅРµ РѕС‚РїСЂР°РІР»СЏРµС‚СЃСЏ,
-                           Рё РґР°РЅРЅРѕРµ Р·РЅР°С‡РµРЅРёРµ РЅРµ РІРѕР·РјРѕР¶РЅРѕ РїРѕР»СѓС‡РёС‚СЊ РїСЂРё
+  Return          - (-1) - в сулчаи ошибки получения данных об IP, ответ при этом не отправляется,
+                           и данное значение не возможно получить при
                            (nameSocket == INVALID_SOCKET),
-                      0  - РІ СЃР»СѓС‡Р°Рё РѕС€РёР±РєРё РІ РїСЂРѕС‚РѕРєРѕР»Рµ РёР»Рё СЂР°Р·СЂС‹РІРµ СЃРѕРµРґРёРЅРµРЅРёСЏ,
-                      1  - РІ СЃР»СѓС‡Р°Рё СѓСЃРїРµС€РЅРѕР№ РѕС‚РїСЂР°РІРєРё РѕС‚РІРµС‚Р°.
+                      0  - в случаи ошибки в протоколе или разрыве соединения,
+                      1  - в случаи успешной отправки ответа.
 */
 static int socks5Reply(SOCKET sourceSocket, SOCKET nameSocket, BYTE replyCode, DWORD flags)
 {
@@ -158,7 +158,7 @@ bool Socks5Server::_start5(SOCKET s, DWORD timeout)
   SOCKS5_QUERY sq;
   BYTE replyCode = 0; //successful
 
-  if(!WSocket::tcpRecvAll(s, &sq, sizeof(SOCKS5_QUERY), timeout) || sq.version != 5/*РћС€РёР±РєР° РїСЂРѕС‚РѕРєРѕР»Р°*/)return false;
+  if(!WSocket::tcpRecvAll(s, &sq, sizeof(SOCKS5_QUERY), timeout) || sq.version != 5/*Ошибка протокола*/)return false;
 
   //Prioretet type IP when querying the DNS.
   int familyList[2];
@@ -212,7 +212,7 @@ bool Socks5Server::_start5(SOCKET s, DWORD timeout)
     {
       BYTE domain[MAXBYTE + 1];
       BYTE domainLen;
-      if(!WSocket::tcpRecvAll(s, &domainLen, sizeof(BYTE), timeout) || domainLen == 0 /*РћС€РёР±РєР° РїСЂРѕС‚РѕРєРѕР»Р°*/ ||
+      if(!WSocket::tcpRecvAll(s, &domainLen, sizeof(BYTE), timeout) || domainLen == 0 /*Ошибка протокола*/ ||
          !WSocket::tcpRecvAll(s, domain, domainLen, timeout))return false;
 
       domain[domainLen] = 0;
@@ -260,7 +260,7 @@ IP_FOUNDED:
     return false;
   }
   
-  //if(replyCode == 0 && destAddr == NULL)РёReplyCode = 1; //SOCKS-server error
+  //if(replyCode == 0 && destAddr == NULL)иReplyCode = 1; //SOCKS-server error
   
   //Errors in the receipt of IP is not found, look team.
   bool retVal = true;
@@ -549,18 +549,18 @@ NEXT2:;
 }
 
 /*
-  РћС‚РїСЂР°РІРєР° РѕС‚РІРµС‚Р° РєР»РёРµРЅС‚Сѓ Socks4.
+  Отправка ответа клиенту Socks4.
 
-  IN sourceSocket  - СЃРѕРєРµС‚, РЅР° РєРѕС‚РѕС‹СЂР№ Р±СѓРґРµС‚ РѕС‚РїСЂР°РІР»РµРЅ РѕС‚РІРµС‚.
-  IN nameSocket    - СЃРѕРєРµС‚, РґР°РЅРЅС‹Рµ РєРѕС‚РѕСЂРѕРіРѕ РЅСѓР¶РЅРѕ РїРѕР»СѓС‡РёС‚СЊ РёР»Рё INVALID_SOCKET РґР»СЏ РѕС‚РІРµС‚Рµ СЃ IP Рё
-                     РїРѕСЂС‚РѕРј Р·Р°РїРѕР»РЅРёРЅР°РјРё РЅСѓР»СЏРјРё.
-  IN replyCode    - РєРѕРґ РѕС‚РІРµС‚Р°.
+  IN sourceSocket  - сокет, на котоырй будет отправлен ответ.
+  IN nameSocket    - сокет, данные которого нужно получить или INVALID_SOCKET для ответе с IP и
+                     портом заполнинами нулями.
+  IN replyCode    - код ответа.
 
-  Return           - (-1) - РІ СЃСѓР»С‡Р°Рё РѕС€РёР±РєРё РїРѕР»СѓС‡РµРЅРёСЏ РґР°РЅРЅС‹С… РѕР± IP, РѕС‚РІРµС‚ РїСЂРё СЌС‚РѕРј РЅРµ РѕС‚РїСЂР°РІР»СЏРµС‚СЃСЏ,
-                            Рё РґР°РЅРЅРѕРµ Р·РЅР°С‡РµРЅРёРµ РЅРµ РІРѕР·РјРѕР¶РЅРѕ РїРѕР»СѓС‡РёС‚СЊ РїСЂРё
+  Return           - (-1) - в сулчаи ошибки получения данных об IP, ответ при этом не отправляется,
+                            и данное значение не возможно получить при
                             (nameSocket == INVALID_SOCKET),
-                       0  - РІ СЃР»СѓС‡Р°Рё РѕС€РёР±РєРё РІ РїСЂРѕС‚РѕРєРѕР»Рµ РёР»Рё СЂР°Р·СЂС‹РІРµ СЃРѕРµРґРёРЅРµРЅРёСЏ,
-                       1  - РІ СЃР»СѓС‡Р°Рё СѓСЃРїРµС€РЅРѕР№ РѕС‚РїСЂР°РІРєРё РѕС‚РІРµС‚Р°.
+                       0  - в случаи ошибки в протоколе или разрыве соединения,
+                       1  - в случаи успешной отправки ответа.
 */
 static int socks4Reply(SOCKET sourceSocket, SOCKET nameSocket, BYTE replyCode, DWORD flags)
 {
@@ -596,7 +596,7 @@ static int socks4Reply(SOCKET sourceSocket, SOCKET nameSocket, BYTE replyCode, D
   return WSocket::tcpSend(sourceSocket, &sr, sizeof(SOCKS4_REPLY)) ? 1 : 0;
 }
 
-/*Р’В Р’В http://www.sockschain.com/doc/socks4_protocol.htm*/
+/*В В http://www.sockschain.com/doc/socks4_protocol.htm*/
 bool Socks5Server::_start4(SOCKET s, DWORD timeout)
 {
   DWORD flags = WSocket::getFamily(s) == AF_INET6 ? S5_CLIENT_IS_IPV6 : S5_CLIENT_IS_IPV4;

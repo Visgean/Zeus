@@ -1,5 +1,5 @@
 /*
-  Данные OC.
+  ������ OC.
 */
 #pragma once
 
@@ -29,36 +29,36 @@ namespace OsEnv
   }OSINFO;
 # pragma pack(pop)  
   /*
-    Инициализация.
+    �������������.
   */
   void init(void);
 
   /*
-    Деинициализация.
+    ���������������.
   */
   void uninit(void);
 
   /*
-    Получение текущей версии Windows.
+    ��������� ������� ������ Windows.
 
     Return - VERSION_ *.
   */
   DWORD _getVersion(void);
 
   /*
-    Получение текущей версии Windows.
+    ��������� ������� ������ Windows.
 
-    OUT oi - версия Windows.
+    OUT oi - ������ Windows.
   */
   void _getVersionEx(OSINFO *oi);
 
-  /*В В В В Getting the user profile directory on the SID.
+  /*    Getting the user profile directory on the SID.
 
-В В В В IN sid - SID.
-В В В В OUT buffer - a buffer for the path must be at least MAX_PATH.
+    IN sid - SID.
+    OUT buffer - a buffer for the path must be at least MAX_PATH.
 
-В В В В Return - true - the path is successfully received,
-В В В В В В В В В В В В В В В В В false - the path has not been received.
-В В */
+    Return - true - the path is successfully received,
+                 false - the path has not been received.
+  */
   bool _getUserProfileDirectoryhBySid(PSID sid, LPWSTR buffer);
 };

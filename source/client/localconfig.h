@@ -1,5 +1,5 @@
 /*
-  Р Р°Р±РѕС‚Р° СЃ Р»РѕРєР°Р»СЊРЅРѕР№ РєРѕРЅС„РёРіСѓСЂР°С†РёРµР№.
+  Работа с локальной конфигурацией.
 */
 #pragma once
 
@@ -17,36 +17,36 @@ namespace LocalConfig
   };
   
   /*
-    РРЅРёС†РёР°Р»РёР·Р°С†РёСЏ.
+    Инициализация.
   */
   void init(void);
   
   /*
-    Р”РµРёРЅРёС†РёР°Р»РёР·Р°С†РёСЏ.
+    Деинициализация.
   */
   void uninit(void);
 
   /*
-    Р—Р°РіСЂСѓР·РєР° С‚РµРєСѓС‰РµР№ РєРѕРЅС„РёРіСѓСЂР°С†РёРё РІ РїР°РјСЏС‚СЊ РїСЂРѕС†РµСЃСЃР°.
+    Загрузка текущей конфигурации в память процесса.
 
-    Return - СѓРєР°Р·Р°С‚РµР»СЊ РЅР° РєРѕРЅС„РёРі(РЅРµРѕР±С…РѕРґРёРјРѕ РѕСЃРІРѕР±РѕРґРёС‚СЊ С‡РµСЂРµР· Mem), РёР»Рё NULL РІ СЃР»СѓС‡Р°Рё РѕС€РёР±РєРё.
+    Return - указатель на конфиг(необходимо освободить через Mem), или NULL в случаи ошибки.
   */
   BinStorage::STORAGE *getCurrent(void);
 
   /*
-    РџРѕР»СѓС‡РµРЅРёРµ С‚РµРєСѓС‰РµР№ РєРѕРЅС„РёРіСѓСЂР°С†РёРё СЃ Р±Р»РѕРєРёСЂРѕРІРєРѕР№ РґРѕСЃС‚СѓРїР° РґР»СЏ РґСЂСѓРіРёС… РїРѕС‚РѕРєРѕРІ Рё РїСЂРѕС†РµСЃСЃРѕРІ.
+    Получение текущей конфигурации с блокировкой доступа для других потоков и процессов.
 
-    Return - СѓРєР°Р·Р°С‚РµР»СЊ РЅР° РєРѕРЅС„РёРі(РЅРµРѕР±С…РѕРґРёРјРѕ РѕСЃРІРѕР±РѕРґРёС‚СЊ С‡РµСЂРµР· Mem), РёР»Рё NULL РІ СЃР»СѓС‡Р°Рё РѕС€РёР±РєРё.
+    Return - указатель на конфиг(необходимо освободить через Mem), или NULL в случаи ошибки.
   */
   BinStorage::STORAGE *beginReadWrite(void);
 
-  /*Р’В Р’В Р’В Р’В Unlock established beginReadWrite () and save the changes.
+  /*В В В В Unlock established beginReadWrite () and save the changes.
 
-Р’В Р’В Р’В Р’В IN OUT binStorage - configuration for the conservation, preservation, or NULL if not required. At the exit
-Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В buffer content is not suitable for use.
-Р’В Р’В Р’В Р’В 
-Р’В Р’В Р’В Р’В Return - true - the configuration has been saved,
-Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В false - config is not saved.
-Р’В Р’В */
+В В В В IN OUT binStorage - configuration for the conservation, preservation, or NULL if not required. At the exit
+В В В В В В В В В В В В В В В В В В В В В В В В buffer content is not suitable for use.
+В В В В 
+В В В В Return - true - the configuration has been saved,
+В В В В В В В В В В В В В В В В В В В В В В В В false - config is not saved.
+В В */
   bool endReadWrite(BinStorage::STORAGE *binStorage);
 };
