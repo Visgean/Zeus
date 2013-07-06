@@ -9,7 +9,7 @@ entry "StaticConfig"
   url_config "http://localhost/config.bin"
   remove_certs 1
   disable_tcpserver 0
-  encryption_key "secret key"
+  encryption_key "incorrect"
 end
 
 entry "DynamicConfig"
