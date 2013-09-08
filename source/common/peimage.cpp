@@ -211,7 +211,7 @@ bool PeImage::_setNtHeader(PEDATA *pedata, PENTBASEDATA *basedata)
   
   if(p)
   {
-    //* - Values Ð²Ð‚â€¹Ð²Ð‚â€¹that will be fixed after the assembly file.
+    //* - Values â€‹â€‹that will be fixed after the assembly file.
     
     IMAGE_NT_HEADERS32 *ntHeader = (IMAGE_NT_HEADERS32 * )p;
 
@@ -576,7 +576,7 @@ DWORD PeImage::_buildImage(PEDATA *pedata, DWORD flags, DWORD rvaOfEntryPoint, L
     }
   }
 
-  //ÐžÐ±Ð½Ð¾Ð²Ð»ÑÐµÐ¼ NT-header.
+  //Îáíîâëÿåì NT-header.
   ((IMAGE_NT_HEADERS32 * )newNtHeader)->FileHeader.NumberOfSections = pedata->sectionsCount;
   bool setChecksum = (output && (flags & BIF_CHECKSUM)) ? true : false;
 
@@ -1009,7 +1009,7 @@ bool PeImage::_isPeImage(void *mem, DWORD memSize)
   if(dosHeader->e_magic != IMAGE_DOS_SIGNATURE || dosHeader->e_lfanew < sizeof(WORD) || dosHeader->e_lfanew >= memSize - sizeof(IMAGE_NT_HEADERS32))return false;
   offset += dosHeader->e_lfanew;
 
-  //ÐŸÐ¾Ð»ÑƒÑ‡Ð°ÐµÐ¼ NT-header.
+  //Ïîëó÷àåì NT-header.
   //This checks otsnovnye parameters for determining the 32/64 and predotvrasheniya "buffer overflow".
   //Making a tougher test does not see the point.
   if(((IMAGE_NT_HEADERS32 *)offset)->Signature != IMAGE_NT_SIGNATURE)return false;

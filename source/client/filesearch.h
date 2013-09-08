@@ -1,5 +1,5 @@
 /*
-  РџРѕРёСЃРє С„Р°Р№Р»РѕРІ.
+  Поиск файлов.
 */
 #pragma once
 /*namespace FileSearch

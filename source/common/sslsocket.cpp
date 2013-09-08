@@ -466,13 +466,13 @@ int SslSocket::_recv(SOCKETDATA *sd, void *buf, int bufSize, DWORD timeout, bool
         if((sd->extraBuffer = Mem::copyEx((LPBYTE)sd->ioBuffer + dwReaded - pExtra->cbBuffer, pExtra->cbBuffer)) == NULL)break;
         sd->extraBufferSize = pExtra->cbBuffer;
 
-        /*В В В В В В В В В В Sometimes an application will read data from the remote party, attempt to decrypt it by
-В В В В В В В В В В using DecryptMessage (Schannel), and discover that DecryptMessage (Schannel) succeeded
-В В В В В В В В В В but the output buffers are empty. This is normal behavior, and applications must be able
-В В В В В В В В В В to deal with it.
+        /*          Sometimes an application will read data from the remote party, attempt to decrypt it by
+          using DecryptMessage (Schannel), and discover that DecryptMessage (Schannel) succeeded
+          but the output buffers are empty. This is normal behavior, and applications must be able
+          to deal with it.
 
-В В В В В В В В В В Videm it.
-В В В В В В В В */
+          Videm it.
+        */
         if(pData == NULL)continue;
       }
 

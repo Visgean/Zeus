@@ -51,10 +51,10 @@ static BYTE lastTool         = 0xFF;
 #define toolsCount (sizeof(toolsList) / sizeof(TOOLDATA))
 
 /*
-  Р вЂ”Р В°Р С–РЎР‚РЎС“Р В·Р С”Р В° Р Р†Р С”Р В»Р В°Р Т‘Р С”Р С‘.
+  �������� �������.
 
-  IN hwnd  - РЎР‚Р С•Р Т‘Р С‘РЎвЂљР ВµР В»РЎРЉ.
-  IN index - Р С‘Р Р…Р Т‘Р ВµР С”РЎРѓ Р Р†Р С”Р В»Р В°Р Т‘Р С”Р С‘.
+  IN hwnd  - ��������.
+  IN index - ������ �������.
 */
 static void loadTool(HWND hwnd, BYTE index)
 {
@@ -70,7 +70,7 @@ static void loadTool(HWND hwnd, BYTE index)
 }
 
 /*
-  Р В¤РЎС“Р Р…Р С”РЎвЂ Р С‘РЎРЏ Р С–Р В»Р В°Р Р†Р Р…Р С•Р С–Р С• Р С•Р С”Р Р…Р В°.
+  ������� �������� ����.
 */
 static INT_PTR CALLBACK mainDialogProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
@@ -139,7 +139,7 @@ static INT_PTR CALLBACK mainDialogProc(HWND hwnd, UINT msg, WPARAM wParam, LPARA
 }
 #endif
 
-/*Р вЂ™Р’В Р вЂ™Р’В Entry point.*/
+/*  Entry point.*/
 void WINAPI entryPoint(void)
 {
   //Initialization data of the GUI.

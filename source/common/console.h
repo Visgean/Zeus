@@ -1,49 +1,49 @@
 /*
-  Р Р°Р±РѕС‚Р° СЃ РєРѕРЅСЃРѕР»СЊСЋ.
+  Работа с консолью.
 */
 #pragma once
 
 namespace Console
 {
   /*
-    РРЅРёС†РёР°Р»РёР·Р°С†РёСЏ.
+    Инициализация.
 
-    Return - true - РІ СЃР»СѓС‡Р°Рё СѓСЃРїРµС…Р°,
-             false - РІ СЃР»СѓС‡Р°Рё РѕС€РёР±РєРё.
+    Return - true - в случаи успеха,
+             false - в случаи ошибки.
   */
   bool init(void);
 
   /*
-    Р”РµРёРЅРёС†РёР°Р»РёР·Р°С†РёСЏ.
+    Деинициализация.
   */
   void uninit(void);
 
   /*
-    Р—Р°РїРёСЃСЊ РґР°РЅРЅС‹С… РІ РєРѕРЅСЃРѕР»СЊ.
+    Запись данных в консоль.
 
-    IN data - РґР°РЅРЅС‹Рµ РґР»СЏ Р·Р°РїРёСЃРё.
-    IN size - РєРѕР»РёС‡РµСЃС‚РІРѕ Р±Р°Р№С‚ РґР»СЏ Р·Р°РїРёСЃРё.
+    IN data - данные для записи.
+    IN size - количество байт для записи.
 
-    Return  - РєРѕР»РёС‡РµСЃС‚РІРѕ Р·Р°РїРёСЃР°РЅРЅС‹С… Р±Р°Р№С‚.
+    Return  - количество записанных байт.
   */
   DWORD writeData(void *data, DWORD size);
 
   /*
-    Р—Р°РїРёСЃСЊ Unicode СЃС‚СЂРѕРєРё РІ РєРѕРЅСЃРѕР»СЊ.
+    Запись Unicode строки в консоль.
 
-    IN string - СЃС‚СЂРѕРєР° РґР»СЏ Р·Р°РїРёСЃРё.
-    IN size   - РєРѕР»РёС‡РµСЃС‚РІРѕ СЃРёРјРІРѕР»РѕРІ РґР»СЏ Р·Р°РїРёСЃРё, РёР»Рё (DWORD)-1 РµСЃР»Рё СЃС‚СЂРѕРєР° РѕРєР°РЅС‡РёРІР°РµС‚СЃСЏ РЅР° \0.
+    IN string - строка для записи.
+    IN size   - количество символов для записи, или (DWORD)-1 если строка оканчивается на \0.
 
-    Return    - РєРѕР»РёС‡РµСЃС‚РІРѕ Р·Р°РїРёСЃР°РЅРЅС‹С… СЃРёРјРІРѕР»РѕРІ.
+    Return    - количество записанных символов.
   */
   DWORD writeStringW(LPWSTR string, DWORD size);
 
-  /*Р’В Р’В Р’В Р’В Analogue of wprintf.
+  /*В В В В Analogue of wprintf.
 
-Р’В Р’В Р’В Р’В IN format - line-format output.
-Р’В Р’В Р’В Р’В IN ... - Arguments for the row.
+В В В В IN format - line-format output.
+В В В В IN ... - Arguments for the row.
 
-Р’В Р’В Р’В Р’В Return - number of characters written.
-Р’В Р’В */
+В В В В Return - number of characters written.
+В В */
   DWORD writeFormatW(LPWSTR format, ...);
 };

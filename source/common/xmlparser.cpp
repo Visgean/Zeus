@@ -94,7 +94,7 @@ void XmlParser::_freeXmlErrorData(XMLERRORDATA *error)
   _freeBstr(error->reason);
 }
 
-/*Р вЂ™Р’В Р вЂ™Р’В Add-in for getNodeTextOf * ().*/
+/*  Add-in for getNodeTextOf * ().*/
 static BSTR getChildTextAndRelease(IXMLDOMNode *child)
 {
   BSTR text;

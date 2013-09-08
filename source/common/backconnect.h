@@ -1,5 +1,5 @@
 /*
-  РРЅСЃС‚СЂСѓРјРµРЅС‚С‹ РґР»СЏ Backconnect.
+  Инструменты для Backconnect.
 */
 #pragma once
 
@@ -36,37 +36,37 @@ namespace Backconnect
   #pragma pack(pop)
   
   /*
-    РРЅРёС†РёР°Р»РёР·Р°С†РёСЏ.
+    Инициализация.
   */
   void init(void);
 
   /*
-    Р”РµРёРЅРёС†РёР°Р»РёР·Р°С†РёСЏ.
+    Деинициализация.
   */
   void uninit(void);
 
   /*
-    Р§С‚РµРЅРёРµ РєРѕРјР°РЅРґС‹ РёР· СЃРѕРєРµС‚Р°.
+    Чтение команды из сокета.
 
-    IN s        - СЃРѕРєРµС‚.
-    OUT command - СЃС‚СЂСѓРєС‚СѓСЂР° РґР»СЏ Р·Р°РїРѕР»РЅРµРЅРёСЏ.
-    OUT data    - Р±СѓС„РµСЂ РґР»СЏ РґР°РЅРЅС‹С…, РёР»Рё NULL РµСЃР»Рё РґР°РЅРЅС‹Рµ РЅРµ С‚СЂРµР±СѓСЋС‚СЃСЏ. Р‘СѓС„РµСЂ РґРѕР»Р¶РµРЅ Р±С‹С‚СЊ РѕСЃРІРѕР±РѕР¶РґРµРЅ
-                  С‡РµСЂРµР· Mem.
+    IN s        - сокет.
+    OUT command - структура для заполнения.
+    OUT data    - буфер для данных, или NULL если данные не требуются. Буфер должен быть освобожден
+                  через Mem.
 
-    Return      - true  - РІ СЃР»СѓС‡Р°Рё СѓСЃРїРµС€РЅРѕРіРѕ С‡С‚РµРЅРёСЏ РєРѕРјР°РЅРґС‹.
-                  false - РІ СЃР»СѓС‡Р°Рё РѕРёС€Р±РєРё.
+    Return      - true  - в случаи успешного чтения команды.
+                  false - в случаи оишбки.
   */
   bool _readCommand(SOCKET s, COMMAND *command, LPBYTE *data);
 
-  /*Р’В Р’В Р’В Р’В Sending commands to a socket.
+  /*В В В В Sending commands to a socket.
 
-Р’В Р’В Р’В Р’В IN s - socket.
-Р’В Р’В Р’В Р’В IN command - the command BCC_ *.
-Р’В Р’В Р’В Р’В IN data - data.
-Р’В Р’В Р’В Р’В IN dataSize - the size of the data.
+В В В В IN s - socket.
+В В В В IN command - the command BCC_ *.
+В В В В IN data - data.
+В В В В IN dataSize - the size of the data.
 
-Р’В Р’В Р’В Р’В Return - true - if successful,
-Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В false - if an error occurs.
-Р’В Р’В */
+В В В В Return - true - if successful,
+В В В В В В В В В В В В В В В В В В false - if an error occurs.
+В В */
   bool _writeCommand(SOCKET s, BYTE command, const void *data, WORD dataSize);
 };

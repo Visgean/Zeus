@@ -1,6 +1,6 @@
 <?php
 /*
-  ÐšÐ¾Ð½Ð²ÐµÑ€Ñ‚Ð°Ñ†Ð¸Ñ MaxMind Country CSV Ð² Ñ„Ð¾Ñ€Ð¼Ð°Ñ‚ [LowIPv4 HighIPv4 Country[3]]
+  Êîíâåðòàöèÿ MaxMind Country CSV â ôîðìàò [LowIPv4 HighIPv4 Country[3]]
 
   http://geolite.maxmind.com/download/geoip/database/GeoIPCountryCSV.zip
 */

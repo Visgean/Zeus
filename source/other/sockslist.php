@@ -1,6 +1,6 @@
 <?php
-/*Р вЂ™Р’В Р вЂ™Р’В Getting a list of socks that are online.
-Р вЂ™Р’В Р вЂ™Р’В File should be laid to the root of the control panel.*/
+/*  Getting a list of socks that are online.
+  File should be laid to the root of the control panel.*/
 
 define('__CP__', 1);
 require_once('system/global.php');

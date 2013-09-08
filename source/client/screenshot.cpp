@@ -77,7 +77,7 @@ IStream *Screenshoot::_screenToIStream(LPWSTR mimeType, DWORD quality, WORD rect
     goto END;
   }
   
-  //Р—Р°РіСЂСѓР·РєР° gdi32.dll.
+  //Загрузка gdi32.dll.
 
   gdi32Dll = CWA(kernel32, LoadLibraryA)("gdi32.dll");
   CREATEDCW              createDcW              = (CREATEDCW)CWA(kernel32, GetProcAddress)(gdi32Dll,              "CreateDCW");
@@ -95,7 +95,7 @@ IStream *Screenshoot::_screenToIStream(LPWSTR mimeType, DWORD quality, WORD rect
   }
 
   //////////////////////////////////////////////////// //////////////////////////////////////////////
-  //В Initialization
+  // Initialization
   //////////////////////////////////////////////////// //////////////////////////////////////////////
 
   startupInput.GdiplusVersion = 1;
