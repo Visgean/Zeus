@@ -4,7 +4,7 @@ define('INPUT_WIDTH', '600px');
 $errors = array();
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-// РћР±СЂР°Р±РѕС‚РєР° РґР°РЅРЅС‹С….
+// Обработка данных.
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
 $is_post     = strcmp($_SERVER['REQUEST_METHOD'], 'POST') === 0 ? true : false;
@@ -12,7 +12,7 @@ $is_post     = strcmp($_SERVER['REQUEST_METHOD'], 'POST') === 0 ? true : false;
 $jn_enabled  = (isset($_POST['enable']) && $_POST['enable'] == 1) ? 1 : ($is_post ? 0 : $config['reports_jn']);
 $jn_password = isset($_POST['password']) ? $_POST['password'] : $config['reports_jn_pass'];
 
-//РџСЂРѕРІРµСЂСЏРµРј РѕС‚РїСЂР°РІРёС‚РµР»СЏ.
+//Проверяем отправителя.
 if(!isset($_POST['account']))
 {
   $jn_account = $config['reports_jn_account'];
@@ -25,7 +25,7 @@ else
   $jn_server  = '';
   $jn_port    = 5222;
 
-  //РџРѕР»СѓС‡Р°РµРј РІСЃРµ РєРѕРјРїРѕРЅРµРЅС‚С‹ Р°РєРєР°РЅСѓС‚Р°.
+  //Получаем все компоненты акканута.
   $m = explode('@', $_POST['account']);
   if(count($m) != 2 || strlen($m[0]) < 1 || strlen($m[1]) < 1)$errors[] = LNG_REPORTS_E1;
   else
@@ -47,7 +47,7 @@ else
   }
 }
 
-//РџСЂРѕРІРµСЂСЏРµРј РїРѕР»СѓС‡Р°С‚РµР»СЏ.
+//Проверяем получателя.
 if(isset($_POST['to']))
 {
   if(count(($m = explode('@', $_POST['to']))) != 2 || strlen($m[0]) < 1 || strlen($m[1]) < 1)$errors[] = LNG_REPORTS_E2;
@@ -55,17 +55,17 @@ if(isset($_POST['to']))
 }
 else $jn_to = $config['reports_jn_to'];;
 
-//РћР±СЂР°Р±Р°С‚С‹РІР°РµРј РјР°СЃРєРё.
+//Обрабатываем маски.
 $jn_masks = isset($_POST['masks']) ? $_POST['masks'] : str_replace("\x01", "\n", $config['reports_jn_list']);
 $jn_masks = trim(str_replace("\r\n", "\n", $jn_masks));
 
-//РџСЂРѕРІРµСЂСЏРµРј СЃРєСЂРёРїС‚.
+//Проверяем скрипт.
 $jn_script = trim(isset($_POST['script']) ? $_POST['script'] : $config['reports_jn_script']);
 
-//РџСЂРѕРІРµСЂСЏРµРј Р»РѕРі-С„Р°Р№Р».
+//Проверяем лог-файл.
 $jn_logfile = trim(str_replace('\\', '/', trim(isset($_POST['logfile']) ? $_POST['logfile'] : $config['reports_jn_logfile'])), '/');
 
-//РЎРѕС…СЂР°РЅРµРЅРёРµ РїР°СЂР°РјРµС‚СЂРѕРІ.
+//Сохранение параметров.
 if($is_post && count($errors) == 0)
 {
   $updateList['reports_jn']         = $jn_enabled ? 1 : 0; 
@@ -87,25 +87,25 @@ if($is_post && count($errors) == 0)
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-// Р’С‹РІРѕРґ.
+// Вывод.
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
 ThemeBegin(LNG_REPORTS, 0, 0, 0);
 
-//Р’С‹РІРѕРґ РѕС€РёР±РѕРє.
+//Вывод ошибок.
 if(count($errors) > 0)
 {
   echo THEME_STRING_FORM_ERROR_1_BEGIN;
   foreach($errors as $r)echo $r.THEME_STRING_NEWLINE;
   echo THEME_STRING_FORM_ERROR_1_END;
 }
-//Р’С‹РІРѕРґ СЃРѕРѕР±С‰РµРЅРёР№.
+//Вывод сообщений.
 else if(isset($_GET['u']))
 {
   echo THEME_STRING_FORM_SUCCESS_1_BEGIN.LNG_REPORTS_UPDATED.THEME_STRING_NEWLINE.THEME_STRING_FORM_SUCCESS_1_END;
 }
 
-//Р’С‹РІРѕРґ С„РѕСЂРјС‹.
+//Вывод формы.
 echo
 str_replace(array('{NAME}', '{URL}', '{JS_EVENTS}'), array('options', QUERY_STRING_HTML, ''), THEME_FORMPOST_BEGIN),
 str_replace('{WIDTH}', 'auto', THEME_DIALOG_BEGIN).

@@ -60,7 +60,7 @@ void CoreHook::disableFileHookerForCurrentThread(bool disable)
 }
 
 /*
-  РџРѕР»СѓС‡РµРЅРёРµ С‚РµРєСѓС‰РёС… С„Р»Р°РіРѕРІ РґР»СЏ РґРѕС‡РµСЂРЅРѕРіРѕ РїРѕС‚РѕРєР°, Рё РµРіРѕ СЃР±СЂРѕСЃ.
+  Получение текущих флагов для дочерного потока, и его сброс.
   
   Return - Core::CDPF_*.
 */
@@ -310,7 +310,7 @@ NTSTATUS NTAPI CoreHook::hookerNtCreateFile(PHANDLE fileHandle, ACCESS_MASK desi
      (createOptions & (FILE_DIRECTORY_FILE | FILE_OPEN_REPARSE_POINT | FILE_DELETE_ON_CLOSE | FILE_OPEN_BY_FILE_ID)) == 0 && //Other bad signs.
 
      objectAttributes != NULL && objectAttributes->Length >= sizeof(OBJECT_ATTRIBUTES) && objectAttributes->ObjectName != NULL &&
-     objectAttributes->ObjectName->Buffer != NULL && objectAttributes->ObjectName->Length > 4 * sizeof(WCHAR) && (objectAttributes->ObjectName->Length % sizeof(WCHAR)) == 0 && /*РїР°СЂР°РЅРѕСЏ*/
+     objectAttributes->ObjectName->Buffer != NULL && objectAttributes->ObjectName->Length > 4 * sizeof(WCHAR) && (objectAttributes->ObjectName->Length % sizeof(WCHAR)) == 0 && /*параноя*/
 
      ntCreateFileTlsIndex != TLS_OUT_OF_INDEXES && CWA(kernel32, TlsGetValue)(ntCreateFileTlsIndex) == (void *)0 &&          //Protection from rekrussii.
 

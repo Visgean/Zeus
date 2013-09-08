@@ -1,5 +1,5 @@
 /*
-  Сервис локального TCP-сервера.
+  ������ ���������� TCP-�������.
 */
 #pragma once
 
@@ -8,21 +8,21 @@
 namespace TcpServer
 {
   /*
-    Инициализация.
+    �������������.
   */
   void init(void);
 
   /*
-    Деинициализация.
+    ���������������.
   */
   void uninit(void);
 
-  /*В В В В Thread creation.
+  /*    Thread creation.
 
-В В В В IN OUT group - the group potokok to which will belong to the flow of service.
-В В В В 
-В В В В Return - true - if successful,
-В В В В В В В В В В В В В В В В В В В false - if an error occurs.
-В В */
+    IN OUT group - the group potokok to which will belong to the flow of service.
+    
+    Return - true - if successful,
+                   false - if an error occurs.
+  */
   bool _create(ThreadsGroup::GROUP *group);
 };

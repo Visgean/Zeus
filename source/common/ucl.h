@@ -1,6 +1,6 @@
 #pragma once
 /*
-  РњРѕРґРёС„РёС†РёСЂРѕРІР°РЅС‹Р№ UCL 1.03.
+  Модифицированый UCL 1.03.
   http://www.oberhumer.com/opensource/ucl/
 */
 
@@ -68,58 +68,58 @@ namespace UCL
   typedef struct
   {
     /*
-      IN dwTextSize - FIXME: РїРµСЂРµРјРµРЅРЅР°СЏ РЅРµ РёР·РІРµСЃС‚РЅР°. text size counter.
-      IN dwCodeSize - FIXME: РїРµСЂРµРјРµРЅРЅР°СЏ РЅРµ РёР·РІРµСЃС‚РЅР°. code size counter.
-      IN iStatus - СЃРѕСЃС‚РѕСЏРЅРёРµ СЂР°Р±РѕС‚С‹.
-                   -1 - РїРѕРґРіРѕС‚РѕРІРєР°.
-                    3 - РїСЂРѕРіСЂРµСЃСЃ.
-                    4 - СѓСЃРїРµС€РЅРѕ Р·Р°РІРµСЂС€РµРЅРѕ.
-      IN pData - РїРѕР»СЊР·РѕРІР°С‚РµР»СЊСЃРєРёРµ РґР°РЅРЅС‹Рµ.
+      IN dwTextSize - FIXME: переменная не известна. text size counter.
+      IN dwCodeSize - FIXME: переменная не известна. code size counter.
+      IN iStatus - состояние работы.
+                   -1 - подготовка.
+                    3 - прогресс.
+                    4 - успешно завершено.
+      IN pData - пользовательские данные.
     */
     void (WINAPI *callback)(DWORD dwTextSize, DWORD dwCodeSize, int iStatus, void *pData);
     void *pData; //User data. sent to the callback.
   }PROGRESS_CALLBACK;
 
   /*
-    РРЅРёС†РёР°Р»РёР·Р°С†РёСЏ.
+    Инициализация.
   */
   void Init(void);
 
   /*
-    Р”РµРёРЅРёС†РёР°Р»РёР·Р°С†РёСЏ.
+    Деинициализация.
   */
   void Uninit(void);
 
   /*
-    РЎР¶Р°С‚РёРµ РґР°РЅРЅС‹С….
+    Сжатие данных.
 
-    IN pSource           - РёСЃС…РѕРґРЅС‹Рµ РґР°РЅРЅС‹Рµ.
-    IN dwSourceSize      - СЂР°Р·РјРµСЂ РёСЃС…РѕРґРЅС‹С… РґР°РЅРЅС‹С… РІ Р±Р°Р№С‚Р°С….
-    OUT pBuffer          - Р±СѓС„РµСЂ РґР»СЏ СЃР¶Р°С‚С‹С… РґР°РЅРЅС‹С….
-    IN OUT pdwBufferSize - РЅР° РІС…РѕРґРµ - РјР°РєСЃРёРјР°Р»СЊРЅС‹Р№ СЂР°Р·РјРµСЂ pBuffer, СЂРµРєРѕРјРµРЅРґСѓРµС‚СЃСЏ СЂР°СЃС‡РёС‚С‹РІР°С‚СЊ РїРѕ
-                           С„РѕСЂРјСѓР»Рµ dwSourceSize + dwSourceSize / 8.
-                           РЅР° РІС‹С…РѕРґРµ - СЂР°Р·РјРµСЂ СЃР¶Р°С‚С‹С… РґР°РЅРЅС‹С….
-    IN pCallback         - С„СѓРЅРєС†РёСЏ РґР»СЏ РїРѕР»СѓС‡РµРЅРёСЏ СЃРѕСЃС‚РѕСЏРЅРёСЏ.
-    IN dwFlags           - С„Р»Р°РіРё CF_*.
+    IN pSource           - исходные данные.
+    IN dwSourceSize      - размер исходных данных в байтах.
+    OUT pBuffer          - буфер для сжатых данных.
+    IN OUT pdwBufferSize - на входе - максимальный размер pBuffer, рекомендуется расчитывать по
+                           формуле dwSourceSize + dwSourceSize / 8.
+                           на выходе - размер сжатых данных.
+    IN pCallback         - функция для получения состояния.
+    IN dwFlags           - флаги CF_*.
 
-    Return               - РєРѕРґ РѕС€РёР±РєРё E_*.
+    Return               - код ошибки E_*.
   */
   int _Compress(LPBYTE pSource, DWORD dwSourceSize, LPBYTE pBuffer, LPDWORD pdwBufferSize, PROGRESS_CALLBACK *pCallback, DWORD dwFlags);
 
-  /*Р’В Р’В Р’В Р’В Unpacking the data.
+  /*В В В В Unpacking the data.
 
-Р’В Р’В Р’В Р’В IN pSource - the original compressed data.
-Р’В Р’В Р’В Р’В IN dwSourceSize - szhatyx size of the source data in bytes.
-Р’В Р’В Р’В Р’В IN pDest - Buffer for uncompressed data.
-Р’В Р’В Р’В Р’В IN pdwDestSize - at the entrance - the maximum size of pBuffer.
-Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В output - the size of the data.
+В В В В IN pSource - the original compressed data.
+В В В В IN dwSourceSize - szhatyx size of the source data in bytes.
+В В В В IN pDest - Buffer for uncompressed data.
+В В В В IN pdwDestSize - at the entrance - the maximum size of pBuffer.
+В В В В В В В В В В В В В В В В В В В В В В output - the size of the data.
 
-Р’В Р’В Р’В Р’В Return - true - in the cases of successful raspkakovki,
-Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В false - in cases oishibka (data corruption).
+В В В В Return - true - in the cases of successful raspkakovki,
+В В В В В В В В В В В В В В В В В В В В В В false - in cases oishibka (data corruption).
 
-Р’В Р’В Р’В Р’В Note: Funkitsii not marked postfix Safe, can cause an exception, but they have
-Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В Р’В smaller size.
-Р’В Р’В */
+В В В В Note: Funkitsii not marked postfix Safe, can cause an exception, but they have
+В В В В В В В В В В В В В В В В smaller size.
+В В */
   bool _DecompressNRV2BSafe(LPBYTE pSource, DWORD dwSourceSize, LPBYTE pDest, LPDWORD );
   bool _DecompressNRV2B(LPBYTE pSource, DWORD dwSourceSize, LPBYTE pDest, LPDWORD pdwDestSize);
   bool _DecompressNRV2DSafe(LPBYTE pSource, DWORD dwSourceSize, LPBYTE pDest, LPDWORD pdwDestSize);

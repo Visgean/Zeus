@@ -3,7 +3,7 @@ define('LNG_BOTNET', 'Bots');
 
 define('LNG_BOTNET_BOTSACTION', 'Bots action:');
 
-//P Р вЂ™Р’В¤ Pepsi "SР В Р вЂ°S, SР В РІР‚С™.
+//P ¤ Pepsi "SЊS, SЂ.
 define('LNG_BOTNET_FILTER_TITLE',          'Filter');
 
 define('LNG_BOTNET_FILTER_BOTS',           'Bots:');
@@ -31,7 +31,7 @@ define('LNG_BOTNET_FILTER_COMMENT_FALSE',  'Not exists');
 define('LNG_BOTNET_FILTER_RESET',          'Reset form');
 define('LNG_BOTNET_FILTER_SUBMIT',         'Accept');
 
-//RР В Р вЂ№RР РЋРІР‚вЂќReSР В РЎвЂњRР РЋРІР‚СћRР РЋРІР‚Сњ.
+//RЎRїReSЃRѕRє.
 define('LNG_BOTNET_LIST',            'Result (%s):');
 define('LNG_BOTNET_LIST_BOTID',      'Bot ID');
 define('LNG_BOTNET_LIST_BOTNET',     'Botnet');

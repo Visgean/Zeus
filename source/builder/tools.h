@@ -1,28 +1,28 @@
 /*
-  Р Р°Р·Р»РёС‡РЅС‹Рµ РёРЅСЃС‚СЂСѓРјРµРЅРµРЅС‚С‹.
+  ��������� �������������.
 */
 #pragma once
 
 /*
-  Р’С‹РІРѕРґ СЃРѕРѕР±С€РµРЅРёСЏ РІ multilne edit control.
+  ����� ��������� � multilne edit control.
 
-  IN hwnd   - С…СЌРЅРґР» edit-РѕРєРЅР°.
-  IN format - С„РѕСЂРјР°С‚ СЃРѕРѕР±С€РµРЅРёРµ СЃРѕРіР»Р°СЃРЅРѕ sprintf.
-  IN ...    - Р°СЂРіСѓРјРµРЅС‚С‹ СЃРѕРѕР±С‰РµРЅРёСЏ.
+  IN hwnd   - ����� edit-����.
+  IN format - ������ ��������� �������� sprintf.
+  IN ...    - ��������� ���������.
 */
 void writeOutput(HWND hwnd, LPWSTR format, ...);
 
 /*
-  Р’С‹РІРѕРґ РѕС€РёР±РєРё РІ multilne edit control.
+  ����� ������ � multilne edit control.
 
-  IN hwnd   - С…СЌРЅРґР» edit-РѕРєРЅР°.
-  IN format - С„РѕСЂРјР°С‚ СЃРѕРѕР±С€РµРЅРёРµ СЃРѕРіР»Р°СЃРЅРѕ sprintf.
-  IN ...    - Р°СЂРіСѓРјРµРЅС‚С‹ СЃРѕРѕР±С‰РµРЅРёСЏ.
+  IN hwnd   - ����� edit-����.
+  IN format - ������ ��������� �������� sprintf.
+  IN ...    - ��������� ���������.
 */
 void writeOutputError(HWND hwnd, LPWSTR format, ...);
 
-/*Р’В Р’В Checks whether the stream ended.
+/*  Checks whether the stream ended.
 
-Р’В Р’В IN OUT subThread - pointer to hegdl flow. If, returned with the handle == NULL, then the flow ended.*/
+  IN OUT subThread - pointer to hegdl flow. If, returned with the handle == NULL, then the flow ended.*/
 void closeThreadIfFinsinhed(HANDLE *subThread);
 

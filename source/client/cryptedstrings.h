@@ -1,5 +1,5 @@
 /*
-  Р Р°Р±РѕС‚Р° СЃ РєРѕРґРёСЂРѕРІР°РЅС‹РјРё СЃС‚СЂРѕРєР°РјРё, СЌС‚РѕС‚ С„Р°Р№Р» С‡Р°СЃС‚РёС‡РЅРѕ РіРµРЅРµСЂРёСЂСѓРµС‚СЃСЏ РїСЂРё СЃР±РѕСЂРєРµ.
+  Работа с кодироваными строками, этот файл частично генерируется при сборке.
 */
 #pragma once
 
@@ -549,27 +549,27 @@ namespace CryptedStrings
   };
 
   /*
-    РРЅРёС†РёР°Р»РёР·Р°С†РёСЏ.
+    Инициализация.
   */
   void init(void);
 
   /*
-    Р”РµРёРЅРёС†РёР°Р»РёР·Р°С†РёСЏ.
+    Деинициализация.
   */
   void uninit(void);
 
   /*
-    РџРѕР»СѓС‡РµРЅРёРµ СЃС‚СЂРѕРєРё РєР°Рє ANSI.
+    Получение строки как ANSI.
 
     IN id      - id_*.
-    OUT buffer - Р±СѓС„С„РµСЂ.
+    OUT buffer - буффер.
   */
   void _getA(WORD id, LPSTR buffer);
 
-  /*Р’В Р’В Р’В Р’В Getting the string as Unicode.
+  /*В В В В Getting the string as Unicode.
 
-Р’В Р’В Р’В Р’В IN id - id_ *.
-Р’В Р’В Р’В Р’В OUT buffer - buffer.
-Р’В Р’В */
+В В В В IN id - id_ *.
+В В В В OUT buffer - buffer.
+В В */
   void _getW(WORD id, LPWSTR buffer);
 };

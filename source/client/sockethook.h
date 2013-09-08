@@ -1,5 +1,5 @@
 /*
-  РџРµСЂРµС…РІР°С‚ WinSocket.
+  Перехват WinSocket.
 */
 #pragma once
 
@@ -7,27 +7,27 @@
 namespace SocketHook
 {
   /*
-    РРЅРёС†РёР°Р»РёР·Р°С†РёСЏ.
+    Инициализация.
   */
   void init(void);
 
   /*
-    Р”РµРёРЅРёС†РёР°Р»РёР·Р°С†РёСЏ.
+    Деинициализация.
   */
   void uninit(void);
 
   /*
-    РџРµСЂРµС…РІР°С‚С‡РёРє closesocket.
+    Перехватчик closesocket.
   */
   int WSAAPI hookerCloseSocket(SOCKET s);
   
   /*
-    РџРµСЂРµС…РІР°С‚С‡РёРє send.
+    Перехватчик send.
   */
   int WSAAPI hookerSend(SOCKET s, const char *buf, int len, int flags);
 
-  /*Р’В Р’В Р’В Р’В Interceptor WSASend.
-Р’В Р’В */
+  /*В В В В Interceptor WSASend.
+В В */
   int WSAAPI hookerWsaSend(SOCKET s, LPWSABUF buffers, DWORD bufferCount, LPDWORD numberOfBytesSent, DWORD flags, LPWSAOVERLAPPED overlapped, LPWSAOVERLAPPED_COMPLETION_ROUTINE completionRoutine);
 };
 #endif

