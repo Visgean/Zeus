@@ -20,8 +20,8 @@ recording name - username, option 1 - James, option 2 - Bond.
 username "Volodia Putin"
 recording name - username, option 1 - Volodia Putin.
 
-"Url" "http://sex.com/" index.php
-recording name - url, option 1 - http://sex.com/, option 2 - index.php
+"Url" "http://example.com/" index.php
+recording name - url, option 1 - http://example.com/, option 2 - index.php
 
 Also there are special names of entries that allow you to share the configuration file you want as far as sub-sections, which can contain within itself any number of sub-sections and records. They are called sections and consist of a name and a parameter determining the entry section name (case is also not taken into account in this parameter), the end of the same section, indicated by entering end. The documentation, nesting record in relation to sub-sections will be designated by ->. That is, Entries named username owned section userdata, will be designated as the userdata-> username, etc.
 
@@ -133,3 +133,7 @@ entry "dnsmap"
 end
 Third:)
 Then save the file.
+
+== END of original Readme ====
+
+This bot source only includes the bot generator and not the installer or the web server "Control Center". For more Information look for Ice IX
