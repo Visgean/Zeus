@@ -745,7 +745,7 @@ typedef IStoreFolder *LPSTOREFOLDER;
 #define MSG_REPLIED                  0x0100  // The message has been replied to
 #define MSG_FORWARDED                0x0200  // The message has been forwarded to
 #define MSG_RCPTSENT                 0x0400  // S/MIME Receipt has been sent
-#define MSG_FLAGGED                  0x0800  // The message is currently flaged
+#define MSG_FLAGGED                  0x0800  // The message is currently flagged
 #define MSG_LAST                     0x0200  // ** Keep this updated!! **
 #define MSG_EXTERNAL_FLAGS           0x00fe
 #define MSG_FLAGS                    0x000f
